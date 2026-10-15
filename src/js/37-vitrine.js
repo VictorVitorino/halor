@@ -119,30 +119,36 @@ function vtCatalog(sec, live) {
     }
     li.append(it); ul.append(li);
   });
+  /* só 8 à mostra; o card + leva para a escolha do plano */
+  const plus = el('li', 'vt-plus');
+  const a = el('a', 'vt-item vt-plus-card'); a.href = '#assinar';
+  a.append(el('span', 'vt-plus-ic', '+'), el('p', 'vt-item-t', 'Mais 32 efeitos'), el('p', 'vt-item-s', 'Escolha um plano e libere todos no Estúdio.'));
+  plus.append(a); ul.append(plus);
 }
 
 /* · Filtro por intenção (vale para o palco e para o catálogo) · */
 function vtFilter(sec) {
   const chips = $$('.vt-chip', sec), wrap = $('#vt-chips', sec), stage = $('#vt-stage', sec);
-  const cards = $$('.vt-card', sec), items = $$('#vt-cat li', sec);
+  const cards = $$('.vt-card', sec), items = $$('#vt-cat li:not(.vt-plus)', sec);
   const empty = $('#vt-empty', sec), count = $('#vt-count', sec), status = $('#vt-status', sec);
   const cat = $('#vt-cat', sec), more = $('#vt-more', sec);
   /* no celular o catálogo abre com 8 itens e um botão para ver todos */
-  cat.classList.add('is-short');
-  const moreSync = n => { more.hidden = n <= 8 || !cat.classList.contains('is-short'); more.textContent = `Ver os ${n} efeitos`; };
-  more.addEventListener('click', () => { cat.classList.remove('is-short'); more.setAttribute('aria-expanded', 'true'); more.hidden = true; });
+  const SHOW = 8, plusT = $('.vt-plus .vt-item-t', sec);
+  more.hidden = true;
+  const moreSync = n => { plusT.textContent = n > SHOW ? `Mais ${n - SHOW} efeitos` : 'Todos os efeitos'; };
   const pop = n => { if (REDUCED) return; n.classList.remove('is-in'); void n.offsetWidth; n.classList.add('is-in'); };
   const apply = k => {
     chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.intent === k)));
     const ok = n => k === 'todos' || n.dataset.intents.split(' ').includes(k);
     let nd = 0, ni = 0;
     cards.forEach(c => { const s = ok(c); c.hidden = !s; if (s) { nd++; pop(c); } });
-    items.forEach(li => { const s = ok(li); li.hidden = !s; if (s) { ni++; pop(li); } });
+    let shown = 0;
+    items.forEach(li => { const s = ok(li); if (s) ni++; const v = s && shown < SHOW; li.hidden = !v; if (v) { shown++; pop(li); } });
     stage.classList.toggle('is-filtered', k !== 'todos');
     stage.hidden = nd === 0;
     empty.hidden = nd !== 0;
     if (!nd) empty.textContent = `Para ${VT_INTENT[k].toLowerCase()}, os efeitos estão no catálogo logo abaixo.`;
-    count.textContent = `${ni} de ${VT_FX.length}`;
+    count.textContent = `${Math.min(ni, SHOW)} de ${VT_FX.length}`;
     moreSync(ni);
     status.textContent = k === 'todos' ? `Todos os efeitos: ${ni} no catálogo, ${nd} ao vivo.` : `${VT_INTENT[k]}: ${ni} efeitos no catálogo, ${nd} ao vivo.`;
   };
@@ -151,8 +157,7 @@ function vtFilter(sec) {
   wrap.addEventListener('scroll', edge, { passive: true });
   window.addEventListener('resize', edge, { passive: true });
   edge();
-  count.textContent = `${items.length} de ${VT_FX.length}`;
-  moreSync(items.length);
+  apply('todos');
 }
 
 /* · Palco: liga cada demo à tela · */

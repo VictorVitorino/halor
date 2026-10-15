@@ -580,7 +580,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 }
 .s-cover .s-hero-in a, .s-cover .s-hero-in button { pointer-events: auto; }
 .s-cover .eyebrow { justify-content: center; }
-.s-cover .s-h1 { max-width: 13ch; margin-inline: auto; font-size: clamp(46px, 7.6vw, 112px); line-height: 1.02; text-shadow: 0 2px 30px rgba(7, 4, 15, .6); }
+.s-cover .s-h1 { max-width: 17ch; margin-inline: auto; font-size: clamp(38px, 5.6vw, 84px); line-height: 1.02; text-shadow: 0 2px 30px rgba(7, 4, 15, .6); }
 .s-cover .s-lede { margin-inline: auto; margin-top: 6px; max-width: 34ch; text-align: center; text-shadow: 0 1px 18px rgba(7, 4, 15, .8); }
 .s-cover .s-cta { justify-content: center; margin-top: 10px; }
 .s-cover-foot { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-block: 0 22px; pointer-events: none; }
@@ -594,7 +594,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .s-cover.field-in .w { display: inline-block; animation: coverWord 1s var(--ease-halo) both; animation-delay: calc(.5s + var(--i) * .13s); }
 .s-cover.field-in .s-in { animation: coverIn .9s var(--ease-halo) both; animation-delay: var(--d, 0s); }
 .s-cover .w { display: inline-block; }
-.s-cover .lux::after { animation-delay: 1.15s; }
+.s-cover .lux { white-space: nowrap; }
+.s-cover .lux::after { animation-delay: 1.5s; }
 .s-cover:not(.field-in) .lux::after { animation: none; }
 @keyframes coverWord { from { opacity: 0; transform: translateY(.42em) scale(.98); filter: blur(10px); } }
 @keyframes coverIn { from { opacity: 0; transform: translateY(14px); } }
@@ -1091,6 +1092,14 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
   .vt-fw-flow { stroke-dasharray: none; opacity: .5; }
 }
 
+/* catálogo com 8 itens e o card + que leva aos planos */
+.vt-plus { display: flex; }
+.vt-plus-card { width: 100%; text-decoration: none; color: var(--text); justify-items: start; align-content: center; text-align: left; border: 1px dashed var(--halor-glow) !important; background: linear-gradient(150deg, rgba(139, 61, 255, .28), rgba(23, 16, 48, .6)) !important; transition: transform var(--t-base) var(--ease-halo), box-shadow var(--t-base) var(--ease-halo); }
+.vt-plus-card:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--halor-glow), 0 20px 50px -20px rgba(139, 61, 255, .9); }
+.vt-plus-ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 600 26px/1 var(--f-display); color: #fff; background: var(--halor-violet); box-shadow: var(--glow-md); margin-bottom: 4px; }
+.vt-cat.is-short > li { display: flex !important; }
+.vt-cat > li[hidden] { display: none !important; }
+
 /* ==========================================================================
    FAIXAS LAVANDA · O efeito Halor, linha do tempo e perguntas
    ========================================================================== */
@@ -1196,7 +1205,7 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 .rec-steps button[aria-pressed="true"] b { background: var(--halor-violet); color: #fff; }
 
 /* modelos */
-.pd-models { margin-top: clamp(56px, 7vw, 96px); display: grid; gap: 22px; }
+.pd-models { margin-top: clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
 .pd-sub { display: grid; gap: 6px; }
 .pd-sub h3 { font-family: var(--f-display); font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.025em; }
 .pd-mgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -1235,6 +1244,172 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 @media (max-width: 860px) { .tl-ahead { grid-template-columns: 1fr; } }
 .tl-ahead article { background: #fff; border: 1px solid var(--line-c); border-radius: var(--r-lg); padding: 20px 22px; display: grid; gap: 8px; box-shadow: 0 10px 30px -18px rgba(58, 20, 120, .35); }
 .tl-ahead p:not(.pd-k) { font-size: 15px; color: var(--text-2); }
+
+/* ==========================================================================
+   PRODUTO v4 · brilho no ganho principal, passos, upload mágico e carrossel
+   ========================================================================== */
+/* Glow / Light Sweep no ganho principal */
+.pd-gain { position: relative; overflow: hidden; isolation: isolate; animation: gainGlow 3.4s ease-in-out infinite; }
+.pd-gain::before { content: ""; position: absolute; top: -40%; bottom: -40%; left: -70%; width: 45%; z-index: -1; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .2), transparent); transform: skewX(-18deg); animation: gainSweep 5s ease-in-out infinite; }
+@keyframes gainGlow { 50% { box-shadow: 0 30px 90px -26px rgba(139, 61, 255, .95), 0 0 0 1px rgba(201, 166, 255, .75), 0 0 60px rgba(169, 112, 255, .45); } }
+@keyframes gainSweep { 0%, 50% { left: -70%; } 85%, 100% { left: 135%; } }
+.neon-band { position: relative; white-space: nowrap; color: #fff; text-shadow: 0 0 18px rgba(169, 112, 255, .95); }
+.neon-band::after { content: ""; position: absolute; left: -3%; right: -3%; bottom: -.16em; height: .17em; border-radius: 99px; background: linear-gradient(90deg, transparent, var(--halor-violet) 14%, #fff 55%, var(--halor-glow) 86%, transparent); filter: drop-shadow(0 0 8px rgba(169, 112, 255, 1)) drop-shadow(0 0 18px rgba(139, 61, 255, .8)); transform-origin: left; animation: sweep 1.4s var(--ease-halo) .2s both paused; }
+.pd-gain.on .neon-band::after { animation-play-state: running; }
+.gain-kpi { display: flex; gap: 14px; align-items: center; margin-top: 10px; padding-top: 16px; border-top: 1px solid rgba(201, 166, 255, .25); }
+.gk-ring { position: relative; flex: none; width: 60px; height: 60px; border-radius: 50%; display: grid; place-items: center; border: 3px solid rgba(201, 166, 255, .22); }
+.gk-ring::before { content: ""; position: absolute; inset: -3px; border-radius: 50%; border: 3px solid transparent; border-top-color: #fff; border-right-color: var(--halor-glow); filter: drop-shadow(0 0 6px rgba(201, 166, 255, .95)); animation: spin 2.6s linear infinite; }
+.gk-ring b { font: 600 26px/1 var(--f-display); color: #fff; text-shadow: 0 0 16px rgba(201, 166, 255, .95); }
+.gain-kpi > span:last-child { font-size: 13.5px; color: #e6defa; line-height: 1.4; }
+.gain-kpi strong { color: #fff; }
+
+/* passo 1 com a lista de efeitos */
+.rs-fx { display: flex !important; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.rs-fx i { font-style: normal; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 99px; background: rgba(139, 61, 255, .16); color: var(--halor-glow); border: 1px solid rgba(201, 166, 255, .22); white-space: nowrap; }
+.rs-fx i.more { background: var(--halor-violet); color: #fff; border-color: transparent; }
+.rec-steps button[aria-pressed="true"] .rs-fx i:not(.more) { animation: fxPop .5s var(--ease-spark) both; }
+.rec-steps button[aria-pressed="true"] .rs-fx i:nth-child(2) { animation-delay: .06s; } .rec-steps button[aria-pressed="true"] .rs-fx i:nth-child(3) { animation-delay: .12s; } .rec-steps button[aria-pressed="true"] .rs-fx i:nth-child(4) { animation-delay: .18s; } .rec-steps button[aria-pressed="true"] .rs-fx i:nth-child(5) { animation-delay: .24s; } .rec-steps button[aria-pressed="true"] .rs-fx i:nth-child(6) { animation-delay: .3s; } .rec-steps button[aria-pressed="true"] .rs-fx i:nth-child(7) { animation-delay: .36s; }
+@keyframes fxPop { from { opacity: 0; transform: translateY(6px) scale(.9); } }
+
+/* estado 3 da gravação: upload que vira apresentação viva */
+.rec-stage[data-state="2"] .rec-up { opacity: 1; visibility: visible; transition: opacity .5s var(--ease-halo); }
+.rec-up { background: var(--mist); display: grid; place-items: center; }
+.ru-drop { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 54%; aspect-ratio: 16 / 8; border: .3cqw dashed var(--lilac-300); border-radius: 2cqw; background: var(--lilac-50); display: grid; place-content: center; justify-items: center; gap: .8cqw; color: var(--ink); font-size: 1.8cqw; }
+.ru-drop svg { width: 4.4cqw; height: 4.4cqw; color: var(--halor-violet); }
+.ru-drop span { font-size: 1.4cqw; color: var(--mute); }
+.ru-file { position: absolute; left: 50%; top: 50%; width: 34%; transform: translate(-50%, -50%); display: grid; grid-template-columns: 3cqw 1fr; column-gap: 1.2cqw; row-gap: .8cqw; align-items: center; background: #fff; border-radius: 1.2cqw; padding: 1.4cqw 1.8cqw; box-shadow: var(--sh-paper-3); font-size: 1.5cqw; color: var(--ink); font-weight: 600; opacity: 0; }
+.ru-file svg { width: 3cqw; height: 3cqw; color: #d24726; grid-row: span 2; }
+.ru-file i { height: .7cqw; border-radius: 99px; background: var(--lilac-100); overflow: hidden; }
+.ru-file i b { display: block; height: 100%; width: 0; background: var(--halor-violet); }
+.ru-magic { position: absolute; left: 50%; top: 50%; width: 70%; aspect-ratio: 16 / 9; transform: translate(-50%, -50%); border-radius: 1cqw; overflow: hidden; box-shadow: var(--sh-paper-3); opacity: 0; }
+.ru-before { position: absolute; inset: 0; background: #fff; padding: 5% 7%; font-family: Arial, sans-serif; color: #333; }
+.ru-before .rb-t { font-size: 3.2cqw; font-weight: 700; margin-bottom: 2.4cqw; }
+.ru-before ul { list-style: disc; padding-left: 3cqw; display: grid; gap: 1.2cqw; font-size: 1.7cqw; color: #555; }
+.ru-after { position: absolute; inset: 0; clip-path: inset(0 100% 0 0); }
+.ru-sweep { position: absolute; top: -10%; bottom: -10%; width: 8%; left: -10%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .95), rgba(201, 166, 255, .7), transparent); filter: blur(2px); box-shadow: 0 0 4cqw rgba(201, 166, 255, .9); opacity: 0; }
+.ru-tag { position: absolute; top: 2cqw; font-size: 1.2cqw; letter-spacing: .14em; text-transform: uppercase; padding: .5cqw 1.1cqw; border-radius: 99px; }
+.ru-tag-a { left: 2cqw; background: #eee; color: #666; }
+.ru-tag-b { right: 2cqw; background: var(--halor-violet); color: #fff; opacity: 0; box-shadow: var(--glow-sm); }
+.rec-stage.play[data-state="2"] .ru-drop { animation: ruDrop 4.6s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-file { animation: ruFile 4.6s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-file i b { animation: pd-fill .9s .7s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-magic { animation: ruMagic 4.6s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-after { animation: ruAfter 1.1s 2.2s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-sweep { animation: ruSweep 1.1s 2.2s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-tag-b { animation: pd-show .4s 3.2s both; }
+.rec-stage.play[data-state="2"] .ru-drop > * { animation: ruDropTxt 4.6s var(--ease-halo) both; }
+.rec-stage.play[data-state="2"] .ru-tag-a { animation: ruTagA 4.6s var(--ease-halo) both; }
+@keyframes ruDropTxt { 0%, 11% { opacity: 1; } 17%, 100% { opacity: 0; } }
+@keyframes ruTagA { 0%, 47% { opacity: 1; } 54%, 100% { opacity: 0; } }
+@keyframes ruDrop { 0% { opacity: 1; } 30% { opacity: 1; } 36%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.96); } }
+@keyframes ruFile { 0% { opacity: 0; transform: translate(10%, -160%) rotate(6deg); } 10% { opacity: 1; } 18%, 30% { opacity: 1; transform: translate(-50%, -50%); } 36%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.9); } }
+@keyframes ruMagic { 0%, 34% { opacity: 0; transform: translate(-50%, -46%) scale(.96); } 42%, 100% { opacity: 1; transform: translate(-50%, -50%); } }
+@keyframes ruAfter { to { clip-path: inset(0 0 0 0); } }
+@keyframes ruSweep { 0% { opacity: 1; left: -10%; } 100% { opacity: 0; left: 102%; } }
+.rec-stage[data-state="2"] .rec-cursor { left: 50%; top: 48%; }
+
+/* modelos em carrossel horizontal, menores e em movimento */
+.pd-carousel { position: relative; min-width: 0; }
+.pd-track { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 8px 4px 22px; scrollbar-width: thin; scrollbar-color: rgba(201, 166, 255, .3) transparent; cursor: grab; --mL: 4%; --mR: 96%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); }
+.pd-carousel.at-start .pd-track { --mL: 0%; }
+.pd-carousel.at-end .pd-track { --mR: 100%; }
+.pd-track.drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.pd-track:focus-visible { outline-offset: 4px; }
+.pd-track .pd-model { flex: 0 0 clamp(210px, 21vw, 250px); scroll-snap-align: start; border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: background .45s var(--ease-halo), border-color .45s var(--ease-halo), transform .35s var(--ease-halo), box-shadow .45s var(--ease-halo); }
+.pd-track .pd-model:hover, .pd-track .pd-model:focus-visible { background: linear-gradient(155deg, var(--ac), #1b0b45 85%); border-color: var(--ac); transform: translateY(-4px); box-shadow: 0 24px 60px -24px var(--ac), 0 0 0 1px var(--ac); }
+.pd-track .pd-model:hover .slide { filter: saturate(1.15); }
+.pd-track .pd-model:hover .chip { background: rgba(255, 255, 255, .18); color: #fff; }
+.pd-mthumb { padding: 10px 10px 0; }
+.pd-mthumb .slide { border-radius: 8px; box-shadow: 0 0 0 1px rgba(201, 166, 255, .18); }
+.pd-track .pd-mb { padding: 12px 14px 14px; gap: 8px; }
+.pd-track .pd-mb b { font-size: 14.5px; }
+.pd-track .chip { height: 22px; font-size: 11px; transition: background .4s, color .4s; }
+.pd-nav { position: absolute; top: 40%; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-c-2); background: rgba(14, 8, 32, .85); color: var(--text); display: grid; place-items: center; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .7); transition: opacity var(--t-base), background var(--t-base); }
+.pd-nav:hover { background: var(--halor-violet); }
+.pd-nav svg { width: 18px; height: 18px; }
+.pd-prev { left: -14px; } .pd-next { right: -14px; }
+.pd-carousel.at-start .pd-prev, .pd-carousel.at-end .pd-next { opacity: 0; pointer-events: none; }
+@media (max-width: 700px) { .pd-nav { display: none; } }
+/* motion graphics dentro das miniaturas: só rodam com o carrossel na tela */
+.pd-carousel.run .sl-chart i { animation: mgBars 3.6s var(--ease-halo) infinite both; transform-origin: bottom; }
+.pd-carousel.run .sl-chart i:nth-child(2) { animation-delay: .15s; } .pd-carousel.run .sl-chart i:nth-child(3) { animation-delay: .3s; } .pd-carousel.run .sl-chart i:nth-child(4) { animation-delay: .45s; }
+.pd-carousel.run .sl-big b { animation: mgPop 3.6s var(--ease-spark) infinite both; transform-origin: left bottom; }
+.pd-carousel.run .sl-line { animation: mgDraw 4s var(--ease-halo) infinite both; transform-origin: left; }
+.pd-carousel.run .sl-ms i { animation: mgDot 4s var(--ease-spark) infinite both; }
+.pd-carousel.run .sl-ms:nth-of-type(3) i { animation-delay: .35s; } .pd-carousel.run .sl-ms:nth-of-type(4) i { animation-delay: .7s; } .pd-carousel.run .sl-ms:nth-of-type(5) i { animation-delay: 1.05s; }
+.pd-carousel.run .sl-step { animation: mgRise 3.8s var(--ease-halo) infinite both; }
+.pd-carousel.run .sl-step:nth-child(2) { animation-delay: .25s; } .pd-carousel.run .sl-step:nth-child(3) { animation-delay: .5s; }
+.pd-carousel.run .sl-list div { animation: mgSlide 4s var(--ease-halo) infinite both; }
+.pd-carousel.run .sl-list div:nth-child(2) { animation-delay: .3s; } .pd-carousel.run .sl-list div:nth-child(3) { animation-delay: .6s; }
+.pd-carousel.run .sl-cta { animation: mgBreathe 2.8s ease-in-out infinite; }
+.pd-carousel.run .sl-img::after { animation: mgRing 3.2s ease-in-out infinite; }
+.pd-carousel.run .sl-ring { animation: spin 14s linear infinite; }
+.pd-carousel.run .sl-h { animation: mgType 4.2s var(--ease-halo) infinite both; }
+@keyframes mgBars { 0% { transform: scaleY(0); } 25%, 80% { transform: none; } 100% { transform: scaleY(0); } }
+@keyframes mgPop { 0% { opacity: 0; transform: scale(.7); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgDraw { 0% { transform: scaleX(0); } 35%, 85% { transform: none; } 100% { transform: scaleX(0); } }
+@keyframes mgDot { 0%, 12% { transform: scale(0); } 30%, 85% { transform: none; box-shadow: 0 0 0 .6cqw rgba(139, 61, 255, .2); } 100% { transform: scale(0); } }
+@keyframes mgRise { 0% { opacity: 0; transform: translateY(3cqw); } 25%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgSlide { 0% { opacity: 0; transform: translateX(-4cqw); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgBreathe { 50% { transform: scale(1.06); box-shadow: inset 0 0 0 .3cqw #c4a6ff, 0 0 4cqw rgba(139, 61, 255, .35); } }
+@keyframes mgRing { 50% { transform: scale(1.12); opacity: .6; } }
+@keyframes mgType { 0% { clip-path: inset(0 100% 0 0); } 22%, 92% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 100%); } }
+
+/* Linha do tempo · Connector / Flow Line */
+.tl-wrap { position: relative; margin-top: 8px; }
+.tl-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+.tl-svg path { fill: none; stroke-linecap: round; }
+.tl-base { stroke: var(--line-c-2); stroke-width: 2; opacity: .6; }
+.tl-draw { stroke: url(#tl-grad); stroke-width: 3; filter: drop-shadow(0 0 6px rgba(139, 61, 255, .45)); }
+.tl-flowp { stroke: #fff; stroke-width: 3; stroke-dasharray: 2 18; opacity: 0; filter: drop-shadow(0 0 4px rgba(139, 61, 255, .9)); }
+.tl-future { stroke: var(--halor-violet); stroke-width: 2.5; stroke-dasharray: 3 9; opacity: .55; }
+.tl-wrap.flowing .tl-flowp { opacity: .9; animation: tlFlow 1.6s linear infinite; }
+@keyframes tlFlow { to { stroke-dashoffset: -40; } }
+.tl-comet { position: absolute; left: 0; top: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 4px rgba(139, 61, 255, .25), 0 0 22px 6px rgba(139, 61, 255, .8); opacity: 0; offset-distance: 0%; offset-rotate: 0deg; z-index: 2; pointer-events: none; }
+.tl-wrap.flowing .tl-comet { opacity: 1; animation: tlComet 5.5s cubic-bezier(.45, .05, .55, .95) infinite; }
+@keyframes tlComet { 0% { offset-distance: 0%; opacity: 0; } 8% { opacity: 1; } 92% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+.tl-wrap .tl::before { display: none; }
+.tl-wrap .tl { position: relative; z-index: 1; }
+.tl-wrap .tl li { outline: none; transition: transform var(--t-base) var(--ease-halo); }
+.tl-wrap .tl li > i { transition: background .4s var(--ease-halo), border-color .4s, box-shadow .4s, transform .4s var(--ease-spark); background: var(--bg); }
+.tl-wrap .tl li.lit > i { background: var(--halor-violet); border-color: #fff; box-shadow: 0 0 0 5px rgba(139, 61, 255, .18), 0 0 16px rgba(139, 61, 255, .7); transform: scale(1.15); }
+.tl-wrap .tl li.tl-next.lit > i { background: var(--bg); border-color: var(--halor-violet); border-style: dashed; }
+.tl-wrap .tl li b, .tl-wrap .tl li p { transition: opacity .5s, transform .5s var(--ease-halo); }
+.tl-wrap .tl li:not(.lit) b, .tl-wrap .tl li:not(.lit) p { opacity: .55; }
+.tl-wrap .tl li:hover, .tl-wrap .tl li:focus-visible { transform: translateY(-4px); }
+.tl-wrap .tl li:hover > i, .tl-wrap .tl li:focus-visible > i { transform: scale(1.45); box-shadow: 0 0 0 8px rgba(139, 61, 255, .16), 0 0 26px rgba(139, 61, 255, .9); }
+
+/* O efeito Halor · Icon Motion + Animated Typography em cada quadro */
+.sci-ic { width: 54px; height: 54px; color: var(--halor-violet); overflow: visible; margin-bottom: 4px; }
+.sci-ic path, .sci-ic circle, .sci-ic rect { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.sci-ic .thin { stroke-width: 1.4; opacity: .55; }
+.sci-ic .fill { fill: currentColor; stroke: none; }
+.sci-ic .ic-ms { font: 700 6px/1 var(--f-mono); fill: currentColor; stroke: none; }
+.sci-ic * { transform-box: view-box; }
+.ic-spin, .ic-hand { transform-origin: 24px 24px; transition: transform .7s var(--ease-spark); }
+.ic-hand { transform-origin: 24px 27px; }
+.ic-spark { transform-origin: 36px 12px; }
+.ic-sun { transform-origin: 32px 18px; }
+.sci:hover .ic-spin { transform: rotate(-35deg); }
+.sci:hover .ic-spark { animation: icTwinkle .8s var(--ease-spark); }
+.sci:hover .ic-hand { transform: rotate(360deg); }
+.sci:hover .ic-sun { animation: icHop .7s var(--ease-spark); }
+@keyframes icTwinkle { 50% { transform: scale(1.6) rotate(45deg); } }
+@keyframes icHop { 40% { transform: translateY(-5px); } }
+#efeito.fx-pre .sci-ic [pathLength] { stroke-dasharray: 1; stroke-dashoffset: 1; }
+#efeito.fx-pre .sci-ic .fill, #efeito.fx-pre .sci-ic .ic-ms { opacity: 0; }
+#efeito.fx-pre .sci .tw, #efeito.fx-pre .sci .sci-n { opacity: 0; }
+#efeito.fx-pre .sci > p:not(.sci-n) { opacity: 0; }
+.sci .tw { display: inline-block; }
+#efeito.fx-go .sci-ic [pathLength] { animation: icDraw 1.1s var(--ease-halo) both; animation-delay: calc(var(--c) * .28s + var(--k, 0) * .18s); }
+#efeito.fx-go .sci-ic .fill, #efeito.fx-go .sci-ic .ic-ms { animation: icFill .5s var(--ease-spark) both; animation-delay: calc(var(--c) * .28s + .7s); }
+#efeito.fx-go .sci .sci-n { animation: twIn .9s var(--ease-halo) both; animation-delay: calc(var(--c) * .28s + .35s); }
+#efeito.fx-go .sci .tw { animation: twIn .8s var(--ease-halo) both; animation-delay: calc(var(--c) * .28s + .55s + var(--i) * .1s); }
+#efeito.fx-go .sci > p:not(.sci-n) { animation: twFade .8s var(--ease-halo) both; animation-delay: calc(var(--c) * .28s + 1s); }
+@keyframes icDraw { from { stroke-dasharray: 1; stroke-dashoffset: 1; } to { stroke-dasharray: 1; stroke-dashoffset: 0; } }
+@keyframes icFill { from { opacity: 0; transform: scale(.4); } }
+@keyframes twIn { from { opacity: 0; transform: translateY(.5em); filter: blur(6px); } }
+@keyframes twFade { from { opacity: 0; transform: translateY(8px); } }
 
 /* ==========================================================================
    FILME · Conheça o Halor, 88 s: uma gravação de tela editada do Estúdio Halor.
@@ -2933,8 +3108,8 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <canvas class="halo-field halor-field" data-field="hero" aria-hidden="true"></canvas>
         <div class="wrap s-hero-in s-hero-copy">
           <p class="eyebrow no-rule s-in" style="--d:.25s">Programa de Apresentações Lúdicas</p>
-          <h1 class="display s-h1"><span class="w" style="--i:0">Faça</span> <span class="w" style="--i:1">cada</span> <span class="w" style="--i:2">olhar</span> <span class="w lux" style="--i:3">render.</span></h1>
-          <p class="lede s-lede s-in" style="--d:1.05s">Apresentações vivas, que prendem o olhar do começo ao fim.</p>
+          <h1 class="display s-h1"><span class="w" style="--i:0">Apresentações</span> <span class="w" style="--i:1">vivas,</span> <span class="w" style="--i:2">que</span> <span class="w" style="--i:3">prendem</span> <span class="w" style="--i:4">o</span> <span class="w" style="--i:5">olhar</span> <span class="w lux" style="--i:6">do começo ao fim.</span></h1>
+          <p class="lede s-lede s-in" style="--d:1.35s">Faça cada olhar render.</p>
           <div class="s-cta s-in" style="--d:1.25s">
             <a class="btn btn-primary btn-lg" href="#assinar" data-attract>Começar grátis <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
             <button class="btn btn-ghost btn-lg" type="button" data-film-play data-attract><svg aria-hidden="true"><use href="#i-play"/></svg> Conheça o Halor <span class="s-dur">(1 min 28 s)</span></button>
@@ -3451,21 +3626,24 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           <p class="lede">Três ideias da ciência explicam por que um visual bem pensado prende a atenção e fica na memória.</p>
         </div>
         <div class="sci-grid">
-          <article class="sci">
+          <article class="sci" style="--c:0">
+            <svg class="sci-ic ic-halo" viewBox="0 0 48 48" aria-hidden="true"><g class="ic-spin"><path pathLength="1" style="--k:0" d="M39.41 16.82A17 17 0 1 1 31.18 8.59"/></g><circle pathLength="1" style="--k:1" cx="24" cy="24" r="10.5" class="thin"/><circle class="fill ic-core" cx="24" cy="24" r="5"/><path class="fill ic-spark" d="M36 7.5Q36 12 40.5 12Q36 12 36 16.5Q36 12 31.5 12Q36 12 36 7.5Z"/></svg>
             <p class="sci-n display">1920</p>
-            <h3>Efeito halo</h3>
+            <h3 class="sci-h"><span class="tw" style="--i:0">Efeito</span> <span class="tw" style="--i:1">halo</span></h3>
             <p>Uma boa impressão em um ponto contamina o julgamento de todo o resto. Um slide bem resolvido faz a apresentação inteira parecer mais sólida.</p>
             <p class="sci-ref mono">Thorndike, Journal of Applied Psychology</p>
           </article>
-          <article class="sci">
+          <article class="sci" style="--c:1">
+            <svg class="sci-ic ic-watch" viewBox="0 0 48 48" aria-hidden="true"><circle pathLength="1" style="--k:0" cx="24" cy="27" r="15"/><path pathLength="1" style="--k:1" d="M20 7h8M24 7v5M36 14l2.5-2.5"/><path class="ic-hand" pathLength="1" style="--k:2" d="M24 27V17"/><circle class="fill" cx="24" cy="27" r="2"/><text class="ic-ms" x="24" y="37.5" text-anchor="middle">50</text></svg>
             <p class="sci-n display">50<small>ms</small></p>
-            <h3>O primeiro olhar decide</h3>
+            <h3 class="sci-h"><span class="tw" style="--i:0">O</span> <span class="tw" style="--i:1">primeiro</span> <span class="tw" style="--i:2">olhar</span> <span class="tw" style="--i:3">decide</span></h3>
             <p>É o tempo que uma pessoa leva para formar uma opinião sobre o visual de uma tela. Antes de ler a primeira linha, quem assiste já sentiu.</p>
             <p class="sci-ref mono">Lindgaard et al., 2006</p>
           </article>
-          <article class="sci">
+          <article class="sci" style="--c:2">
+            <svg class="sci-ic ic-img" viewBox="0 0 48 48" aria-hidden="true"><rect pathLength="1" style="--k:0" x="7" y="10" width="34" height="28" rx="4"/><path pathLength="1" style="--k:1" d="M7 32l10-10 8 8 5-5 11 11"/><circle class="fill ic-sun" cx="32" cy="18" r="3.2"/></svg>
             <p class="sci-n display">img<small>&gt;</small>txt</p>
-            <h3>Imagem fica, texto passa</h3>
+            <h3 class="sci-h"><span class="tw" style="--i:0">Imagem</span> <span class="tw" style="--i:1">fica,</span> <span class="tw" style="--i:2">texto</span> <span class="tw" style="--i:3">passa</span></h3>
             <p>Lembramos melhor do que vemos do que do que lemos. Uma ideia desenhada volta à cabeça de quem assistiu muito depois do último slide.</p>
             <p class="sci-ref mono">Paivio, dupla codificação, 1971</p>
           </article>
@@ -3503,8 +3681,9 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           </article>
           <article class="pd-gain">
             <p class="pd-k mono">O ganho principal</p>
-            <h3>O que exigia código agora é de todo mundo</h3>
+            <h3>O que exigia código agora é <span class="neon-band">de todo mundo</span></h3>
             <p>Apresentações em HTML com animação e interação eram coisa de quem programa, usa Claude Code ou paga contas de IA. Com o Halor, qualquer pessoa cria. Quem recebe abre em qualquer navegador.</p>
+            <div class="gain-kpi"><span class="gk-ring" aria-hidden="true"><b>0</b></span><span><strong>linhas de código</strong> para criar uma apresentação viva</span></div>
           </article>
         </div>
 
@@ -3531,23 +3710,33 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
                 </div>
                 <div class="rd-bar"><svg aria-hidden="true"><use href="#i-file"/></svg><span>kickoff-2027.html</span><i><b></b></i><em>concluído</em></div>
               </div>
-              <div class="rec-s rec-show">
-                <div class="rs-slide" id="rs-slide"></div>
-                <div class="rs-vote"><p class="mono">Votação ao vivo</p><span style="--v:72%">Prazo</span><span style="--v:48%">Escopo</span><span style="--v:31%">Equipe</span></div>
+              <div class="rec-s rec-up theme-paper">
+                <div class="ru-drop"><svg aria-hidden="true"><use href="#i-upload"/></svg><b>Solte seu arquivo aqui</b><span>.pptx ou .pdf</span></div>
+                <div class="ru-file"><svg aria-hidden="true"><use href="#i-file"/></svg><span>apresentacao-antiga.pptx</span><i><b></b></i></div>
+                <div class="ru-magic">
+                  <div class="ru-before"><p class="rb-t">Plano 2027</p><ul><li>Objetivos do trimestre</li><li>Cronograma em 12 semanas</li><li>Responsáveis por frente</li><li>Próximos passos</li></ul></div>
+                  <div class="ru-after" id="ru-after"></div>
+                  <span class="ru-sweep" aria-hidden="true"></span>
+                  <span class="ru-tag ru-tag-a mono">antes</span><span class="ru-tag ru-tag-b mono">depois</span>
+                </div>
               </div>
               <span class="rec-cursor" aria-hidden="true"></span>
             </div>
           </div>
           <ol class="rec-steps" aria-label="Etapas da gravação">
-            <li><button type="button" data-rec="0" aria-pressed="true"><b>1</b><span><strong>Monte</strong><small>Modelo, kit de marca e efeitos.</small></span></button></li>
-            <li><button type="button" data-rec="1" aria-pressed="false"><b>2</b><span><strong>Baixe em HTML</strong><small>Um arquivo único, leve e animado.</small></span></button></li>
-            <li><button type="button" data-rec="2" aria-pressed="false"><b>3</b><span><strong>Apresente em qualquer lugar</strong><small>Abre no navegador. A plateia participa.</small></span></button></li>
+            <li><button type="button" data-rec="0" aria-pressed="true"><b>1</b><span><strong>Monte</strong><small>Modelo, kit de marca e efeitos.</small><span class="rs-fx"><i>Particle System</i><i>Animated Typography</i><i>Glow / Light Sweep</i><i>Spotlight</i><i>Flip Card</i><i>Chart Build</i><i>Parallax</i><i class="more">+33 efeitos</i></span></span></button></li>
+            <li><button type="button" data-rec="1" aria-pressed="false"><b>2</b><span><strong>Baixe em HTML, PDF ou PPT</strong><small>Já pronto para apresentar.</small></span></button></li>
+            <li><button type="button" data-rec="2" aria-pressed="false"><b>3</b><span><strong>Já tem um modelo?</strong><small>Faça upload do seu arquivo e veja a mágica acontecer.</small></span></button></li>
           </ol>
         </div>
 
         <div class="pd-models">
           <div class="pd-sub"><h3>Modelos que entregamos prontos</h3><p class="muted">Cada modelo já sai com o seu kit de marca e os efeitos certos para o que você quer comunicar.</p></div>
-          <div class="pd-mgrid" id="pd-models"></div>
+          <div class="pd-carousel">
+            <button class="pd-nav pd-prev" type="button" aria-label="Modelos anteriores"><svg aria-hidden="true"><use href="#i-back"/></svg></button>
+            <div class="pd-track" id="pd-models" tabindex="0" aria-label="Modelos prontos, role para o lado"></div>
+            <button class="pd-nav pd-next" type="button" aria-label="Próximos modelos"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
         </div>
 
         <ul class="feat-grid pd-feats">
@@ -3572,7 +3761,12 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           <h2 class="display">Dez anos de apresentações, e para onde vamos.</h2>
           <p class="lede">O slide deixou de ser papel na tela. Agora ele se move, responde e chama quem assiste para dentro da conversa.</p>
         </div>
-        <ol class="tl">
+        <div class="tl-wrap">
+          <svg class="tl-svg" aria-hidden="true">
+            <defs><linearGradient id="tl-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c4a6ff"/><stop offset=".7" stop-color="#8b3dff"/><stop offset="1" stop-color="#6421d1"/></linearGradient></defs>
+            <path class="tl-base"/><path class="tl-draw"/><path class="tl-flowp"/><path class="tl-future"/>
+          </svg>
+          <ol class="tl">
           <li class="tl-past"><span class="tl-y mono">2016</span><i></i><b>Slides estáticos</b><p>Tópicos em sequência e PDF por e-mail. Quem recebe lê sozinho.</p></li>
           <li class="tl-past"><span class="tl-y mono">2018</span><i></i><b>Na nuvem</b><p>Várias pessoas editam ao mesmo tempo. O arquivo vira link.</p></li>
           <li class="tl-past"><span class="tl-y mono">2020</span><i></i><b>Tela compartilhada</b><p>Tudo por vídeo. A atenção disputa espaço com dez abas abertas.</p></li>
@@ -3581,6 +3775,8 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           <li class="tl-now"><span class="tl-y mono">2026 · hoje</span><i></i><b>HTML vivo e lúdico</b><p>Com o Halor, a apresentação se move, responde e convida a participar. Sem código.</p></li>
           <li class="tl-next"><span class="tl-y mono">Próximos anos</span><i></i><b>Apresentação que conversa</b><p>Ela se adapta a quem assiste, tira dúvidas e mede a atenção ao vivo.</p></li>
         </ol>
+          <span class="tl-comet" aria-hidden="true"></span>
+        </div>
         <div class="tl-ahead">
           <article><p class="pd-k mono">Do estático ao vivo</p><p>Cada slide ganha movimento com propósito: guiar o olhar, dar ritmo e destacar o que importa.</p></article>
           <article><p class="pd-k mono">Da plateia ao participante</p><p>Quem assiste vota, escreve e responde. Participar é a forma mais forte de prestar atenção.</p></article>
@@ -5986,29 +6182,49 @@ document.addEventListener('click', e => {
    e vitrine de modelos prontos
    ========================================================================== */
 const PD_MODELS = [
-  { n: 'Kickoff de projeto', fx: ['Timeline Motion', 'Reveal'], s: { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
-  { n: 'Aula e treinamento', fx: ['Animated Typography', 'Votação'], s: { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] } },
-  { n: 'Relatório executivo', fx: ['Counter Animation', 'Chart Build'], s: { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] } },
-  { n: 'Workshop', fx: ['Post-its', 'Cronômetro'], s: { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' } },
-  { n: 'Apresentação institucional', fx: ['Parallax', 'Glow'], s: { type: 'text', k: 'Quem somos', h: 'Uma história que se vê.', p: ['Missão, números e pessoas em poucos slides.', 'Imagem dominante em cada página.'] } },
-  { n: 'Abertura de evento', fx: ['Particle System', 'Animated Shader'], s: { type: 'cover', k: 'Evento 2027', h: 'Bem-vindos.', sub: 'Abertura · auditório principal' } }
+  { n: 'Kickoff de projeto', ac: '#8b3dff', fx: ['Timeline Motion', 'Reveal'], s: { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
+  { n: 'Aula e treinamento', ac: '#a970ff', fx: ['Animated Typography', 'Votação'], s: { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] } },
+  { n: 'Relatório executivo', ac: '#6420cc', fx: ['Counter', 'Chart Build'], s: { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', unit: '%', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] } },
+  { n: 'Workshop', ac: '#b791ff', fx: ['Post-its', 'Cronômetro'], s: { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' } },
+  { n: 'Apresentação institucional', ac: '#7a33eb', fx: ['Parallax', 'Glow'], s: { type: 'text', k: 'Quem somos', h: 'Uma história que se vê.', p: ['Missão, números e pessoas em poucos slides.', 'Imagem dominante em cada página.'] } },
+  { n: 'Abertura de evento', ac: '#c9a6ff', fx: ['Particle System', 'Shader'], s: { type: 'cover', k: 'Evento 2027', h: 'Bem-vindos.', sub: 'Abertura · auditório principal' } },
+  { n: 'Roadmap do ano', ac: '#8752f5', fx: ['Connector', 'Spotlight'], s: { type: 'tl', k: 'Roadmap', h: 'Quatro ondas, um ano.', ms: [['T1', 'Base', .1], ['T2', 'Escala', .37], ['T3', 'Dados', .63], ['T4', 'IA', .9]] } },
+  { n: 'Onboarding de time', ac: '#9f70ff', fx: ['Card Stack', 'Flip Card'], s: { type: 'steps', k: 'Boas-vindas', h: 'Sua primeira semana.', s: [['01', 'Conhecer', 'Pessoas e rituais'], ['02', 'Fazer', 'Primeira entrega'], ['03', 'Contar', 'O que aprendeu']] } },
+  { n: 'Pesquisa ao vivo', ac: '#5a35a8', fx: ['Votação', 'Counter'], s: { type: 'kpi', k: 'Ao vivo', h: 'A sala respondeu.', big: '87%', cap: 'votaram pela frente de design', unit: '%', bars: [[22, 'A'], [48, 'B'], [87, 'C'], [35, 'D']] } },
+  { n: 'Retrospectiva', ac: '#cfb3ff', fx: ['Post-its', 'Matriz'], s: { type: 'next', k: 'Retro', h: 'O que levamos daqui?', items: ['O que funcionou', 'O que mudar', 'Quem puxa o quê'], cta: 'Votação em 3 min' } }
 ];
 
 function bootProduto() {
-  const grid = $('#pd-models');
-  if (grid) PD_MODELS.forEach((m, i) => {
-    const c = el('article', 'pd-model');
-    c.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor'));
-    const b = el('div', 'pd-mb'); b.appendChild(el('b', null, m.n));
-    const fx = el('div', 'pd-fx'); m.fx.forEach(f => fx.appendChild(el('span', 'chip', f))); b.appendChild(fx);
-    c.appendChild(b); grid.appendChild(c);
-  });
+  const track = $('#pd-models');
+  if (track) {
+    PD_MODELS.forEach((m, i) => {
+      const c = el('article', 'pd-model'); c.style.setProperty('--ac', m.ac); c.tabIndex = 0;
+      const th = el('div', 'pd-mthumb'); th.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); c.appendChild(th);
+      const b = el('div', 'pd-mb'); b.appendChild(el('b', null, m.n));
+      const fx = el('div', 'pd-fx'); m.fx.forEach(f => fx.appendChild(el('span', 'chip', f))); b.appendChild(fx);
+      c.appendChild(b); track.appendChild(c);
+    });
+    const car = track.closest('.pd-carousel'), by = () => Math.max(240, track.clientWidth * .8);
+    $('.pd-prev', car).addEventListener('click', () => track.scrollBy({ left: -by(), behavior: REDUCED ? 'auto' : 'smooth' }));
+    $('.pd-next', car).addEventListener('click', () => track.scrollBy({ left: by(), behavior: REDUCED ? 'auto' : 'smooth' }));
+    let dx = null, sl = 0, moved = false;
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; moved = false; track.classList.add('drag'); });
+    window.addEventListener('pointermove', e => { if (dx == null) return; const d = e.clientX - dx; if (Math.abs(d) > 4) moved = true; track.scrollLeft = sl - d; });
+    window.addEventListener('pointerup', () => { dx = null; track.classList.remove('drag'); });
+    const edge = () => { car.classList.toggle('at-start', track.scrollLeft < 10); car.classList.toggle('at-end', track.scrollLeft + track.clientWidth > track.scrollWidth - 10); };
+    track.addEventListener('scroll', edge, { passive: true }); edge();
+    new IntersectionObserver(es => car.classList.toggle('run', es[0].isIntersecting)).observe(car);
+  }
+  bootTimeline();
+  bootEfeitoFx();
+  const gain = $('.pd-gain');
+  if (gain) new IntersectionObserver(es => { if (es[0].isIntersecting) gain.classList.add('on'); }, { threshold: .4 }).observe(gain);
   const stage = $('#rec-stage'); if (!stage) return;
   const rail = $('#re-rail');
   PD_MODELS.slice(0, 4).forEach((m, i) => { const d = el('div', 're-th' + (i === 2 ? ' on' : '')); d.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); rail.appendChild(d); });
   $('#re-canvas').innerHTML = slideHTML(PD_MODELS[2].s, 3, 'halor');
-  $('#rs-slide').innerHTML = slideHTML({ type: 'cover', k: 'Kickoff 2027', h: 'Do kickoff à entrega.', sub: 'Aberto no navegador · sem instalar nada' }, 1, 'halor');
-  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Kickoff 2027', 'arquivo:///kickoff-2027.html'];
+  $('#ru-after').innerHTML = slideHTML({ type: 'cover', k: 'Plano 2027', h: 'Plano 2027 em 12 semanas.', sub: 'Importado de apresentacao-antiga.pptx' }, 1, 'halor');
+  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Salvar como', 'estudio.halor · Importar arquivo'];
   let st = 0, timer = 0, visible = false;
   const set = n => {
     st = n; stage.dataset.state = String(n);
@@ -6021,6 +6237,58 @@ function bootProduto() {
   new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); loop(); } else clearTimeout(timer); }).observe(stage);
   document.addEventListener('halor:view', loop);
   set(0);
+}
+
+/* Linha do tempo · Connector / Flow Line: a linha se desenha pelos marcos,
+   acende cada um quando chega nele e depois segue com luz correndo */
+function bootTimeline() {
+  const wrap = $('.tl-wrap'); if (!wrap) return;
+  const svg = $('.tl-svg', wrap), lis = $$('.tl li', wrap), comet = $('.tl-comet', wrap);
+  const base = $('.tl-base', svg), draw = $('.tl-draw', svg), flow = $('.tl-flowp', svg), fut = $('.tl-future', svg);
+  let played = false, timers = [];
+  /* onda suave: sobe e desce entre os marcos, sem invadir ano nem título */
+  const w = i => (i % 2 ? -20 : 20), curve = (pts, o = 0) => pts.reduce((d, p, i) => {
+    if (!i) return `M${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
+    const a = pts[i - 1], dx = p[0] - a[0], dy = p[1] - a[1];
+    return d + (Math.abs(dx) >= Math.abs(dy)
+      ? ` C${(a[0] + dx * .32).toFixed(1)} ${(a[1] + w(i + o)).toFixed(1)} ${(p[0] - dx * .32).toFixed(1)} ${(p[1] + w(i + o)).toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
+      : ` C${a[0].toFixed(1)} ${(a[1] + dy * .5).toFixed(1)} ${p[0].toFixed(1)} ${(p[1] - dy * .5).toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`);
+  }, '');
+  const layout = () => {
+    const r = wrap.getBoundingClientRect(); if (!r.width) return;
+    svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
+    const pts = lis.map(li => { const d = $('i', li).getBoundingClientRect(); return [d.left - r.left + d.width / 2, d.top - r.top + d.height / 2]; });
+    const main = curve(pts.slice(0, -1)), future = curve(pts.slice(-2), pts.length - 2);
+    base.setAttribute('d', main); draw.setAttribute('d', main); flow.setAttribute('d', main); fut.setAttribute('d', future);
+    const L = draw.getTotalLength();
+    draw.style.strokeDasharray = L; if (!played) draw.style.strokeDashoffset = L;
+    comet.style.offsetPath = `path('${main}')`;
+    return { L, pts };
+  };
+  const play = () => {
+    const g = layout(); if (!g) return;
+    played = true; timers.forEach(clearTimeout); timers = [];
+    wrap.classList.remove('flowing'); lis.forEach(li => li.classList.remove('lit'));
+    const dur = REDUCED ? 0 : 2600;
+    draw.style.transition = 'none'; draw.style.strokeDashoffset = g.L; void draw.getBoundingClientRect();
+    draw.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(.22,.61,.36,1)`; draw.style.strokeDashoffset = 0;
+    const xs = g.pts.map(p => p[0]), span = (xs[xs.length - 2] - xs[0]) || 1, vertical = Math.abs(span) < 40;
+    lis.forEach((li, i) => {
+      const k = i === lis.length - 1 ? 1.08 : vertical ? i / (lis.length - 2) : (g.pts[i][0] - xs[0]) / span;
+      timers.push(setTimeout(() => li.classList.add('lit'), dur * Math.min(1.1, k)));
+    });
+    timers.push(setTimeout(() => wrap.classList.add('flowing'), dur + 200));
+  };
+  new IntersectionObserver(es => { if (es[0].isIntersecting && !played) play(); }, { threshold: .35 }).observe(wrap);
+  new ResizeObserver(() => { const g = layout(); if (g && played) { draw.style.transition = 'none'; draw.style.strokeDashoffset = 0; } }).observe(wrap);
+  lis.forEach(li => { li.tabIndex = 0; });
+}
+
+/* O efeito Halor · dispara o desenho dos ícones e a tipografia quando a seção aparece */
+function bootEfeitoFx() {
+  const sec = $('#efeito'); if (!sec || REDUCED) return;
+  sec.classList.add('fx-pre');
+  new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; sec.classList.add('fx-go'); sec.classList.remove('fx-pre'); o.disconnect(); }, { threshold: .25 }).observe($('.sci-grid', sec));
 }
 
 /* ==========================================================================
@@ -6144,30 +6412,36 @@ function vtCatalog(sec, live) {
     }
     li.append(it); ul.append(li);
   });
+  /* só 8 à mostra; o card + leva para a escolha do plano */
+  const plus = el('li', 'vt-plus');
+  const a = el('a', 'vt-item vt-plus-card'); a.href = '#assinar';
+  a.append(el('span', 'vt-plus-ic', '+'), el('p', 'vt-item-t', 'Mais 32 efeitos'), el('p', 'vt-item-s', 'Escolha um plano e libere todos no Estúdio.'));
+  plus.append(a); ul.append(plus);
 }
 
 /* · Filtro por intenção (vale para o palco e para o catálogo) · */
 function vtFilter(sec) {
   const chips = $$('.vt-chip', sec), wrap = $('#vt-chips', sec), stage = $('#vt-stage', sec);
-  const cards = $$('.vt-card', sec), items = $$('#vt-cat li', sec);
+  const cards = $$('.vt-card', sec), items = $$('#vt-cat li:not(.vt-plus)', sec);
   const empty = $('#vt-empty', sec), count = $('#vt-count', sec), status = $('#vt-status', sec);
   const cat = $('#vt-cat', sec), more = $('#vt-more', sec);
   /* no celular o catálogo abre com 8 itens e um botão para ver todos */
-  cat.classList.add('is-short');
-  const moreSync = n => { more.hidden = n <= 8 || !cat.classList.contains('is-short'); more.textContent = `Ver os ${n} efeitos`; };
-  more.addEventListener('click', () => { cat.classList.remove('is-short'); more.setAttribute('aria-expanded', 'true'); more.hidden = true; });
+  const SHOW = 8, plusT = $('.vt-plus .vt-item-t', sec);
+  more.hidden = true;
+  const moreSync = n => { plusT.textContent = n > SHOW ? `Mais ${n - SHOW} efeitos` : 'Todos os efeitos'; };
   const pop = n => { if (REDUCED) return; n.classList.remove('is-in'); void n.offsetWidth; n.classList.add('is-in'); };
   const apply = k => {
     chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.intent === k)));
     const ok = n => k === 'todos' || n.dataset.intents.split(' ').includes(k);
     let nd = 0, ni = 0;
     cards.forEach(c => { const s = ok(c); c.hidden = !s; if (s) { nd++; pop(c); } });
-    items.forEach(li => { const s = ok(li); li.hidden = !s; if (s) { ni++; pop(li); } });
+    let shown = 0;
+    items.forEach(li => { const s = ok(li); if (s) ni++; const v = s && shown < SHOW; li.hidden = !v; if (v) { shown++; pop(li); } });
     stage.classList.toggle('is-filtered', k !== 'todos');
     stage.hidden = nd === 0;
     empty.hidden = nd !== 0;
     if (!nd) empty.textContent = `Para ${VT_INTENT[k].toLowerCase()}, os efeitos estão no catálogo logo abaixo.`;
-    count.textContent = `${ni} de ${VT_FX.length}`;
+    count.textContent = `${Math.min(ni, SHOW)} de ${VT_FX.length}`;
     moreSync(ni);
     status.textContent = k === 'todos' ? `Todos os efeitos: ${ni} no catálogo, ${nd} ao vivo.` : `${VT_INTENT[k]}: ${ni} efeitos no catálogo, ${nd} ao vivo.`;
   };
@@ -6176,8 +6450,7 @@ function vtFilter(sec) {
   wrap.addEventListener('scroll', edge, { passive: true });
   window.addEventListener('resize', edge, { passive: true });
   edge();
-  count.textContent = `${items.length} de ${VT_FX.length}`;
-  moreSync(items.length);
+  apply('todos');
 }
 
 /* · Palco: liga cada demo à tela · */

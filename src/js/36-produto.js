@@ -3,29 +3,49 @@
    e vitrine de modelos prontos
    ========================================================================== */
 const PD_MODELS = [
-  { n: 'Kickoff de projeto', fx: ['Timeline Motion', 'Reveal'], s: { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
-  { n: 'Aula e treinamento', fx: ['Animated Typography', 'Votação'], s: { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] } },
-  { n: 'Relatório executivo', fx: ['Counter Animation', 'Chart Build'], s: { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] } },
-  { n: 'Workshop', fx: ['Post-its', 'Cronômetro'], s: { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' } },
-  { n: 'Apresentação institucional', fx: ['Parallax', 'Glow'], s: { type: 'text', k: 'Quem somos', h: 'Uma história que se vê.', p: ['Missão, números e pessoas em poucos slides.', 'Imagem dominante em cada página.'] } },
-  { n: 'Abertura de evento', fx: ['Particle System', 'Animated Shader'], s: { type: 'cover', k: 'Evento 2027', h: 'Bem-vindos.', sub: 'Abertura · auditório principal' } }
+  { n: 'Kickoff de projeto', ac: '#8b3dff', fx: ['Timeline Motion', 'Reveal'], s: { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
+  { n: 'Aula e treinamento', ac: '#a970ff', fx: ['Animated Typography', 'Votação'], s: { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] } },
+  { n: 'Relatório executivo', ac: '#6420cc', fx: ['Counter', 'Chart Build'], s: { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', unit: '%', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] } },
+  { n: 'Workshop', ac: '#b791ff', fx: ['Post-its', 'Cronômetro'], s: { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' } },
+  { n: 'Apresentação institucional', ac: '#7a33eb', fx: ['Parallax', 'Glow'], s: { type: 'text', k: 'Quem somos', h: 'Uma história que se vê.', p: ['Missão, números e pessoas em poucos slides.', 'Imagem dominante em cada página.'] } },
+  { n: 'Abertura de evento', ac: '#c9a6ff', fx: ['Particle System', 'Shader'], s: { type: 'cover', k: 'Evento 2027', h: 'Bem-vindos.', sub: 'Abertura · auditório principal' } },
+  { n: 'Roadmap do ano', ac: '#8752f5', fx: ['Connector', 'Spotlight'], s: { type: 'tl', k: 'Roadmap', h: 'Quatro ondas, um ano.', ms: [['T1', 'Base', .1], ['T2', 'Escala', .37], ['T3', 'Dados', .63], ['T4', 'IA', .9]] } },
+  { n: 'Onboarding de time', ac: '#9f70ff', fx: ['Card Stack', 'Flip Card'], s: { type: 'steps', k: 'Boas-vindas', h: 'Sua primeira semana.', s: [['01', 'Conhecer', 'Pessoas e rituais'], ['02', 'Fazer', 'Primeira entrega'], ['03', 'Contar', 'O que aprendeu']] } },
+  { n: 'Pesquisa ao vivo', ac: '#5a35a8', fx: ['Votação', 'Counter'], s: { type: 'kpi', k: 'Ao vivo', h: 'A sala respondeu.', big: '87%', cap: 'votaram pela frente de design', unit: '%', bars: [[22, 'A'], [48, 'B'], [87, 'C'], [35, 'D']] } },
+  { n: 'Retrospectiva', ac: '#cfb3ff', fx: ['Post-its', 'Matriz'], s: { type: 'next', k: 'Retro', h: 'O que levamos daqui?', items: ['O que funcionou', 'O que mudar', 'Quem puxa o quê'], cta: 'Votação em 3 min' } }
 ];
 
 function bootProduto() {
-  const grid = $('#pd-models');
-  if (grid) PD_MODELS.forEach((m, i) => {
-    const c = el('article', 'pd-model');
-    c.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor'));
-    const b = el('div', 'pd-mb'); b.appendChild(el('b', null, m.n));
-    const fx = el('div', 'pd-fx'); m.fx.forEach(f => fx.appendChild(el('span', 'chip', f))); b.appendChild(fx);
-    c.appendChild(b); grid.appendChild(c);
-  });
+  const track = $('#pd-models');
+  if (track) {
+    PD_MODELS.forEach((m, i) => {
+      const c = el('article', 'pd-model'); c.style.setProperty('--ac', m.ac); c.tabIndex = 0;
+      const th = el('div', 'pd-mthumb'); th.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); c.appendChild(th);
+      const b = el('div', 'pd-mb'); b.appendChild(el('b', null, m.n));
+      const fx = el('div', 'pd-fx'); m.fx.forEach(f => fx.appendChild(el('span', 'chip', f))); b.appendChild(fx);
+      c.appendChild(b); track.appendChild(c);
+    });
+    const car = track.closest('.pd-carousel'), by = () => Math.max(240, track.clientWidth * .8);
+    $('.pd-prev', car).addEventListener('click', () => track.scrollBy({ left: -by(), behavior: REDUCED ? 'auto' : 'smooth' }));
+    $('.pd-next', car).addEventListener('click', () => track.scrollBy({ left: by(), behavior: REDUCED ? 'auto' : 'smooth' }));
+    let dx = null, sl = 0, moved = false;
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; moved = false; track.classList.add('drag'); });
+    window.addEventListener('pointermove', e => { if (dx == null) return; const d = e.clientX - dx; if (Math.abs(d) > 4) moved = true; track.scrollLeft = sl - d; });
+    window.addEventListener('pointerup', () => { dx = null; track.classList.remove('drag'); });
+    const edge = () => { car.classList.toggle('at-start', track.scrollLeft < 10); car.classList.toggle('at-end', track.scrollLeft + track.clientWidth > track.scrollWidth - 10); };
+    track.addEventListener('scroll', edge, { passive: true }); edge();
+    new IntersectionObserver(es => car.classList.toggle('run', es[0].isIntersecting)).observe(car);
+  }
+  bootTimeline();
+  bootEfeitoFx();
+  const gain = $('.pd-gain');
+  if (gain) new IntersectionObserver(es => { if (es[0].isIntersecting) gain.classList.add('on'); }, { threshold: .4 }).observe(gain);
   const stage = $('#rec-stage'); if (!stage) return;
   const rail = $('#re-rail');
   PD_MODELS.slice(0, 4).forEach((m, i) => { const d = el('div', 're-th' + (i === 2 ? ' on' : '')); d.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); rail.appendChild(d); });
   $('#re-canvas').innerHTML = slideHTML(PD_MODELS[2].s, 3, 'halor');
-  $('#rs-slide').innerHTML = slideHTML({ type: 'cover', k: 'Kickoff 2027', h: 'Do kickoff à entrega.', sub: 'Aberto no navegador · sem instalar nada' }, 1, 'halor');
-  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Kickoff 2027', 'arquivo:///kickoff-2027.html'];
+  $('#ru-after').innerHTML = slideHTML({ type: 'cover', k: 'Plano 2027', h: 'Plano 2027 em 12 semanas.', sub: 'Importado de apresentacao-antiga.pptx' }, 1, 'halor');
+  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Salvar como', 'estudio.halor · Importar arquivo'];
   let st = 0, timer = 0, visible = false;
   const set = n => {
     st = n; stage.dataset.state = String(n);
@@ -38,4 +58,56 @@ function bootProduto() {
   new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); loop(); } else clearTimeout(timer); }).observe(stage);
   document.addEventListener('halor:view', loop);
   set(0);
+}
+
+/* Linha do tempo · Connector / Flow Line: a linha se desenha pelos marcos,
+   acende cada um quando chega nele e depois segue com luz correndo */
+function bootTimeline() {
+  const wrap = $('.tl-wrap'); if (!wrap) return;
+  const svg = $('.tl-svg', wrap), lis = $$('.tl li', wrap), comet = $('.tl-comet', wrap);
+  const base = $('.tl-base', svg), draw = $('.tl-draw', svg), flow = $('.tl-flowp', svg), fut = $('.tl-future', svg);
+  let played = false, timers = [];
+  /* onda suave: sobe e desce entre os marcos, sem invadir ano nem título */
+  const w = i => (i % 2 ? -20 : 20), curve = (pts, o = 0) => pts.reduce((d, p, i) => {
+    if (!i) return `M${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
+    const a = pts[i - 1], dx = p[0] - a[0], dy = p[1] - a[1];
+    return d + (Math.abs(dx) >= Math.abs(dy)
+      ? ` C${(a[0] + dx * .32).toFixed(1)} ${(a[1] + w(i + o)).toFixed(1)} ${(p[0] - dx * .32).toFixed(1)} ${(p[1] + w(i + o)).toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
+      : ` C${a[0].toFixed(1)} ${(a[1] + dy * .5).toFixed(1)} ${p[0].toFixed(1)} ${(p[1] - dy * .5).toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`);
+  }, '');
+  const layout = () => {
+    const r = wrap.getBoundingClientRect(); if (!r.width) return;
+    svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
+    const pts = lis.map(li => { const d = $('i', li).getBoundingClientRect(); return [d.left - r.left + d.width / 2, d.top - r.top + d.height / 2]; });
+    const main = curve(pts.slice(0, -1)), future = curve(pts.slice(-2), pts.length - 2);
+    base.setAttribute('d', main); draw.setAttribute('d', main); flow.setAttribute('d', main); fut.setAttribute('d', future);
+    const L = draw.getTotalLength();
+    draw.style.strokeDasharray = L; if (!played) draw.style.strokeDashoffset = L;
+    comet.style.offsetPath = `path('${main}')`;
+    return { L, pts };
+  };
+  const play = () => {
+    const g = layout(); if (!g) return;
+    played = true; timers.forEach(clearTimeout); timers = [];
+    wrap.classList.remove('flowing'); lis.forEach(li => li.classList.remove('lit'));
+    const dur = REDUCED ? 0 : 2600;
+    draw.style.transition = 'none'; draw.style.strokeDashoffset = g.L; void draw.getBoundingClientRect();
+    draw.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(.22,.61,.36,1)`; draw.style.strokeDashoffset = 0;
+    const xs = g.pts.map(p => p[0]), span = (xs[xs.length - 2] - xs[0]) || 1, vertical = Math.abs(span) < 40;
+    lis.forEach((li, i) => {
+      const k = i === lis.length - 1 ? 1.08 : vertical ? i / (lis.length - 2) : (g.pts[i][0] - xs[0]) / span;
+      timers.push(setTimeout(() => li.classList.add('lit'), dur * Math.min(1.1, k)));
+    });
+    timers.push(setTimeout(() => wrap.classList.add('flowing'), dur + 200));
+  };
+  new IntersectionObserver(es => { if (es[0].isIntersecting && !played) play(); }, { threshold: .35 }).observe(wrap);
+  new ResizeObserver(() => { const g = layout(); if (g && played) { draw.style.transition = 'none'; draw.style.strokeDashoffset = 0; } }).observe(wrap);
+  lis.forEach(li => { li.tabIndex = 0; });
+}
+
+/* O efeito Halor · dispara o desenho dos ícones e a tipografia quando a seção aparece */
+function bootEfeitoFx() {
+  const sec = $('#efeito'); if (!sec || REDUCED) return;
+  sec.classList.add('fx-pre');
+  new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; sec.classList.add('fx-go'); sec.classList.remove('fx-pre'); o.disconnect(); }, { threshold: .25 }).observe($('.sci-grid', sec));
 }

@@ -20,8 +20,9 @@
           </article>
           <article class="pd-gain">
             <p class="pd-k mono">O ganho principal</p>
-            <h3>O que exigia código agora é de todo mundo</h3>
+            <h3>O que exigia código agora é <span class="neon-band">de todo mundo</span></h3>
             <p>Apresentações em HTML com animação e interação eram coisa de quem programa, usa Claude Code ou paga contas de IA. Com o Halor, qualquer pessoa cria. Quem recebe abre em qualquer navegador.</p>
+            <div class="gain-kpi"><span class="gk-ring" aria-hidden="true"><b>0</b></span><span><strong>linhas de código</strong> para criar uma apresentação viva</span></div>
           </article>
         </div>
 
@@ -48,23 +49,33 @@
                 </div>
                 <div class="rd-bar"><svg aria-hidden="true"><use href="#i-file"/></svg><span>kickoff-2027.html</span><i><b></b></i><em>concluído</em></div>
               </div>
-              <div class="rec-s rec-show">
-                <div class="rs-slide" id="rs-slide"></div>
-                <div class="rs-vote"><p class="mono">Votação ao vivo</p><span style="--v:72%">Prazo</span><span style="--v:48%">Escopo</span><span style="--v:31%">Equipe</span></div>
+              <div class="rec-s rec-up theme-paper">
+                <div class="ru-drop"><svg aria-hidden="true"><use href="#i-upload"/></svg><b>Solte seu arquivo aqui</b><span>.pptx ou .pdf</span></div>
+                <div class="ru-file"><svg aria-hidden="true"><use href="#i-file"/></svg><span>apresentacao-antiga.pptx</span><i><b></b></i></div>
+                <div class="ru-magic">
+                  <div class="ru-before"><p class="rb-t">Plano 2027</p><ul><li>Objetivos do trimestre</li><li>Cronograma em 12 semanas</li><li>Responsáveis por frente</li><li>Próximos passos</li></ul></div>
+                  <div class="ru-after" id="ru-after"></div>
+                  <span class="ru-sweep" aria-hidden="true"></span>
+                  <span class="ru-tag ru-tag-a mono">antes</span><span class="ru-tag ru-tag-b mono">depois</span>
+                </div>
               </div>
               <span class="rec-cursor" aria-hidden="true"></span>
             </div>
           </div>
           <ol class="rec-steps" aria-label="Etapas da gravação">
-            <li><button type="button" data-rec="0" aria-pressed="true"><b>1</b><span><strong>Monte</strong><small>Modelo, kit de marca e efeitos.</small></span></button></li>
-            <li><button type="button" data-rec="1" aria-pressed="false"><b>2</b><span><strong>Baixe em HTML</strong><small>Um arquivo único, leve e animado.</small></span></button></li>
-            <li><button type="button" data-rec="2" aria-pressed="false"><b>3</b><span><strong>Apresente em qualquer lugar</strong><small>Abre no navegador. A plateia participa.</small></span></button></li>
+            <li><button type="button" data-rec="0" aria-pressed="true"><b>1</b><span><strong>Monte</strong><small>Modelo, kit de marca e efeitos.</small><span class="rs-fx"><i>Particle System</i><i>Animated Typography</i><i>Glow / Light Sweep</i><i>Spotlight</i><i>Flip Card</i><i>Chart Build</i><i>Parallax</i><i class="more">+33 efeitos</i></span></span></button></li>
+            <li><button type="button" data-rec="1" aria-pressed="false"><b>2</b><span><strong>Baixe em HTML, PDF ou PPT</strong><small>Já pronto para apresentar.</small></span></button></li>
+            <li><button type="button" data-rec="2" aria-pressed="false"><b>3</b><span><strong>Já tem um modelo?</strong><small>Faça upload do seu arquivo e veja a mágica acontecer.</small></span></button></li>
           </ol>
         </div>
 
         <div class="pd-models">
           <div class="pd-sub"><h3>Modelos que entregamos prontos</h3><p class="muted">Cada modelo já sai com o seu kit de marca e os efeitos certos para o que você quer comunicar.</p></div>
-          <div class="pd-mgrid" id="pd-models"></div>
+          <div class="pd-carousel">
+            <button class="pd-nav pd-prev" type="button" aria-label="Modelos anteriores"><svg aria-hidden="true"><use href="#i-back"/></svg></button>
+            <div class="pd-track" id="pd-models" tabindex="0" aria-label="Modelos prontos, role para o lado"></div>
+            <button class="pd-nav pd-next" type="button" aria-label="Próximos modelos"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
         </div>
 
         <ul class="feat-grid pd-feats">
@@ -89,7 +100,12 @@
           <h2 class="display">Dez anos de apresentações, e para onde vamos.</h2>
           <p class="lede">O slide deixou de ser papel na tela. Agora ele se move, responde e chama quem assiste para dentro da conversa.</p>
         </div>
-        <ol class="tl">
+        <div class="tl-wrap">
+          <svg class="tl-svg" aria-hidden="true">
+            <defs><linearGradient id="tl-grad" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c4a6ff"/><stop offset=".7" stop-color="#8b3dff"/><stop offset="1" stop-color="#6421d1"/></linearGradient></defs>
+            <path class="tl-base"/><path class="tl-draw"/><path class="tl-flowp"/><path class="tl-future"/>
+          </svg>
+          <ol class="tl">
           <li class="tl-past"><span class="tl-y mono">2016</span><i></i><b>Slides estáticos</b><p>Tópicos em sequência e PDF por e-mail. Quem recebe lê sozinho.</p></li>
           <li class="tl-past"><span class="tl-y mono">2018</span><i></i><b>Na nuvem</b><p>Várias pessoas editam ao mesmo tempo. O arquivo vira link.</p></li>
           <li class="tl-past"><span class="tl-y mono">2020</span><i></i><b>Tela compartilhada</b><p>Tudo por vídeo. A atenção disputa espaço com dez abas abertas.</p></li>
@@ -98,6 +114,8 @@
           <li class="tl-now"><span class="tl-y mono">2026 · hoje</span><i></i><b>HTML vivo e lúdico</b><p>Com o Halor, a apresentação se move, responde e convida a participar. Sem código.</p></li>
           <li class="tl-next"><span class="tl-y mono">Próximos anos</span><i></i><b>Apresentação que conversa</b><p>Ela se adapta a quem assiste, tira dúvidas e mede a atenção ao vivo.</p></li>
         </ol>
+          <span class="tl-comet" aria-hidden="true"></span>
+        </div>
         <div class="tl-ahead">
           <article><p class="pd-k mono">Do estático ao vivo</p><p>Cada slide ganha movimento com propósito: guiar o olhar, dar ritmo e destacar o que importa.</p></article>
           <article><p class="pd-k mono">Da plateia ao participante</p><p>Quem assiste vota, escreve e responde. Participar é a forma mais forte de prestar atenção.</p></article>
