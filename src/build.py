@@ -2,6 +2,8 @@
 """Monta o Halor em um único HTML.
 
     python3 src/build.py            -> index.html (documento completo, abre direto no navegador)
+    python3 src/build.py --out CAMINHO
+                                    -> grava o documento completo em outro lugar (testes em paralelo)
     python3 src/build.py --fragment CAMINHO
                                     -> também grava uma versão sem <html>/<head>/<body>
                                        (para hospedagens que já envolvem a página)
@@ -56,6 +58,11 @@ def main():
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         f'{head}</head>\n<body>\n{body}</body>\n</html>\n'
     )
+    if "--out" in sys.argv:
+        out = pathlib.Path(sys.argv[sys.argv.index("--out") + 1])
+        out.write_text(doc, encoding="utf-8")
+        print(f"{out}  {len(doc) / 1024:.0f} KB")
+        return
     out = ROOT / "index.html"
     out.write_text(doc, encoding="utf-8")
     print(f"index.html  {len(doc) / 1024:.0f} KB")

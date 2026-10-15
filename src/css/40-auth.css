@@ -66,7 +66,7 @@
 .reqs li.ok { color: var(--ok); }
 .reqs li.ok svg { opacity: 1; }
 
-/* — Checkout — */
+/* · Checkout · */
 #v-checkout { background: var(--mist); }
 .co-top { background: var(--paper); border-bottom: 1px solid var(--line); position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; }
 .co-top-in { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }

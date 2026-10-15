@@ -33,7 +33,7 @@ function slideHTML(s, n, brand) {
   return '';
 }
 
-/* — Estúdio — */
+/* · Estúdio · */
 const STUDIO = { cur: 2, fixed: false, stage: 2 };
 
 function renderEditor() {
@@ -143,7 +143,7 @@ const PEOPLE = [
   ['Marina Costa', 'marina@nortesistemas.com.br', 'Administradora', 'ativo', 'agora', 86, ''],
   ['Rafael Lima', 'rafael@nortesistemas.com.br', 'Membro', 'ativo', 'há 1 h', 81, 'av-2'],
   ['Júlia Prado', 'julia@nortesistemas.com.br', 'Membro', 'ativo', 'ontem', 77, 'av-3'],
-  ['Caio Mendes', 'caio@nortesistemas.com.br', 'Membro', 'convite', '—', null, 'av-2'],
+  ['Caio Mendes', 'caio@nortesistemas.com.br', 'Membro', 'convite', 'nunca entrou', null, 'av-2'],
   ['Beatriz Nunes', 'beatriz@nortesistemas.com.br', 'Membro', 'ativo', 'há 3 dias', 69, 'av-3'],
   ['Otávio Reis', 'otavio@nortesistemas.com.br', 'Membro', 'suspenso', 'há 2 meses', 58, 'av-2']
 ];
@@ -154,7 +154,7 @@ function renderAdmin() {
     const who = el('td'); const w = el('div', 'who'); const av = el('span', 'avatar av-sm ' + p[6], p[0].split(' ').map(x => x[0]).join('')); const d = el('div'); d.append(el('b', null, p[0]), el('span', null, p[1])); w.append(av, d); who.appendChild(w);
     const st = el('td'); const chip = el('span', 'chip ' + (p[3] === 'ativo' ? 'chip-ok' : p[3] === 'convite' ? 'chip-line' : 'chip-warn'), p[3] === 'ativo' ? 'Ativo' : p[3] === 'convite' ? 'Convite pendente' : 'Suspenso'); st.appendChild(chip);
     const act = el('td', 'r'); const b = el('button', 'btn-icon'); b.type = 'button'; b.setAttribute('aria-label', 'Ações para ' + p[0]); b.innerHTML = '<svg aria-hidden="true"><use href="#i-dots"/></svg>'; b.addEventListener('click', () => toast('Promover a admin, suspender, reenviar convite ou revogar')); act.appendChild(b);
-    tr.append(who, el('td', null, p[2]), st, el('td', null, p[4]), el('td', 'r', p[5] == null ? '—' : String(p[5])), act);
+    tr.append(who, el('td', null, p[2]), st, el('td', null, p[4]), el('td', 'r', p[5] == null ? 'sem dados' : String(p[5])), act);
     tb.appendChild(tr);
   });
 }

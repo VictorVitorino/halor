@@ -161,7 +161,7 @@ function chainCard(A) {
     s.appendChild(hit);
   });
   ch.appendChild(s);
-  card.appendChild(tableToggle(['Anel', 'Antes', 'Com Halor'], CHAIN_STEPS.map(st => [st.n, String(st.b), A ? String(st.a) : '—'])));
+  card.appendChild(tableToggle(['Anel', 'Antes', 'Com Halor'], CHAIN_STEPS.map(st => [st.n, String(st.b), A ? String(st.a) : 'sem dado'])));
   return card;
 }
 

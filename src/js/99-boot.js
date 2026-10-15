@@ -2,7 +2,7 @@
    Partida
    ========================================================================== */
 function boot() {
-  buildHaloRings();
+  bootEfeito();
   renderPlans();
   dashAll();
   renderPreviews();

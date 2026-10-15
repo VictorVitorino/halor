@@ -92,7 +92,7 @@ const Film = (() => {
     draw(t);
   }
 
-  /* — canvas — */
+  /* · canvas · */
   function ring(x, y, r, a, lw, color) {
     if (r <= 0 || a <= 0) return;
     ctx.save(); ctx.strokeStyle = color || 'rgba(169,112,255,1)';
@@ -140,7 +140,7 @@ const Film = (() => {
     ctx.globalCompositeOperation = 'source-over'; ctx.globalAlpha = 1;
   }
 
-  /* — som: um pad grave e um sino por cena (só depois do clique) — */
+  /* · som: um pad grave e um sino por cena (só depois do clique) · */
   function audioInit() {
     const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return null;
     const ac = new AC(), master = ac.createGain(), lp = ac.createBiquadFilter();

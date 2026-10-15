@@ -41,7 +41,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
 }
 
-/* — Tipografia utilitária — */
+/* · Tipografia utilitária · */
 .eyebrow {
   font-family: var(--f-mono);
   font-size: var(--fs-cap);
@@ -50,21 +50,19 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   color: var(--accent-text);
   display: inline-flex; align-items: center; gap: 10px;
 }
-.eyebrow::before { content: ""; width: 18px; height: 1px; background: currentColor; opacity: .7; }
-.eyebrow.no-rule::before { display: none; }
 .display { font-family: var(--f-display); font-weight: 600; letter-spacing: -.035em; }
 .lede { font-size: clamp(17px, 1.6vw, 20px); color: var(--text-2); line-height: 1.55; max-width: 60ch; }
 .muted { color: var(--text-mute); }
 .mono { font-family: var(--f-mono); }
 .num { font-variant-numeric: tabular-nums; }
 
-/* — Logo (marca + palavra) — */
+/* · Logo (marca + palavra) · */
 .logo { display: inline-flex; align-items: center; gap: .42em; text-decoration: none; color: var(--text); font-size: 22px; line-height: 1; }
 .logo svg { width: 1.45em; height: 1.45em; flex: none; overflow: visible; }
 .wordmark { font-family: var(--f-display); font-weight: 600; letter-spacing: -.045em; font-size: 1em; line-height: 1; }
 .logo-night .mk-glow { filter: drop-shadow(0 0 6px rgba(169, 112, 255, .75)); }
 
-/* — Botões — */
+/* · Botões · */
 .btn {
   --h: 44px;
   display: inline-flex; align-items: center; justify-content: center; gap: .55em;
@@ -96,7 +94,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .btn-icon:hover { background: var(--glass-2); color: var(--text); }
 .btn-icon[aria-pressed="true"] { background: var(--accent-wash); color: var(--accent-text); }
 
-/* — Campos — */
+/* · Campos · */
 .field { display: grid; gap: 6px; }
 .field label, .label { font-size: 13px; font-weight: 600; color: var(--text-2); }
 .input, .select {
@@ -116,7 +114,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .input-wrap .btn-icon { position: absolute; right: 5px; top: 5px; }
 .hint { font-size: 12.5px; color: var(--text-mute); }
 
-/* — Chips, pílulas, selos — */
+/* · Chips, pílulas, selos · */
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
   height: 26px; padding: 0 10px; border-radius: var(--r-pill);
@@ -141,7 +139,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hscore .trk { stroke: var(--line-c-2); }
 .hscore .val { stroke: var(--accent); stroke-linecap: round; }
 
-/* — Segmentado / abas — */
+/* · Segmentado / abas · */
 .seg { display: inline-flex; flex: none; flex-wrap: nowrap; max-width: 100%; padding: 4px; gap: 2px; border-radius: var(--r-pill); background: var(--glass-2); border: 1px solid var(--line-c); }
 .seg button {
   border: 0; background: transparent; color: var(--text-2);
@@ -162,7 +160,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--accent); }
 .tabs button:hover { color: var(--text); }
 
-/* — Toggle — */
+/* · Toggle · */
 .switch { position: relative; width: 40px; height: 24px; flex: none; }
 .switch input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
 .switch span { position: absolute; inset: 0; border-radius: 99px; background: var(--line-c-2); transition: background var(--t-base) var(--ease-halo); pointer-events: none; }
@@ -171,7 +169,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .switch input:checked + span::after { transform: translateX(16px); }
 .switch input:focus-visible + span { outline: 2px solid var(--focus); outline-offset: 2px; }
 
-/* — Toast — */
+/* · Toast · */
 .toast {
   position: fixed; left: 50%; bottom: calc(96px + env(safe-area-inset-bottom, 0px)); z-index: 300;
   transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
@@ -185,7 +183,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 .toast svg { width: 18px; height: 18px; color: var(--halor-glow); flex: none; }
 
-/* — Navegador do protótipo (barra flutuante) — */
+/* · Navegador do protótipo (barra flutuante) · */
 .proto {
   position: fixed; z-index: 200; left: 50%; transform: translateX(-50%);
   bottom: calc(14px + env(safe-area-inset-bottom, 0px));
@@ -210,7 +208,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .proto a svg { width: 15px; height: 15px; }
 @media (max-width: 760px) { .proto-tag span { display: none; } .proto a { padding: 0 10px; } }
 
-/* — Modal — */
+/* · Modal · */
 .modal { position: fixed; inset: 0; z-index: 250; display: grid; place-items: center; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
 .modal-bg { position: absolute; inset: 0; background: rgba(12, 6, 30, .55); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); animation: fade var(--t-base) var(--ease-halo); }
 .modal-box {
