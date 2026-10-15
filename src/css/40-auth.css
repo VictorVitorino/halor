@@ -25,7 +25,7 @@
 @keyframes shake { 20%, 60% { transform: translateX(-10px); } 40%, 80% { transform: translateX(10px); } }
 .eye-say { font-family: var(--f-mono); font-size: 13px; letter-spacing: .04em; color: var(--halor-glow); background: rgba(139, 61, 255, .14); border: 1px solid rgba(201, 166, 255, .25); padding: 8px 14px; border-radius: var(--r-pill); min-height: 36px; }
 .auth-quote { display: grid; gap: 18px; }
-.auth-quote .display { font-size: clamp(28px, 3vw, 40px); letter-spacing: -.045em; line-height: 1.05; }
+.auth-quote .display { font-size: clamp(28px, 3vw, 40px); letter-spacing: -.03em; line-height: 1.05; }
 .auth-promise { display: grid; gap: 10px; color: #cfc6ea; font-size: 14.5px; }
 .auth-promise li { display: flex; gap: 10px; align-items: center; }
 .auth-promise svg { width: 16px; height: 16px; color: var(--halor-glow); flex: none; }
@@ -36,7 +36,7 @@
 .auth-card > div { display: grid; gap: 18px; animation: pop var(--t-slow) var(--ease-halo); }
 .auth-mobile-logo { display: none; font-size: 22px; }
 @media (max-width: 920px) { .auth-mobile-logo { display: inline-flex; } }
-.auth-h { font-family: var(--f-display); font-size: 30px; letter-spacing: -.045em; }
+.auth-h { font-family: var(--f-display); font-size: 30px; letter-spacing: -.03em; }
 .auth-sub { margin-top: -8px; }
 .auth-seg { width: 100%; }
 .auth-seg button { flex: 1; justify-content: center; }
@@ -162,7 +162,7 @@
 .demo-note svg { width: 16px; height: 16px; flex: none; margin-top: 1px; }
 
 .co-done { min-height: 70vh; display: grid; place-content: center; justify-items: center; text-align: center; gap: 18px; }
-.co-done h1 { font-size: clamp(36px, 5vw, 64px); letter-spacing: -.05em; }
+.co-done h1 { font-size: clamp(36px, 5vw, 64px); letter-spacing: -.035em; }
 .co-done .lede { margin-inline: auto; }
 .done-halo { position: relative; width: 120px; height: 120px; display: grid; place-items: center; margin-bottom: 8px; }
 .done-halo svg { width: 84px; height: 84px; position: relative; z-index: 1; animation: pop .8s var(--ease-spark); }

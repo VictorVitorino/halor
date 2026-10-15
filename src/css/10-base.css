@@ -59,7 +59,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 /* · Logo (marca + palavra) · */
 .logo { display: inline-flex; align-items: center; gap: .42em; text-decoration: none; color: var(--text); font-size: 22px; line-height: 1; }
 .logo svg { width: 1.45em; height: 1.45em; flex: none; overflow: visible; }
-.wordmark { font-family: var(--f-display); font-weight: 600; letter-spacing: -.045em; font-size: 1em; line-height: 1; }
+.wordmark { font-family: var(--f-display); font-weight: 600; letter-spacing: -.03em; font-size: 1em; line-height: 1; }
 .logo-night .mk-glow { filter: drop-shadow(0 0 6px rgba(169, 112, 255, .75)); }
 
 /* · Botões · */

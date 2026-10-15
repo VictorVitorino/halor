@@ -26,8 +26,17 @@
 /* em tela estreita o texto ocupa a largura toda: o halo sobe e coroa o título, numa faixa própria acima dele */
 @media (max-width: 859px) { .s-hero { padding-top: clamp(112px, 30vw, 136px); } }
 .halo-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; display: block; }
-.s-hero-in { display: grid; justify-items: start; gap: 22px; }
-.s-h1 { font-size: var(--fs-h1); line-height: .98; letter-spacing: -.05em; max-width: 12ch; }
+.s-hero { background: radial-gradient(900px 600px at 82% 18%, rgba(139, 61, 255, .22), transparent 65%), radial-gradient(700px 500px at 10% 100%, rgba(201, 166, 255, .08), transparent 70%); }
+.s-hero-in { position: relative; display: grid; justify-items: start; gap: 22px; min-height: clamp(420px, 46vw, 600px); align-content: center; }
+.s-hero-in > *:not(.s-hero-art) { position: relative; z-index: 1; }
+.s-hero-art { position: absolute; right: -2%; top: 50%; transform: translateY(-50%); width: min(48%, 600px); aspect-ratio: 1; pointer-events: none; z-index: 0; }
+.s-hero-art .halo-field { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+.s-lede { margin-top: 10px; max-width: 30ch; font-size: clamp(19px, 1.8vw, 23px); color: var(--text-2); line-height: 1.45; }
+@media (max-width: 900px) {
+  .s-hero-in { min-height: 0; padding-top: 50vw; }
+  .s-hero-art { top: -2vw; right: -6vw; transform: none; width: 56vw; opacity: .95; }
+}
+.s-h1 { font-size: var(--fs-h1); line-height: 1.02; letter-spacing: -.035em; max-width: 11ch; }
 .s-hero .lede { max-width: 62ch; text-wrap: balance; }
 .lux { position: relative; white-space: nowrap; color: #fff; text-shadow: 0 0 28px rgba(169, 112, 255, .85), 0 0 80px rgba(139, 61, 255, .6); }
 .lux::after {
@@ -58,7 +67,7 @@
 .sci { padding: 28px 28px 32px 0; display: grid; gap: 12px; align-content: start; border-bottom: 1px solid var(--line-c); }
 .sci + .sci { padding-left: 28px; border-left: 1px solid var(--line-c); }
 @media (max-width: 860px) { .sci + .sci { padding-left: 0; border-left: 0; } .sci { padding-right: 0; } }
-.sci-n { font-size: clamp(44px, 5vw, 64px); letter-spacing: -.05em; line-height: 1; color: #fff; text-shadow: 0 0 30px rgba(139, 61, 255, .6); }
+.sci .sci-n { font-size: clamp(44px, 5vw, 64px); letter-spacing: -.035em; line-height: 1; color: #fff; text-shadow: 0 0 30px rgba(139, 61, 255, .6); }
 .sci-n small { font-size: .42em; letter-spacing: 0; margin-left: 4px; color: var(--halor-glow); }
 .sci h3 { font-size: 19px; letter-spacing: -.01em; }
 .sci p { color: var(--text-2); font-size: 15px; }
@@ -137,7 +146,7 @@
 /* · CTA final e rodapé · */
 .s-final { position: relative; overflow: hidden; isolation: isolate; padding-block: clamp(96px, 14vw, 180px); text-align: center; border-top: 1px solid rgba(201, 166, 255, .08); }
 .s-final-in { display: grid; justify-items: center; gap: 32px; }
-.s-final h2 { font-size: clamp(36px, 6vw, 80px); letter-spacing: -.05em; line-height: 1.02; }
+.s-final h2 { font-size: clamp(36px, 6vw, 80px); letter-spacing: -.035em; line-height: 1.02; }
 .s-foot { border-top: 1px solid var(--line-c); padding-block: 56px 120px; }
 .s-foot-in { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
 .sf-brand { display: grid; gap: 10px; align-content: start; }

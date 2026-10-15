@@ -2,7 +2,8 @@
    Partida
    ========================================================================== */
 function boot() {
-  bootEfeito();
+  bootVitrine();
+  bootProduto();
   renderPlans();
   dashAll();
   renderPreviews();

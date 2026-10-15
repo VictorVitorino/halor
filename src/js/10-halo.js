@@ -13,6 +13,7 @@
              cabe troca cx, cy, k ou arcs (o hero usa 560 e 860 px, como o CSS)
    ========================================================================== */
 const HALO_PRESETS = {
+  mark:  { mark: true, stars: 46, arcs: [] },
   // hero: o domo de arcos mora na coluna da direita e balança sem invadir o texto.
   // A geometria vem do pé do bloco de texto (anchor), não do filme logo abaixo.
   // Até 859 px o texto ocupa a largura toda: o halo sobe para a faixa acima do título.
@@ -172,10 +173,56 @@ function initHaloField(cv) {
   haloFields.push(f);
   resize();
 }
+
+/* Símbolo Halor em neon: halo aberto, anel, núcleo e faísca, em tubos de luz */
+function neonTube(ctx, build, lw, k, coreStyle) {
+  ctx.save(); ctx.lineCap = 'round'; ctx.globalCompositeOperation = 'lighter';
+  build(); ctx.strokeStyle = 'rgba(139,61,255,1)'; ctx.globalAlpha = .14 * k; ctx.lineWidth = lw * 5.2; ctx.shadowColor = 'rgba(139,61,255,1)'; ctx.shadowBlur = lw * 5; ctx.stroke();
+  build(); ctx.strokeStyle = 'rgba(169,112,255,1)'; ctx.globalAlpha = .6 * k; ctx.lineWidth = lw * 2.1; ctx.shadowBlur = lw * 2.4; ctx.stroke();
+  build(); ctx.strokeStyle = coreStyle || 'rgba(244,238,255,1)'; ctx.globalAlpha = k; ctx.lineWidth = lw * .78; ctx.shadowColor = 'rgba(201,166,255,1)'; ctx.shadowBlur = lw; ctx.stroke();
+  ctx.restore();
+}
+function drawNeonMark(f, t) {
+  const { ctx, w, h } = f, S = Math.min(w, h) / 64 * .84, cx = w / 2, cy = h / 2, R = Math.PI / 180;
+  const haze = ctx.createRadialGradient(cx, cy, 0, cx, cy, 36 * S);
+  haze.addColorStop(0, 'rgba(139,61,255,.3)'); haze.addColorStop(.55, 'rgba(139,61,255,.1)'); haze.addColorStop(1, 'rgba(139,61,255,0)');
+  ctx.fillStyle = haze; ctx.fillRect(0, 0, w, h);
+  ctx.globalCompositeOperation = 'lighter';
+  for (const s of f.stars) { ctx.globalAlpha = Math.max(0, .2 + .35 * Math.sin(t * s.s + s.p)); ctx.fillStyle = '#e9deff'; ctx.beginPath(); ctx.arc(s.x * w, s.y * h, s.r, 0, 6.283); ctx.fill(); }
+  ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over';
+  const breathe = REDUCED ? 1 : .9 + .1 * Math.sin(t * 1.5);
+  const flick = REDUCED ? 1 : (Math.sin(t * 17.3) > .985 ? .72 : 1);
+  const a0 = -25 * R, a1 = 295 * R, r = 26 * S, lw = 5.5 * S * .4;
+  let core = 'rgba(244,238,255,1)';
+  if (ctx.createConicGradient) {
+    core = ctx.createConicGradient(a0, cx, cy);
+    core.addColorStop(0, '#b791ff'); core.addColorStop(.45, '#d9c7ff'); core.addColorStop(.8, '#f4eeff'); core.addColorStop(.889, '#ffffff'); core.addColorStop(1, '#ffffff');
+  }
+  neonTube(ctx, () => { ctx.beginPath(); ctx.arc(cx, cy, r, a0, a1); }, lw, breathe * flick, core);
+  if (!REDUCED) {
+    const k = (t * .16) % 1, ang = a0 + (a1 - a0) * k, px = cx + r * Math.cos(ang), py = cy + r * Math.sin(ang);
+    const g = ctx.createRadialGradient(px, py, 0, px, py, lw * 4);
+    g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(.3, 'rgba(201,166,255,.45)'); g.addColorStop(1, 'rgba(139,61,255,0)');
+    ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(px, py, lw * 4, 0, 6.283); ctx.fill(); ctx.restore();
+  }
+  neonTube(ctx, () => { ctx.beginPath(); ctx.arc(cx, cy, 16.5 * S, 0, 6.283); }, 1.6 * S * .55, .55 * breathe);
+  const cg = ctx.createRadialGradient(cx - 2.6 * S, cy - 2.6 * S, 0, cx, cy, 8.5 * S);
+  cg.addColorStop(0, '#ffffff'); cg.addColorStop(.35, '#e9deff'); cg.addColorStop(.75, '#a970ff'); cg.addColorStop(1, '#8b3dff');
+  ctx.save(); ctx.shadowColor = 'rgba(169,112,255,1)'; ctx.shadowBlur = 9 * S * breathe; ctx.fillStyle = cg; ctx.beginPath(); ctx.arc(cx, cy, 8.5 * S, 0, 6.283); ctx.fill(); ctx.restore();
+  const sx = cx + 18.4 * S, sy = cy - 18.4 * S, sr = 7.2 * S * (REDUCED ? 1 : .86 + .14 * Math.sin(t * 2.2));
+  const sg = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr * 2.4);
+  sg.addColorStop(0, 'rgba(255,255,255,.55)'); sg.addColorStop(.4, 'rgba(201,166,255,.22)'); sg.addColorStop(1, 'rgba(139,61,255,0)');
+  ctx.save(); ctx.globalCompositeOperation = 'lighter'; ctx.fillStyle = sg; ctx.beginPath(); ctx.arc(sx, sy, sr * 2.4, 0, 6.283); ctx.fill();
+  ctx.translate(sx, sy); ctx.rotate(REDUCED ? 0 : Math.sin(t * .7) * .12);
+  ctx.beginPath(); ctx.moveTo(0, -sr); ctx.quadraticCurveTo(0, 0, sr, 0); ctx.quadraticCurveTo(0, 0, 0, sr); ctx.quadraticCurveTo(0, 0, -sr, 0); ctx.quadraticCurveTo(0, 0, 0, -sr); ctx.closePath();
+  ctx.shadowColor = 'rgba(201,166,255,1)'; ctx.shadowBlur = 3 * S; ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.restore();
+}
+
 function drawHaloField(f, t) {
   const { ctx, w, h, p } = f; if (!w || !h) return;
   const hr = f.hr || h, sw = p.sway, op = p.paper ? 'source-over' : 'lighter';
   ctx.clearRect(0, 0, w, h);
+  if (p.mark) { drawNeonMark(f, t); return; }
   ctx.globalCompositeOperation = op;
   // com sway, o arco balança em volta da posição inicial em vez de dar a volta inteira
   const R = Math.hypot(w, hr) * .5 * p.k;

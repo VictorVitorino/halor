@@ -5,13 +5,13 @@
 const DASH = {
   mode: 'com',
   months: ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'],
-  // propostas assinadas a cada 100 envios, por mês. O Halor entra em julho.
+  // pessoas que voltaram para rever, a cada 100, por mês. O Halor entra em julho.
   signed: [3.1, 2.8, 3.4, 3.0, 3.3, 3.2, 4.6, 5.5, 6.2, 6.9, 7.4, 8.0],
   kpis: [
     { k: 'Taxa de atenção', sub: 'passam da capa', b: 41, a: 68, u: '%', spark: [40, 42, 39, 41, 43, 41, 52, 58, 61, 64, 66, 68] },
     { k: 'Tempo de olhar', sub: 'média por slide', b: 9, a: 17, u: 's', spark: [9, 8, 9, 10, 9, 9, 12, 13, 15, 15, 16, 17] },
-    { k: 'Reuniões marcadas', sub: 'a cada 100 envios', b: 6, a: 14, u: '', spark: [6, 5, 6, 7, 6, 6, 8, 10, 11, 12, 13, 14] },
-    { k: 'Propostas assinadas', sub: 'a cada 100 envios', b: 3, a: 8, u: '', spark: [3.1, 2.8, 3.4, 3.0, 3.3, 3.2, 4.6, 5.5, 6.2, 6.9, 7.4, 8.0] }
+    { k: 'Interações', sub: 'votos e post-its por apresentação', b: 6, a: 14, u: '', spark: [6, 5, 6, 7, 6, 6, 8, 10, 11, 12, 13, 14] },
+    { k: 'Voltaram para rever', sub: 'a cada 100 pessoas', b: 3, a: 8, u: '', spark: [3.1, 2.8, 3.4, 3.0, 3.3, 3.2, 4.6, 5.5, 6.2, 6.9, 7.4, 8.0] }
   ],
   score: { b: 54, a: 82 },
   slides: ['Capa', 'Desafio', 'Resultado', 'Como', 'Prazo', 'Valor', 'Passos', 'Fim', 'Anexo A', 'Anexo B', 'Equipe', 'Contato'],
@@ -82,13 +82,13 @@ function showTip(tip, chart, x, y, title, rows) {
 function lineCard(A) {
   const card = el('div', 'd-card');
   const hd = el('div', 'd-head'), ht = el('div');
-  ht.append(el('h3', null, 'Propostas assinadas a cada 100 envios'), el('p', null, A ? 'Por mês. Apresentações Halor a partir de julho.' : 'Por mês, antes das apresentações Halor.'));
+  ht.append(el('h3', null, 'Pessoas que voltaram para rever, a cada 100'), el('p', null, A ? 'Por mês. Apresentações Halor a partir de julho.' : 'Por mês, antes das apresentações Halor.'));
   hd.appendChild(ht); card.appendChild(hd);
   const ch = el('div', 'd-chart'); card.appendChild(ch);
   const W = 560, H = 240, L = 34, Rr = 44, T = 14, B = 26, iw = W - L - Rr, ih = H - T - B, ymax = 10;
   const n = A ? 12 : 6, data = DASH.signed.slice(0, n);
   const X = i => L + i / 11 * iw, Y = v => T + ih - v / ymax * ih;
-  const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Linha mensal de propostas assinadas a cada 100 envios' });
+  const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Linha mensal de pessoas que voltaram para rever, a cada 100' });
   if (A) {
     s.appendChild(svgEl('rect', { x: X(5.5), y: T, width: X(11) - X(5.5) + 8, height: ih, class: 'evt-band' }));
   }
@@ -115,14 +115,14 @@ function lineCard(A) {
     i = Math.max(0, Math.min(n - 1, i)); fi = i;
     xh.setAttribute('x1', X(i)); xh.setAttribute('x2', X(i)); ch.classList.add('hover');
     const r = s.getBoundingClientRect(), k = r.width / W;
-    showTip(tip, ch, X(i) * k, Y(data[i]) * k, DASH.months[i] + (i > 5 ? ' · com Halor' : ' · antes'), [{ n: 'Assinadas', v: fmtNum(data[i], 1), c: 'var(--c-after)' }]);
+    showTip(tip, ch, X(i) * k, Y(data[i]) * k, DASH.months[i] + (i > 5 ? ' · com Halor' : ' · antes'), [{ n: 'Voltaram', v: fmtNum(data[i], 1), c: 'var(--c-after)' }]);
   };
   hit.addEventListener('pointermove', e => { const r = s.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * W; at(Math.round((x - L) / iw * 11)); });
   hit.addEventListener('pointerleave', () => { ch.classList.remove('hover'); tip.classList.remove('on'); });
   hit.addEventListener('focus', () => at(fi));
   hit.addEventListener('blur', () => { ch.classList.remove('hover'); tip.classList.remove('on'); });
   hit.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { at(fi + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { at(fi - 1); e.preventDefault(); } });
-  card.appendChild(tableToggle(['Mês', 'Assinadas a cada 100'], data.map((v, i) => [DASH.months[i], fmtNum(v, 1)])));
+  card.appendChild(tableToggle(['Mês', 'Voltaram, a cada 100'], data.map((v, i) => [DASH.months[i], fmtNum(v, 1)])));
   return card;
 }
 
@@ -168,7 +168,7 @@ function chainCard(A) {
 function heatCard(A) {
   const card = el('div', 'd-card');
   const hd = el('div', 'd-head'), ht = el('div');
-  ht.append(el('h3', null, 'Mapa de atenção por slide'), el('p', null, 'Segundos médios de leitura em “Proposta comercial 2027”'));
+  ht.append(el('h3', null, 'Mapa de atenção por slide'), el('p', null, 'Segundos médios de leitura em “Kickoff 2027”'));
   hd.appendChild(ht); card.appendChild(hd);
   const vals = A ? DASH.heat.a : DASH.heat.b, steps = ['--c-chain-1', '--c-chain-2', '--c-chain-3', '--c-chain-4', '--c-chain-5', '--c-chain-6', '--c-chain-7'];
   const row = el('div', 'd-heat-row'), labs = el('div', 'd-cell-lab');

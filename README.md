@@ -10,7 +10,7 @@ com o valor que ele gera: uma proposta aceita, uma parceria firmada, um projeto 
 
 > Atenção → Interesse → Curiosidade → Aproximação → Confiança → Parceria → Valor
 
-No site, a cadeia vira a **Distância Halor**: toda plateia começa a sete metros de você, e cada passo encurta essa distância até o lado a lado. Cada passo vira um indicador no **Painel Halor**, e o logo é um halo aberto:
+No site, o efeito Halor aparece em três ideias da ciência (efeito halo, 50 ms, imagem fica e texto passa), e o produto mostra o ganho principal: apresentações em HTML, vivas e interativas, sem código. O logo é um halo aberto:
 um anel aberto (atenção), um anel interno (confiança), um núcleo aceso (valor) e uma faísca (o primeiro olhar).
 
 ## Telas do protótipo
@@ -19,7 +19,7 @@ A barra flutuante "Protótipo" leva a todas. Cada uma também abre por endereço
 
 | Endereço | Tela | Mundo |
 |---|---|---|
-| `#site` | Site: hero com halos neon, **filme Conheça o Halor, 60 s** (roteiro em canvas + DOM, trilha opcional), Distância Halor interativa (quem assiste sai dos 7 m e chega ao seu lado), ciência, prévia do Painel, produto, planos, FAQ | Noite |
+| `#site` | Site: hero com o símbolo Halor em neon, **filme Conheça o Halor** (gravação do Estúdio, passo a passo), O efeito Halor, Produto com gravação em loop e modelos, Linha do tempo de 10 anos, **Vitrine de efeitos** (demos ao vivo e catálogo de 40 efeitos), planos, perguntas | Noite + Lavanda |
 | `#entrar` | Entrar · criar conta · esqueci a senha · definir senha (o halo da esquerda "olha" o e-mail e fecha o olho na senha) | Noite + Papel |
 | `#assinar` | Checkout: plano, ciclo, pessoas, Pix / cartão (cartão ao vivo) / boleto, cupom `PRIMEIROOLHAR`, confirmação | Papel |
 | `#estudio` | Início (a nova capa): saudação, Índice Halor da semana, atalhos, acervo, modelos, sinais da cadeia | Papel |
@@ -38,7 +38,7 @@ Todos os números do painel são **ilustrativos** (carteira de exemplo). Formul�
 - **Cores-núcleo:** Vazio `#07040F` · Violeta Halor `#8B3DFF` · Neon `#A970FF` · Brilho `#C9A6FF` · Lúmen `#F4EEFF`.
   Estúdio: Papel `#FFFFFF` · Névoa `#F8F6FE` · Lilás `#F3EEFF` · Tinta `#17112B`.
 - **Escala da Cadeia Halor:** rampa ordinal de 7 tons validada (luminosidade monotônica, passos visíveis) para Papel e Noite.
-- **Tipografia:** Unbounded (display e logo) · Instrument Sans (interface e texto) · JetBrains Mono (dados e rótulos).
+- **Tipografia:** Sora (display e logo) · Instrument Sans (interface e texto) · JetBrains Mono (dados e rótulos).
 - **Logo:** `brand/halor-logo-{night,paper,mono}.svg`, `brand/halor-mark-*.svg`, `brand/halor-app-icon.svg`
   (palavra convertida em contornos, não depende de fonte instalada).
 
@@ -46,9 +46,9 @@ Todos os números do painel são **ilustrativos** (carteira de exemplo). Formul�
 
 ```
 src/
-  css/   00-tokens · 10-base · 20-site · 25-efeito · 30-film · 40-auth · 50-studio · 60-dash · 70-brand
-  html/  00-sprite (logo e ícones) · 05-proto · 10-site-a (hero) · 11-site-film · 12-site-efeito · 13-site-b · 20-auth · 30-studio · 40-brand
-  js/    00-core (roteador) · 10-halo (canvas) · 20-film · 30-site · 35-efeito · 40-dash · 50-studio · 60-auth · 70-brand · 99-boot
+  css/   00-tokens · 10-base · 20-site · 27-vitrine · 28-produto · 30-film · 40-auth · 50-studio · 60-dash · 70-brand
+  html/  00-sprite (logo e ícones) · 05-proto · 10-site-a (hero) · 11-site-film · 12-site-efeito · 13-site-produto · 14-site-vitrine · 15-site-c · 20-auth · 30-studio · 40-brand
+  js/    00-core (roteador) · 10-halo (canvas e símbolo neon) · 20-film · 30-site · 36-produto · 37-vitrine · 40-dash · 50-studio · 60-auth · 70-brand · 99-boot
   build.py
 ```
 

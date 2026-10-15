@@ -21,7 +21,7 @@ ROOT = SRC.parent
 TITLE = "Halor"
 DESCRIPTION = "Halor é um programa de apresentações lúdicas. Prende o olhar, põe a plateia para participar e mede cada passo até o sim: proposta, parceria, aprovação."
 FONTS = ("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700"
-         "&family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@500;600;700&display=swap")
+         "&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@500;600;700&display=swap")
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E"
            "%3Crect width='64' height='64' rx='16' fill='%2307040f'/%3E"
            "%3Cpath d='M55.56 21.01A26 26 0 1 1 42.99 8.44' fill='none' stroke='%23a970ff' stroke-width='5.5' stroke-linecap='round'/%3E"

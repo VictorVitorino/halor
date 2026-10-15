@@ -51,7 +51,7 @@
   --info: #2d62c4; --info-wash: #e8f0fd;
 
   /* · Tipografia · */
-  --f-display: 'Unbounded', 'Arial Black', 'Helvetica Neue', system-ui, sans-serif;
+  --f-display: 'Sora', 'Helvetica Neue', Arial, system-ui, sans-serif;
   --f-ui: 'Instrument Sans', 'Helvetica Neue', Arial, system-ui, sans-serif;
   --f-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Consolas, monospace;
   --fs-cap: 11px;     /* sobretítulo em mono, caixa-alta */
@@ -133,5 +133,25 @@
   --c-chain-1: var(--chain-p1); --c-chain-2: var(--chain-p2); --c-chain-3: var(--chain-p3); --c-chain-4: var(--chain-p4);
   --c-chain-5: var(--chain-p5); --c-chain-6: var(--chain-p6); --c-chain-7: var(--chain-p7);
   --ok-c: var(--ok); --warn-c: var(--warn); --danger-c: var(--danger);
+  color-scheme: light;
+}
+
+/* Lavanda: faixa clara do site para dar respiro e contraste ao mundo Noite */
+.theme-lilac {
+  --bg: #f1eaff;
+  --surface: #ffffff;
+  --surface-2: #f8f4ff;
+  --glass: rgba(255, 255, 255, .7);
+  --glass-2: #ffffff;
+  --line-c: #dccff5;
+  --line-c-2: #c9b6f0;
+  --text: var(--ink);
+  --text-2: var(--ink-2);
+  --text-mute: #5b5378;
+  --accent: var(--halor-violet);
+  --accent-hover: var(--halor-violet-600);
+  --accent-text: var(--halor-violet-700);
+  --accent-wash: rgba(139, 61, 255, .1);
+  --focus: var(--halor-violet);
   color-scheme: light;
 }

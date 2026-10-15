@@ -46,13 +46,13 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .sub { flex: 1; }
 .st-pad > * { min-width: 0; }
 .st-pad { padding: clamp(20px, 3vw, 36px) max(20px, env(safe-area-inset-right, 0px)) 120px max(20px, env(safe-area-inset-left, 0px)); max-width: 1440px; width: 100%; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-content: start; }
-.st-h1 { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -.045em; line-height: 1.12; max-width: 30ch; }
+.st-h1 { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -.03em; line-height: 1.12; max-width: 30ch; }
 .st-h1 span { display: block; font-family: var(--f-ui); font-size: .52em; letter-spacing: -.01em; color: var(--ink-2); font-weight: 500; margin-top: 8px; }
 /* Início: a capa nova. Papel limpo com um halo lilás de assinatura. */
 .home-hero { position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-xl); border: 1px solid var(--line); background: linear-gradient(115deg, #fff 35%, var(--lilac-50) 100%); padding: clamp(22px, 3.6vw, 44px); display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: center; box-shadow: var(--sh-paper-1); }
 @media (max-width: 900px) { .home-hero { grid-template-columns: 1fr; } }
 .hh-text { display: grid; gap: 12px; justify-items: start; }
-.hh-h { font-family: var(--f-display); font-size: clamp(32px, 4.4vw, 58px); letter-spacing: -.05em; line-height: 1; }
+.hh-h { font-family: var(--f-display); font-size: clamp(32px, 4.4vw, 58px); letter-spacing: -.035em; line-height: 1; }
 .hh-sub { font-size: clamp(15px, 1.3vw, 17px); color: var(--ink-2); max-width: 46ch; }
 .hh-chain { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 6px; padding: 8px 14px; border-radius: var(--r-pill); background: rgba(255, 255, 255, .8); border: 1px solid var(--lilac-200); }
 .hh-chain-k { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-2); }
@@ -314,10 +314,10 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 
 /* · 404 · */
 .nf { position: relative; overflow: hidden; isolation: isolate; min-height: 100vh; display: grid; place-content: center; justify-items: center; text-align: center; gap: 18px; padding: 48px max(16px, env(safe-area-inset-left, 0px)) 120px; }
-.nf-n { font-size: clamp(96px, 18vw, 220px); letter-spacing: -.06em; line-height: .9; display: flex; align-items: center; gap: .04em; }
+.nf-n { font-size: clamp(96px, 18vw, 220px); letter-spacing: -.035em; line-height: .9; display: flex; align-items: center; gap: .04em; }
 .nf-n svg { width: .82em; height: .82em; filter: drop-shadow(0 0 30px rgba(169, 112, 255, .8)); animation: spin 18s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
-.nf h1 { font-size: clamp(26px, 3.6vw, 44px); letter-spacing: -.045em; }
+.nf h1 { font-size: clamp(26px, 3.6vw, 44px); letter-spacing: -.03em; }
 .nf .lede { margin-inline: auto; }
 
 /* ==========================================================================
@@ -333,14 +333,14 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .sl-foot svg { width: 1.8cqw; height: 1.8cqw; }
 .sl-cover { background: radial-gradient(90% 120% at 100% 0%, #3a1680 0%, #12082c 45%, #07040f 80%); color: #f4eeff; }
 .sl-cover .sl-k { color: #c9a6ff; top: 12%; }
-.sl-cover .sl-h { top: 34%; width: 62%; font-family: var(--f-display); font-size: 5.6cqw; letter-spacing: -.05em; }
+.sl-cover .sl-h { top: 34%; width: 62%; font-family: var(--f-display); font-size: 5.6cqw; letter-spacing: -.035em; }
 .sl-cover .sl-sub { position: absolute; left: 6%; top: 66%; font-size: 1.8cqw; color: #cfc6ea; }
 .sl-cover .sl-foot { color: #a69cc4; } .sl-cover .sl-foot b { color: #f4eeff; }
 .sl-ring { position: absolute; right: -14%; top: -30%; width: 66%; aspect-ratio: 1; border-radius: 50%; border: 1.4cqw solid transparent; background: conic-gradient(from 200deg, transparent 0 8%, #5a35a8 20%, #8b3dff 45%, #fff 62%, #c9a6ff 70%, transparent 82%) border-box; -webkit-mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0); mask: linear-gradient(#000 0 0) padding-box exclude, linear-gradient(#000 0 0); filter: drop-shadow(0 0 2cqw rgba(169, 112, 255, .7)); }
 .sl-ring2 { right: -2%; top: -6%; width: 40%; border-width: .3cqw; opacity: .6; filter: none; }
 .sl-kpi .sl-h { width: 58%; }
 .sl-big { position: absolute; left: 6%; top: 46%; display: grid; gap: .6cqw; }
-.sl-big b { font-size: 12cqw; line-height: .85; letter-spacing: -.06em; font-weight: 600; color: #6421d1; }
+.sl-big b { font-size: 12cqw; line-height: .85; letter-spacing: -.035em; font-weight: 600; color: #6421d1; }
 .sl-big span { font-size: 1.6cqw; color: #4a4366; max-width: 28ch; }
 .sl-chart { position: absolute; right: 6%; top: 30%; width: 36%; height: 52%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 7%; align-items: end; border-bottom: .15cqw solid #e8e3f4; padding: 0 4%; }
 .sl-chart i { display: block; height: var(--h); background: #d9c7ff; border-radius: .5cqw .5cqw 0 0; position: relative; }
@@ -371,7 +371,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .sl-cta { position: absolute; right: 6%; top: 40%; width: 30%; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center; text-align: center; background: radial-gradient(circle, #f4eeff 0%, #e9dfff 50%, #fff 72%); box-shadow: inset 0 0 0 .3cqw #c4a6ff; font-weight: 600; font-size: 2cqw; color: #6421d1; padding: 4cqw; }
 .sl-end { background: #07040f; color: #f4eeff; display: grid; place-content: center; justify-items: center; gap: 2cqw; }
 .sl-end svg { width: 10cqw; height: 10cqw; filter: drop-shadow(0 0 2cqw rgba(169, 112, 255, .8)); }
-.sl-end p { font-family: var(--f-display); font-size: 4cqw; letter-spacing: -.05em; }
+.sl-end p { font-family: var(--f-display); font-size: 4cqw; letter-spacing: -.035em; }
 .sl-end small { font-size: 1.6cqw; color: #a69cc4; }
 .sl-light { background: linear-gradient(160deg, #fff 55%, #f3eeff); }
 @media (max-width: 520px) { .stage-dots button { width: 14px; } .stage-dock { gap: 6px; } }
