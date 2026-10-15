@@ -49,8 +49,8 @@ const Film = (() => {
     [10.1, .9, '.fm-grid', 1.1, 1.9, '.fm-grid@.22,.5'],
     [12.9, 1, '.fm-main@.5,.62', 1.1, 2, '.fm-strip@.82,.5'],
     [15.6, .8, '.fw', 1, 1.35, '.fe-cvw'],
-    [16.4, 1.1, '.fe-sel1', 1.75, 2.7],
-    [20.4, 1, '.fe-body@.6,.45', 1.28, 1.95, '.fe-body@.7,.4'],
+    [16.4, 1.1, '.fe-cvw@.5,.42', 1.9, 2.7, '.fe-sel1'],
+    [20.4, 1, '.fe-body@.56,.46', 1.385, 1.95, '.fe-body@.7,.4'],
     [28.3, .9, '.fe@.42,.42', 1.18, 2, '.fe@.25,.42'],
     [32.2, .8, '.fe@.45,.45', 1.18, 2, '.fe-cvw@.62,.45'],
     [35.6, .9, '.fe-body@.62,.5', 1.16, 1.6, '.fe-body@.68,.48'],
@@ -58,26 +58,28 @@ const Film = (() => {
     [37.95, .7, '.fe-body@.62,.5', 1.16, 2, '.fe-cvw@.3,.55'],
     [39.4, .6, '.fe-body@.62,.5', 1.16, 2.1, '.flb-use'],
     [41.3, .8, '.fe-body@.55,.5', 1.08, 1.5, '.fe-body@.55,.5'],
-    [48.1, .9, '.fe-cvw@.6,.5', 1.4, 2.15, '.fe-cvw'],
-    [51.6, 1, '.fe-body@.66,.4', 1.22, 2.1, '.fi-score'],
+    [48.1, .9, '.fe-cvw@.5,.5', 1.9, 2.15, '.fe-cvw'],
+    [51.2, .9, '.fe-body@.7,.42', 1.2, 2.1, '.fi-score'],
     [53.4, .9, '.fw', 1, 1.25, '.fe-cvw@.3,.5'],
-    [55.5, .7, '.fim', 1.32, 2.1],
-    [58, .8, '.fe-body@.25,.45', 1.25, 2.1, '.fe-rail'],
+    [55.5, .7, '.fim', 1.2, 2.1],
+    [58, .8, '.fe-body@.25,.45', 1.2, 2.1, '.fe-rail'],
     [59.5, .5, '.fe-acts', 1.3, 2.2, '.fe-play'],
     [60.25, .8, '.fw', 1, 1.3, '.fpl-stage@.5,.5'],
     [62.5, 1, '.fpl-stage@.3,.62', 1.22, 1.95],
     [64.7, 1.2, '.fpl-stage@.72,.62', 1.22, 1.95],
     [67.3, .5, '.fw', 1, 1.3, '.fe-cvw'],
     [68.2, .7, '.fe-acts', 1.4, 2.3, '.fe-save'],
-    [69, .7, '.fsv', 1.32, 2, '.fsv@.5,.45'],
-    [71.5, .9, '.fdl@.3,.5', 1.45, 2.3, '.fdl-item'],
-    [74.15, .6, '.fw-tabs@.3,.5', 1.6, 2.4, '.fw-tab2'],
+    [69, .7, '.fsv', 1.2, 2, '.fsv@.5,.45'],
+    [71.5, .9, '.fdl@.3,.5', 1.45, 1.7, '.fdl-item'],
+    [74.15, .6, '.fw-tabs@.3,.5', 1.6, 1.6, '.fw-tab2'],
     [75.3, 1, '.fw', 1, 1.3, '.fwb-stage'],
     [80.4, .8, '.fwb-stage@.3,.6', 1.18, 2, '.fwb-poll'],
     [82.6, 1, '.fw', 1, 1.25, '.fwb-stage']
   ];
   /* paleta do slide: [tempo, matiz em graus, saturação] · Halor → Oceano → Coral → Halor */
   const PAL = [[0, 0, 1], [23.7, -82, 1.1], [25.3, 112, 1], [26.9, 0, 1]];
+  // legenda final (no celular ela sobe para o lugar da legenda do passo)
+  const LEG = [76.3, 80.3];
   // trilha: um sino por passo, subindo pela escala; acorde no fecho
   const CUES = [[.3, 0], [1.2, 7]].concat(STEPS.map((s, i) => [s.t, [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26][i]]), [[END + .3, 'chord']]);
   const TAU = Math.PI * 2;
@@ -106,7 +108,7 @@ const Film = (() => {
 
   let film, cv, ctx, fillEl, timeEl, chapEl, track, camEl, winEl, appSc;
   let scenes = [], state = 'poster', t = 0, last = 0, raf = 0, w = 0, h = 0, stars;
-  let audio = null, soundOn = false, dragging = false, camLast = '', palLast = '', portrait = false;
+  let audio = null, soundOn = false, dragging = false, camLast = '', palLast = '', portrait = false, legOn = false;
   const A = {}, CK = [], MK = { pts: [], hov: [], drags: [], clicks: [], ok: false };
   const clamp = v => Math.max(0, Math.min(1, v));
   const ease = v => 1 - Math.pow(1 - clamp(v), 3);
@@ -267,6 +269,8 @@ const Film = (() => {
       update(s, lt);
     }
     if (appSc.classList.contains('on')) { camFrame(); curFrame(); palFrame(); }
+    const leg = t >= LEG[0] && t < LEG[1] + .35;
+    if (leg !== legOn) { film.classList.toggle('leg-on', leg); legOn = leg; }
     barFrame(); draw();
   }
   function update(s, lt) {
@@ -297,7 +301,7 @@ const Film = (() => {
     }
     const c = mix(from, to, k(t, st, du)), z = Math.max(1, c.z);
     // enquadra dentro da janela quando o zoom permite; senão desliza até o palco inteiro
-    const Wb = A.win, pad = w * .012;
+    const Wb = A.win, pad = w * .034;
     const axis = (p, size, lo, len) => {
       const v = size / z, inner = len + 2 * pad;
       if (v <= inner) return Math.max(lo - pad + v / 2, Math.min(lo + len + pad - v / 2, p));
