@@ -1,0 +1,338 @@
+<!-- =====================================================================
+     ESTÚDIO · mundo Papel (construção limpa: branco, névoa, lilás e violeta)
+     Sub-telas: inicio · editor · painel · apresentar · admin
+     ===================================================================== -->
+<div class="view theme-paper" id="v-studio" data-view="estudio" hidden>
+  <div class="app" id="app">
+    <!-- Barra lateral -->
+    <aside class="side" id="side" aria-label="Navegação do Estúdio">
+      <a class="logo side-logo" href="#site"><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg><span class="wordmark">halor</span></a>
+      <a class="btn btn-primary btn-block side-new" href="#editor"><svg aria-hidden="true"><use href="#i-plus"/></svg> Nova apresentação</a>
+      <nav class="side-nav">
+        <a href="#estudio" data-sub="inicio"><svg aria-hidden="true"><use href="#i-home"/></svg>Início</a>
+        <a href="#editor" data-sub="editor"><svg aria-hidden="true"><use href="#i-layers"/></svg>Editor</a>
+        <a href="#painel" data-sub="painel"><svg aria-hidden="true"><use href="#i-chart"/></svg>Painel Halor</a>
+        <a href="#apresentar" data-sub="apresentar"><svg aria-hidden="true"><use href="#i-present"/></svg>Apresentar</a>
+        <p class="side-h mono">Equipe</p>
+        <a href="#marca"><svg aria-hidden="true"><use href="#i-palette"/></svg>Kit de marca</a>
+        <a href="#admin" data-sub="admin"><svg aria-hidden="true"><use href="#i-users"/></svg>Administração</a>
+        <a href="#nao-existe"><svg aria-hidden="true"><use href="#i-book"/></svg>Guia do Halor</a>
+      </nav>
+      <div class="side-plan">
+        <div class="sp-top"><span class="chip">Plano Halo</span><a class="link" href="#assinar">Mudar</a></div>
+        <p class="sp-l">Raio Halor este mês</p>
+        <div class="sp-bar" role="meter" aria-valuemin="0" aria-valuemax="50" aria-valuenow="32" aria-label="Análises do Raio Halor usadas"><i style="width:64%"></i></div>
+        <p class="sp-n mono num">32 de 50 análises</p>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- Barra superior -->
+      <header class="topbar">
+        <button class="btn-icon side-toggle" type="button" id="side-toggle" aria-label="Abrir menu" aria-expanded="false"><svg aria-hidden="true"><use href="#i-menu"/></svg></button>
+        <label class="search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="st-search" type="search" placeholder="Buscar apresentações, slides e modelos" aria-label="Buscar"><kbd>⌘K</kbd></label>
+        <div class="tb-right">
+          <button class="btn btn-ghost btn-sm" type="button" data-open="m-import"><svg aria-hidden="true"><use href="#i-upload"/></svg><span>Importar</span></button>
+          <button class="btn-icon" type="button" aria-label="Notificações"><svg aria-hidden="true"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
+          <a class="avatar" href="#entrar" aria-label="Conta de Marina Costa. Sair">MC</a>
+        </div>
+      </header>
+
+      <!-- INÍCIO -->
+      <section class="sub" data-subview="inicio" aria-label="Início">
+        <div class="st-pad">
+          <div class="home-hero">
+            <canvas class="halo-field" data-halo="paper" aria-hidden="true"></canvas>
+            <div class="hh-text">
+              <p class="eyebrow">Quinta-feira, 15 de outubro</p>
+              <h1 class="hh-h">Bom dia, Marina.</h1>
+              <p class="hh-sub">3 clientes olharam suas propostas desde ontem. O Grupo Aurora já chegou ao anel da confiança.</p>
+              <div class="hh-chain" role="img" aria-label="Grupo Aurora no anel 5 de 7: Confiança">
+                <span class="hh-chain-k mono">Grupo Aurora</span>
+                <span class="hh-dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on now"></i><i></i><i></i></span>
+                <span class="hh-chain-v">Confiança · 5 de 7</span>
+              </div>
+            </div>
+            <div class="hh-week">
+              <div class="hh-score">
+                <div class="rs-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="33" class="trk"/><circle cx="40" cy="40" r="33" class="val" style="stroke-dasharray:170 208"/></svg><b>82</b></div>
+                <div><p class="rs-k">Índice Halor da semana</p><p class="hh-up"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 2l4 5H2z" fill="currentColor"/></svg> +6 vs. semana passada</p></div>
+              </div>
+              <dl class="hh-stats">
+                <div><dt>Propostas abertas</dt><dd>14</dd></div>
+                <div><dt>Reuniões marcadas</dt><dd>3</dd></div>
+                <div><dt>Assinadas no mês</dt><dd>2</dd></div>
+              </dl>
+            </div>
+          </div>
+          <div class="starts">
+            <a class="start start-new" href="#editor"><span class="st-ic"><svg aria-hidden="true"><use href="#i-plus"/></svg></span><b>Nova apresentação</b><small>Em branco ou com o seu kit de marca</small><kbd>1</kbd></a>
+            <button class="start" type="button" data-scroll="#modelos"><span class="st-ic"><svg aria-hidden="true"><use href="#i-grid"/></svg></span><b>Modelos</b><small>Proposta, pitch, status report</small><kbd>2</kbd></button>
+            <a class="start" href="#editor"><span class="st-ic"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><b>Retomar</b><small>Proposta comercial 2027</small><kbd>3</kbd></a>
+            <button class="start" type="button" data-open="m-import"><span class="st-ic"><svg aria-hidden="true"><use href="#i-upload"/></svg></span><b>Importar arquivo</b><small>.pptx, .pdf ou acervo .json</small><kbd>4</kbd></button>
+            <button class="start" type="button" data-toast="A biblioteca abre dentro do editor, com componentes e efeitos."><span class="st-ic"><svg aria-hidden="true"><use href="#i-layers"/></svg></span><b>Biblioteca</b><small>Componentes, gráficos e efeitos</small><kbd>5</kbd></button>
+            <a class="start" href="#marca"><span class="st-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><b>Guia da marca</b><small>Cores, fontes e regras</small><kbd>6</kbd></a>
+          </div>
+
+          <div class="home-grid">
+            <div class="home-main">
+              <div class="sec-h">
+                <h2>Acervo</h2>
+                <div class="tabs" role="tablist" aria-label="Filtrar acervo">
+                  <button role="tab" aria-selected="true" data-acv="todas">Todas</button>
+                  <button role="tab" aria-selected="false" data-acv="minhas">Minhas</button>
+                  <button role="tab" aria-selected="false" data-acv="time">Do time</button>
+                  <button role="tab" aria-selected="false" data-acv="lixeira">Lixeira</button>
+                </div>
+                <label class="sort"><span class="sr-only">Ordenar por</span><select class="select" id="acv-sort"><option>Atualizadas recentemente</option><option>Maior Índice Halor</option><option>Mais vistas</option><option>Título (A–Z)</option></select></label>
+              </div>
+              <div class="acv" id="acv"></div>
+              <div class="sec-h" id="modelos"><h2>Comece com um modelo</h2><span class="muted sec-sub">Todos já aplicam o seu kit de marca</span></div>
+              <div class="tpls" id="tpls"></div>
+            </div>
+            <aside class="signals" aria-label="Sinais de hoje">
+              <div class="sig-h"><h2>Sinais de hoje</h2><span class="chip"><i class="dot dot-live"></i> ao vivo</span></div>
+              <ol class="sig-list" id="sig-list"></ol>
+              <a class="link" href="#painel">Ver tudo no Painel Halor <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDITOR -->
+      <section class="sub sub-editor" data-subview="editor" aria-label="Editor" hidden>
+        <div class="ed-top">
+          <div class="ed-file">
+            <a class="btn-icon" href="#estudio" aria-label="Voltar ao início"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
+            <div class="ed-name"><input id="ed-title" value="Proposta comercial 2027 · Grupo Aurora" aria-label="Título da apresentação"><span class="save-pill"><svg aria-hidden="true"><use href="#i-check"/></svg> Salvo na nuvem às 09:42</span></div>
+          </div>
+          <nav class="ed-menu" aria-label="Menus do editor">
+            <button type="button">Arquivo</button><button type="button">Editar</button><button type="button">Inserir</button><button type="button">Slide</button><button type="button">Organizar</button><button type="button">Apresentar</button><button type="button">Ajuda</button>
+          </nav>
+          <div class="ed-actions">
+            <button class="btn-icon" type="button" aria-label="Desfazer"><svg aria-hidden="true"><use href="#i-undo"/></svg></button>
+            <button class="btn-icon" type="button" aria-label="Refazer"><svg aria-hidden="true"><use href="#i-redo"/></svg></button>
+            <button class="btn btn-ghost btn-sm" type="button" data-open="m-share"><svg aria-hidden="true"><use href="#i-share"/></svg><span>Compartilhar</span></button>
+            <button class="btn btn-ghost btn-sm" type="button" data-open="m-export"><svg aria-hidden="true"><use href="#i-download"/></svg><span>Salvar como</span></button>
+            <a class="btn btn-primary btn-sm" href="#apresentar"><svg aria-hidden="true"><use href="#i-play"/></svg><span>Apresentar</span></a>
+          </div>
+        </div>
+        <div class="ribbon" role="toolbar" aria-label="Inserir elementos">
+          <button type="button"><svg aria-hidden="true"><use href="#i-text"/></svg>Texto</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-shape"/></svg>Formas</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Seta</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-image"/></svg>Imagem</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-spark"/></svg>Ícones</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-bars"/></svg>Gráficos</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-table"/></svg>Tabela</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-cards"/></svg>Cards</button>
+          <span class="rb-sep"></span>
+          <button type="button"><svg aria-hidden="true"><use href="#i-grid"/></svg>Modelos</button>
+          <button type="button"><svg aria-hidden="true"><use href="#i-wand"/></svg>Efeitos</button>
+          <span class="rb-sep"></span>
+          <button type="button" class="rb-ray" id="ray-toggle" aria-pressed="false"><svg aria-hidden="true"><use href="#i-target"/></svg>Raio Halor</button>
+        </div>
+        <div class="ed-body">
+          <aside class="ed-rail" aria-label="Slides">
+            <div class="rail-h"><span>Slides</span><span class="muted mono num">8</span></div>
+            <ol class="rail-list" id="rail-list"></ol>
+            <button class="btn btn-ghost btn-sm btn-block" type="button"><svg aria-hidden="true"><use href="#i-plus"/></svg> Novo slide</button>
+          </aside>
+          <div class="ed-stage">
+            <div class="ed-canvas-wrap">
+              <div class="ed-canvas" id="ed-canvas"></div>
+              <div class="ray-layer" id="ray-layer" hidden>
+                <span class="ray-heat rh1"></span><span class="ray-heat rh2"></span><span class="ray-heat rh3"></span>
+                <span class="ray-n" style="left:10%;top:16%">1</span><span class="ray-n" style="left:47%;top:44%">2</span><span class="ray-n" style="left:80%;top:22%">3</span><span class="ray-n" style="left:10%;top:84%">4</span>
+                <span class="ray-legend mono">Mapa de atenção previsto · primeiros 3 segundos</span>
+              </div>
+              <div class="sel-box" id="sel-box" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="sel-tag mono">Título · 44 pt</span></div>
+              <div class="float-bar" role="toolbar" aria-label="Formatar texto">
+                <button class="btn-icon" type="button" aria-label="Negrito" aria-pressed="true"><svg aria-hidden="true"><use href="#i-bold"/></svg></button>
+                <button class="btn-icon" type="button" aria-label="Itálico"><svg aria-hidden="true"><use href="#i-italic"/></svg></button>
+                <button class="btn-icon" type="button" aria-label="Alinhar"><svg aria-hidden="true"><use href="#i-align"/></svg></button>
+                <span class="fb-sw" style="--c:#17112b" title="Tinta"></span><span class="fb-sw" style="--c:#8b3dff" title="Violeta Halor"></span>
+              </div>
+            </div>
+            <div class="ed-status"><span class="mono num">Slide 3 de 8</span><span class="muted">Clique duas vezes para editar o texto · F1 mostra os atalhos</span><span class="mono num">100%</span></div>
+          </div>
+          <aside class="insp" aria-label="Propriedades">
+            <div class="tabs" role="tablist" aria-label="Painel de propriedades">
+              <button role="tab" aria-selected="false" data-insp="design">Design</button>
+              <button role="tab" aria-selected="false" data-insp="anim">Animação</button>
+              <button role="tab" aria-selected="true" data-insp="halor"><svg class="tab-ic" aria-hidden="true"><use href="#i-target"/></svg>Halor</button>
+            </div>
+            <div class="insp-panel" data-insp-panel="halor">
+              <div class="ray-score">
+                <div class="rs-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="33" class="trk"/><circle cx="40" cy="40" r="33" class="val" style="stroke-dasharray:178 208"/></svg><b>86</b></div>
+                <div><p class="rs-k">Índice Halor do slide</p><p class="rs-v">Forte. O olhar encontra a mensagem em 1,2 s.</p></div>
+              </div>
+              <div class="insp-sec">
+                <p class="insp-h">Caminho do olhar</p>
+                <ol class="gaze"><li><i>1</i>Título</li><li><i>2</i>Número de destaque</li><li><i>3</i>Gráfico</li><li><i>4</i>Fonte</li></ol>
+              </div>
+              <div class="insp-sec">
+                <p class="insp-h">Checagens</p>
+                <ul class="checks">
+                  <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Um destaque por slide</b><span>O número −34 dias domina a leitura.</span></div></li>
+                  <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Contraste do texto</b><span>7,1:1, acima do mínimo de 4,5:1.</span></div></li>
+                  <li class="warn"><svg aria-hidden="true"><use href="#i-alert"/></svg><div><b>Título com 11 palavras</b><span>Títulos de até 7 palavras seguram 30% mais o olhar.</span><button class="btn btn-ghost btn-xs" type="button" id="fix-title">Aplicar sugestão</button></div></li>
+                  <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Imagem ou gráfico dominante</b><span>Ocupa 38% da área visível.</span></div></li>
+                </ul>
+              </div>
+            </div>
+            <div class="insp-panel" data-insp-panel="design" hidden>
+              <div class="insp-sec"><p class="insp-h">Texto</p>
+                <div class="insp-row"><select class="select" aria-label="Fonte"><option>Instrument Sans</option><option>Unbounded</option><option>JetBrains Mono</option></select><select class="select sel-sm" aria-label="Tamanho"><option>44</option><option>36</option><option>28</option></select></div>
+                <div class="seg seg-sm" role="group" aria-label="Peso"><button type="button" aria-pressed="false">Regular</button><button type="button" aria-pressed="true">Semibold</button><button type="button" aria-pressed="false">Bold</button></div>
+              </div>
+              <div class="insp-sec"><p class="insp-h">Cores do kit de marca</p>
+                <div class="kit-sw"><button type="button" style="--c:#17112b" aria-label="Tinta" aria-pressed="true"></button><button type="button" style="--c:#8b3dff" aria-label="Violeta Halor"></button><button type="button" style="--c:#c4a6ff" aria-label="Lilás"></button><button type="button" style="--c:#4a4366" aria-label="Grafite"></button><button type="button" style="--c:#e9dfff" aria-label="Lilás claro"></button><button type="button" style="--c:#07040f" aria-label="Vazio"></button></div>
+              </div>
+              <div class="insp-sec"><p class="insp-h">Posição e tamanho</p>
+                <div class="xywh"><label>X<input class="input" value="96"></label><label>Y<input class="input" value="72"></label><label>L<input class="input" value="720"></label><label>A<input class="input" value="132"></label></div>
+              </div>
+            </div>
+            <div class="insp-panel" data-insp-panel="anim" hidden>
+              <div class="insp-sec"><p class="insp-h">Entrada</p>
+                <div class="fx-grid"><button type="button" aria-pressed="true">Revelar</button><button type="button" aria-pressed="false">Brilho</button><button type="button" aria-pressed="false">Subir</button><button type="button" aria-pressed="false">Halo</button></div>
+              </div>
+              <div class="insp-sec"><p class="insp-h">Duração</p><input type="range" min="200" max="1600" value="900" class="range" aria-label="Duração da animação em milissegundos"><p class="hint mono">900 ms · curva halo-out</p></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PAINEL -->
+      <section class="sub" data-subview="painel" aria-label="Painel Halor" hidden>
+        <div class="st-pad">
+          <div class="sec-h sec-h-top">
+            <div><p class="eyebrow">Painel Halor</p><h1 class="st-h1">Sua cadeia de atenção</h1></div>
+            <div class="seg" role="group" aria-label="Comparar períodos"><button type="button" aria-pressed="false" data-dash-mode="antes">Antes do Halor</button><button type="button" aria-pressed="true" data-dash-mode="com">Com Halor</button></div>
+          </div>
+          <div class="filters" role="group" aria-label="Filtros">
+            <label class="flt"><span>Período</span><select class="select"><option>Últimos 90 dias</option><option>Últimos 30 dias</option><option>Últimos 7 dias</option><option>Este ano</option></select></label>
+            <label class="flt"><span>Carteira</span><select class="select"><option>Todas as carteiras</option><option>Indústria</option><option>Varejo</option><option>Energia</option></select></label>
+            <label class="flt"><span>Vendedor</span><select class="select"><option>Todo o time</option><option>Marina Costa</option><option>Rafael Lima</option></select></label>
+            <label class="flt"><span>Apresentação</span><select class="select"><option>Todas</option><option>Proposta comercial 2027</option></select></label>
+          </div>
+          <div class="dash" data-dash="app"></div>
+          <p class="dash-note mono">Dados ilustrativos · carteira de exemplo com 100 apresentações enviadas por mês</p>
+        </div>
+      </section>
+
+      <!-- APRESENTAR (palco Noite) -->
+      <section class="sub sub-stage theme-night" data-subview="apresentar" aria-label="Modo palco" hidden>
+        <div class="stage-top">
+          <span class="chip"><i class="dot dot-live"></i> Ao vivo</span>
+          <span class="stage-title">Proposta comercial 2027 · Grupo Aurora</span>
+          <span class="stage-clock mono num" id="stage-clock">12:41</span>
+          <a class="btn btn-ghost btn-sm" href="#editor"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Sair</span></a>
+        </div>
+        <div class="stage-body">
+          <div class="stage-now"><div id="stage-now"></div></div>
+          <div class="stage-side">
+            <div class="stage-next"><p class="sk mono">A seguir · slide 4</p><div id="stage-next"></div></div>
+            <div class="stage-notes"><p class="sk mono">Notas</p><p>Abrir com a pergunta: quanto custa um mês a mais de ciclo? Depois mostrar o −34 dias e pausar dois segundos.</p></div>
+            <div class="stage-pulse">
+              <p class="sk mono">Pulso da audiência</p>
+              <div class="pulse-row"><b id="pulse-val">87%</b><span class="muted">atenção agora · 4 pessoas</span></div>
+              <svg viewBox="0 0 240 56" class="pulse-svg" aria-hidden="true"><path id="pulse-path" d=""/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="stage-dock">
+          <button class="btn-icon" type="button" aria-label="Slide anterior" data-stage="-1"><svg aria-hidden="true"><use href="#i-back"/></svg></button>
+          <div class="stage-dots" id="stage-dots"></div>
+          <button class="btn-icon" type="button" aria-label="Próximo slide" data-stage="1"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <span class="dock-sep"></span>
+          <button class="btn-icon" type="button" aria-label="Tela cheia" id="stage-fs"><svg aria-hidden="true"><use href="#i-expand"/></svg></button>
+        </div>
+      </section>
+
+      <!-- ADMIN -->
+      <section class="sub" data-subview="admin" aria-label="Administração" hidden>
+        <div class="st-pad">
+          <div class="sec-h sec-h-top"><div><p class="eyebrow">Administração</p><h1 class="st-h1">Pessoas e acesso</h1></div><button class="btn btn-primary btn-sm" type="button" data-toast="Convite enviado para novo@nortesistemas.com.br"><svg aria-hidden="true"><use href="#i-plus"/></svg> Convidar pessoa</button></div>
+          <div class="tabs adm-tabs" role="tablist"><button role="tab" aria-selected="true">Usuários</button><button role="tab" aria-selected="false">Convidar</button><button role="tab" aria-selected="false">Auditoria</button><button role="tab" aria-selected="false">Configurações</button><button role="tab" aria-selected="false">Resumo</button></div>
+          <div class="adm-sum">
+            <div><span class="muted">Pessoas ativas</span><b>18</b></div>
+            <div><span class="muted">Convites pendentes</span><b>3</b></div>
+            <div><span class="muted">Apresentações</span><b>246</b></div>
+            <div><span class="muted">Espaço usado</span><b>12,4 GB</b><span class="adm-bar"><i style="width:41%"></i></span></div>
+          </div>
+          <div class="tbl-wrap">
+            <table class="tbl">
+              <thead><tr><th scope="col">Pessoa</th><th scope="col">Papel</th><th scope="col">Status</th><th scope="col">Último acesso</th><th scope="col" class="r">Índice médio</th><th scope="col"><span class="sr-only">Ações</span></th></tr></thead>
+              <tbody id="adm-rows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
+
+<!-- MODAIS DO ESTÚDIO -->
+<div class="modal theme-paper" id="m-import" hidden role="dialog" aria-modal="true" aria-labelledby="m-import-t">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="m-import-t">Importar para o acervo</h3><button class="btn-icon" type="button" data-close aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <div class="modal-body">
+      <label class="drop" for="imp-file"><svg aria-hidden="true"><use href="#i-upload"/></svg><b>Arraste os arquivos para cá</b><span class="muted">ou clique para escolher · .pptx, .pdf e acervo .json</span><input id="imp-file" type="file" multiple accept=".pptx,.pdf,.json" class="sr-only"></label>
+      <div><p class="insp-h">Fila de importação</p>
+        <ul class="queue" id="imp-queue">
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Pitch Investidores Q3.pptx</b><span class="qbar"><i style="width:100%"></i></span></div><span class="chip chip-ok">Pronto · 18 slides</span></li>
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Relatório de resultados.pdf</b><span class="qbar"><i class="run" style="width:62%"></i></span></div><span class="chip">62%</span></li>
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Onboarding cliente.pptx</b><span class="qbar"><i style="width:0"></i></span></div><span class="chip chip-line">Na fila</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-quiet btn-sm" type="button" data-close>Parar após o item atual</button><button class="btn btn-primary btn-sm" type="button" data-close data-toast="3 arquivos no acervo. Relatório da importação disponível.">Ver no acervo</button></div>
+  </div>
+</div>
+
+<div class="modal theme-paper" id="m-export" hidden role="dialog" aria-modal="true" aria-labelledby="m-export-t">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="m-export-t">Salvar como</h3><button class="btn-icon" type="button" data-close aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <div class="modal-body">
+      <div class="exp" role="radiogroup" aria-label="Formato">
+        <button type="button" role="radio" aria-checked="true" class="exp-hot"><span class="exp-ic"><svg aria-hidden="true"><use href="#i-link"/></svg></span><b>Link Halor medido</b><small>O cliente abre no navegador e você vê cada anel da cadeia. Recomendado.</small></button>
+        <button type="button" role="radio" aria-checked="false"><span class="exp-ic">PPTX</span><b>PowerPoint editável</b><small>Textos e formas continuam editáveis.</small></button>
+        <button type="button" role="radio" aria-checked="false"><span class="exp-ic">PPTX</span><b>PowerPoint idêntico</b><small>Cada slide como imagem fiel ao Estúdio.</small></button>
+        <button type="button" role="radio" aria-checked="false"><span class="exp-ic">PDF</span><b>PDF</b><small>Vetorial, pronto para imprimir ou anexar.</small></button>
+        <button type="button" role="radio" aria-checked="false"><span class="exp-ic">HTML</span><b>HTML interativo</b><small>Um arquivo único, com animações, que abre offline.</small></button>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-quiet btn-sm" type="button" data-close>Cancelar</button><button class="btn btn-primary btn-sm" type="button" data-close data-toast="Link criado: halor.link/aurora-2027 · copiado">Gerar</button></div>
+  </div>
+</div>
+
+<div class="modal theme-paper" id="m-share" hidden role="dialog" aria-modal="true" aria-labelledby="m-share-t">
+  <div class="modal-bg" data-close></div>
+  <div class="modal-box">
+    <div class="modal-head"><h3 id="m-share-t">Compartilhar</h3><button class="btn-icon" type="button" data-close aria-label="Fechar"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+    <div class="modal-body">
+      <div class="share-row"><input class="input" id="share-mail" placeholder="Adicionar pessoas por e-mail" aria-label="E-mail"><select class="select sel-sm" aria-label="Permissão"><option>Pode editar</option><option>Pode comentar</option><option>Pode ver</option></select></div>
+      <ul class="people">
+        <li><span class="avatar av-sm">MC</span><div><b>Marina Costa</b><span class="muted">marina@nortesistemas.com.br</span></div><span class="muted">Proprietária</span></li>
+        <li><span class="avatar av-sm av-2">RL</span><div><b>Rafael Lima</b><span class="muted">rafael@nortesistemas.com.br</span></div><span class="muted">Pode editar</span></li>
+      </ul>
+      <div class="share-link"><svg aria-hidden="true"><use href="#i-link"/></svg><div><b>Link medido para o cliente</b><span class="muted mono">halor.link/aurora-2027</span></div><label class="switch"><input type="checkbox" checked aria-label="Link ativo"><span></span></label></div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-ghost btn-sm" type="button" data-copy-text="halor.link/aurora-2027"><svg aria-hidden="true"><use href="#i-copy"/></svg> Copiar link</button><button class="btn btn-primary btn-sm" type="button" data-close data-toast="Convite enviado">Enviar</button></div>
+  </div>
+</div>
+
+<!-- 404 -->
+<div class="view theme-night" id="v-404" data-view="404" hidden>
+  <div class="nf">
+    <canvas class="halo-field" data-halo="nf" aria-hidden="true"></canvas>
+    <p class="eyebrow no-rule">Erro 404</p>
+    <p class="nf-n display">4<svg aria-hidden="true"><use href="#hl-mark"/></svg>4</p>
+    <h1 class="display">Esta página saiu da órbita.</h1>
+    <p class="lede">O endereço pode ter mudado ou a apresentação foi para a lixeira.</p>
+    <div class="s-cta"><a class="btn btn-primary" href="#estudio">Ir para o acervo</a><a class="btn btn-ghost" href="#site">Voltar ao site</a></div>
+  </div>
+</div>

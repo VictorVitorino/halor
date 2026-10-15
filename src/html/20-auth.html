@@ -1,0 +1,244 @@
+<!-- =====================================================================
+     ENTRAR · cena Noite à esquerda (o halo que observa), formulário Papel à direita
+     Estados: entrar · criar · esqueci · enviado · definir (primeiro acesso)
+     ===================================================================== -->
+<div class="view theme-paper" id="v-auth" data-view="entrar" hidden>
+  <div class="auth">
+    <aside class="auth-scene theme-night" aria-hidden="true">
+      <canvas class="halo-field" data-halo="auth"></canvas>
+      <a class="logo logo-night auth-logo" href="#site" tabindex="-1"><svg class="mk-glow"><use href="#hl-mark"/></svg><span class="wordmark">halor</span></a>
+      <div class="eye-wrap">
+        <svg class="eye" id="eye" viewBox="0 0 240 240">
+          <defs>
+            <radialGradient id="eye-core" cx=".4" cy=".38" r=".7"><stop offset="0" stop-color="#fff"/><stop offset=".4" stop-color="#e9deff"/><stop offset="1" stop-color="#8b3dff"/></radialGradient>
+            <filter id="eye-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <g class="eye-body" filter="url(#eye-glow)">
+            <circle class="eye-ring" cx="120" cy="120" r="96" fill="none" stroke="url(#hl-g-ring)" stroke-width="12" stroke-linecap="round" stroke-dasharray="520 83" transform="rotate(-62 120 120)"/>
+            <circle class="eye-inner" cx="120" cy="120" r="62" fill="none" stroke="#a970ff" stroke-width="3" opacity=".55"/>
+            <g class="eye-pupil"><circle cx="120" cy="120" r="30" fill="url(#eye-core)"/></g>
+            <rect class="eye-lid" x="20" y="116" width="200" height="8" rx="4" fill="#c9a6ff"/>
+          </g>
+          <path class="eye-spark" d="M188 36Q188 52 204 52Q188 52 188 68Q188 52 172 52Q188 52 188 36Z" fill="#fff"/>
+        </svg>
+        <p class="eye-say" id="eye-say">Bem-vindo de volta.</p>
+      </div>
+      <div class="auth-quote">
+        <p class="display">Atenção é o primeiro sim.</p>
+        <ul class="auth-promise">
+          <li><svg><use href="#i-check"/></svg>Apresentações que prendem o olhar</li>
+          <li><svg><use href="#i-check"/></svg>Cada envio medido, do clique à assinatura</li>
+          <li><svg><use href="#i-check"/></svg>Seu acervo salvo na nuvem, em qualquer computador</li>
+        </ul>
+      </div>
+    </aside>
+
+    <section class="auth-panel">
+      <div class="auth-top">
+        <a class="btn btn-quiet btn-sm" href="#site"><svg aria-hidden="true"><use href="#i-back"/></svg> Voltar ao site</a>
+        <span class="chip chip-line"><svg aria-hidden="true"><use href="#i-lock"/></svg> Conexão segura</span>
+      </div>
+
+      <div class="auth-card">
+        <!-- ENTRAR / CRIAR -->
+        <div data-auth="entrar">
+          <a class="logo auth-mobile-logo" href="#site"><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg><span class="wordmark">halor</span></a>
+          <h1 class="auth-h" id="auth-title">Entrar no Halor</h1>
+          <p class="muted auth-sub" id="auth-sub">Continue de onde parou. Seu acervo está esperando.</p>
+          <div class="seg auth-seg" role="tablist" aria-label="Acesso">
+            <button type="button" role="tab" aria-selected="true" data-auth-tab="entrar">Entrar</button>
+            <button type="button" role="tab" aria-selected="false" data-auth-tab="criar">Criar conta</button>
+          </div>
+          <form class="auth-form" id="f-login" novalidate>
+            <div class="field" data-only="criar" hidden>
+              <label for="a-nome">Nome</label>
+              <input class="input" id="a-nome" name="nome" autocomplete="name" placeholder="Como devemos te chamar">
+            </div>
+            <div class="field">
+              <label for="a-email">E-mail</label>
+              <input class="input" id="a-email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" value="marina@nortesistemas.com.br">
+            </div>
+            <div class="field">
+              <label for="a-senha">Senha</label>
+              <div class="input-wrap">
+                <input class="input" id="a-senha" name="senha" type="password" autocomplete="current-password" placeholder="Sua senha" value="halor-demo-2026">
+                <button class="btn-icon" type="button" data-reveal="a-senha" aria-label="Mostrar senha" aria-pressed="false"><svg aria-hidden="true"><use href="#i-eye"/></svg></button>
+              </div>
+            </div>
+            <div class="auth-row" data-only="entrar">
+              <label class="check"><input type="checkbox" id="a-lembrar" checked> <span>Manter conectado</span></label>
+              <button class="link" type="button" data-auth-go="esqueci">Esqueci a senha</button>
+            </div>
+            <label class="check" data-only="criar" hidden><input type="checkbox" id="a-termos"> <span>Aceito os termos e a política de privacidade</span></label>
+            <p class="auth-err" id="auth-err" role="alert" hidden><svg aria-hidden="true"><use href="#i-alert"/></svg><span></span></p>
+            <button class="btn btn-primary btn-lg btn-block" type="submit" id="a-submit">Entrar</button>
+          </form>
+          <div class="auth-or"><span>ou</span></div>
+          <div class="auth-sso">
+            <button class="btn btn-ghost btn-block" type="button" data-sso><svg aria-hidden="true"><use href="#i-google"/></svg> Continuar com Google</button>
+            <button class="btn btn-ghost btn-block" type="button" data-sso><svg aria-hidden="true"><use href="#i-microsoft"/></svg> Continuar com Microsoft</button>
+            <button class="btn btn-quiet btn-block" type="button" data-sso><svg aria-hidden="true"><use href="#i-key"/></svg> Entrar com SSO da empresa</button>
+          </div>
+        </div>
+
+        <!-- ESQUECI -->
+        <div data-auth="esqueci" hidden>
+          <h1 class="auth-h">Recuperar o acesso</h1>
+          <p class="muted auth-sub">Enviamos um link para criar uma nova senha. Ele vale por 30 minutos.</p>
+          <form class="auth-form" id="f-esqueci" novalidate>
+            <div class="field"><label for="r-email">E-mail da sua conta</label><input class="input" id="r-email" type="email" autocomplete="email" value="marina@nortesistemas.com.br"></div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Enviar link de redefinição</button>
+          </form>
+          <button class="link auth-back" type="button" data-auth-go="entrar"><svg aria-hidden="true"><use href="#i-back"/></svg> Voltar para entrar</button>
+        </div>
+
+        <!-- ENVIADO -->
+        <div data-auth="enviado" hidden>
+          <div class="auth-badge"><svg aria-hidden="true"><use href="#i-mail"/></svg></div>
+          <h1 class="auth-h">Verifique seu e-mail</h1>
+          <p class="muted auth-sub">Se existir uma conta para <b id="sent-to">marina@nortesistemas.com.br</b>, o link chega em instantes. Confira também a caixa de spam.</p>
+          <button class="btn btn-ghost btn-block" type="button" data-auth-go="definir">Abrir o link (simulação)</button>
+          <button class="link auth-back" type="button" data-auth-go="esqueci">Usar outro e-mail</button>
+        </div>
+
+        <!-- DEFINIR SENHA -->
+        <div data-auth="definir" hidden>
+          <h1 class="auth-h">Crie uma nova senha</h1>
+          <p class="muted auth-sub">Use uma frase que só você saiba. Quanto mais longa, melhor.</p>
+          <form class="auth-form" id="f-definir" novalidate>
+            <div class="field"><label for="d-senha">Nova senha</label>
+              <div class="input-wrap"><input class="input" id="d-senha" type="password" autocomplete="new-password" placeholder="Pelo menos 12 caracteres"><button class="btn-icon" type="button" data-reveal="d-senha" aria-label="Mostrar senha" aria-pressed="false"><svg aria-hidden="true"><use href="#i-eye"/></svg></button></div>
+            </div>
+            <div class="meter" aria-hidden="true"><i id="pw-meter"></i></div>
+            <ul class="reqs" id="pw-reqs" aria-label="Requisitos da senha">
+              <li data-req="len"><svg aria-hidden="true"><use href="#i-check"/></svg>12 caracteres ou mais</li>
+              <li data-req="mail"><svg aria-hidden="true"><use href="#i-check"/></svg>Não contém o seu e-mail</li>
+              <li data-req="common"><svg aria-hidden="true"><use href="#i-check"/></svg>Não é uma senha comum</li>
+            </ul>
+            <div class="field"><label for="d-senha2">Confirme a senha</label><input class="input" id="d-senha2" type="password" autocomplete="new-password"></div>
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Definir senha e entrar</button>
+          </form>
+        </div>
+      </div>
+
+      <p class="auth-foot muted">Protótipo de interface. Nenhum dado digitado sai desta página.</p>
+    </section>
+  </div>
+</div>
+
+<!-- =====================================================================
+     ASSINAR · checkout Papel com cartão Noite
+     ===================================================================== -->
+<div class="view theme-paper" id="v-checkout" data-view="assinar" hidden>
+  <header class="co-top">
+    <div class="wrap co-top-in">
+      <a class="logo" href="#site"><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg><span class="wordmark">halor</span></a>
+      <ol class="steps" aria-label="Etapas da assinatura">
+        <li class="done"><i>1</i><span>Plano</span></li>
+        <li class="on" aria-current="step"><i>2</i><span>Pagamento</span></li>
+        <li><i>3</i><span>Pronto</span></li>
+      </ol>
+      <span class="chip chip-line co-secure"><svg aria-hidden="true"><use href="#i-shield"/></svg> Pagamento protegido</span>
+    </div>
+  </header>
+
+  <main class="wrap co-main" id="co-form-wrap">
+    <form class="co-grid" id="f-checkout" novalidate>
+      <div class="co-left">
+        <section class="co-sec">
+          <div class="co-sec-h"><h2>Escolha o plano</h2><div class="seg" role="group" aria-label="Ciclo de cobrança"><button type="button" aria-pressed="false" data-cycle="mensal">Mensal</button><button type="button" aria-pressed="true" data-cycle="anual">Anual <span class="save">−20%</span></button></div></div>
+          <div class="co-plans" id="co-plans" role="radiogroup" aria-label="Plano"></div>
+          <div class="co-seats" id="co-seats" hidden>
+            <div><p class="label">Pessoas no time</p><p class="hint">Mínimo de 3 no plano Órbita</p></div>
+            <div class="stepper"><button type="button" class="btn-icon" data-seat="-1" aria-label="Remover pessoa"><svg aria-hidden="true"><use href="#i-minus"/></svg></button><output id="seats" class="num">5</output><button type="button" class="btn-icon" data-seat="1" aria-label="Adicionar pessoa"><svg aria-hidden="true"><use href="#i-plus"/></svg></button></div>
+          </div>
+        </section>
+
+        <section class="co-sec">
+          <h2>Seus dados</h2>
+          <div class="co-fields">
+            <div class="field"><label for="c-nome">Nome completo</label><input class="input" id="c-nome" autocomplete="name" value="Marina Costa"></div>
+            <div class="field"><label for="c-email">E-mail de cobrança</label><input class="input" id="c-email" type="email" autocomplete="email" value="financeiro@nortesistemas.com.br"></div>
+            <div class="field"><label for="c-doc">CPF ou CNPJ</label><input class="input" id="c-doc" inputmode="numeric" value="12.345.678/0001-90"></div>
+            <div class="field"><label for="c-cep">CEP</label><input class="input" id="c-cep" inputmode="numeric" autocomplete="postal-code" value="04538-132"></div>
+          </div>
+        </section>
+
+        <section class="co-sec">
+          <h2>Forma de pagamento</h2>
+          <div class="pay-tabs" role="tablist" aria-label="Forma de pagamento">
+            <button type="button" role="tab" aria-selected="true" data-pay="pix"><svg aria-hidden="true"><use href="#i-pix"/></svg><span>Pix</span><small>aprovação na hora</small></button>
+            <button type="button" role="tab" aria-selected="false" data-pay="cartao"><svg aria-hidden="true"><use href="#i-card"/></svg><span>Cartão</span><small>até 12x no anual</small></button>
+            <button type="button" role="tab" aria-selected="false" data-pay="boleto"><svg aria-hidden="true"><use href="#i-barcode"/></svg><span>Boleto</span><small>compensa em até 2 dias</small></button>
+          </div>
+
+          <div class="pay-panel" data-pay-panel="pix" role="tabpanel">
+            <div class="pix">
+              <div class="pix-qr" id="pix-qr" aria-label="QR Code Pix ilustrativo"></div>
+              <div class="pix-info">
+                <p><b>Escaneie com o app do seu banco</b></p>
+                <p class="muted">O QR Code aparece depois de confirmar. Ele vale por 30 minutos e a assinatura ativa assim que o Pix cai.</p>
+                <div class="pix-code"><span class="mono" id="pix-code">00020126580014br.gov.bcb.pix0136halor-demo…</span><button class="btn btn-ghost btn-xs" type="button" data-copy="#pix-code"><svg aria-hidden="true"><use href="#i-copy"/></svg> Copiar</button></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-panel" data-pay-panel="cartao" role="tabpanel" hidden>
+            <div class="card-grid">
+              <div class="cc" id="cc" aria-hidden="true">
+                <div class="cc-glow"></div>
+                <div class="cc-top"><svg class="cc-mark"><use href="#hl-mark"/></svg><span class="cc-brand mono" id="cc-brand">CARTÃO</span></div>
+                <p class="cc-num mono" id="cc-num">•••• •••• •••• ••••</p>
+                <div class="cc-bot"><div><small>Nome</small><span id="cc-name">MARINA COSTA</span></div><div><small>Validade</small><span id="cc-exp">MM/AA</span></div></div>
+              </div>
+              <div class="co-fields co-fields-1">
+                <div class="field"><label for="k-num">Número do cartão</label><input class="input mono" id="k-num" inputmode="numeric" autocomplete="off" placeholder="0000 0000 0000 0000" maxlength="19"></div>
+                <div class="field"><label for="k-name">Nome impresso</label><input class="input" id="k-name" autocomplete="off" value="Marina Costa"></div>
+                <div class="co-fields co-fields-3">
+                  <div class="field"><label for="k-exp">Validade</label><input class="input mono" id="k-exp" inputmode="numeric" autocomplete="off" placeholder="MM/AA" maxlength="5"></div>
+                  <div class="field"><label for="k-cvv">CVV</label><input class="input mono" id="k-cvv" inputmode="numeric" autocomplete="off" placeholder="123" maxlength="4"></div>
+                  <div class="field"><label for="k-parc">Parcelas</label><select class="select" id="k-parc"><option>1x sem juros</option><option>3x sem juros</option><option>6x sem juros</option><option>12x sem juros</option></select></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-panel" data-pay-panel="boleto" role="tabpanel" hidden>
+            <p class="boleto-note"><svg aria-hidden="true"><use href="#i-barcode"/></svg> O boleto é gerado depois de confirmar e enviado para o e-mail de cobrança. A conta fica ativa por 3 dias enquanto ele compensa.</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="co-sum">
+        <div class="sum-card theme-night">
+          <canvas class="halo-field" data-halo="sum" aria-hidden="true"></canvas>
+          <p class="eyebrow">Resumo</p>
+          <div class="sum-plan"><svg aria-hidden="true"><use href="#hl-mark"/></svg><div><p class="sum-name display" id="sum-name">Halo</p><p class="sum-cycle muted" id="sum-cycle">Anual · cobrado uma vez por ano</p></div></div>
+          <dl class="sum-lines">
+            <div><dt id="sum-l1">Plano Halo × 12 meses</dt><dd class="num" id="sum-sub">R$ 828,00</dd></div>
+            <div class="sum-disc" id="sum-disc-row"><dt>Desconto anual (20%)</dt><dd class="num" id="sum-disc">− R$ 165,60</dd></div>
+            <div class="sum-coupon-row" id="sum-coupon-row" hidden><dt>Cupom <span id="sum-coupon-name"></span></dt><dd class="num" id="sum-coupon">− R$ 0,00</dd></div>
+          </dl>
+          <div class="coupon"><input class="input" id="c-cupom" placeholder="Cupom de desconto" aria-label="Cupom de desconto" value="PRIMEIROOLHAR"><button class="btn btn-ghost btn-sm" type="button" id="c-cupom-ok">Aplicar</button></div>
+          <div class="sum-total"><span>Total hoje</span><b class="num" id="sum-total">R$ 662,40</b></div>
+          <p class="sum-per muted" id="sum-per">equivale a R$ 55,20 por mês</p>
+          <button class="btn btn-primary btn-lg btn-block" type="submit" id="co-submit">Assinar agora</button>
+          <ul class="sum-trust">
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Cancele quando quiser</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>7 dias de garantia</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Nota fiscal automática</li>
+          </ul>
+        </div>
+        <p class="demo-note"><svg aria-hidden="true"><use href="#i-alert"/></svg> Ambiente de demonstração. Nenhum pagamento é processado e nada é enviado.</p>
+      </aside>
+    </form>
+
+    <section class="co-done" id="co-done" hidden aria-live="polite">
+      <div class="done-halo" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#hl-mark-paper"/></svg><i></i><i></i><i></i></div>
+      <p class="eyebrow">Assinatura ativa</p>
+      <h1 class="display">Bem-vindo à órbita.</h1>
+      <p class="lede" id="done-msg">Seu plano Halo está ativo. Mandamos o recibo para o seu e-mail.</p>
+      <div class="s-cta"><a class="btn btn-primary btn-lg" href="#estudio">Abrir o Estúdio <svg aria-hidden="true"><use href="#i-arrow"/></svg></a><button class="btn btn-ghost btn-lg" type="button" id="co-again">Ver o checkout de novo</button></div>
+    </section>
+  </main>
+</div>

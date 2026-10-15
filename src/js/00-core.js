@@ -1,0 +1,126 @@
+/* ==========================================================================
+   Núcleo · utilitários, roteador por hash, modais, toast, cópia
+   ========================================================================== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmtBRL = v => 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const fmtNum = (v, d = 0) => v.toFixed(d).replace('.', ',');
+const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
+const svgEl = (tag, attrs = {}) => { const n = document.createElementNS('http://www.w3.org/2000/svg', tag); for (const k in attrs) n.setAttribute(k, attrs[k]); return n; };
+
+/* Toast */
+let toastT;
+function toast(msg) {
+  const t = $('#toast'); if (!t) return;
+  $('span', t).textContent = msg;
+  t.classList.add('on');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('on'), 2600);
+}
+
+/* Copiar (com recuo para seleção quando a área de transferência é recusada) */
+function copyText(text, node) {
+  const done = () => toast('Copiado');
+  const fallback = () => {
+    if (!node) return toast('Selecione e copie manualmente');
+    const r = document.createRange(); r.selectNodeContents(node);
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+    toast('Texto selecionado. Use Ctrl+C');
+  };
+  try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+}
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-copy]');
+  if (c) { const n = $(c.dataset.copy); if (n) copyText(n.textContent, n); }
+  const ct = e.target.closest('[data-copy-text]');
+  if (ct) copyText(ct.dataset.copyText);
+  const tt = e.target.closest('[data-toast]');
+  if (tt) toast(tt.dataset.toast);
+});
+
+/* Modais */
+let lastFocus = null;
+function openModal(id) {
+  const m = document.getElementById(id); if (!m) return;
+  lastFocus = document.activeElement;
+  m.hidden = false;
+  const f = m.querySelector('input, button:not([data-close]), [href]') || m.querySelector('button');
+  setTimeout(() => f && f.focus(), 30);
+}
+function closeModal(m) { m.hidden = true; if (lastFocus) lastFocus.focus(); }
+document.addEventListener('click', e => {
+  const o = e.target.closest('[data-open]');
+  if (o) { e.preventDefault(); openModal(o.dataset.open); }
+  const c = e.target.closest('[data-close]');
+  if (c) { const m = c.closest('.modal'); if (m) closeModal(m); }
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { const m = $$('.modal').find(x => !x.hidden); if (m) closeModal(m); }
+});
+
+/* Mostrar/ocultar senha */
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-reveal]'); if (!b) return;
+  const inp = document.getElementById(b.dataset.reveal);
+  const show = inp.type === 'password';
+  inp.type = show ? 'text' : 'password';
+  b.setAttribute('aria-pressed', String(show));
+  b.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
+  $('use', b).setAttribute('href', show ? '#i-eye-off' : '#i-eye');
+});
+
+/* Roteador ---------------------------------------------------------------- */
+const ROUTES = {
+  site: { view: 'v-site' },
+  entrar: { view: 'v-auth' },
+  assinar: { view: 'v-checkout' },
+  estudio: { view: 'v-studio', sub: 'inicio' },
+  editor: { view: 'v-studio', sub: 'editor' },
+  painel: { view: 'v-studio', sub: 'painel' },
+  apresentar: { view: 'v-studio', sub: 'apresentar' },
+  admin: { view: 'v-studio', sub: 'admin' },
+  marca: { view: 'v-brand' },
+  '404': { view: 'v-404' }
+};
+const viewHooks = {};   // id da view -> função chamada ao mostrar
+const subHooks = {};    // sub-tela do estúdio -> função
+let currentView = null;
+
+function showView(id) {
+  if (currentView === id) return;
+  $$('.view').forEach(v => { v.hidden = v.id !== id; });
+  currentView = id;
+  document.dispatchEvent(new CustomEvent('halor:view', { detail: id }));
+  if (viewHooks[id]) viewHooks[id]();
+}
+function showSub(sub) {
+  $$('#v-studio .sub').forEach(s => { s.hidden = s.dataset.subview !== sub; });
+  $$('#v-studio .side-nav a[data-sub]').forEach(a => { if (a.dataset.sub === sub) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  $('#side')?.classList.remove('open');
+  if (subHooks[sub]) subHooks[sub]();
+}
+function route() {
+  const raw = decodeURIComponent(location.hash.replace(/^#/, ''));
+  const key = raw || 'site';
+  let r = ROUTES[key];
+  let target = null;
+  if (!r) {
+    target = document.getElementById(key);
+    const v = target && target.closest('.view');
+    if (v) r = { view: v.id, anchor: true };
+    else r = ROUTES['404'];
+  }
+  showView(r.view);
+  if (r.sub) showSub(r.sub);
+  const routeKey = r.anchor ? (r.view === 'v-site' ? 'site' : r.view === 'v-brand' ? 'marca' : '') : (ROUTES[key] ? key : '');
+  $$('.proto a').forEach(a => { if (a.dataset.route === routeKey) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }));
+  else window.scrollTo(0, 0);
+}
+window.addEventListener('hashchange', route);
+
+/* Rolagem: barra do site ganha fundo */
+window.addEventListener('scroll', () => {
+  const n = $('#s-nav'); if (n) n.classList.toggle('scrolled', window.scrollY > 12);
+}, { passive: true });
