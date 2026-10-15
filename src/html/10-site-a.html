@@ -22,15 +22,20 @@
   <main id="conteudo">
     <!-- HERO + FILME -->
     <section class="s-hero" id="topo">
-      <div class="wrap s-hero-in">
-        <div class="s-hero-art" aria-hidden="true"><canvas class="halo-field" data-halo="mark"></canvas></div>
-        <p class="eyebrow">Programa de Apresentações Lúdicas</p>
-        <h1 class="display s-h1">Faça cada olhar <span class="lux">render.</span></h1>
-        <p class="lede s-lede">Apresentações vivas, que prendem o olhar do começo ao fim.</p>
-        <div class="s-cta">
-          <a class="btn btn-primary btn-lg" href="#assinar">Começar grátis <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-          <button class="btn btn-ghost btn-lg" type="button" data-film-play><svg aria-hidden="true"><use href="#i-play"/></svg> Conheça o Halor <span class="s-dur">(1 min 28 s)</span></button>
+      <div class="s-cover field-in">
+        <canvas class="halo-field halor-field" data-field="hero" aria-hidden="true"></canvas>
+        <div class="wrap s-hero-in s-hero-copy">
+          <p class="eyebrow no-rule s-in" style="--d:.25s">Programa de Apresentações Lúdicas</p>
+          <h1 class="display s-h1"><span class="w" style="--i:0">Faça</span> <span class="w" style="--i:1">cada</span> <span class="w" style="--i:2">olhar</span> <span class="w lux" style="--i:3">render.</span></h1>
+          <p class="lede s-lede s-in" style="--d:1.05s">Apresentações vivas, que prendem o olhar do começo ao fim.</p>
+          <div class="s-cta s-in" style="--d:1.25s">
+            <a class="btn btn-primary btn-lg" href="#assinar" data-attract>Começar grátis <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            <button class="btn btn-ghost btn-lg" type="button" data-film-play data-attract><svg aria-hidden="true"><use href="#i-play"/></svg> Conheça o Halor <span class="s-dur">(1 min 28 s)</span></button>
+          </div>
         </div>
-        <p class="s-proof"><span>Dados no Brasil · LGPD</span></p>
+        <div class="s-cover-foot wrap s-in" style="--d:1.6s">
+          <span class="s-hint mono">Passe o mouse para reunir as partículas · clique para soltar uma onda</span>
+          <button class="btn btn-quiet btn-sm s-replay" type="button" data-field-replay="hero"><svg aria-hidden="true"><use href="#i-replay"/></svg> Repetir entrada</button>
+        </div>
       </div>
 

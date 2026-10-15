@@ -3,26 +3,26 @@
    acervo, palco, prévia do site e manual da marca
    ========================================================================== */
 const DECK = [
-  { type: 'cover', k: 'Proposta comercial · 2027', h: 'Menos ciclo, mais contratos.', sub: 'Para Grupo Aurora · outubro de 2026' },
-  { type: 'text', k: 'O desafio', h: 'Cada mês a mais de negociação custa caro.', p: ['Hoje o ciclo médio de venda é de 96 dias.', 'Metade das propostas para antes da segunda reunião.'] },
-  { type: 'kpi', k: 'Resultado esperado', h: 'Reduzimos o ciclo de venda do seu time em 34 dias.', big: '−34', cap: 'dias no ciclo médio, de 96 para 62', bars: [[96, 'Hoje'], [84, 'Mês 3'], [71, 'Mês 6'], [62, 'Mês 9']] },
-  { type: 'steps', k: 'Como funciona', h: 'Três movimentos, uma cadeia.', s: [['01', 'Diagnóstico', 'Raio-x das propostas atuais'], ['02', 'Redesenho', 'Modelos com o kit de marca'], ['03', 'Medição', 'Painel por carteira e vendedor']] },
+  { type: 'cover', k: 'Kickoff · 2027', h: 'Plano 2027 em 12 semanas.', sub: 'Time de produto · 4 de novembro' },
+  { type: 'text', k: 'O desafio', h: 'Muita informação, pouca atenção.', p: ['Hoje cada reunião começa com 40 slides.', 'Metade da sala desliga antes do quinto.'] },
+  { type: 'kpi', k: 'Meta do trimestre', h: 'Queremos dobrar a leitura completa dos nossos materiais até março.', big: '2×', cap: 'leitura completa, de 34% para 68%', unit: '%', bars: [[34, 'Hoje'], [45, 'Mês 1'], [57, 'Mês 2'], [68, 'Mês 3']] },
+  { type: 'steps', k: 'Como funciona', h: 'Três movimentos, uma cadeia.', s: [['01', 'Diagnóstico', 'Raio-x dos materiais atuais'], ['02', 'Redesenho', 'Modelos com o kit de marca'], ['03', 'Medição', 'Painel por time']] },
   { type: 'tl', k: 'Cronograma', h: 'Nove meses do primeiro olhar ao resultado.', ms: [['Mês 1', 'Diagnóstico', .1], ['Mês 3', 'Modelos no ar', .37], ['Mês 6', 'Time treinado', .63], ['Mês 9', 'Meta de ciclo', .9]] },
-  { type: 'table', k: 'Investimento', h: 'Um plano para o time inteiro.', rows: [['Plano Órbita · 25 pessoas', '12 meses', 'R$ 11.760'], ['Implantação e treinamento', 'uma vez', 'R$ 8.000'], ['Total no primeiro ano', '', 'R$ 19.760']] },
-  { type: 'next', k: 'Próximos passos', h: 'Combinamos o começo?', items: ['Validar o escopo com o comercial', 'Assinar até 30 de outubro', 'Kickoff em 4 de novembro'], cta: 'Kickoff em 4 de novembro' },
+  { type: 'table', k: 'Recursos', h: 'Quem faz o quê.', rows: [['Estúdio Halor · 25 pessoas', '12 semanas', 'todo o time'], ['Treinamento de apresentação', '2 encontros', '4 h'], ['Dedicação total', '', '12 semanas']] },
+  { type: 'next', k: 'Próximos passos', h: 'Combinamos o começo?', items: ['Validar o escopo com o time', 'Aprovar até 30 de outubro', 'Kickoff em 4 de novembro'], cta: 'Kickoff em 4 de novembro' },
   { type: 'end', h: 'Obrigado.', sub: 'marina@nortesistemas.com.br' }
 ];
 
 function slideHTML(s, n, brand) {
   const foot = brand === 'halor'
     ? `<div class="sl-foot"><b><svg aria-hidden="true"><use href="${s.type === 'cover' ? '#hl-mark' : '#hl-mark-paper'}"/></svg>halor</b><span>${String(n).padStart(2, '0')}</span></div>`
-    : `<div class="sl-foot"><span>Norte Sistemas · Proposta comercial 2027</span><span>${String(n).padStart(2, '0')}</span></div>`;
+    : `<div class="sl-foot"><span>Norte Sistemas · Kickoff 2027</span><span>${String(n).padStart(2, '0')}</span></div>`;
   switch (s.type) {
     case 'cover': return `<div class="slide sl-cover"><span class="sl-ring"></span><span class="sl-ring sl-ring2"></span><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><p class="sl-sub">${s.sub}</p>${foot}</div>`;
     case 'text': return `<div class="slide sl-text sl-light"><p class="sl-k">${s.k}</p><p class="sl-h" style="width:48%">${s.h}</p><div class="sl-body">${s.p.map(x => `<p class="sl-p">${x}</p>`).join('')}</div><span class="sl-img"></span>${foot}</div>`;
     case 'kpi': {
       const mx = Math.max(...s.bars.map(b => b[0]));
-      return `<div class="slide sl-kpi"><p class="sl-k">${s.k}</p><p class="sl-h" data-title>${s.h}</p><div class="sl-big"><b>${s.big}</b><span>${s.cap}</span></div><div class="sl-chart">${s.bars.map((b, i) => `<i class="${i === s.bars.length - 1 ? 'hi' : ''}" style="--h:${(b[0] / mx * 92).toFixed(0)}%"><em>${b[0]} d</em></i>`).join('')}</div><div class="sl-axis">${s.bars.map(b => `<span>${b[1]}</span>`).join('')}</div>${foot}</div>`;
+      return `<div class="slide sl-kpi"><p class="sl-k">${s.k}</p><p class="sl-h" data-title>${s.h}</p><div class="sl-big"><b>${s.big}</b><span>${s.cap}</span></div><div class="sl-chart">${s.bars.map((b, i) => `<i class="${i === s.bars.length - 1 ? 'hi' : ''}" style="--h:${(b[0] / mx * 92).toFixed(0)}%"><em>${b[0]}${s.unit || ' d'}</em></i>`).join('')}</div><div class="sl-axis">${s.bars.map(b => `<span>${b[1]}</span>`).join('')}</div>${foot}</div>`;
     }
     case 'steps': return `<div class="slide sl-steps sl-light"><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><div class="sl-row">${s.s.map(x => `<div class="sl-step"><b>${x[0]}</b><strong>${x[1]}</strong><span class="sl-p">${x[2]}</span></div>`).join('')}</div>${foot}</div>`;
     case 'tl': return `<div class="slide sl-tl"><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><span class="sl-line"></span>${s.ms.map(m => `<div class="sl-ms" style="left:${6 + m[2] * 88}%"><span>${m[1]}</span><i></i><small>${m[0]}</small></div>`).join('')}${foot}</div>`;
@@ -63,11 +63,11 @@ function bindEditor() {
     $$('[data-insp-panel]').forEach(p => { p.hidden = p.dataset.inspPanel !== t.dataset.insp; });
   }));
   $('#fix-title')?.addEventListener('click', e => {
-    DECK[2].h = '34 dias a menos no seu ciclo.';
+    DECK[2].h = 'Leitura completa em dobro.';
     renderEditor(); renderStage();
     const li = e.currentTarget.closest('li');
     li.className = 'ok'; li.querySelector('use').setAttribute('href', '#i-check');
-    li.querySelector('b').textContent = 'Título com 6 palavras';
+    li.querySelector('b').textContent = 'Título com 4 palavras';
     li.querySelector('span').textContent = 'Curto o bastante para ser lido em um olhar.';
     e.currentTarget.remove();
     $('.rs-ring b').textContent = '91'; $('.rs-ring .val').style.strokeDasharray = '189 208';
@@ -83,16 +83,16 @@ function bindEditor() {
 
 /* Acervo, modelos, sinais */
 const ACERVO = [
-  { t: 'Proposta comercial 2027 · Grupo Aurora', h: 'Menos ciclo, mais contratos.', who: 'minhas', when: 'há 12 min', score: 86, views: 14, live: true },
-  { t: 'Renovação de contrato · Vale Verde', h: 'Mais um ano, com mais resultado.', who: 'minhas', when: 'ontem', score: 79, views: 9 },
+  { t: 'Kickoff 2027 · Time de produto', h: 'Plano 2027 em 12 semanas.', who: 'minhas', when: 'há 12 min', score: 86, views: 14, live: true },
+  { t: 'Treinamento de líderes · Vale Verde', h: 'Liderar é dar ritmo.', who: 'minhas', when: 'ontem', score: 79, views: 9 },
   { t: 'Pitch para investidores · série A', h: 'A atenção é o novo funil.', who: 'time', when: 'há 2 dias', score: 91, views: 31 },
   { t: 'Status report executivo · Q3', h: 'Terceiro trimestre em uma página.', who: 'time', when: 'há 4 dias', score: 72, views: 6 },
   { t: 'Kickoff · Orion Varejo', h: 'Começamos segunda-feira.', who: 'minhas', when: 'semana passada', score: 84, views: 11 },
-  { t: 'Estudo de caso · Atlas Energia', h: 'Do primeiro olhar ao contrato.', who: 'time', when: 'semana passada', score: 88, views: 22 },
-  { t: 'Rascunho antigo de proposta', h: 'Versão descartada.', who: 'lixeira', when: 'há 3 semanas', score: 41, views: 0 }
+  { t: 'Aula aberta · Atlas Energia', h: 'Energia que se vê.', who: 'time', when: 'semana passada', score: 88, views: 22 },
+  { t: 'Rascunho antigo de workshop', h: 'Versão descartada.', who: 'lixeira', when: 'há 3 semanas', score: 41, views: 0 }
 ];
 const TPLS = [
-  { n: 'Proposta comercial', d: '8 slides', s: { type: 'cover', k: 'Proposta', h: 'Sua proposta, com luz própria.', sub: 'Cliente · data' } },
+  { n: 'Abertura de evento', d: '8 slides', s: { type: 'cover', k: 'Evento', h: 'Sua abertura, com luz própria.', sub: 'Auditório · data' } },
   { n: 'Pitch de investimento', d: '12 slides', s: { type: 'kpi', k: 'Tração', h: 'Crescemos 3× em um ano.', big: '3×', cap: 'receita recorrente em 12 meses', bars: [[30, 'T1'], [48, 'T2'], [70, 'T3'], [92, 'T4']] } },
   { n: 'Status report executivo', d: '6 slides', s: { type: 'steps', k: 'Status', h: 'Onde estamos em três frentes.', s: [['01', 'No prazo', 'Frente comercial'], ['02', 'Atenção', 'Frente técnica'], ['03', 'Concluído', 'Treinamento']] } },
   { n: 'Kickoff de projeto', d: '9 slides', s: { type: 'tl', k: 'Plano', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
@@ -100,8 +100,8 @@ const TPLS = [
   { n: 'Em branco', d: 'com seu kit de marca', s: { type: 'end', h: 'Comece aqui.', sub: 'Kit de marca aplicado' } }
 ];
 const SIGNALS = [
-  { r: 0, h: '<b>Grupo Aurora</b> abriu “Proposta comercial 2027” 3 vezes', w: 'há 12 min · Atenção' },
-  { r: 4, h: '<b>Grupo Aurora</b> encaminhou a proposta para 2 pessoas', w: 'há 40 min · Confiança' },
+  { r: 0, h: '<b>Grupo Aurora</b> abriu “Kickoff 2027” 3 vezes', w: 'há 12 min · Atenção' },
+  { r: 4, h: '<b>Grupo Aurora</b> encaminhou a apresentação para 2 pessoas', w: 'há 40 min · Confiança' },
   { r: 1, h: 'O slide 6, Investimento, segurou o olhar por 41 s', w: 'há 1 h · Interesse' },
   { r: 3, h: '<b>Vale Verde</b> comentou no slide 3: “Esse prazo inclui treinamento?”', w: 'há 2 h · Aproximação' },
   { r: 5, h: '<b>Orion Varejo</b> marcou reunião para terça, 10h', w: 'ontem · Parceria' },

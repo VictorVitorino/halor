@@ -19,5 +19,6 @@ function boot() {
   subHooks.editor = renderEditor;
   route();
   bootHalos();
+  bootFields();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

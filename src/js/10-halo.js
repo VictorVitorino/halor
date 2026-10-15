@@ -244,7 +244,7 @@ function haloLoop(now) {
   requestAnimationFrame(haloLoop);
 }
 function bootHalos() {
-  $$('canvas.halo-field').forEach(initHaloField);
+  $$('canvas.halo-field[data-halo]').forEach(initHaloField);
   if (!REDUCED) requestAnimationFrame(haloLoop);
   document.addEventListener('halor:view', () => setTimeout(() => haloFields.forEach(f => f.resize()), 30));
 }

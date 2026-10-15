@@ -42,7 +42,7 @@
       <section class="sub" data-subview="inicio" aria-label="Início">
         <div class="st-pad">
           <div class="home-hero">
-            <canvas class="halo-field" data-halo="paper" aria-hidden="true"></canvas>
+            <canvas class="halo-field halor-field" data-field="paper" aria-hidden="true"></canvas>
             <div class="hh-text">
               <p class="eyebrow">Quinta-feira, 15 de outubro</p>
               <h1 class="hh-h">Bom dia, Marina.</h1>
@@ -67,8 +67,8 @@
           </div>
           <div class="starts">
             <a class="start start-new" href="#editor"><span class="st-ic"><svg aria-hidden="true"><use href="#i-plus"/></svg></span><b>Nova apresentação</b><small>Em branco ou com o seu kit de marca</small><kbd>1</kbd></a>
-            <button class="start" type="button" data-scroll="#modelos"><span class="st-ic"><svg aria-hidden="true"><use href="#i-grid"/></svg></span><b>Modelos</b><small>Proposta, pitch, kickoff, aula</small><kbd>2</kbd></button>
-            <a class="start" href="#editor"><span class="st-ic"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><b>Retomar</b><small>Proposta comercial 2027</small><kbd>3</kbd></a>
+            <button class="start" type="button" data-scroll="#modelos"><span class="st-ic"><svg aria-hidden="true"><use href="#i-grid"/></svg></span><b>Modelos</b><small>Kickoff, aula, workshop, evento</small><kbd>2</kbd></button>
+            <a class="start" href="#editor"><span class="st-ic"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><b>Retomar</b><small>Kickoff 2027</small><kbd>3</kbd></a>
             <button class="start" type="button" data-open="m-import"><span class="st-ic"><svg aria-hidden="true"><use href="#i-upload"/></svg></span><b>Importar arquivo</b><small>.pptx, .pdf ou acervo .json</small><kbd>4</kbd></button>
             <button class="start" type="button" data-toast="A biblioteca abre dentro do editor, com componentes e efeitos."><span class="st-ic"><svg aria-hidden="true"><use href="#i-layers"/></svg></span><b>Biblioteca</b><small>Componentes, gráficos e efeitos</small><kbd>5</kbd></button>
             <a class="start" href="#marca"><span class="st-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><b>Guia da marca</b><small>Cores, fontes e regras</small><kbd>6</kbd></a>
@@ -104,7 +104,7 @@
         <div class="ed-top">
           <div class="ed-file">
             <a class="btn-icon" href="#estudio" aria-label="Voltar ao início"><svg aria-hidden="true"><use href="#i-back"/></svg></a>
-            <div class="ed-name"><input id="ed-title" value="Proposta comercial 2027 · Grupo Aurora" aria-label="Título da apresentação"><span class="save-pill"><svg aria-hidden="true"><use href="#i-check"/></svg> Salvo na nuvem às 09:42</span></div>
+            <div class="ed-name"><input id="ed-title" value="Kickoff 2027 · Time de produto" aria-label="Título da apresentação"><span class="save-pill"><svg aria-hidden="true"><use href="#i-check"/></svg> Salvo na nuvem às 09:42</span></div>
           </div>
           <nav class="ed-menu" aria-label="Menus do editor">
             <button type="button">Arquivo</button><button type="button">Editar</button><button type="button">Inserir</button><button type="button">Slide</button><button type="button">Organizar</button><button type="button">Apresentar</button><button type="button">Ajuda</button>
@@ -174,7 +174,7 @@
               <div class="insp-sec">
                 <p class="insp-h">Checagens</p>
                 <ul class="checks">
-                  <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Um destaque por slide</b><span>O número −34 dias domina a leitura.</span></div></li>
+                  <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Um destaque por slide</b><span>O número 2× domina a leitura.</span></div></li>
                   <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Contraste do texto</b><span>7,1:1, acima do mínimo de 4,5:1.</span></div></li>
                   <li class="warn"><svg aria-hidden="true"><use href="#i-alert"/></svg><div><b>Título com 11 palavras</b><span>Títulos de até 7 palavras seguram 30% mais o olhar.</span><button class="btn btn-ghost btn-xs" type="button" id="fix-title">Aplicar sugestão</button></div></li>
                   <li class="ok"><svg aria-hidden="true"><use href="#i-check"/></svg><div><b>Imagem ou gráfico dominante</b><span>Ocupa 38% da área visível.</span></div></li>
@@ -214,7 +214,7 @@
             <label class="flt"><span>Período</span><select class="select"><option>Últimos 90 dias</option><option>Últimos 30 dias</option><option>Últimos 7 dias</option><option>Este ano</option></select></label>
             <label class="flt"><span>Carteira</span><select class="select"><option>Todas as carteiras</option><option>Indústria</option><option>Varejo</option><option>Energia</option></select></label>
             <label class="flt"><span>Pessoa</span><select class="select"><option>Todo o time</option><option>Marina Costa</option><option>Rafael Lima</option></select></label>
-            <label class="flt"><span>Apresentação</span><select class="select"><option>Todas</option><option>Proposta comercial 2027</option></select></label>
+            <label class="flt"><span>Apresentação</span><select class="select"><option>Todas</option><option>Kickoff 2027</option></select></label>
           </div>
           <div class="dash" data-dash="app"></div>
           <p class="dash-note mono">Dados ilustrativos · carteira de exemplo com 100 apresentações enviadas por mês</p>
@@ -223,9 +223,10 @@
 
       <!-- APRESENTAR (palco Noite) -->
       <section class="sub sub-stage theme-night" data-subview="apresentar" aria-label="Modo palco" hidden>
+        <canvas class="halo-field halor-field" data-field="stage" aria-hidden="true"></canvas>
         <div class="stage-top">
           <span class="chip"><i class="dot dot-live"></i> Ao vivo</span>
-          <span class="stage-title">Proposta comercial 2027 · Grupo Aurora</span>
+          <span class="stage-title">Kickoff 2027 · Time de produto</span>
           <span class="stage-clock mono num" id="stage-clock">12:41</span>
           <a class="btn btn-ghost btn-sm" href="#editor"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Sair</span></a>
         </div>
@@ -233,7 +234,7 @@
           <div class="stage-now"><div id="stage-now"></div></div>
           <div class="stage-side">
             <div class="stage-next"><p class="sk mono">A seguir · slide 4</p><div id="stage-next"></div></div>
-            <div class="stage-notes"><p class="sk mono">Notas</p><p>Abrir com a pergunta: quanto custa um mês a mais de ciclo? Depois mostrar o −34 dias e pausar dois segundos.</p></div>
+            <div class="stage-notes"><p class="sk mono">Notas</p><p>Abrir com a pergunta: o que faria você ler um material até o fim? Depois mostrar o 2× e pausar dois segundos.</p></div>
             <div class="stage-pulse">
               <p class="sk mono">Pulso da audiência</p>
               <div class="pulse-row"><b id="pulse-val">87%</b><span class="muted">atenção agora · 4 pessoas</span></div>
@@ -328,7 +329,7 @@
 <!-- 404 -->
 <div class="view theme-night" id="v-404" data-view="404" hidden>
   <div class="nf">
-    <canvas class="halo-field" data-halo="nf" aria-hidden="true"></canvas>
+    <canvas class="halo-field halor-field" data-field="nf" aria-hidden="true"></canvas>
     <p class="eyebrow no-rule">Erro 404</p>
     <p class="nf-n display">4<svg aria-hidden="true"><use href="#hl-mark"/></svg>4</p>
     <h1 class="display">Esta página saiu da órbita.</h1>
