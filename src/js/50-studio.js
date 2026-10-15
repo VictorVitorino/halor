@@ -96,7 +96,7 @@ const TPLS = [
   { n: 'Pitch de investimento', d: '12 slides', s: { type: 'kpi', k: 'Tração', h: 'Crescemos 3× em um ano.', big: '3×', cap: 'receita recorrente em 12 meses', bars: [[30, 'T1'], [48, 'T2'], [70, 'T3'], [92, 'T4']] } },
   { n: 'Status report executivo', d: '6 slides', s: { type: 'steps', k: 'Status', h: 'Onde estamos em três frentes.', s: [['01', 'No prazo', 'Frente comercial'], ['02', 'Atenção', 'Frente técnica'], ['03', 'Concluído', 'Treinamento']] } },
   { n: 'Kickoff de projeto', d: '9 slides', s: { type: 'tl', k: 'Plano', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
-  { n: 'Estudo de caso', d: '7 slides', s: { type: 'text', k: 'Caso', h: 'Como a Atlas fechou 2× mais.', p: ['Contexto, desafio e resultado em três atos.'] } },
+  { n: 'Aula e treinamento', d: '10 slides', s: { type: 'text', k: 'Aula 4', h: 'Aprenda fazendo, em três rodadas.', p: ['Pergunta, votação e post-its em cada bloco.'] } },
   { n: 'Em branco', d: 'com seu kit de marca', s: { type: 'end', h: 'Comece aqui.', sub: 'Kit de marca aplicado' } }
 ];
 const SIGNALS = [
@@ -105,7 +105,7 @@ const SIGNALS = [
   { r: 1, h: 'O slide 6, Investimento, segurou o olhar por 41 s', w: 'há 1 h · Interesse' },
   { r: 3, h: '<b>Vale Verde</b> comentou no slide 3: “Esse prazo inclui treinamento?”', w: 'há 2 h · Aproximação' },
   { r: 5, h: '<b>Orion Varejo</b> marcou reunião para terça, 10h', w: 'ontem · Parceria' },
-  { r: 6, h: '<b>Atlas Energia</b> assinou a proposta', w: 'ontem · Proposta' }
+  { r: 6, h: '<b>Atlas Energia</b> aprovou o projeto', w: 'ontem · Valor' }
 ];
 const SIG_FILL = ['#c4a6ff', '#b08aff', '#9c6cff', '#8b4ffa', '#7a33eb', '#6420cc', '#4a11a0'];
 const SIG_INK = ['#17112b', '#17112b', '#17112b', '#fff', '#fff', '#fff', '#fff'];
@@ -197,8 +197,8 @@ function renderPreviews() {
   const c = $('#pf-canvas'); if (c) c.innerHTML = slideHTML(DECK[2], 3);
   const a = $('#apl-slides');
   if (a) [
-    { type: 'cover', k: 'Modelo · capa', h: 'A venda segue a luz.', sub: 'Halor · manual da marca' },
+    { type: 'cover', k: 'Modelo · capa', h: 'Faça cada olhar render.', sub: 'Halor · manual da marca' },
     { type: 'kpi', k: 'Modelo · número', h: 'Um destaque por slide.', big: '50ms', cap: 'para o cérebro julgar um visual', bars: [[41, 'Antes'], [52, 'M1'], [61, 'M2'], [68, 'M3']] },
-    { type: 'steps', k: 'Modelo · processo', h: 'Atenção, interesse, proposta.', s: [['01', 'Atenção', 'O olhar para'], ['02', 'Interesse', 'O olhar fica'], ['07', 'Proposta', 'O cliente assina']] }
+    { type: 'steps', k: 'Modelo · processo', h: 'Atenção, interesse, valor.', s: [['01', 'Atenção', 'O olhar para'], ['02', 'Interesse', 'O olhar fica'], ['07', 'Valor', 'Quem assiste diz sim']] }
   ].forEach((s, i) => a.insertAdjacentHTML('beforeend', slideHTML(s, i + 1, 'halor')));
 }

@@ -1,89 +1,616 @@
+      <!-- FILME · Conheça o Halor (60 s). Cada cena tem relógio próprio (--lt);
+           .fa = entrada no tempo --at · .fd = mudança no tempo --xt (saída, troca de estado).
+           Telas do Estúdio desenhadas em HTML: dentro de .fm, cqw é a largura da tela simulada. -->
       <div class="wrap s-film-wrap" id="filme">
-        <div class="film" id="film" data-state="poster">
+        <div class="film" id="film" data-state="poster" role="region" aria-label="Filme Conheça o Halor" aria-describedby="film-roteiro">
+          <svg class="film-defs" width="0" height="0" aria-hidden="true" focusable="false">
+            <symbol id="fi-vote" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="6" cy="18" r="1.8"/><circle cx="12" cy="18" r="1.8"/><circle cx="12" cy="12.5" r="1.8"/><circle cx="12" cy="7" r="1.8"/><circle cx="18" cy="18" r="1.8"/><circle cx="18" cy="12.5" r="1.8"/></symbol>
+            <symbol id="fi-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M5 4.5h14v9.5l-5 5H5z"/><path d="M14 19v-5h5"/></symbol>
+            <symbol id="fi-form" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 12.5h8M8 16h4.5"/></symbol>
+            <symbol id="fi-timer" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="13.5" r="7"/><path d="M12 13.5V9.8M9.5 3.5h5M18 6.8l1.5-1.5"/></symbol>
+            <symbol id="fi-spark" viewBox="0 0 24 24"><path d="M12 1Q12 12 23 12Q12 12 12 23Q12 12 1 12Q12 12 12 1Z" fill="currentColor"/></symbol>
+            <symbol id="fi-cursor" viewBox="0 0 24 24"><path d="M5 3l14 8.2-6.1 1.4L9.6 19z" fill="#17112b" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></symbol>
+          </svg>
+          <div class="film-paper" aria-hidden="true"></div>
           <canvas class="film-cv" aria-hidden="true"></canvas>
-          <div class="film-scenes">
-            <div class="sc sc-ms" data-from="0" data-to="5.2">
-              <p class="f-ms mono">50<small>ms</small></p>
-              <p class="f-line">é o tempo que o cérebro leva para julgar o que vê.</p>
+
+          <div class="film-scenes" aria-hidden="true">
+            <!-- 0:00 · 50 ms -->
+            <div class="sc sc-c sc-ms" data-from="0" data-to="3" data-fo=".1">
+              <span class="f-spk-w" data-anchor="spk"><svg class="f-spk fa fa-pop" style="--at:.05;--du:.7"><use href="#fi-spark"/></svg></span>
+              <p class="f-ms mono fa fa-up" style="--at:.12;--du:.45"><b data-n="0 50 .2 .4" data-pad="2">50</b><small>ms</small></p>
+              <p class="f-line" data-words="1.2 .07">é o tempo que o cérebro leva para julgar o que vê.</p>
             </div>
-            <div class="sc" data-from="5.2" data-to="11">
-              <p class="f-h">Antes de ler,<br>o cliente já sentiu.</p>
-              <p class="f-sub">A psicologia chama isso de <b>efeito halo</b>.</p>
-              <p class="f-ref mono">Edward Thorndike · 1920</p>
+
+            <!-- 0:03 · efeito halo -->
+            <div class="sc sc-c sc-halo" data-from="3" data-to="6">
+              <p class="f-h"><span class="ln fa fa-mask" style="--at:.3;--du:.6">Antes de ler,</span><br><span class="ln fa fa-mask" style="--at:.38;--du:.6">quem assiste já sentiu.</span></p>
+              <p class="f-sub fa fa-up" style="--at:1">A psicologia chama isso de <b>efeito halo</b>.</p>
+              <p class="f-ref mono fa fa-fade" style="--at:1.45">Edward Thorndike · 1920</p>
             </div>
-            <div class="sc sc-chain" data-from="11" data-to="21">
-              <p class="f-kick mono">A cadeia</p>
-              <ol class="f-chain">
-                <li style="--i:0">Atenção</li><li style="--i:1">Interesse</li><li style="--i:2">Curiosidade</li><li style="--i:3">Aproximação</li><li style="--i:4">Confiança</li><li style="--i:5">Parceria</li><li style="--i:6">Proposta</li>
-              </ol>
-            </div>
-            <div class="sc sc-logo" data-from="21" data-to="27.5">
-              <svg class="f-mark" viewBox="0 0 64 64" aria-hidden="true">
-                <path class="f-ring" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
-                <circle class="f-inner" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6"/>
-                <circle class="f-core" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
-                <path class="f-spark" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#fff"/>
-              </svg>
-              <p class="f-word wordmark">halor</p>
-              <p class="f-tag">A venda segue a luz.</p>
-            </div>
-            <div class="sc sc-beat" data-from="27.5" data-to="30.2">
-              <p class="f-verb display">Crie<i>.</i></p>
-              <div class="mini mini-edit">
-                <div class="me-rail"><b></b><b class="on"></b><b></b><b></b></div>
-                <div class="me-slide">
-                  <span class="me-t" style="--d:.1s"></span><span class="me-t2" style="--d:.3s"></span>
-                  <span class="me-img" style="--d:.55s"></span>
-                  <span class="me-bars" style="--d:.8s"><i style="--h:40%"></i><i style="--h:62%"></i><i style="--h:88%"></i></span>
+
+            <!-- 0:06 · o que brilha primeiro -->
+            <div class="sc sc-shine" data-from="6" data-to="8">
+              <p class="f-h2 fd" style="--xt:1.5"><span class="fa fa-up" style="--at:.1">O que brilha primeiro vale mais.</span></p>
+              <div class="sh">
+                <div class="sh-back">
+                  <div class="sh-s fd" style="--xt:1.5;--xn:f-fly;--xdu:.4" data-anchor="sh1"><div class="sh-th" data-slide="kpi" data-n-slide="3"></div><i class="sh-dim fd" style="--xt:.5;--xdu:.35"></i></div>
+                  <div class="sh-s fd" style="--xt:1.56;--xn:f-fly;--xdu:.4" data-anchor="sh2"><div class="sh-th" data-slide="tl" data-n-slide="4"></div><i class="sh-dim fd" style="--xt:.62;--xdu:.35"></i></div>
+                  <div class="sh-s fd" style="--xt:1.62;--xn:f-fly;--xdu:.4" data-anchor="sh3"><div class="sh-th" data-slide="team" data-n-slide="5"></div><i class="sh-dim fd" style="--xt:.74;--xdu:.35"></i></div>
+                </div>
+                <div class="sh-front fd" style="--xt:1.44;--xn:f-fly;--xdu:.42" data-anchor="sh0">
+                  <div class="slide sh-cv fa fa-pop" style="--at:.12;--du:.55;--s0:.82">
+                    <span class="sh-n">01</span>
+                    <p class="sh-k">Kickoff · 2027</p>
+                    <p class="sh-t">Plano 2027</p>
+                    <p class="sh-st">Do kickoff à entrega</p>
+                    <span class="sh-halo"></span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="sc sc-beat" data-from="30.2" data-to="32.9">
-              <p class="f-verb display">Preveja<i>.</i></p>
-              <div class="mini mini-ray">
-                <div class="mr-slide"><span class="me-t"></span><span class="me-t2"></span><span class="me-img"></span>
-                  <span class="mr-heat h1"></span><span class="mr-heat h2"></span><span class="mr-heat h3"></span>
-                  <span class="mr-n" style="--x:18%;--y:22%">1</span><span class="mr-n" style="--x:70%;--y:58%">2</span><span class="mr-n" style="--x:22%;--y:78%">3</span>
+
+            <!-- 0:08 · a cadeia, na régua da Distância Halor -->
+            <div class="sc sc-chain" data-from="8" data-to="11">
+              <p class="f-kick mono fa fa-fade" style="--at:.05">A cadeia</p>
+              <div class="fr fr-chain" data-walk="0 1 .05 2.4" data-warm data-anchor="rule">
+                <span class="fr-line"></span>
+                <span class="fr-tick" data-pos="0" style="--p:0"><b>7 m</b></span>
+                <span class="fr-tick" data-pos=".2155" style="--p:.2155"><b>3,6 m</b></span>
+                <span class="fr-tick" data-pos=".431" style="--p:.431"><b>1,2 m</b></span>
+                <span class="fr-tick" data-pos=".6466" style="--p:.6466"><b>45 cm</b></span>
+                <span class="fr-tick" data-pos="1" style="--p:1"><b>0</b></span>
+                <span class="fr-dot"></span>
+                <ol class="f-chain">
+                  <li class="fd" style="--xt:.4;--xdu:.08"><span class="fa fa-cut" style="--at:0">Atenção</span></li>
+                  <li class="fd" style="--xt:.8;--xdu:.08"><span class="fa fa-cut" style="--at:.4">Interesse</span></li>
+                  <li class="fd" style="--xt:1.2;--xdu:.08"><span class="fa fa-cut" style="--at:.8">Curiosidade</span></li>
+                  <li class="fd" style="--xt:1.6;--xdu:.08"><span class="fa fa-cut" style="--at:1.2">Aproximação</span></li>
+                  <li class="fd" style="--xt:2;--xdu:.08"><span class="fa fa-cut" style="--at:1.6">Confiança</span></li>
+                  <li class="fd" style="--xt:2.4;--xdu:.08"><span class="fa fa-cut" style="--at:2">Parceria</span></li>
+                  <li class="f-last"><span class="fa fa-cut" style="--at:2.4">Valor</span></li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- 0:11 · halor, slogan de abertura -->
+            <div class="sc sc-c sc-logo" data-from="11" data-to="13.5" data-fo=".1">
+              <span class="f-mk" data-anchor="mark">
+                <svg class="f-mark" viewBox="0 0 64 64">
+                  <path class="f-ring fa fa-draw" style="--at:.05;--du:1;--len:146" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
+                  <circle class="f-inner fa fa-fade" style="--at:.5;--du:.5" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6"/>
+                  <circle class="f-core fa fa-core" style="--at:.32;--du:.55" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
+                  <path class="f-spark fa fa-spark" style="--at:.8;--du:.6" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#fff"/>
+                </svg>
+              </span>
+              <p class="f-word wordmark fa fa-up" style="--at:.7">halor</p>
+              <p class="f-tag fa fa-up" style="--at:.95">Faça cada olhar <span class="f-lux" style="--at:1.1">render.</span></p>
+            </div>
+
+            <!-- 0:13.5 a 0:22.5 · Crie (mundo Papel) -->
+            <div class="sc sc-paper" data-from="13.5" data-to="22.5">
+              <div class="fv" data-anchor="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.25">Crie<i>.</i></p>
+                <ol class="fv-steps fa fa-fade" style="--at:.45">
+                  <li data-on="0 2">Início do Estúdio</li>
+                  <li data-on="2 4">Escolha um modelo</li>
+                  <li data-on="4 7">Crie e edite</li>
+                  <li data-on="7 99">Componentes lúdicos e efeitos</li>
+                </ol>
+              </div>
+            </div>
+
+            <!-- Início do Estúdio -->
+            <div class="sc sc-paper" data-from="13.5" data-to="15.5">
+              <div class="fs-area">
+                <div class="fm fm-home fa fa-rise" style="--at:.12;--du:.6" data-cur="0 104,96|1 104,96|1.55 .k-mod|1.8 !">
+                  <div class="fm-side">
+                    <span class="fm-logo"><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg><b class="wordmark">halor</b></span>
+                    <span class="fm-btn fm-btn-p fm-new"><svg aria-hidden="true"><use href="#i-plus"/></svg>Nova apresentação</span>
+                    <span class="fm-nav act"><svg aria-hidden="true"><use href="#i-home"/></svg>Início</span>
+                    <span class="fm-nav"><svg aria-hidden="true"><use href="#i-layers"/></svg>Editor</span>
+                    <span class="fm-nav"><svg aria-hidden="true"><use href="#i-chart"/></svg>Painel Halor</span>
+                    <span class="fm-nav"><svg aria-hidden="true"><use href="#i-present"/></svg>Apresentar</span>
+                  </div>
+                  <div class="fm-main">
+                    <div class="fm-hero">
+                      <p class="fm-eb mono fa fa-fade" style="--at:.35">Quinta-feira, 15 de outubro</p>
+                      <p class="fm-hh fa fa-up" style="--at:.4">Bom dia, Marina.</p>
+                      <p class="fm-p fa fa-fade" style="--at:.5">3 pessoas olharam suas apresentações desde ontem.</p>
+                    </div>
+                    <div class="fm-starts">
+                      <span class="fm-start fm-start-p fa fa-up" style="--at:.55" data-hov><span class="fm-ic"><svg aria-hidden="true"><use href="#i-plus"/></svg></span><b>Nova apresentação</b></span>
+                      <span class="fm-start k-mod fa fa-up" style="--at:.63" data-hov><span class="fm-ic"><svg aria-hidden="true"><use href="#i-grid"/></svg></span><b>Modelos</b></span>
+                      <span class="fm-start fa fa-up" style="--at:.71" data-hov><span class="fm-ic"><svg aria-hidden="true"><use href="#i-clock"/></svg></span><b>Retomar</b></span>
+                      <span class="fm-start fa fa-up" style="--at:.79" data-hov><span class="fm-ic"><svg aria-hidden="true"><use href="#i-upload"/></svg></span><b>Importar arquivo</b></span>
+                      <span class="fm-start fa fa-up" style="--at:.87" data-hov><span class="fm-ic"><svg aria-hidden="true"><use href="#i-layers"/></svg></span><b>Biblioteca</b></span>
+                      <span class="fm-start fa fa-up" style="--at:.95" data-hov><span class="fm-ic"><svg aria-hidden="true"><use href="#i-book"/></svg></span><b>Guia da marca</b></span>
+                    </div>
+                  </div>
+                  <i class="fm-cur"><svg aria-hidden="true"><use href="#fi-cursor"/></svg></i><i class="fm-rip"></i>
                 </div>
-                <p class="mr-cap mono">Raio Halor · índice 86</p>
               </div>
             </div>
-            <div class="sc sc-beat" data-from="32.9" data-to="35.6">
-              <p class="f-verb display">Apresente<i>.</i></p>
-              <div class="mini mini-stage">
-                <div class="ms-slide"><span class="me-t"></span><span class="me-img"></span></div>
-                <div class="ms-side"><span class="ms-live"><i class="dot dot-live"></i> 4 assistindo</span><span class="ms-meter"><i></i></span><span class="ms-l">atenção 87%</span></div>
+
+            <!-- Escolher um modelo -->
+            <div class="sc sc-paper" data-from="15.5" data-to="17.5" data-fi=".14">
+              <div class="fs-area">
+                <div class="fm fm-tpl" data-cur="0 60,30|.3 .tc1|.52 .tc2|.74 .tc3|1.08 .tc4|1.3 !">
+                  <div class="fm-top"><span class="fm-search"><svg aria-hidden="true"><use href="#i-search"/></svg><em>Buscar modelos</em></span><span class="fm-av">MC</span></div>
+                  <div class="fm-pad">
+                    <div class="fm-sec"><p class="fm-h2">Comece com um modelo</p><p class="fm-sub">Todos já aplicam o seu kit de marca</p></div>
+                    <div class="fm-tpls">
+                      <span class="fm-tc tc1 fa fa-up" style="--at:.02" data-hov><span class="fm-th" data-slide="t1"></span><b>Proposta comercial</b></span>
+                      <span class="fm-tc tc2 fa fa-up" style="--at:.07" data-hov><span class="fm-th" data-slide="t2"></span><b>Pitch de investimento</b></span>
+                      <span class="fm-tc tc3 fa fa-up" style="--at:.12" data-hov><span class="fm-th" data-slide="t3"></span><b>Status report executivo</b></span>
+                      <span class="fm-tc tc4 fa fa-up" style="--at:.17" data-hov><span class="fm-th" data-slide="t4"></span><b>Kickoff de projeto</b></span>
+                      <span class="fm-tc fa fa-up" style="--at:.22" data-hov><span class="fm-th" data-slide="t5"></span><b>Aula e treinamento</b></span>
+                      <span class="fm-tc fa fa-up" style="--at:.27" data-hov><span class="fm-th" data-slide="t6"></span><b>Em branco</b></span>
+                    </div>
+                  </div>
+                  <div class="fm-flip" data-flip=".tc4 .fm-th|#f-edslide|1.38|.5"><span class="fm-flip-in" data-slide="t4"></span></div>
+                  <i class="fm-cur"><svg aria-hidden="true"><use href="#fi-cursor"/></svg></i><i class="fm-rip"></i>
+                </div>
               </div>
             </div>
-            <div class="sc sc-beat" data-from="35.6" data-to="38.4">
-              <p class="f-verb display">Meça<i>.</i></p>
-              <div class="mini mini-chart">
-                <svg viewBox="0 0 300 150" aria-hidden="true"><path class="mc-grid" d="M0 140H300M0 100H300M0 60H300M0 20H300"/><path class="mc-line" d="M10 128 L55 122 L100 126 L145 112 L190 80 L235 58 L290 26"/><circle class="mc-dot" cx="290" cy="26" r="5"/></svg>
-                <span class="chip mc-chip"><svg aria-hidden="true"><use href="#i-check"/></svg> Proposta assinada</span>
+
+            <!-- Criar e editar -->
+            <div class="sc sc-paper" data-from="17.5" data-to="20.5" data-fi=".12">
+              <div class="fs-area">
+                <div class="fm fm-ed" data-cur="0 50,62|1.45 50,62|1.75 .fs-num|1.82 !|2.1 .ff-vi|2.18 !|2.6 74,70">
+                  <div class="fm-edbar">
+                    <span class="fm-back"><svg aria-hidden="true"><use href="#i-back"/></svg></span>
+                    <span class="fm-doc"><b>Plano 2027 · Do kickoff à entrega</b><span class="fm-save fa fa-pop" style="--at:2.45"><svg aria-hidden="true"><use href="#i-check"/></svg>Salvo na nuvem às 09:42</span></span>
+                    <span class="fm-acts"><span class="fm-btn fm-btn-g"><svg aria-hidden="true"><use href="#i-download"/></svg><em>Salvar como</em></span><span class="fm-btn fm-btn-p"><svg aria-hidden="true"><use href="#i-play"/></svg><em>Apresentar</em></span></span>
+                  </div>
+                  <div class="fm-rib" data-ribbon></div>
+                  <div class="fm-edbody">
+                    <ol class="fm-rail" data-rail="1"></ol>
+                    <div class="fm-stage">
+                      <div class="slide fs-kick" id="f-edslide">
+                        <p class="fs-k">Kickoff · 2027</p>
+                        <p class="fs-t" data-type=".2 .55">Plano 2027</p>
+                        <p class="fs-st" data-type=".85 .45">Do kickoff à entrega</p>
+                        <div class="fs-big fa fa-fade" style="--at:.5"><b class="fs-num fd" style="--xt:2.2;--xn:f-violet;--xdu:.3">12</b><span>semanas até a entrega</span></div>
+                        <div class="fs-chart fa fa-lib" style="--at:1;--du:.38">
+                          <i class="fa fa-bar" style="--at:1.38;--h:34%"></i><i class="fa fa-bar" style="--at:1.46;--h:52%"></i><i class="fa fa-bar" style="--at:1.54;--h:71%"></i><i class="fs-hi fa fa-bar" style="--at:1.62;--h:94%"></i>
+                        </div>
+                        <span class="fs-sel" data-on="1.82 99"><i></i><i></i><i></i><i></i></span>
+                        <span class="fs-fb" data-on="1.82 99"><b>B</b><em>I</em><span class="ff-sw ff-ink"></span><span class="ff-sw ff-vi" data-on="2.18 99"></span></span>
+                      </div>
+                    </div>
+                  </div>
+                  <i class="fm-cur"><svg aria-hidden="true"><use href="#fi-cursor"/></svg></i><i class="fm-rip"></i>
+                </div>
               </div>
             </div>
-            <div class="sc" data-from="38.4" data-to="42.4">
-              <p class="f-h">Cada olhar vira dado.<br><em>Cada dado vira proposta.</em></p>
+
+            <!-- Componentes lúdicos e efeitos -->
+            <div class="sc sc-paper" data-from="20.5" data-to="22.5" data-fi=".12">
+              <div class="fs-area">
+                <div class="fm fm-ed fm-lib" data-cur="0 50,60|.14 .li-vote|.24 !|.66 .fm-rail li:nth-child(5)|.72 !|.82 .li-note|.9 !|1.22 .fm-rail li:nth-child(6)|1.28 !|1.38 .lt-anim|1.44 !|1.6 .fx-glow|1.66 !|2 70,74">
+                  <div class="fm-edbar">
+                    <span class="fm-back"><svg aria-hidden="true"><use href="#i-back"/></svg></span>
+                    <span class="fm-doc"><b>Plano 2027 · Do kickoff à entrega</b><span class="fm-save"><svg aria-hidden="true"><use href="#i-check"/></svg>Salvo na nuvem às 09:42</span></span>
+                    <span class="fm-acts"><span class="fm-btn fm-btn-g"><svg aria-hidden="true"><use href="#i-download"/></svg><em>Salvar como</em></span><span class="fm-btn fm-btn-p"><svg aria-hidden="true"><use href="#i-play"/></svg><em>Apresentar</em></span></span>
+                  </div>
+                  <div class="fm-rib" data-ribbon></div>
+                  <div class="fm-edbody fm-edbody-lib">
+                    <ol class="fm-rail" data-rail="1" data-drop=".72 1.28"></ol>
+                    <div class="fm-stage">
+                      <div class="slide fs-kick">
+                        <p class="fs-k">Kickoff · 2027</p>
+                        <p class="fs-t">Plano 2027</p>
+                        <p class="fs-st">Do kickoff à entrega</p>
+                        <div class="fs-big"><b class="fs-num fs-num-vi">12</b><span>semanas até a entrega</span></div>
+                        <div class="fs-chart"><i style="--h:34%"></i><i style="--h:52%"></i><i style="--h:71%"></i><i class="fs-hi" style="--h:94%"></i></div>
+                        <span class="fs-sweep fd" style="--xt:1.68;--xn:f-sweep;--xdu:.5"></span>
+                      </div>
+                    </div>
+                    <div class="fm-lib-p fa fa-left" style="--at:0;--du:.3">
+                      <div class="fm-ltabs"><span data-on="0 1.44">Biblioteca</span><span class="lt-anim" data-on="1.44 99">Animação</span></div>
+                      <div class="fm-lgrid">
+                        <div class="fm-llist fd" style="--xt:1.44;--xdu:.12">
+                          <span class="fm-li li-vote" data-hov><span class="fm-lic"><svg aria-hidden="true"><use href="#fi-vote"/></svg></span>Votação</span>
+                          <span class="fm-li li-note" data-hov><span class="fm-lic"><svg aria-hidden="true"><use href="#fi-note"/></svg></span>Post-its</span>
+                          <span class="fm-li" data-hov><span class="fm-lic"><svg aria-hidden="true"><use href="#fi-form"/></svg></span>Formulário</span>
+                          <span class="fm-li" data-hov><span class="fm-lic"><svg aria-hidden="true"><use href="#fi-timer"/></svg></span>Cronômetro</span>
+                        </div>
+                        <div class="fm-fx fa fa-fade" style="--at:1.46;--du:.15">
+                          <span data-on="0 1.66">Revelar</span><span class="fx-glow" data-on="1.66 99">Brilho</span><span>Subir</span><span>Halo</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <span class="fm-ghost" data-drag=".26 .72"><svg aria-hidden="true"><use href="#fi-vote"/></svg>Votação</span>
+                  <span class="fm-ghost" data-drag=".92 1.28"><svg aria-hidden="true"><use href="#fi-note"/></svg>Post-its</span>
+                  <i class="fm-cur"><svg aria-hidden="true"><use href="#fi-cursor"/></svg></i><i class="fm-rip"></i>
+                </div>
+              </div>
             </div>
-            <div class="sc sc-end" data-from="42.4" data-to="48.1">
-              <span class="logo logo-night f-endlogo"><svg class="mk-glow" aria-hidden="true"><use href="#hl-mark"/></svg><span class="wordmark">halor</span></span>
-              <p class="f-tag">A venda segue a luz.</p>
-              <a class="btn btn-primary" href="#assinar">Comece grátis</a>
+
+            <!-- 0:22.5 · Importe -->
+            <div class="sc sc-paper" data-from="22.5" data-to="25.5">
+              <div class="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.12">Importe<i>.</i></p>
+                <p class="fv-cap fa fa-up" style="--at:.3">.pptx e .pdf viram slides editáveis</p>
+              </div>
+            </div>
+            <div class="sc sc-paper" data-from="22.5" data-to="25.5">
+              <div class="fs-area">
+                <div class="fm fm-imp">
+                  <div class="fm-acv">
+                    <p class="fm-acv-h">Acervo</p>
+                    <div class="fm-acv-g"><span data-slide="cover"></span><span data-slide="t2"></span><span data-slide="t3"></span><span data-slide="t5"></span></div>
+                  </div>
+                  <div class="fm-dim"></div>
+                  <div class="fm-modal fa fa-pop" style="--at:.04;--du:.35;--s0:.94">
+                    <div class="fm-mh"><b>Importar para o acervo</b><svg aria-hidden="true"><use href="#i-x"/></svg></div>
+                    <div class="fm-drop">
+                      <svg class="fm-drop-ic" aria-hidden="true"><use href="#i-upload"/></svg>
+                      <b>Arraste os arquivos para cá</b>
+                      <span class="fm-files">
+                        <span class="fm-file fd" style="--xt:.62;--xdu:.15"><span class="fa fa-fall" style="--at:.14"><svg aria-hidden="true"><use href="#i-file"/></svg><em>PPTX</em></span></span>
+                        <span class="fm-file fd" style="--xt:.66;--xdu:.15"><span class="fa fa-fall" style="--at:.26"><svg aria-hidden="true"><use href="#i-file"/></svg><em>PDF</em></span></span>
+                        <span class="fm-file fd" style="--xt:.7;--xdu:.15"><span class="fa fa-fall" style="--at:.38"><svg aria-hidden="true"><use href="#i-file"/></svg><em>PPTX</em></span></span>
+                      </span>
+                    </div>
+                    <p class="fm-lb">Fila de importação</p>
+                    <ul class="fm-q">
+                      <li class="fa fa-up" style="--at:.62"><svg aria-hidden="true"><use href="#i-file"/></svg><span class="fm-qn"><b>Pitch Investidores Q3.pptx</b><span class="fm-qbar"><i class="fa fa-w" style="--at:.7;--du:.7;--w0:4%;--w1:100%"></i></span></span>
+                        <span class="fm-qs"><span class="fm-chip fd" style="--xt:1.42;--xdu:.1"><b data-n="4 100 .7 .7" data-suf="%">4%</b></span><span class="fm-chip fm-chip-ok fa fa-pop" style="--at:1.42;--du:.3">Pronto · 18 slides</span></span></li>
+                      <li class="fa fa-up" style="--at:.68"><svg aria-hidden="true"><use href="#i-file"/></svg><span class="fm-qn"><b>Relatório de resultados.pdf</b><span class="fm-qbar"><i class="fa fa-w" style="--at:1.42;--du:.78;--w0:62%;--w1:100%"></i></span></span>
+                        <span class="fm-qs"><span class="fm-chip fd" style="--xt:2.2;--xdu:.1"><b data-n="62 100 1.42 .78" data-suf="%">62%</b></span><span class="fm-chip fm-chip-ok fa fa-pop" style="--at:2.2;--du:.3">Pronto · 12 páginas</span></span></li>
+                      <li class="fa fa-up" style="--at:.74"><svg aria-hidden="true"><use href="#i-file"/></svg><span class="fm-qn"><b>Onboarding cliente.pptx</b><span class="fm-qbar"><i class="fa fa-w" style="--at:2.22;--du:.8;--w0:0%;--w1:41%"></i></span></span>
+                        <span class="fm-qs"><span class="fm-chip fm-chip-line fd" style="--xt:2.2;--xdu:.1">Na fila</span><span class="fm-chip fa fa-fade" style="--at:2.3;--du:.15"><b data-n="0 41 2.22 .8" data-suf="%">41%</b></span></span></li>
+                    </ul>
+                  </div>
+                  <div class="fm-fly">
+                    <span class="fd" style="--xt:1.48;--xn:f-tofly;--xdu:.5;--fy:-120%" data-slide="r-pitch"></span>
+                    <span class="fd" style="--xt:1.54;--xn:f-tofly;--xdu:.5;--fy:-120%" data-slide="kpi"></span>
+                    <span class="fd" style="--xt:2.26;--xn:f-tofly;--xdu:.5;--fy:-230%" data-slide="team"></span>
+                    <span class="fd" style="--xt:2.32;--xn:f-tofly;--xdu:.5;--fy:-230%" data-slide="tl"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 0:25.5 · Preveja · Raio Halor -->
+            <div class="sc sc-paper" data-from="25.5" data-to="28.5">
+              <div class="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.12">Preveja<i>.</i></p>
+                <p class="fv-cap fa fa-up" style="--at:.3">Raio Halor · índice <b class="num" data-n="0 86 .5 1" data-n2="86 91 2.12 .45">86</b></p>
+              </div>
+            </div>
+            <div class="sc sc-paper" data-from="25.5" data-to="28.5">
+              <div class="fs-area">
+                <div class="fm fm-ed fm-ray" data-cur="0 70,60|.16 .fm-ray|.24 !|1.5 76,64|1.92 .fm-fix|2.02 !|2.6 66,40">
+                  <div class="fm-edbar">
+                    <span class="fm-back"><svg aria-hidden="true"><use href="#i-back"/></svg></span>
+                    <span class="fm-doc"><b>Plano 2027 · Do kickoff à entrega</b><span class="fm-save"><svg aria-hidden="true"><use href="#i-check"/></svg>Salvo na nuvem às 09:42</span></span>
+                    <span class="fm-acts"><span class="fm-btn fm-btn-g"><svg aria-hidden="true"><use href="#i-download"/></svg><em>Salvar como</em></span><span class="fm-btn fm-btn-p"><svg aria-hidden="true"><use href="#i-play"/></svg><em>Apresentar</em></span></span>
+                  </div>
+                  <div class="fm-rib" data-ribbon data-ray=".24"></div>
+                  <div class="fm-edbody fm-edbody-ray">
+                    <div class="fm-stage">
+                      <div class="slide fs-ray">
+                        <p class="fs-k">Cronograma · slide 3</p>
+                        <p class="fs-rt fs-rt-long fd" style="--xt:2.06;--xdu:.15">O plano completo para sair do kickoff e chegar à entrega</p>
+                        <p class="fs-rt fs-rt-short fa fa-up" style="--at:2.08;--du:.3">Do kickoff à entrega em 12 semanas.</p>
+                        <span class="fs-line"></span>
+                        <span class="fs-ms" style="--l:10%"><b>Kickoff</b><i></i><small>S1</small></span>
+                        <span class="fs-ms" style="--l:37%"><b>Desenho</b><i></i><small>S4</small></span>
+                        <span class="fs-ms" style="--l:63%"><b>Piloto</b><i></i><small>S8</small></span>
+                        <span class="fs-ms fs-ms-hi" style="--l:90%"><b>Entrega</b><i></i><small>S12</small></span>
+                        <div class="fs-raylayer fa fa-fade" style="--at:.34;--du:.3">
+                          <span class="fs-heat h1 fa fa-fade" style="--at:.42;--du:.5"></span><span class="fs-heat h2 fa fa-fade" style="--at:.52;--du:.5"></span><span class="fs-heat h3 fa fa-fade" style="--at:.62;--du:.5"></span>
+                          <span class="fs-rn fa fa-pop" style="--at:.7;--l:3%;--t:21%">1</span><span class="fs-rn fa fa-pop" style="--at:.84;--l:94%;--t:24%">2</span><span class="fs-rn fa fa-pop" style="--at:.98;--l:90%;--t:64%">3</span><span class="fs-rn fa fa-pop" style="--at:1.12;--l:10%;--t:64%">4</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="fm-insp fa fa-left" style="--at:.36;--du:.35">
+                      <div class="fm-score">
+                        <span class="fm-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="33" class="trk"/><circle cx="40" cy="40" r="33" class="val" data-ring data-n="0 86 .5 1" data-n2="86 91 2.12 .45"/></svg><b class="num" data-n="0 86 .5 1" data-n2="86 91 2.12 .45">86</b></span>
+                        <span class="fm-score-k">Índice Halor do slide</span>
+                      </div>
+                      <div class="fm-checks">
+                        <div class="fm-ck fm-ck-ok"><svg aria-hidden="true"><use href="#i-check"/></svg><b>Contraste do texto</b></div>
+                        <div class="fm-ck-sw">
+                          <div class="fm-ck fm-ck-warn fd" style="--xt:2.06;--xdu:.12"><svg aria-hidden="true"><use href="#i-alert"/></svg><b>Título com 11 palavras</b><span class="fm-fix" data-hov>Aplicar sugestão</span></div>
+                          <div class="fm-ck fm-ck-ok fa fa-pop" style="--at:2.08;--du:.3"><svg aria-hidden="true"><use href="#i-check"/></svg><b>Título com 7 palavras</b></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <i class="fm-cur"><svg aria-hidden="true"><use href="#fi-cursor"/></svg></i><i class="fm-rip"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- 0:28.5 · Salve como -->
+            <div class="sc sc-paper" data-from="28.5" data-to="32" data-fo=".1">
+              <div class="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.12">Salve como<i>.</i></p>
+                <div class="fv-fmts fa fa-fade" style="--at:.3">
+                  <p data-on=".3 .75">PowerPoint editável</p>
+                  <p data-on=".75 1.2">PowerPoint idêntico</p>
+                  <p data-on="1.2 1.65">PDF</p>
+                  <p data-on="1.65 2.1">HTML interativo</p>
+                  <p data-on="2.1 99" class="fv-fmt-hot">Link Halor medido</p>
+                </div>
+              </div>
+            </div>
+            <div class="sc sc-paper" data-from="28.5" data-to="32" data-fo=".1">
+              <div class="fs-area">
+                <div class="fm fm-exp" data-cur="0 30,90|1.9 30,90|2.26 .fx-link|2.32 !|2.62 .fm-gen|2.7 !|3.2 74,96">
+                  <div class="fm-mh fm-mh-exp"><b>Salvar como</b><svg aria-hidden="true"><use href="#i-x"/></svg></div>
+                  <div class="fm-exp-b">
+                    <div class="fm-fmts">
+                      <span class="fm-fc fx-link" data-on="2.32 99"><span class="fm-fic"><svg aria-hidden="true"><use href="#i-link"/></svg></span><b>Link Halor medido</b><em class="fm-rec">Recomendado</em></span>
+                      <span class="fm-fc" data-on=".3 .75"><span class="fm-fic mono">PPTX</span><b>PowerPoint editável</b></span>
+                      <span class="fm-fc" data-on=".75 1.2"><span class="fm-fic mono">PPTX</span><b>PowerPoint idêntico</b></span>
+                      <span class="fm-fc" data-on="1.2 1.65"><span class="fm-fic mono">PDF</span><b>PDF</b></span>
+                      <span class="fm-fc" data-on="1.65 2.1"><span class="fm-fic mono">HTML</span><b>HTML interativo</b></span>
+                    </div>
+                    <div class="fm-prev">
+                      <div class="fm-pv fd" style="--xt:.75;--xdu:.12"><div class="fa fa-drop-r" style="--at:.32"><span class="pv-edit"><span>Plano 2027</span><i></i></span><em class="mono">plano-2027.pptx</em></div></div>
+                      <div class="fm-pv fd" style="--xt:1.2;--xdu:.12"><div class="fa fa-drop-r" style="--at:.77"><span class="pv-img" data-slide="cover"></span><em class="mono">slides como imagem</em></div></div>
+                      <div class="fm-pv fd" style="--xt:1.65;--xdu:.12"><div class="fa fa-drop-r" style="--at:1.22"><span class="pv-pdf"><i></i><i></i><i></i></span><em class="mono">plano-2027.pdf</em></div></div>
+                      <div class="fm-pv fd" style="--xt:2.1;--xdu:.12"><div class="fa fa-drop-r" style="--at:1.67"><span class="pv-html"><i></i><b>offline</b></span><em class="mono">plano-2027.html</em></div></div>
+                      <div class="fm-pv"><div class="fa fa-drop-r" style="--at:2.12"><span class="pv-link"><svg aria-hidden="true"><use href="#i-link"/></svg><span>halor.link/<br>plano-2027</span></span><em class="mono">cada olhar medido</em></div></div>
+                    </div>
+                  </div>
+                  <div class="fm-foot"><span class="fm-btn fm-btn-q">Cancelar</span><span class="fm-btn fm-btn-p fm-gen" data-hov>Gerar</span></div>
+                  <span class="fm-toast fa fa-up" style="--at:2.78;--du:.3" data-anchor="toast"><svg aria-hidden="true"><use href="#i-check"/></svg><span class="mono">halor.link/plano-2027 · copiado</span></span>
+                  <i class="fm-cur"><svg aria-hidden="true"><use href="#fi-cursor"/></svg></i><i class="fm-rip"></i>
+                </div>
+              </div>
+            </div>
+
+            <!-- 0:32 · Envie · Link Halor (volta à Noite) -->
+            <div class="sc sc-night" data-from="32" data-to="34.5">
+              <div class="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.1">Envie<i>.</i></p>
+                <p class="fv-cap fa fa-up" style="--at:.28">Sua luz chega antes de você.</p>
+              </div>
+              <div class="fs-area fs-phone">
+                <div class="fp-ph fa fa-rise" style="--at:.05;--du:.5" data-anchor="phone">
+                  <div class="fp-scr">
+                    <p class="fp-time num">09:47</p>
+                    <p class="fp-date">quinta-feira, 15 de outubro</p>
+                    <div class="fp-nt fa fa-drop" style="--at:.6"><span class="fp-ic"><svg aria-hidden="true"><use href="#hl-mark"/></svg></span><span class="fp-tx"><b>Halor · Grupo Aurora</b><span>Abriu 3 vezes</span></span><em>agora</em></div>
+                    <div class="fp-nt fa fa-drop" style="--at:1"><span class="fp-ic"><svg aria-hidden="true"><use href="#hl-mark"/></svg></span><span class="fp-tx"><b>Halor · Grupo Aurora</b><span>41 s no slide 6</span></span><em>agora</em></div>
+                    <div class="fp-nt fa fa-drop" style="--at:1.4"><span class="fp-ic"><svg aria-hidden="true"><use href="#hl-mark"/></svg></span><span class="fp-tx"><b>Halor · Grupo Aurora</b><span>Encaminhou para 2 pessoas</span></span><em>agora</em></div>
+                  </div>
+                </div>
+              </div>
+              <div class="fr fr-low fa fa-fade" style="--at:.3" data-walk="0 .2155 1.05 1.2" data-anchor="rule2">
+                <span class="fr-line"></span>
+                <span class="fr-tick" data-pos="0" style="--p:0"><b>7 m</b></span>
+                <span class="fr-tick" data-pos=".2155" style="--p:.2155"><b>3,6 m</b></span>
+                <span class="fr-tick" data-pos=".431" style="--p:.431"><b>1,2 m</b></span>
+                <span class="fr-tick" data-pos=".6466" style="--p:.6466"><b>45 cm</b></span>
+                <span class="fr-tick" data-pos="1" style="--p:1"><b>0</b></span>
+                <span class="fr-dot"><em class="mono">Grupo Aurora</em></span>
+              </div>
+            </div>
+
+            <!-- 0:34.5 a 0:42 · Apresente no palco -->
+            <div class="sc sc-night" data-from="34.5" data-to="42">
+              <div class="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.1">Apresente<i>.</i></p>
+                <div class="fv-caps fa fa-up" style="--at:.28">
+                  <p data-on="0 2.5">Ao vivo · <b class="num" data-n="4 38 .15 1.9">38</b> na sala</p>
+                  <p data-on="2.5 5">A plateia vota.</p>
+                  <p data-on="5 99">A plateia escreve.</p>
+                </div>
+              </div>
+              <div class="fs-area fs-stage">
+                <div class="fg fa fa-rise" style="--at:.05;--du:.5">
+                  <div class="fg-top">
+                    <span class="fg-live"><i class="dot dot-live"></i>Ao vivo</span>
+                    <b class="fg-title">Plano 2027 · Grupo Aurora</b>
+                    <span class="fg-ppl"><svg aria-hidden="true"><use href="#i-users"/></svg><b class="num" data-n="4 38 .15 1.9">38</b></span>
+                    <span class="fg-clock mono num" data-clock="761 .05">12:41</span>
+                  </div>
+                  <div class="fg-body">
+                    <div class="fg-now">
+                      <div class="fg-sl fd" style="--xt:2.5;--xdu:.14"><div class="fg-cover" data-slide="cover"></div></div>
+                      <div class="fg-sl fd" style="--xt:5;--xdu:.14"><div class="fa fa-fade" style="--at:2.5;--du:.14">
+                        <div class="slide fs-vote">
+                          <p class="fs-k">Votação por pontos · slide 5</p>
+                          <p class="fs-vh">O que priorizar primeiro?</p>
+                          <div class="fs-cols">
+                            <div class="fs-col fs-col-win"><span class="fs-dots" data-votes="0" data-anchor="vc0"></span><b>Prazo</b><em class="fs-first fa fa-pop" style="--at:4.66;--du:.35">1º</em></div>
+                            <div class="fs-col"><span class="fs-dots" data-votes="1" data-anchor="vc1"></span><b>Escopo</b></div>
+                            <div class="fs-col"><span class="fs-dots" data-votes="2" data-anchor="vc2"></span><b>Equipe</b></div>
+                          </div>
+                          <p class="fs-vn mono"><b class="num" data-n="0 38 2.97 1.63" data-ez="lin">38</b> votos</p>
+                        </div>
+                      </div></div>
+                      <div class="fg-sl"><div class="fa fa-fade" style="--at:5;--du:.14">
+                        <div class="slide fs-post">
+                          <p class="fs-k">Quadro de post-its · slide 6</p>
+                          <p class="fs-vh fd" style="--xt:6.05;--xdu:.2">O que não pode faltar?</p>
+                          <p class="fs-vh fs-next fa fa-up" style="--at:6.15;--du:.3">Próximos passos</p>
+                          <p class="fs-vn mono"><b class="num" data-n="0 24 5.1 1.1">24</b> post-its</p>
+                          <div class="fs-board" data-posts="5.1 6.05"></div>
+                        </div>
+                      </div></div>
+                    </div>
+                    <div class="fg-side">
+                      <div class="fg-next"><p class="fg-k mono">A seguir</p>
+                        <div class="fg-nx"><div class="fd" style="--xt:2.5;--xdu:.1" data-slide="kpi" data-n-slide="5"></div><div class="fd" style="--xt:5;--xdu:.1"><div class="fa fa-fade" style="--at:2.5;--du:.1" data-slide="next" data-n-slide="6"></div></div><div class="fa fa-fade" style="--at:5;--du:.1" data-slide="table" data-n-slide="7"></div></div>
+                      </div>
+                      <div class="fg-notes"><p class="fg-k mono">Notas</p><p>Abrir com a pergunta sobre prazo. Depois, a votação.</p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <span class="fg-aud" data-anchor="aud"></span>
+            </div>
+
+            <!-- 0:42 · Meça · Painel Halor -->
+            <div class="sc sc-paper" data-from="42" data-to="44.5" data-fo="0">
+              <div class="fv">
+                <p class="fv-verb display fa fa-up" style="--at:.1">Meça<i>.</i></p>
+                <p class="fv-cap fa fa-up" style="--at:.28">Grupo Aurora · 45 cm · Confiança</p>
+              </div>
+            </div>
+            <div class="sc sc-paper" data-from="42" data-to="44.5" data-fo="0">
+              <div class="fs-area">
+                <div class="fm fm-dash fa fa-rise" style="--at:.04;--du:.45">
+                  <div class="fm-dtop">
+                    <div><p class="fm-eb mono">Painel Halor</p><p class="fm-h2">Grupo Aurora</p></div>
+                    <span class="chip mc-chip fa fa-pop" style="--at:1.7;--du:.35"><svg aria-hidden="true"><use href="#i-check"/></svg> Próximo passo marcado</span>
+                  </div>
+                  <div class="fm-dist">
+                    <p class="fm-eb mono">Distância Halor</p>
+                    <div class="fr fr-paper" data-walk="0 .6466 .3 1.25">
+                      <span class="fr-line"></span>
+                      <span class="fr-tick" data-pos="0" style="--p:0"><b>7 m</b></span>
+                      <span class="fr-tick" data-pos=".2155" style="--p:.2155"><b>3,6 m</b></span>
+                      <span class="fr-tick" data-pos=".431" style="--p:.431"><b>1,2 m</b></span>
+                      <span class="fr-tick" data-pos=".6466" style="--p:.6466"><b>45 cm</b></span>
+                      <span class="fr-tick" data-pos="1" style="--p:1"><b>0</b></span>
+                      <span class="fr-dot"></span>
+                    </div>
+                  </div>
+                  <div class="fm-dgrid">
+                    <div class="fm-dscore">
+                      <span class="fm-ring"><svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="33" class="trk"/><circle cx="40" cy="40" r="33" class="val" data-ring data-n="54 82 .3 1.3"/></svg><b class="num" data-n="54 82 .3 1.3">82</b></span>
+                      <span class="fm-score-k">Índice Halor</span>
+                    </div>
+                    <div class="fm-kpis">
+                      <div><span>Slides lidos</span><b class="num"><i data-n="0 11 .35 1.1">11</i> de 14</b></div>
+                      <div><span>Tempo de leitura</span><b class="num"><i data-n="0 6 .35 1.1">6</i> min</b></div>
+                      <div><span>Retornos</span><b class="num" data-n="0 2 .35 1.1">2</b></div>
+                    </div>
+                    <div class="fm-line">
+                      <svg viewBox="0 0 300 96" preserveAspectRatio="none" aria-hidden="true"><path class="fm-grid" d="M0 94H300M0 62H300M0 30H300"/><path class="fm-area fa fa-fade" style="--at:1.5;--du:.4" d="M6 84L54 80L102 72L150 66L198 46L246 32L294 14V94H6Z"/><path class="fm-ln fa fa-draw" style="--at:.4;--du:1.2;--len:100" pathLength="100" d="M6 84L54 80L102 72L150 66L198 46L246 32L294 14"/></svg>
+                      <span class="fm-mo mono"><i>mai</i><i>jun</i><i>jul</i><i>ago</i><i>set</i><i>out</i></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 0:44.5 a 0:53.5 · nove resultados, um por segundo, cada um com a sua saída -->
+            <div class="sc sc-c sc-res" data-from="44.5" data-to="45.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Cliente</span></p>
+              <div class="fo-1 fd" style="--xt:.8;--xn:f-x-dissolve;--xdu:.2">
+                <div class="fo-1s fa fa-up" style="--du:.2" data-slide="r-prop"></div>
+                <span class="fo-seal fa fa-stamp" style="--at:.1;--du:.28"><svg aria-hidden="true"><use href="#i-check"/></svg>Proposta aceita</span>
+              </div>
+              <span class="fo-sweep fd" style="--xt:.76;--xn:f-sweep-x;--xdu:.24"></span>
+            </div>
+            <div class="sc sc-c sc-res" data-from="45.5" data-to="46.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Parceiro</span></p>
+              <div class="fo-2">
+                <span class="fo-chip fd" style="--xt:.8;--xn:f-x-up;--xdu:.2"><span class="fa fa-pop" style="--at:.1;--du:.3"><svg aria-hidden="true"><use href="#i-check"/></svg>Parceria firmada</span></span>
+                <span class="fo-chip fo-echo fd" style="--xt:.83;--xn:f-x-echo;--xdu:.2;--eo:.4" aria-hidden="true"><span><svg aria-hidden="true"><use href="#i-check"/></svg>Parceria firmada</span></span>
+                <span class="fo-chip fo-echo fd" style="--xt:.86;--xn:f-x-echo;--xdu:.2;--eo:.2" aria-hidden="true"><span><svg aria-hidden="true"><use href="#i-check"/></svg>Parceria firmada</span></span>
+                <span class="fo-pair fd" style="--xt:.8;--xn:f-x-up;--xdu:.2"><svg class="fa fa-from-l" style="--du:.22"><use href="#fi-spark"/></svg><svg class="fa fa-from-r" style="--du:.22"><use href="#fi-spark"/></svg></span>
+              </div>
+            </div>
+            <div class="sc sc-c sc-res" data-from="46.5" data-to="47.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Vendas</span></p>
+              <div class="fo-3 fd" style="--xt:.8;--xn:f-x-fly;--xdu:.2">
+                <div class="fo-ph fa fa-up" style="--du:.2">
+                  <div class="fo-nt fa fa-drop" style="--at:.08;--du:.24"><span class="fp-ic"><svg aria-hidden="true"><use href="#hl-mark"/></svg></span><span class="fp-tx"><b>Negócio fechado</b><span>Atlas Energia assinou agora</span></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="sc sc-c sc-res" data-from="47.5" data-to="48.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Investidor</span></p>
+              <div class="fo-4 fd" style="--xt:.8;--xn:f-x-diag;--xdu:.2">
+                <div class="fo-4s fa fa-up" style="--du:.2" data-slide="r-pitch"></div>
+                <p class="fo-big fa fa-up" style="--at:.08;--du:.2">Aporte confirmado</p>
+              </div>
+            </div>
+            <div class="sc sc-c sc-res" data-from="48.5" data-to="49.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Diretoria</span></p>
+              <div class="fo-5 fd" style="--xt:.8;--xn:f-x-rot;--xdu:.2">
+                <div class="fo-5s fa fa-up" style="--du:.2" data-slide="tl"></div>
+                <span class="fo-stamp fa fa-stamp" style="--at:.1;--du:.28">Projeto aprovado</span>
+              </div>
+            </div>
+            <div class="sc sc-c sc-res" data-from="49.5" data-to="50.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Time</span></p>
+              <div class="fo-6">
+                <p class="fo-big fd" style="--xt:.8;--xdu:.18"><span class="fa fa-up" style="--at:.1;--du:.2">Time alinhado</span></p>
+                <div class="fo-dots" data-dots="18"></div>
+              </div>
+            </div>
+            <div class="sc sc-c sc-res" data-from="50.5" data-to="51.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Turma</span></p>
+              <div class="fo-7 fd" style="--xt:.8;--xn:f-x-glow;--xdu:.2">
+                <div class="fo-quiz fa fa-pop" style="--du:.22;--s0:.9">
+                  <p class="mono">Quiz · Efeito halo</p>
+                  <span class="fo-qd"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="off"></i><i class="off"></i></span>
+                  <b class="num">8 de 10</b>
+                </div>
+                <p class="fo-big fa fa-up" style="--at:.08;--du:.2">Conceito aprendido</p>
+              </div>
+              <span class="fo-burst fd" style="--xt:.8;--xn:f-burst;--xdu:.2"></span>
+            </div>
+            <div class="sc sc-c sc-res" data-from="51.5" data-to="52.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Cliente</span></p>
+              <div class="fo-8 fd" style="--xt:.8;--xn:f-x-left;--xdu:.2">
+                <p class="fo-big fa fa-up" style="--du:.2">Contrato renovado</p>
+                <div class="fo-yrs fa fa-fade" style="--du:.2">
+                  <span><i></i>2025</span><span><i></i>2026</span><span><i></i>2027</span>
+                  <span class="fo-new fa fa-grow" style="--at:.16;--du:.3"><i></i>2028</span>
+                </div>
+              </div>
+            </div>
+            <div class="sc sc-c sc-res" data-from="52.5" data-to="53.5" data-fi="0" data-fo="0">
+              <p class="fo-k mono fd" style="--xt:.8;--xdu:.15"><span class="fa fa-fade" style="--du:.2">Próximo passo</span></p>
+              <div class="fo-9 fd" style="--xt:.78;--xn:f-x-spark;--xdu:.2">
+                <div class="fo-inv fa fa-pop" style="--du:.22;--s0:.85">
+                  <span class="fo-cal"><em class="mono">TER</em><b>10h</b></span>
+                  <span class="fo-iv"><b>Reunião marcada</b><span>Terça, 10h · Plano 2027</span></span>
+                </div>
+              </div>
+              <svg class="fo-spk fa fa-pop" style="--at:.86;--du:.2"><use href="#fi-spark"/></svg>
+            </div>
+
+            <!-- 0:53.5 · cada olhar vira dado -->
+            <div class="sc sc-c sc-data" data-from="53.5" data-to="56" data-fo=".25">
+              <p class="f-h"><span class="ln fa fa-mask" style="--at:.35;--du:.6">Cada olhar vira dado.</span><br><em class="ln fa fa-mask" style="--at:.85;--du:.6">Cada dado vira valor.</em></p>
             </div>
           </div>
 
+          <!-- 0:56 · Comece (fica acessível: tem o botão final) -->
+          <div class="film-scenes film-end">
+            <div class="sc sc-c sc-end" data-from="56" data-to="61" data-fi=".3">
+              <span class="f-mk f-mk-end" aria-hidden="true" data-anchor="mark2">
+                <svg class="f-mark" viewBox="0 0 64 64">
+                  <path class="f-ring fa fa-draw" style="--at:.35;--du:1;--len:146" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
+                  <circle class="f-inner fa fa-fade" style="--at:.75;--du:.5" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6"/>
+                  <circle class="f-core fa fa-core" style="--at:.5;--du:.55" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
+                  <path class="f-spark fa fa-spark" style="--at:1;--du:.6" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#fff"/>
+                </svg>
+              </span>
+              <p class="f-word wordmark fa fa-up" style="--at:.7">halor</p>
+              <p class="f-tag fa fa-up" style="--at:.85">Faça cada olhar <span class="f-lux" style="--at:1">render.</span></p>
+              <a class="btn btn-primary f-cta fa fa-pop" style="--at:1;--du:.6" href="#assinar">Comece grátis</a>
+            </div>
+          </div>
+          <div class="film-flash" aria-hidden="true"></div>
+
           <div class="film-poster">
             <div class="fp-in">
-              <p class="eyebrow no-rule">O filme · 48 segundos</p>
-              <p class="fp-title display">Como a atenção<br>vira proposta</p>
-              <button class="film-bigplay" type="button" data-film-play aria-label="Assistir ao filme do Halor"><svg aria-hidden="true"><use href="#i-play"/></svg></button>
+              <p class="eyebrow no-rule">Conheça o Halor · 60 segundos</p>
+              <p class="fp-title display">Do primeiro olhar<br>ao valor</p>
+              <button class="film-bigplay" type="button" data-film-play aria-label="Conheça o Halor em 60 segundos"><svg aria-hidden="true"><use href="#i-play"/></svg></button>
             </div>
           </div>
 
           <div class="film-bar">
             <button class="btn-icon film-btn" type="button" data-film-toggle aria-label="Reproduzir"><svg aria-hidden="true"><use href="#i-play"/></svg></button>
-            <span class="film-time mono num">0:00 / 0:48</span>
-            <div class="film-track" role="slider" tabindex="0" aria-label="Posição do filme" aria-valuemin="0" aria-valuemax="48" aria-valuenow="0" aria-valuetext="0 segundos">
+            <span class="film-time mono num">0:00 / 1:00</span>
+            <div class="film-track" role="slider" tabindex="0" aria-label="Posição do filme" aria-valuemin="0" aria-valuemax="60" aria-valuenow="0" aria-valuetext="0 segundos">
               <div class="film-fill"></div>
             </div>
             <span class="film-chap">Abertura</span>
@@ -91,6 +618,21 @@
             <button class="btn-icon film-btn" type="button" data-film-replay aria-label="Recomeçar o filme"><svg aria-hidden="true"><use href="#i-replay"/></svg></button>
           </div>
         </div>
+        <div class="sr-only" id="film-roteiro">
+          <p>Roteiro do filme, em 60 segundos.</p>
+          <ol>
+            <li>50 ms é o tempo que o cérebro leva para julgar o que vê. Antes de ler, quem assiste já sentiu: é o efeito halo, descrito por Edward Thorndike em 1920.</li>
+            <li>O que brilha primeiro vale mais. Na régua de 7 metros até 0, atenção gera interesse, curiosidade, aproximação, confiança, parceria e valor.</li>
+            <li>Halor. Faça cada olhar render.</li>
+            <li>Crie no Estúdio: escolha um modelo com o seu kit de marca, edite e arraste votação, post-its, formulário e cronômetro para os slides.</li>
+            <li>Importe arquivos .pptx e .pdf, que viram slides editáveis numa fila de importação.</li>
+            <li>Preveja com o Raio Halor onde cai o primeiro olhar. O índice do slide sobe de 86 para 91 com uma sugestão.</li>
+            <li>Salve como Link Halor medido, PowerPoint editável, PowerPoint idêntico, PDF ou HTML interativo. Envie pelo Link Halor: sua luz chega antes de você.</li>
+            <li>Apresente no palco ao vivo, com 38 pessoas votando e escrevendo post-its.</li>
+            <li>Meça no Painel Halor: o Grupo Aurora está a 45 cm, na confiança.</li>
+            <li>Resultados: proposta aceita, parceria firmada, negócio fechado, aporte confirmado, projeto aprovado, time alinhado, conceito aprendido, contrato renovado e reunião marcada.</li>
+            <li>Cada olhar vira dado. Cada dado vira valor. Faça cada olhar render. Comece grátis.</li>
+          </ol>
+        </div>
       </div>
     </section>
-

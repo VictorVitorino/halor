@@ -129,7 +129,7 @@ function lineCard(A) {
 function chainCard(A) {
   const card = el('div', 'd-card');
   const hd = el('div', 'd-head'), ht = el('div');
-  ht.append(el('h3', null, 'Cadeia Halor: quantos chegam a cada anel'), el('p', null, 'A cada 100 apresentações enviadas'));
+  ht.append(el('h3', null, 'Cadeia Halor: quantos chegam a cada passo'), el('p', null, 'A cada 100 apresentações enviadas'));
   const lg = el('div', 'd-legend');
   const l1 = el('span'); const i1 = el('i'); i1.style.setProperty('--c', 'var(--c-before)'); l1.append(i1, document.createTextNode('Antes'));
   lg.appendChild(l1);
@@ -137,7 +137,7 @@ function chainCard(A) {
   hd.append(ht, lg); card.appendChild(hd);
   const ch = el('div', 'd-chart'); card.appendChild(ch);
   const W = 520, LW = 104, RW = 40, rowH = 34, H = CHAIN_STEPS.length * rowH + 4, iw = W - LW - RW, X = v => v / 100 * iw;
-  const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Barras por anel da cadeia, antes e com Halor' });
+  const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Barras por passo da cadeia, antes e com Halor' });
   [0, 25, 50, 75, 100].forEach(v => s.appendChild(svgEl('line', { x1: LW + X(v), x2: LW + X(v), y1: 0, y2: H - 2, class: 'grid' })));
   const tip = chartTip(card);
   CHAIN_STEPS.forEach((st, i) => {
@@ -155,13 +155,13 @@ function chainCard(A) {
       const t1 = svgEl('text', { x: endX + 6, y: endY + 4, class: 'val-lab mut' }); t1.textContent = st.b; s.appendChild(t1);
     } else { const t1 = svgEl('text', { x: endX + 6, y: endY + 4, class: 'val-lab' }); t1.textContent = st.b; s.appendChild(t1); }
     const hit = svgEl('rect', { x: 0, y: y0, width: W, height: rowH, class: 'hit', tabindex: '0', 'aria-label': st.n + ': antes ' + st.b + (A ? ', com Halor ' + st.a : '') });
-    const show = () => { const r = s.getBoundingClientRect(), k = r.width / W; const rows = [{ n: 'Antes', v: String(st.b), c: 'var(--c-before)' }]; if (A) rows.unshift({ n: 'Com Halor', v: String(st.a), c: 'var(--c-after)' }); showTip(tip, ch, (LW + X(A ? st.a : st.b)) * k, y0 * k, 'Anel ' + (i + 1) + ' · ' + st.n, rows); };
+    const show = () => { const r = s.getBoundingClientRect(), k = r.width / W; const rows = [{ n: 'Antes', v: String(st.b), c: 'var(--c-before)' }]; if (A) rows.unshift({ n: 'Com Halor', v: String(st.a), c: 'var(--c-after)' }); showTip(tip, ch, (LW + X(A ? st.a : st.b)) * k, y0 * k, 'Passo ' + (i + 1) + ' · ' + st.n, rows); };
     hit.addEventListener('pointerenter', show); hit.addEventListener('focus', show);
     hit.addEventListener('pointerleave', () => tip.classList.remove('on')); hit.addEventListener('blur', () => tip.classList.remove('on'));
     s.appendChild(hit);
   });
   ch.appendChild(s);
-  card.appendChild(tableToggle(['Anel', 'Antes', 'Com Halor'], CHAIN_STEPS.map(st => [st.n, String(st.b), A ? String(st.a) : 'sem dado'])));
+  card.appendChild(tableToggle(['Passo', 'Antes', 'Com Halor'], CHAIN_STEPS.map(st => [st.n, String(st.b), A ? String(st.a) : 'sem dado'])));
   return card;
 }
 

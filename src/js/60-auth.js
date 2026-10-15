@@ -19,7 +19,7 @@ function bindAuth() {
     $$('[data-auth-tab]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.authTab === m)));
     $$('[data-only]').forEach(n => { n.hidden = n.dataset.only !== m; });
     $('#auth-title').textContent = m === 'entrar' ? 'Entrar no Halor' : 'Criar sua conta';
-    $('#auth-sub').textContent = m === 'entrar' ? 'Continue de onde parou. Seu acervo está esperando.' : 'Grátis no plano Faísca. Sem cartão de crédito.';
+    $('#auth-sub').textContent = m === 'entrar' ? 'Continue de onde parou. Seu acervo está esperando.' : 'Grátis no plano Faísca, para sempre.';
     $('#a-submit').textContent = m === 'entrar' ? 'Entrar' : 'Criar conta grátis';
     $('#a-senha').autocomplete = m === 'entrar' ? 'current-password' : 'new-password';
     mood('idle', m === 'entrar' ? 'Bem-vindo de volta.' : 'Que bom ter você aqui.');

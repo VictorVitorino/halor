@@ -4,19 +4,19 @@
 const HALOR = { cycle: 'anual', plan: 'halo', seats: 5, coupon: false, pay: 'pix' };
 
 const CHAIN_STEPS = [
-  { n: 'Atenção', v: 'O olhar para.', t: 'A capa decide em meio segundo se o cliente continua. Contraste, uma imagem forte e um título curto fazem o olhar parar.', m: 'Passam da capa', a: 68, b: 41, next: 'gera interesse' },
-  { n: 'Interesse', v: 'O olhar fica.', t: 'Quando cada slide tem um único destaque, o cliente não precisa procurar. Ele permanece e lê.', m: 'Ficam mais de 60 s', a: 52, b: 28, next: 'gera curiosidade' },
-  { n: 'Curiosidade', v: 'O olhar procura mais.', t: 'Perguntas abertas e números que surpreendem fazem o cliente avançar por conta própria até o fim.', m: 'Veem 70% dos slides ou mais', a: 40, b: 19, next: 'gera aproximação' },
-  { n: 'Aproximação', v: 'O cliente pergunta.', t: 'Um comentário, uma dúvida, um pedido de detalhe. É o primeiro passo do cliente na sua direção.', m: 'Comentam ou perguntam', a: 27, b: 12, next: 'gera confiança' },
-  { n: 'Confiança', v: 'O cliente compartilha.', t: 'Ninguém encaminha o que não confia. Cada novo leitor no link é um voto silencioso a seu favor.', m: 'Encaminham para alguém', a: 19, b: 8, next: 'gera parceria' },
-  { n: 'Parceria', v: 'O cliente convida.', t: 'A conversa vira reunião, e a reunião vira construção conjunta da solução.', m: 'Marcam reunião', a: 14, b: 6, next: 'gera proposta' },
-  { n: 'Proposta', v: 'O cliente assina.', t: 'O centro do halo. Tudo que veio antes trabalhou para este momento.', m: 'Assinam a proposta', a: 8, b: 3, next: null }
+  { n: 'Atenção', v: 'O olhar para.', t: 'A capa decide em meio segundo se quem assiste continua. Contraste, uma imagem forte e um título curto fazem o olhar parar.', m: 'Passam da capa', a: 68, b: 41, next: 'gera interesse' },
+  { n: 'Interesse', v: 'O olhar fica.', t: 'Quando cada slide tem um único destaque, ninguém precisa procurar. A pessoa permanece e lê.', m: 'Ficam mais de 60 s', a: 52, b: 28, next: 'gera curiosidade' },
+  { n: 'Curiosidade', v: 'O olhar procura mais.', t: 'Perguntas abertas e números que surpreendem fazem a pessoa avançar por conta própria até o fim.', m: 'Veem 70% dos slides ou mais', a: 40, b: 19, next: 'gera aproximação' },
+  { n: 'Aproximação', v: 'Quem assiste pergunta.', t: 'Um comentário, uma dúvida, um pedido de detalhe. É o primeiro passo de quem assiste na sua direção.', m: 'Comentam ou perguntam', a: 27, b: 12, next: 'gera confiança' },
+  { n: 'Confiança', v: 'Quem assiste compartilha.', t: 'Ninguém encaminha o que não confia. Cada novo leitor no link é um voto silencioso a seu favor.', m: 'Encaminham para alguém', a: 19, b: 8, next: 'gera parceria' },
+  { n: 'Parceria', v: 'Quem assiste convida.', t: 'A conversa vira reunião, e a reunião vira construção conjunta da solução.', m: 'Marcam reunião', a: 14, b: 6, next: 'gera valor' },
+  { n: 'Valor', v: 'Quem assiste diz sim.', t: 'Proposta aceita, parceria firmada, projeto aprovado. Tudo que veio antes trabalhou para este momento.', m: 'Dizem sim', a: 8, b: 3, next: null }
 ];
 /* Planos ----------------------------------------------------------------- */
 const PLANS = [
   { id: 'faisca', n: 'Faísca', ic: '#i-spark', d: 'Para conhecer a luz, sem pagar nada.', m: 0, cta: 'Começar grátis', f: ['3 apresentações ativas', 'Modelos essenciais', 'Exporta PDF', 'Painel Halor com 7 dias de histórico'] },
-  { id: 'halo', n: 'Halo', ic: '#hl-mark', hot: true, d: 'Para quem vende e quer ser lembrado.', m: 69, cta: 'Assinar Halo', f: ['Apresentações ilimitadas', 'PowerPoint editável, PDF e HTML', 'Raio Halor: 50 análises por mês', 'Links medidos e Painel completo', 'Sem marca d’água'] },
-  { id: 'orbita', n: 'Órbita', ic: '#i-target', d: 'Para times que vendem juntos.', m: 49, per: 'pessoa', min: 3, cta: 'Assinar Órbita', f: ['Tudo do plano Halo', 'Kit de marca travado', 'Biblioteca do time e aprovações', 'Integração com CRM', 'Relatórios por vendedor'] },
+  { id: 'halo', n: 'Halo', ic: '#hl-mark', hot: true, d: 'Para quem apresenta e quer ser lembrado.', m: 69, cta: 'Assinar Halo', f: ['Apresentações ilimitadas', 'Exporta em todos os formatos', 'Raio Halor: 50 análises por mês', 'Links medidos e Painel completo', 'Sem marca d’água'] },
+  { id: 'orbita', n: 'Órbita', ic: '#i-target', d: 'Para times que apresentam juntos.', m: 49, per: 'pessoa', min: 3, cta: 'Assinar Órbita', f: ['Tudo do plano Halo', 'Kit de marca travado', 'Biblioteca do time e aprovações', 'Integração com CRM', 'Relatórios por pessoa'] },
   { id: 'constelacao', n: 'Constelação', ic: '#i-share', d: 'Para empresas com muitos times.', m: null, cta: 'Falar com vendas', f: ['SSO e gestão de papéis', 'Auditoria e retenção de dados', 'Ambiente dedicado', 'Implantação e gestão da mudança', 'Suporte com SLA'] }
 ];
 const monthly = p => p.m == null ? null : (HALOR.cycle === 'anual' ? p.m * .8 : p.m);

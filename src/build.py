@@ -19,7 +19,7 @@ SRC = pathlib.Path(__file__).resolve().parent
 ROOT = SRC.parent
 
 TITLE = "Halor"
-DESCRIPTION = "Halor: plataforma de apresentações que transforma atenção em proposta aceita."
+DESCRIPTION = "Halor é um programa de apresentações lúdicas. Prende o olhar, põe a plateia para participar e mede cada passo até o sim: proposta, parceria, aprovação."
 FONTS = ("https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700"
          "&family=JetBrains+Mono:wght@400;500;600&family=Unbounded:wght@500;600;700&display=swap")
 FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E"
