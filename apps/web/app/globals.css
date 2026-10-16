@@ -1,0 +1,21 @@
+/* Estilos do Halor, na mesma ordem do protótipo (prototype/src/css).
+   Os tokens vivem em @halor/brand e são a fonte única de cores, tipos e movimento. */
+@import '../styles/00-tokens.css';
+@import '../styles/10-base.css';
+@import '../styles/20-site.css';
+@import '../styles/22-cover.css';
+@import '../styles/25-planos.css';
+@import '../styles/27-vitrine.css';
+@import '../styles/28-produto.css';
+@import '../styles/30-film.css';
+@import '../styles/40-auth.css';
+@import '../styles/50-studio.css';
+@import '../styles/60-dash.css';
+@import '../styles/70-brand.css';
+
+/* fontes auto-hospedadas pelo next/font */
+:root {
+  --f-display: var(--font-sora), 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --f-ui: var(--font-instrument), 'Helvetica Neue', Arial, system-ui, sans-serif;
+  --f-mono: var(--font-jetbrains), ui-monospace, 'SFMono-Regular', Consolas, monospace;
+}

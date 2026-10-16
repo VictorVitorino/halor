@@ -1,0 +1,15 @@
+{
+  "name": "halor",
+  "private": true,
+  "description": "Halor: marca, design system e front end (Next.js) do programa de apresentações lúdicas.",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "npm run dev -w @halor/web",
+    "build": "npm run build -w @halor/web",
+    "start": "npm run start -w @halor/web",
+    "typecheck": "npm run typecheck -w @halor/web",
+    "brand:assets": "npm run assets -w @halor/brand",
+    "prototype": "python3 prototype/src/build.py"
+  },
+  "engines": { "node": ">=20.9" }
+}

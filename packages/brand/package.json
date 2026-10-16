@@ -1,0 +1,19 @@
+{
+  "name": "@halor/brand",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Marca Halor: logos, símbolo, ícone do app, favicons, imagem social e tokens de design.",
+  "type": "module",
+  "main": "tokens/index.ts",
+  "types": "tokens/index.ts",
+  "exports": {
+    ".": "./tokens/index.ts",
+    "./tokens.css": "./tokens/halor-tokens.css",
+    "./tokens.json": "./tokens/tokens.json",
+    "./svg/*": "./svg/*",
+    "./png/*": "./png/*"
+  },
+  "scripts": {
+    "assets": "node scripts/build-assets.mjs"
+  }
+}

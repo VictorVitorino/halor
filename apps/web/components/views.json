@@ -1,0 +1,39 @@
+{
+  "views": [
+    {
+      "id": "v-site",
+      "className": "view theme-night",
+      "view": "site"
+    },
+    {
+      "id": "v-auth",
+      "className": "view theme-paper",
+      "view": "entrar"
+    },
+    {
+      "id": "v-checkout",
+      "className": "view theme-paper",
+      "view": "assinar"
+    },
+    {
+      "id": "v-studio",
+      "className": "view theme-paper",
+      "view": "estudio"
+    },
+    {
+      "id": "v-404",
+      "className": "view theme-night",
+      "view": "404"
+    },
+    {
+      "id": "v-brand",
+      "className": "view theme-paper",
+      "view": "marca"
+    }
+  ],
+  "studioApp": {
+    "id": "app",
+    "className": "app"
+  },
+  "studioMain": "main"
+}

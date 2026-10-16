@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Monta o Halor em um único HTML.
 
-    python3 src/build.py            -> index.html (documento completo, abre direto no navegador)
+    python3 prototype/src/build.py  -> prototype/index.html (documento completo, abre direto no navegador)
     python3 src/build.py --out CAMINHO
                                     -> grava o documento completo em outro lugar (testes em paralelo)
     python3 src/build.py --fragment CAMINHO
@@ -67,7 +67,7 @@ def main():
     out.write_text(doc, encoding="utf-8")
     print(f"index.html  {len(doc) / 1024:.0f} KB")
 
-    shutil.copyfile(SRC / "css" / "00-tokens.css", ROOT / "design-system" / "halor-tokens.css")
+    shutil.copyfile(SRC / "css" / "00-tokens.css", ROOT.parent / "packages" / "brand" / "tokens" / "halor-tokens.css")
 
     if "--fragment" in sys.argv:
         dest = pathlib.Path(sys.argv[sys.argv.index("--fragment") + 1])
