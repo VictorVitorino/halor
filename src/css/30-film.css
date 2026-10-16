@@ -8,13 +8,15 @@
    animation-delay calcula o quadro exato, então arrastar a trilha mostra sempre
    o mesmo quadro que a reprodução mostraria. A câmera (zoom e corte) e o cursor
    são calculados no script a partir do mesmo tempo.
+   Entradas suaves: pouca escala, um pouco mais de tempo e curvas sem tranco.
+   Elementos com .fa e .fd juntos entram e saem pelo mesmo relógio.
    No celular o palco fica em 4:5 e a câmera aproxima mais da ação.
    ========================================================================== */
 @property --at { syntax: '<number>'; inherits: false; initial-value: 0; }
 @property --du { syntax: '<number>'; inherits: false; initial-value: .5; }
 @property --xt { syntax: '<number>'; inherits: false; initial-value: 99; }
 @property --xdu { syntax: '<number>'; inherits: false; initial-value: .25; }
-@property --s0 { syntax: '<number>'; inherits: false; initial-value: .6; }
+@property --s0 { syntax: '<number>'; inherits: false; initial-value: .9; }
 @property --an { syntax: '*'; inherits: false; }
 @property --xn { syntax: '*'; inherits: false; }
 @property --ez { syntax: '*'; inherits: false; }
@@ -49,27 +51,32 @@
 
 /* · motor de animação · .fa entra em --at, .fd muda em --xt (segundos do relógio da cena) · */
 .film .fa { animation: var(--an, f-fade) calc(var(--du) * 1s) var(--ez, cubic-bezier(.22, .61, .36, 1)) both paused; animation-delay: calc((var(--at) - var(--lt, 0)) * 1s); }
-.film .fd { animation: var(--xn, f-out) calc(var(--xdu) * 1s) var(--xez, cubic-bezier(.55, .085, .68, .53)) forwards paused; animation-delay: calc((var(--xt) - var(--lt, 0)) * 1s); }
+.film .fd { animation: var(--xn, f-out) calc(var(--xdu) * 1s) var(--xez, cubic-bezier(.4, 0, .7, .4)) forwards paused; animation-delay: calc((var(--xt) - var(--lt, 0)) * 1s); }
+.film .fa.fd {
+  animation: var(--an, f-fade) calc(var(--du) * 1s) var(--ez, cubic-bezier(.22, .61, .36, 1)) both paused, var(--xn, f-out) calc(var(--xdu) * 1s) var(--xez, cubic-bezier(.4, 0, .7, .4)) forwards paused;
+  animation-delay: calc((var(--at) - var(--lt, 0)) * 1s), calc((var(--xt) - var(--lt, 0)) * 1s);
+}
 .fa-fade { --an: f-fade; }
 .fa-up { --an: f-up; }
-.fa-pop { --an: f-pop; --ez: cubic-bezier(.34, 1.56, .64, 1); }
+.fa-pop { --an: f-pop; --ez: cubic-bezier(.24, 1.12, .42, 1); }
 .film .fa-mask { --an: f-mask; animation-fill-mode: backwards; }
 .fa-draw { --an: f-draw; stroke-dasharray: var(--len); }
 .fa-core { --an: f-core; --ez: cubic-bezier(.34, 1.56, .64, 1); }
 .fa-spark { --an: f-spark; --ez: cubic-bezier(.34, 1.56, .64, 1); }
-.fa-bar { --an: f-bar; --du: .45; --ez: cubic-bezier(.34, 1.3, .64, 1); }
+.fa-bar { --an: f-bar; --du: .6; --ez: cubic-bezier(.26, 1.14, .44, 1); }
 .fa-w { --an: f-w; width: var(--w1); }
-.fa-drop { --an: f-drop; --du: .4; --ez: cubic-bezier(.34, 1.3, .64, 1); }
-.fa-win { --an: f-win; }
-.fa-tab { --an: f-tab; }
-.fa-in { --an: f-in; --du: .45; --ez: cubic-bezier(.34, 1.4, .64, 1); }
-.fa-lib { --an: f-lib; }
+.fa-drop { --an: f-drop; --du: .55; --ez: cubic-bezier(.2, .9, .3, 1.02); }
+.fa-win { --an: f-win; --ez: cubic-bezier(.16, 1, .3, 1); }
+.fa-tab { --an: f-tab; --ez: cubic-bezier(.16, 1, .3, 1); }
+.fa-in { --an: f-in; --du: .6; --ez: cubic-bezier(.16, 1, .3, 1); }
+.fa-lib { --an: f-lib; --ez: cubic-bezier(.16, 1, .3, 1); }
 .fa-dd { --an: f-dd; }
 .fa-shine { --an: f-shine; --ez: cubic-bezier(.45, 0, .55, 1); }
-.fa-note { --an: f-note; --du: .45; --ez: cubic-bezier(.34, 1.5, .64, 1); }
-.fa-shelf { --an: f-shelf; }
+.fa-note { --an: f-note; --du: .6; --ez: cubic-bezier(.24, 1.16, .42, 1); }
+.fa-shelf { --an: f-shelf; --ez: cubic-bezier(.16, 1, .3, 1); }
+.fa-cap { --an: f-cap; --ez: cubic-bezier(.16, 1, .3, 1); }
 @keyframes f-fade { from { opacity: 0; } }
-@keyframes f-up { from { opacity: 0; transform: translateY(1.4cqw); } }
+@keyframes f-up { from { opacity: 0; transform: translateY(1cqw); } }
 @keyframes f-pop { from { opacity: 0; transform: scale(var(--s0)); } }
 @keyframes f-mask { from { transform: translateY(100%); clip-path: inset(-60% -20% 100% -20%); } to { transform: none; clip-path: inset(-60% -20% -60% -20%); } }
 @keyframes f-draw { from { stroke-dashoffset: var(--len); } to { stroke-dashoffset: 0; } }
@@ -77,16 +84,21 @@
 @keyframes f-spark { from { transform: scale(0) rotate(-90deg); } }
 @keyframes f-bar { from { transform: scaleY(0); } }
 @keyframes f-w { from { width: var(--w0); } to { width: var(--w1); } }
-@keyframes f-drop { from { opacity: 0; transform: translateY(-40%) scale(.94); } }
-@keyframes f-win { from { opacity: 0; transform: translateY(3cqw) scale(.94); } }
-@keyframes f-tab { from { opacity: 0; transform: translateY(40%); } }
-@keyframes f-in { from { opacity: 0; transform: translateX(-30%) scale(.8); } }
-@keyframes f-lib { from { opacity: 0; transform: translateX(40%); } }
+@keyframes f-drop { from { opacity: 0; transform: translateY(-1.2cqw) scale(.97); } }
+@keyframes f-win { from { opacity: 0; transform: translateY(2.2cqw) scale(.97); } }
+@keyframes f-tab { from { opacity: 0; transform: translateY(30%); } }
+@keyframes f-in { from { opacity: 0; transform: translateX(-14%) scale(.95); } }
+@keyframes f-lib { from { opacity: 0; transform: translateX(22%); } }
+@keyframes f-lib-out { to { opacity: 0; transform: translateX(16%); } }
 @keyframes f-dd { from { opacity: 0; transform: translateY(-.8cqw); } }
 @keyframes f-shine { 0% { opacity: 0; transform: translateX(-120%) skewX(-16deg); } 20%, 75% { opacity: 1; } 100% { opacity: 0; transform: translateX(560%) skewX(-16deg); } }
-@keyframes f-note { from { opacity: 0; transform: translateY(-3cqw) rotate(-10deg) scale(.7); } }
-@keyframes f-shelf { from { transform: translateY(100%); } }
+@keyframes f-note { from { opacity: 0; transform: translateY(-1.6cqw) rotate(-6deg) scale(.9); } }
+@keyframes f-shelf { from { opacity: 0; transform: translateY(100%); } }
+@keyframes f-shelf-out { to { opacity: 0; transform: translateY(100%); } }
 @keyframes f-out { to { opacity: 0; } }
+@keyframes f-pop-out { to { opacity: 0; transform: scale(.97); } }
+@keyframes f-cap { from { opacity: 0; transform: translateY(-.5cqw) scale(.97); } }
+@keyframes f-toast { from { opacity: 0; transform: translate(-50%, .8cqw); } }
 @keyframes fe-rl-up { to { transform: translateY(-9.5cqw); } }
 @keyframes f-caret { 50% { opacity: 0; } }
 @keyframes f-pv { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
@@ -185,7 +197,7 @@
 .fh-imp { margin-left: auto; display: flex; align-items: center; gap: .5cqw; height: 2.4cqw; padding: 0 1.1cqw; border: 1px solid var(--line-strong); border-radius: 99px; font-size: .9cqw; font-weight: 600; }
 .fh-imp svg { width: 1.05cqw; height: 1.05cqw; }
 .fh-av { display: grid; place-items: center; width: 2.5cqw; height: 2.5cqw; border-radius: 50%; background: var(--halor-violet); color: #fff; font-size: .85cqw; font-weight: 600; }
-.fw .fh-main, .fw .fm-main { inset: 4.2cqw 0 0 15cqw; padding: 2.3cqw 3cqw; }
+.fw .fh-main, .fw .fm-main { inset: 4.2cqw 0 0 15cqw; padding: 2.3cqw 3cqw; background: var(--mist); }
 
 /* Início */
 .fh-eb { font: 500 .85cqw/1 var(--f-mono); letter-spacing: .2em; text-transform: uppercase; color: var(--halor-violet-700); }
@@ -306,9 +318,9 @@
 .fe-h3 { left: 2%; top: 58%; width: 44%; height: 26%; background: radial-gradient(closest-side, #c9a6ff, rgba(139, 61, 255, .5) 55%, transparent); }
 .fe-ray b { position: absolute; display: grid; place-items: center; width: 2.6cqw; height: 2.6cqw; margin: -1.3cqw 0 0 -1.3cqw; border-radius: 50%; background: var(--ink); color: #fff; font: 700 1.2cqw/1 var(--f-mono); box-shadow: 0 0 0 .3cqw #fff, 0 0 1.6cqw rgba(139, 61, 255, .9); }
 .fe-ray em { position: absolute; right: 1.4%; bottom: 3%; padding: .45cqw .8cqw; border-radius: .5cqw; background: rgba(23, 17, 43, .85); color: #fff; font-size: .82cqw; font-style: normal; letter-spacing: .02em; }
-.fe-toast { position: absolute; left: 50%; top: calc(100% + 1cqw); display: flex; align-items: center; gap: .5cqw; padding: .6cqw 1.2cqw; border-radius: 99px; background: var(--ink); color: #fff; font-size: .9cqw; font-weight: 600; white-space: nowrap; opacity: 0; transform: translate(-50%, .6cqw); transition: opacity .25s, transform .25s var(--ease-halo); }
+.fe-toast { position: absolute; left: 50%; top: calc(100% + 1cqw); display: flex; align-items: center; gap: .5cqw; padding: .6cqw 1.2cqw; border-radius: 99px; background: var(--ink); color: #fff; font-size: .9cqw; font-weight: 600; white-space: nowrap; visibility: hidden; transform: translate(-50%, 0); }
 .fe-toast svg { width: 1cqw; height: 1cqw; color: var(--ok-n); }
-.fe-toast.act { opacity: 1; transform: translate(-50%, 0); }
+.fe-toast.act { visibility: visible; }
 
 /* inspetor */
 .fe-insp { position: relative; min-height: 0; overflow: hidden; padding: 0 1.4cqw; background: var(--paper); border-left: 1px solid var(--line); }
@@ -582,7 +594,6 @@
   .f-cap { gap: 2cqw; max-width: 92cqw; padding: 1.4cqw 3.4cqw 1.4cqw 1.4cqw; font-size: 4.1cqw; white-space: normal; line-height: 1.2; }
   .f-cap b { min-width: 6.6cqw; height: 6.6cqw; font-size: 3.4cqw; }
   .f-legsc { align-items: flex-start; padding: 4cqw 5cqw 0; }
-  .film.leg-on .f-capsc { visibility: hidden !important; }
   .f-leg { display: grid; gap: .4cqw; padding: 2cqw 4.4cqw; border-radius: 4cqw; font-size: 3.8cqw; }
   .f-leg b { font-size: 4.6cqw; }
   .fp-in { gap: 4cqw; }

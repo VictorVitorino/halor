@@ -10,6 +10,11 @@
    guiadas por animation-delay; cursor, câmera, paleta, contadores e digitação
    são calculados aqui a partir do mesmo tempo, então qualquer ponto da trilha
    mostra o quadro exato.
+   Câmera: poucos movimentos, cada um com 1,6 a 2,2 s e pausas de verdade entre
+   eles. O zoom anda em escala logarítmica e o ponto fixo da transformação fica
+   parado na tela (zoom ancorado), então o quadro nunca escorrega de lado
+   durante uma aproximação. Nas pausas, um avanço lento (quase imperceptível)
+   mantém o quadro vivo. Cortes entre telas são fusões sobrepostas.
    ========================================================================== */
 const Film = (() => {
   const D = 88, END = 84;
@@ -21,11 +26,12 @@ const Film = (() => {
   ];
   const CHAPTERS = [{ t: 0, n: 'Abertura' }].concat(STEPS.map((s, i) => ({ t: s.t, n: (i + 1) + ' · ' + s.n })), [{ t: END, n: 'Comece' }]);
 
-  /* cursor: [tempo global, alvo]. Alvo = seletor dentro da janela, "x,y" em % da janela ou "!" (clique) */
+  /* cursor: [tempo de chegada, alvo]. Alvo = seletor dentro da janela, "x,y" em % da janela ou "!" (clique).
+     O cursor espera parado e só sai a tempo de chegar: um movimento curto, em leve arco, como uma mão de verdade. */
   const CUR = [
     [4.5, '64,94'], [6, '.fh-st1'], [7.2, '.fh-st4'], [8.35, '.fh-st2'], [8.7, '!'],
     [10.8, '.fm-c3'], [11.6, '.fm-c2'], [12.3, '.fm-c1'], [12.6, '!'], [14.1, '.fm-use'], [14.5, '!'],
-    [16.8, '.fe-cv .sl-h'], [17.3, '!'], [17.5, '!'], [20.5, '58,34'], [21.55, '.fi-tab-design'], [21.9, '!'],
+    [16.95, '.fe-cv .sl-h'], [17.3, '!'], [17.5, '!'], [20.5, '58,34'], [21.55, '.fi-tab-design'], [21.9, '!'],
     [23.3, '.fp-p2'], [23.7, '!'], [24.9, '.fp-p3'], [25.3, '!'], [26.5, '.fp-p1'], [26.9, '!'],
     [28.85, '.fe-rl li:nth-child(3)'], [29.2, '!'], [29.95, '.fr-chart'], [30.3, '!'], [31, '.fdd-col'], [31.35, '!'],
     [32.55, '.fr-icon'], [32.9, '!'], [33.75, '.fr-cards'], [34.1, '!'], [34.95, '.fe-cv .fs3-chart'], [35.3, '!'],
@@ -40,46 +46,49 @@ const Film = (() => {
     [73.7, '.fdl-item'], [74.1, '!'], [76.6, '82,64'], [77.6, '.fwb-next'], [78, '!'], [79.9, '.fwb-next'], [80.3, '!'],
     [81.2, '.fwb-opt2'], [81.5, '!'], [83, '70,70']
   ];
-  /* câmera: [tempo, duração do movimento, alvo, zoom, zoom no celular, alvo no celular].
-     Alvo = seletor (centro), "seletor@fx,fy" (ponto relativo à caixa) ou "x,y" (% do palco) */
-  const CAM = [
-    [0, 0, '.fw', 1, 1],
-    [4.4, 1.4, '.fh-main@.5,.42', 1.06, 1.75, '.fh-starts@.3,.5'],
-    [7.3, 1, '.fh-st2', 1.22, 2.2, '.fh-starts@.25,.5'],
-    [10.1, .9, '.fm-grid', 1.1, 1.9, '.fm-grid@.22,.5'],
-    [12.9, 1, '.fm-main@.5,.62', 1.1, 2, '.fm-strip@.82,.5'],
-    [15.6, .8, '.fw', 1, 1.35, '.fe-cvw'],
-    [16.4, 1.1, '.fe-cvw@.5,.42', 1.9, 2.7, '.fe-sel1'],
-    [20.4, 1, '.fe-body@.56,.46', 1.385, 1.95, '.fe-body@.7,.4'],
-    [28.3, .9, '.fe@.42,.42', 1.18, 2, '.fe@.25,.42'],
-    [32.2, .8, '.fe@.45,.45', 1.18, 2, '.fe-cvw@.62,.45'],
-    [35.6, .9, '.fe-body@.62,.5', 1.16, 1.6, '.fe-body@.68,.48'],
-    [36.6, .7, '.fe-body@.62,.5', 1.16, 2.1, '.flb'],
-    [37.95, .7, '.fe-body@.62,.5', 1.16, 2, '.fe-cvw@.3,.55'],
-    [39.4, .6, '.fe-body@.62,.5', 1.16, 2.1, '.flb-use'],
-    [41.3, .8, '.fe-body@.55,.5', 1.08, 1.5, '.fe-body@.55,.5'],
-    [48.1, .9, '.fe-cvw@.5,.5', 1.9, 2.15, '.fe-cvw'],
-    [51.2, .9, '.fe-body@.7,.42', 1.2, 2.1, '.fi-score'],
-    [53.4, .9, '.fw', 1, 1.25, '.fe-cvw@.3,.5'],
-    [55.5, .7, '.fim', 1.2, 2.1],
-    [58, .8, '.fe-body@.25,.45', 1.2, 2.1, '.fe-rail'],
-    [59.5, .5, '.fe-acts', 1.3, 2.2, '.fe-play'],
-    [60.25, .8, '.fw', 1, 1.3, '.fpl-stage@.5,.5'],
-    [62.5, 1, '.fpl-stage@.3,.62', 1.22, 1.95],
-    [64.7, 1.2, '.fpl-stage@.72,.62', 1.22, 1.95],
-    [67.3, .5, '.fw', 1, 1.3, '.fe-cvw'],
-    [68.2, .7, '.fe-acts', 1.4, 2.3, '.fe-save'],
-    [69, .7, '.fsv', 1.2, 2, '.fsv@.5,.45'],
-    [71.5, .9, '.fdl@.3,.5', 1.45, 1.7, '.fdl-item'],
-    [74.15, .6, '.fw-tabs@.3,.5', 1.6, 1.6, '.fw-tab2'],
-    [75.3, 1, '.fw', 1, 1.3, '.fwb-stage'],
-    [80.4, .8, '.fwb-stage@.3,.6', 1.18, 2, '.fwb-poll'],
-    [82.6, 1, '.fw', 1, 1.25, '.fwb-stage']
+  /* câmera: [início, duração, alvo, zoom máximo]. Uma lista para o palco largo e outra para o celular (4:5).
+     Alvo = seletor, "a+b" (enquadra a união das caixas, com folga, até o zoom máximo), "alvo@fx,fy"
+     (ponto relativo à caixa, com o zoom pedido) ou "x,y" (% do palco). Os quadros ficam dentro da janela.
+     Regras: nada de afastar e voltar a aproximar em menos de 2,5 s; o cursor chega com a câmera quase parada. */
+  const CAM_D = [
+    [0, 0, '.fw', 1],
+    [4.5, 2, '.fh-main@.5,.46', 1.13],
+    [12.85, 1.8, '.fm-main@.56,.66', 1.3],
+    [15.55, 1.9, '.fe-cvw@.5,.44', 1.45],
+    [20.2, 1.9, '.fe-body@.6,.47', 1.2],
+    [27.3, 1.8, '.fe@.43,.42', 1.14],
+    [34.9, 1.8, '.fe-body@.6,.5', 1.17],
+    [48.95, 1.9, '.fr-ray+.fe-cvw+.fi-score', 1.45],
+    [53.2, 2, '.fw', 1],
+    [59.95, 1.9, '.fpl-stage', 1.12],
+    [62.5, 2, '.fpl-stage@.5,.6', 1.28],
+    [67.6, 1.9, '.fsv@.5,.42', 1.3],
+    [71.25, 1.8, '.fdl@.32,.5', 1.3],
+    [73.2, 2, '.fw', 1.1],
+    [80.45, 1.8, '.fwb-stage@.3,.6', 1.3]
+  ];
+  const CAM_M = [
+    [0, 0, '.fw', 1],
+    [4.5, 2, '.fh-starts@.38,.5', 1.7],
+    [12.75, 1.8, '.fm-strip@.74,.5', 1.7],
+    [15.55, 1.9, '.fe-sel1', 2.15],
+    [20.2, 1.9, '.fe-body@.7,.42', 1.85],
+    [27.3, 1.9, '.fe-rail+.fe-cvw', 1.6],
+    [34.9, 1.9, '.fe-cvw+.flb@.6,.5', 1.3],
+    [41.15, 2, '.fw@.5,.5', 1.06],
+    [48.95, 1.9, '.fr-ray+.fe-cvw', 1.75],
+    [51.2, 2, '.fe-cvw+.fi-score@.62,.5', 1.75],
+    [53.5, 2, '.fe-cvw', 1.75],
+    [57.75, 2, '.fw@.5,.5', 1.06],
+    [62.35, 2, '.fpl-stage@.27,.6', 1.9],
+    [64.4, 2.2, '.fpl-stage@.76,.6', 1.9],
+    [67.65, 1.9, '.fsv+.fe-save', 1.6],
+    [71.2, 1.9, '.fdl@.3,.5', 1.4],
+    [73.2, 2, '.fw@.5,.5', 1.06],
+    [80.4, 1.9, '.fwb-poll', 1.9]
   ];
   /* paleta do slide: [tempo, matiz em graus, saturação] · Halor → Oceano → Coral → Halor */
   const PAL = [[0, 0, 1], [23.7, -82, 1.1], [25.3, 112, 1], [26.9, 0, 1]];
-  // legenda final (no celular ela sobe para o lugar da legenda do passo)
-  const LEG = [76.3, 80.3];
   // trilha: um sino por passo, subindo pela escala; acorde no fecho
   const CUES = [[.3, 0], [1.2, 7]].concat(STEPS.map((s, i) => [s.t, [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26][i]]), [[END + .3, 'chord']]);
   const TAU = Math.PI * 2;
@@ -106,13 +115,14 @@ const Film = (() => {
     i2: { type: 'tl', k: 'Pesquisa do piloto', h: 'O que o piloto mostrou.', ms: [['S1', 'Escuta', .1], ['S2', 'Testes', .37], ['S3', 'Ajustes', .63], ['S4', 'Relatório', .9]] }
   };
 
-  let film, cv, ctx, fillEl, timeEl, chapEl, track, camEl, winEl, appSc;
+  let film, cv, ctx, fillEl, timeEl, chapEl, track, camEl, winEl, appSc, capsEl, legSc;
   let scenes = [], state = 'poster', t = 0, last = 0, raf = 0, w = 0, h = 0, stars;
-  let audio = null, soundOn = false, dragging = false, camLast = '', palLast = '', portrait = false, legOn = false;
+  let audio = null, soundOn = false, dragging = false, camLast = '', palLast = '', portrait = false, legLast = null;
   const A = {}, CK = [], MK = { pts: [], hov: [], drags: [], clicks: [], ok: false };
   const clamp = v => Math.max(0, Math.min(1, v));
   const ease = v => 1 - Math.pow(1 - clamp(v), 3);
-  const eio = v => { v = clamp(v); return v < .5 ? 4 * v * v * v : 1 - Math.pow(-2 * v + 2, 3) / 2; };
+  const sine = v => .5 - .5 * Math.cos(Math.PI * clamp(v));                       // fusões e avanço lento
+  const smoother = v => { v = clamp(v); return v * v * v * (v * (v * 6 - 15) + 10); };  // câmera: começa e para sem tranco
   const lin = v => clamp(v);
   const nums = s => s.trim().split(/\s+/).map(Number);
   const fmt = s => Math.floor(s / 60) + ':' + String(Math.floor(s % 60)).padStart(2, '0');
@@ -134,19 +144,20 @@ const Film = (() => {
   function build() {
     $$('[data-slide]', film).forEach(e => { const s = FS[e.dataset.slide]; if (s) e.innerHTML = slideHTML(s, +(e.dataset.nSlide || 1), 'halor'); });
     $$('[data-clone]', film).forEach(e => { const src = $('[data-cs="' + e.dataset.clone + '"] .slide', film); if (src) e.innerHTML = src.outerHTML; });
+    // uma legenda sai por completo antes da próxima entrar (no mesmo lugar, nunca se sobrepõem)
     const caps = $('[data-caps]', film);
     STEPS.forEach((s, i) => {
       const sc = el('div', 'sc f-capsc');
-      sc.dataset.from = (s.t + .05).toFixed(2); sc.dataset.to = ((STEPS[i + 1] ? STEPS[i + 1].t : END) - .15).toFixed(2);
-      sc.dataset.fi = '.25'; sc.dataset.fo = '.2';
-      sc.innerHTML = `<p class="f-cap fa fa-up" style="--at:0;--du:.45"><b>${i + 1}</b><span>${s.n}</span></p>`;
+      sc.dataset.from = s.t.toFixed(2); sc.dataset.to = ((STEPS[i + 1] ? STEPS[i + 1].t : END) - .34).toFixed(2);
+      sc.dataset.fi = '.4'; sc.dataset.fo = '.34';
+      sc.innerHTML = `<p class="f-cap fa fa-cap" style="--at:0;--du:.6"><b>${i + 1}</b><span>${s.n}</span></p>`;
       caps.appendChild(sc);
     });
   }
 
   function parseScene(n) {
     const own = e => e.closest('.sc') === n;   // cada elemento obedece só à cena mais próxima
-    const s = { n, from: +n.dataset.from, to: +n.dataset.to, o: n.dataset.o != null ? +n.dataset.o : +n.dataset.from, fi: n.dataset.fi != null ? +n.dataset.fi : .18, fo: n.dataset.fo != null ? +n.dataset.fo : .18, vis: false };
+    const s = { n, from: +n.dataset.from, to: +n.dataset.to, o: n.dataset.o != null ? +n.dataset.o : +n.dataset.from, fi: n.dataset.fi != null ? +n.dataset.fi : .3, fo: n.dataset.fo != null ? +n.dataset.fo : .3, fz: +(n.dataset.fz || 0), vis: false, tf: '' };
     s.counts = $$('[data-n]', n).filter(own).map(e => ({ e, segs: [nums(e.dataset.n)], dec: +(e.dataset.dec || 0), fn: e.dataset.ez === 'lin' ? lin : ease, ring: e.hasAttribute('data-ring'), last: null }));
     s.types = $$('[data-type]', n).filter(own).map(e => { const [at, du] = nums(e.dataset.type); return { e, at, du, full: e.textContent, last: -1 }; });
     s.ons = $$('[data-on]', n).filter(own).map(e => ({ e, r: ranges(e.dataset.on), last: null }));
@@ -160,6 +171,7 @@ const Film = (() => {
     camEl = $('.fw-cam', film); winEl = $('[data-cur]', film); appSc = camEl.closest('.sc');
     build();
     scenes = $$('.sc', film).map(parseScene);
+    capsEl = $('[data-caps]', film); legSc = scenes.find(s => s.n.classList.contains('f-legsc'));
     MK.cur = $('.fw-cur', winEl); MK.rip = $('.fw-rip', winEl);
     MK.way = CUR.map(([t0, tg]) => ({ t: t0, tg }));
     MK.clicks = MK.way.filter(x => x.tg === '!').map(x => x.t);
@@ -201,13 +213,49 @@ const Film = (() => {
     cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
-  // alvo da câmera em coordenadas do palco (sem transformação)
-  function camPoint(tg) {
-    if (/^-?[\d.]+,-?[\d.]+$/.test(tg)) { const [x, y] = tg.split(',').map(Number); return { x: x / 100 * w, y: y / 100 * h }; }
-    const [sel, rel] = tg.split('@'), e = $(sel, camEl);
-    if (!e) return { x: w / 2, y: h / 2 };
-    const b = box(e, camEl), [fx, fy] = rel ? rel.split(',').map(Number) : [.5, .5];
-    return { x: b.x + b.w * fx, y: b.y + b.h * fy };
+  /* · câmera: quadros-chave medidos no palco (sem transformação) · */
+  // margem dos quadros em volta da janela e folga ao enquadrar uma união de caixas
+  const PAD = .018, FIT = .05;
+  function camKey(tg, zmax) {
+    let x = w / 2, y = h / 2, z = zmax;
+    if (/^-?[\d.]+,-?[\d.]+$/.test(tg)) { const [px, py] = tg.split(',').map(Number); x = px / 100 * w; y = py / 100 * h; }
+    else {
+      const [sels, rel] = tg.split('@');
+      let u = null;
+      for (const sel of sels.split('+')) {
+        const e = $(sel, camEl); if (!e) continue;
+        const b = box(e, camEl);
+        u = u ? { x: Math.min(u.x, b.x), y: Math.min(u.y, b.y), r: Math.max(u.r, b.x + b.w), b: Math.max(u.b, b.y + b.h) } : { x: b.x, y: b.y, r: b.x + b.w, b: b.y + b.h };
+      }
+      if (u) {
+        const bw = u.r - u.x, bh = u.b - u.y;
+        if (rel) { const [fx, fy] = rel.split(',').map(Number); x = u.x + bw * fx; y = u.y + bh * fy; }
+        else { x = u.x + bw / 2; y = u.y + bh / 2; z = Math.min(zmax, w / (bw * (1 + 2 * FIT)), h / (bh * (1 + 2 * FIT))); }
+      }
+    }
+    return camFit({ px: x, py: y }, Math.max(1, z));
+  }
+  function camFit(k, z) { k.z = z; k.x = camAxis(k.px, w, A.win.x, A.win.w, z); k.y = camAxis(k.py, h, A.win.y, A.win.h, z); return k; }
+  // mantém o quadro dentro da janela (com folga); com zoom baixo, desliza até o palco inteiro
+  function camAxis(p, size, lo, len, z) {
+    const v = size / z, pad = w * PAD, inner = len + 2 * pad;
+    if (v <= inner) return Math.max(lo - pad + v / 2, Math.min(lo + len + pad - v / 2, p));
+    const s = clamp((v - inner) / Math.max(1, size - inner));
+    return (lo + len / 2) + (size / 2 - (lo + len / 2)) * s;
+  }
+  // movimento ancorado: zoom em escala logarítmica e o ponto fixo da transformação parado na tela.
+  // Entre dois quadros válidos, as bordas do quadro andam sempre num só sentido, então nada sai da janela.
+  function camMix(a, b, s) {
+    const L = Math.log(b.z / a.z), z = a.z * Math.exp(L * s);
+    const g = Math.abs(L) < 1e-6 ? s : (1 - Math.exp(-L * s)) / (1 - Math.exp(-L));
+    return { x: a.x + (b.x - a.x) * g, y: a.y + (b.y - a.y) * g, z };
+  }
+  // estado no trecho i: movimento até o quadro i e, depois, a pausa com avanço lento até o próximo movimento
+  function camSeg(i, tt) {
+    const k = CK[i];
+    if (tt < k.t + k.du) return camMix(k.s, k, smoother((tt - k.t) / k.du));
+    const h0 = k.t + k.du, h1 = CK[i + 1] ? CK[i + 1].t : D, hold = Math.max(.01, h1 - h0);
+    return { x: k.x, y: k.y, z: k.z * (1 + Math.min(.026, .0042 * hold) * sine((tt - h0) / hold)) };
   }
   function measure() {
     if (!film || !film.offsetWidth) return;
@@ -215,7 +263,13 @@ const Film = (() => {
     $$('[data-anchor]', film).forEach(n => { const b = box(n, film); A[n.dataset.anchor] = { x: b.x + b.w / 2, y: b.y + b.h / 2, w: b.w, h: b.h }; });
     A.win = box(winEl, camEl);
     CK.length = 0;
-    for (const [t0, du, tg, z, zm, tgm] of CAM) { const p = camPoint(portrait && tgm ? tgm : tg); CK.push({ t: t0, du, x: p.x, y: p.y, z: portrait ? zm : z }); }
+    for (const [t0, du, tg, z] of (portrait ? CAM_M : CAM_D)) { const k = camKey(tg, z); k.t = t0; k.du = du; CK.push(k); }
+    // cada movimento parte do quadro exato daquele instante (com o avanço lento da pausa anterior);
+    // numa panorâmica com o mesmo zoom, o quadro guarda o avanço em vez de recuar e voltar
+    CK.forEach((k, i) => {
+      k.s = i ? camSeg(i - 1, k.t) : k;
+      if (i && Math.abs(Math.log(k.z / CK[i - 1].z)) < .04 && k.s.z > k.z) camFit(k, k.s.z);
+    });
     MK.ok = false; camLast = '';
   }
   function measureMock() {
@@ -261,16 +315,24 @@ const Film = (() => {
       const vis = t >= s.from && t < s.to + (REDUCED ? 0 : s.fo);
       if (vis !== s.vis) { s.vis = vis; s.n.classList.toggle('on', vis); }
       if (!vis) continue;
-      let op = 1;
-      if (!REDUCED) { if (s.fi > 0) op = Math.min(op, (t - s.from) / s.fi); if (t > s.to && s.fo > 0) op = Math.min(op, 1 - (t - s.to) / s.fo); }
-      s.n.style.opacity = clamp(op).toFixed(3);
+      // fusões com curva suave; a cena que entra pode crescer de leve até o lugar (data-fz)
+      let op = 1, inq = 1;
+      if (!REDUCED) {
+        if (s.fi > 0 && t < s.from + s.fi) { inq = sine((t - s.from) / s.fi); op = inq; }
+        if (t > s.to && s.fo > 0) op = Math.min(op, 1 - sine((t - s.to) / s.fo));
+      }
+      s.n.style.opacity = op.toFixed(3);
+      const tf = s.fz && inq < 1 ? 'scale(' + (1 - s.fz * (1 - inq)).toFixed(4) + ')' : '';
+      if (tf !== s.tf) { s.n.style.transform = tf; s.tf = tf; }
       const lt = t - s.o;
       s.n.style.setProperty('--lt', lt.toFixed(3));
       update(s, lt);
     }
     if (appSc.classList.contains('on')) { camFrame(); curFrame(); palFrame(); }
-    const leg = t >= LEG[0] && t < LEG[1] + .35;
-    if (leg !== legOn) { film.classList.toggle('leg-on', leg); legOn = leg; }
+    // no celular a legenda final ocupa o lugar da legenda do passo: a do passo sai antes e volta depois
+    let capOp = '';
+    if (portrait && legSc) { const q = REDUCED ? (t >= legSc.from && t < legSc.to ? 1 : 0) : Math.min(sine((t - legSc.from + .4) / .4), 1 - sine((t - legSc.to - legSc.fo) / .4)); capOp = (1 - q).toFixed(3); }
+    if (capOp !== legLast) { capsEl.style.opacity = capOp; legLast = capOp; }
     barFrame(); draw();
   }
   function update(s, lt) {
@@ -289,45 +351,42 @@ const Film = (() => {
       if (on !== o.last) { o.e.classList.toggle('act', on); o.last = on; }
     }
   }
-  // câmera: zoom e enquadramento suaves; com movimento reduzido, cortes secos
+  // câmera: movimentos ancorados e suaves; com movimento reduzido, cortes secos e nenhum avanço
   function camFrame() {
     if (!CK.length) return;
-    const k = (tt, st, du) => REDUCED || du <= 0 ? (tt >= st ? 1 : 0) : eio((tt - st) / du);
-    const mix = (a, b, q) => ({ x: a.x + (b.x - a.x) * q, y: a.y + (b.y - a.y) * q, z: a.z + (b.z - a.z) * q });
-    let from = CK[0], to = CK[0], st = 0, du = 0;
-    for (let i = 1; i < CK.length; i++) {
-      if (t < CK[i].t) break;
-      from = mix(from, to, k(CK[i].t, st, du)); to = CK[i]; st = CK[i].t; du = CK[i].du;
-    }
-    const c = mix(from, to, k(t, st, du)), z = Math.max(1, c.z);
-    // enquadra dentro da janela quando o zoom permite; senão desliza até o palco inteiro
-    const Wb = A.win, pad = w * .034;
-    const axis = (p, size, lo, len) => {
-      const v = size / z, inner = len + 2 * pad;
-      if (v <= inner) return Math.max(lo - pad + v / 2, Math.min(lo + len + pad - v / 2, p));
-      const s = clamp((v - inner) / Math.max(1, size - inner));
-      return (lo + len / 2) + (size / 2 - (lo + len / 2)) * s;
-    };
-    const cx = axis(c.x, w, Wb.x, Wb.w), cy = axis(c.y, h, Wb.y, Wb.h);
-    const tx = w / 2 - cx * z, ty = h / 2 - cy * z;
-    const str = `translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${z.toFixed(4)})`;
+    let i = 0; while (i < CK.length - 1 && t >= CK[i + 1].t) i++;
+    const c = REDUCED ? CK[i] : camSeg(i, t);
+    const tx = w / 2 - c.x * c.z, ty = h / 2 - c.y * c.z;
+    const str = `translate(${tx.toFixed(2)}px,${ty.toFixed(2)}px) scale(${c.z.toFixed(5)})`;
     if (str !== camLast) { camEl.style.transform = str; camLast = str; }
+  }
+  /* cursor: parado até a hora de sair; então um movimento curto (0,5 a 1 s, conforme a distância),
+     que arranca rápido e pousa devagar, num arco leve */
+  function curPos(i) {
+    const wy = MK.way, P = MK.pts, a = P[i], b = P[i + 1];
+    if (REDUCED || t <= wy[i].t) return a;
+    const dx = b.x - a.x, dy = (b.y - a.y) * .573, dist = Math.hypot(dx, dy);   // em % da largura da janela
+    if (dist < .01) return a;
+    const du = Math.min(wy[i + 1].t - wy[i].t, Math.max(.5, Math.min(1, .4 + dist * .012)));
+    const u = (t - (wy[i + 1].t - du)) / du;
+    if (u <= 0) return a;
+    const q = smoother(Math.pow(clamp(u), .8)), bow = Math.sin(Math.PI * q) * Math.min(3, dist * .08);
+    let nx = -dy / dist, ny = dx / dist; if (ny > 0) { nx = -nx; ny = -ny; }   // o arco sempre puxa para cima
+    return { x: a.x + dx * q + nx * bow, y: a.y + (dy * q + ny * bow) / .573 };
   }
   function curFrame() {
     if (!MK.ok) measureMock();
     const wy = MK.way, P = MK.pts; if (!P.length) return;
     let i = 0; while (i < wy.length - 1 && t >= wy[i + 1].t) i++;
-    let p;
-    if (t <= wy[0].t || i >= wy.length - 1) p = P[t <= wy[0].t ? 0 : P.length - 1];
-    else if (REDUCED) p = P[i];
-    else { const k = eio((t - wy[i].t) / (wy[i + 1].t - wy[i].t)); p = { x: P[i].x + (P[i + 1].x - P[i].x) * k, y: P[i].y + (P[i + 1].y - P[i].y) * k }; }
-    const shown = t >= wy[0].t && t < END - .2;
+    const p = t <= wy[0].t ? P[0] : i >= wy.length - 1 ? P[P.length - 1] : curPos(i);
+    const op = REDUCED ? (t >= 4.4 && t < END - .6 ? 1 : 0) : Math.min(sine((t - 4.3) / .4), 1 - sine((t - (END - .9)) / .4));
+    const shown = op > 0;
     MK.cur.style.left = p.x.toFixed(2) + '%'; MK.cur.style.top = p.y.toFixed(2) + '%';
-    MK.cur.style.opacity = shown ? 1 : 0;
+    MK.cur.style.opacity = op.toFixed(3);
     MK.cur.classList.toggle('down', MK.clicks.some(c => t >= c - .06 && t < c + .1));
-    let c = null; for (const ct of MK.clicks) if (t >= ct && t < ct + .45) c = ct;
+    let c = null; for (const ct of MK.clicks) if (t >= ct && t < ct + .5) c = ct;
     if (c == null || REDUCED) MK.rip.style.opacity = 0;
-    else { const q = (t - c) / .45; MK.rip.style.left = p.x.toFixed(2) + '%'; MK.rip.style.top = p.y.toFixed(2) + '%'; MK.rip.style.opacity = (1 - q).toFixed(3); MK.rip.style.transform = 'scale(' + (.3 + q).toFixed(3) + ')'; }
+    else { const q = ease((t - c) / .5); MK.rip.style.left = p.x.toFixed(2) + '%'; MK.rip.style.top = p.y.toFixed(2) + '%'; MK.rip.style.opacity = (.85 * (1 - q)).toFixed(3); MK.rip.style.transform = 'scale(' + (.35 + .75 * q).toFixed(3) + ')'; }
     for (const o of MK.hov) {
       const vis = o.e.offsetParent !== null && !o.e.closest('.sc:not(.on)');
       o.e.classList.toggle('hov', shown && vis && p.x >= o.r[0] && p.x <= o.r[2] && p.y >= o.r[1] && p.y <= o.r[3]);
@@ -342,7 +401,7 @@ const Film = (() => {
     let hue = PAL[0][1], sat = PAL[0][2];
     for (let i = 1; i < PAL.length; i++) {
       const [pt, ph, ps] = PAL[i]; if (t < pt) break;
-      const q = REDUCED ? 1 : eio((t - pt) / .5), h0 = hue, s0 = sat;
+      const q = REDUCED ? 1 : sine((t - pt) / .6), h0 = hue, s0 = sat;
       hue = h0 + (ph - h0) * q; sat = s0 + (ps - s0) * q;
     }
     const str = hue.toFixed(1) + '|' + sat.toFixed(3);
@@ -383,9 +442,9 @@ const Film = (() => {
       starsAt(u, 1);
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .7, ry: .7, rot: 0, s: 3.5, len: 2.6, w: 2.2 * u * 1.6, sp: 0, o: .75 }, 0);
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .95, ry: .62, rot: .1, s: 4, len: 1.6, w: 1.2 * u * 1.6, sp: 0, o: .4 }, 0);
-    } else if (t < 4.3) {                                   // abertura: o símbolo acende e os arcos giram atrás dele
-      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), out = 1 - clamp((t - 3.6) / .6);
-      starsAt(u, out);
+    } else if (t < 4.7) {                                   // abertura: o símbolo acende e os arcos giram atrás dele
+      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 3.7) / 1), out = 1 - q;
+      starsAt(u, 1 - .5 * q);                               // o céu baixa até o tom da gravação, sem salto
       arcs(mk.x, mk.y, R * 1.25, u, k * out, t * .12);
       glow(mk.x, mk.y, mk.w * .7, .35 * k * out);
     } else if (t < END) {                                   // gravação: só um céu discreto atrás da janela
@@ -393,7 +452,7 @@ const Film = (() => {
     } else {                                                // fecho: os arcos voltam e respiram
       const lt = t - END, mk = A.mark2 || { x: cx, y: cy * .7, w: R * .4 }, kk = ease((lt - .1) / 1.4);
       const br = REDUCED ? 1 : 1 + .03 * Math.sin(lt * TAU / 2.4);
-      starsAt(u, 1);
+      starsAt(u, .5 + .5 * sine(lt / .9));
       arcs(cx, cy * 1.04, R * 1.1 * br, u, kk, lt * .06);
       glow(mk.x, mk.y, mk.w * .8 * br, .3 * kk);
     }
@@ -441,5 +500,6 @@ const Film = (() => {
   function fullscreen() {
     try { if (document.fullscreenElement) document.exitFullscreen(); else film.requestFullscreen().catch(() => {}); } catch (e) {}
   }
-  return { init };
+  // seek fica exposto para testes quadro a quadro (o mesmo que arrastar a trilha)
+  return { init, seek: nt => seek(nt) };
 })();

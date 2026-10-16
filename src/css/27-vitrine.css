@@ -480,10 +480,10 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
   .vt-fw-flow { stroke-dasharray: none; opacity: .5; }
 }
 
-/* catálogo com 8 itens e o card + que leva aos planos */
-.vt-plus { display: flex; }
-.vt-plus-card { width: 100%; text-decoration: none; color: var(--text); justify-items: start; align-content: center; text-align: left; border: 1px dashed var(--halor-glow) !important; background: linear-gradient(150deg, rgba(139, 61, 255, .28), rgba(23, 16, 48, .6)) !important; transition: transform var(--t-base) var(--ease-halo), box-shadow var(--t-base) var(--ease-halo); }
-.vt-plus-card:hover { transform: translateY(-3px); box-shadow: 0 0 0 1px var(--halor-glow), 0 20px 50px -20px rgba(139, 61, 255, .9); }
-.vt-plus-ic { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 600 26px/1 var(--f-display); color: #fff; background: var(--halor-violet); box-shadow: var(--glow-md); margin-bottom: 4px; }
+/* catálogo com 8 itens e a pílula + que leva aos planos (mesma linguagem do selo Ao vivo) */
+.vt-plus-pill { display: flex; width: fit-content; margin: 22px auto 0; align-items: center; gap: 7px; height: 30px; padding: 0 14px 0 5px; border-radius: var(--r-pill); background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 700; letter-spacing: .01em; text-decoration: none; box-shadow: var(--glow-sm); transition: transform var(--t-base) var(--ease-halo), box-shadow var(--t-base) var(--ease-halo); }
+.vt-plus-pill span { width: 21px; height: 21px; border-radius: 50%; display: grid; place-items: center; background: rgba(255, 255, 255, .22); font: 600 15px/1 var(--f-display); }
+.vt-plus-pill:hover, .vt-plus-pill:focus-visible { transform: translateY(-2px); box-shadow: var(--glow-md); }
+.vt-plus-pill[hidden] { display: none; }
 .vt-cat.is-short > li { display: flex !important; }
 .vt-cat > li[hidden] { display: none !important; }

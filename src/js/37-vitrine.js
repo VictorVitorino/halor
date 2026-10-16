@@ -119,23 +119,22 @@ function vtCatalog(sec, live) {
     }
     li.append(it); ul.append(li);
   });
-  /* só 8 à mostra; o card + leva para a escolha do plano */
-  const plus = el('li', 'vt-plus');
-  const a = el('a', 'vt-item vt-plus-card'); a.href = '#assinar';
-  a.append(el('span', 'vt-plus-ic', '+'), el('p', 'vt-item-t', 'Mais 32 efeitos'), el('p', 'vt-item-s', 'Escolha um plano e libere todos no Estúdio.'));
-  plus.append(a); ul.append(plus);
+  /* só 8 à mostra; a pílula + leva para a escolha do plano */
+  const plus = el('a', 'vt-plus-pill'); plus.href = '#assinar';
+  plus.innerHTML = '<span aria-hidden="true">+</span><b>32 efeitos</b>';
+  ul.after(plus);
 }
 
 /* · Filtro por intenção (vale para o palco e para o catálogo) · */
 function vtFilter(sec) {
   const chips = $$('.vt-chip', sec), wrap = $('#vt-chips', sec), stage = $('#vt-stage', sec);
-  const cards = $$('.vt-card', sec), items = $$('#vt-cat li:not(.vt-plus)', sec);
+  const cards = $$('.vt-card', sec), items = $$('#vt-cat li', sec);
   const empty = $('#vt-empty', sec), count = $('#vt-count', sec), status = $('#vt-status', sec);
   const cat = $('#vt-cat', sec), more = $('#vt-more', sec);
   /* no celular o catálogo abre com 8 itens e um botão para ver todos */
-  const SHOW = 8, plusT = $('.vt-plus .vt-item-t', sec);
+  const SHOW = 8, plusP = $('.vt-plus-pill', sec), plusT = $('b', plusP);
   more.hidden = true;
-  const moreSync = n => { plusT.textContent = n > SHOW ? `Mais ${n - SHOW} efeitos` : 'Todos os efeitos'; };
+  const moreSync = n => { plusP.hidden = n <= SHOW; plusT.textContent = `${n - SHOW} efeitos`; plusP.setAttribute('aria-label', `Mais ${n - SHOW} efeitos: escolha um plano para liberar todos`); };
   const pop = n => { if (REDUCED) return; n.classList.remove('is-in'); void n.offsetWidth; n.classList.add('is-in'); };
   const apply = k => {
     chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.intent === k)));

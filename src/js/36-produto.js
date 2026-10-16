@@ -36,7 +36,7 @@ function bootProduto() {
     track.addEventListener('scroll', edge, { passive: true }); edge();
     new IntersectionObserver(es => car.classList.toggle('run', es[0].isIntersecting)).observe(car);
   }
-  bootTimeline();
+  bootEvo();
   bootEfeitoFx();
   const gain = $('.pd-gain');
   if (gain) new IntersectionObserver(es => { if (es[0].isIntersecting) gain.classList.add('on'); }, { threshold: .4 }).observe(gain);
@@ -60,49 +60,76 @@ function bootProduto() {
   set(0);
 }
 
-/* Linha do tempo · Connector / Flow Line: a linha se desenha pelos marcos,
-   acende cada um quando chega nele e depois segue com luz correndo */
-function bootTimeline() {
-  const wrap = $('.tl-wrap'); if (!wrap) return;
-  const svg = $('.tl-svg', wrap), lis = $$('.tl li', wrap), comet = $('.tl-comet', wrap);
-  const base = $('.tl-base', svg), draw = $('.tl-draw', svg), flow = $('.tl-flowp', svg), fut = $('.tl-future', svg);
-  let played = false, timers = [];
-  /* onda suave: sobe e desce entre os marcos, sem invadir ano nem título */
-  const w = i => (i % 2 ? -20 : 20), curve = (pts, o = 0) => pts.reduce((d, p, i) => {
-    if (!i) return `M${p[0].toFixed(1)} ${p[1].toFixed(1)}`;
-    const a = pts[i - 1], dx = p[0] - a[0], dy = p[1] - a[1];
-    return d + (Math.abs(dx) >= Math.abs(dy)
-      ? ` C${(a[0] + dx * .32).toFixed(1)} ${(a[1] + w(i + o)).toFixed(1)} ${(p[0] - dx * .32).toFixed(1)} ${(p[1] + w(i + o)).toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`
-      : ` C${a[0].toFixed(1)} ${(a[1] + dy * .5).toFixed(1)} ${p[0].toFixed(1)} ${(p[1] - dy * .5).toFixed(1)} ${p[0].toFixed(1)} ${p[1].toFixed(1)}`);
-  }, '');
+/* Linha do tempo · viagem no tempo: um palco mostra como a apresentação era em cada
+   época, o trilho avança sozinho enquanto a seção está à vista e para quando a pessoa escolhe */
+const EVO = [
+  { yr: '2016', y: '2016', t: 'Slides estáticos', d: 'Tópicos em sequência e PDF por e-mail. Quem recebe lê sozinho.', who: 'Lê sozinho', a: .16 },
+  { yr: '2018', y: '2018', t: 'Na nuvem', d: 'Várias pessoas editam ao mesmo tempo. O arquivo vira link.', who: 'Comenta', a: .28 },
+  { yr: '2020', y: '2020', t: 'Tela compartilhada', d: 'Tudo por vídeo. A atenção disputa espaço com dez abas abertas.', who: 'Divide a atenção', a: .2 },
+  { yr: '2022', y: '2022', t: 'Modelos prontos', d: 'Design em minutos, mas muita apresentação com a mesma cara.', who: 'Reconhece o modelo', a: .34 },
+  { yr: '2024', y: '2024', t: 'Gerado por IA', d: 'Slides a partir de um texto. Rápido, porém ainda parado.', who: 'Recebe pronto', a: .42 },
+  { yr: '2026', y: '2026', t: 'HTML vivo e lúdico', d: 'Com o Halor, a apresentação se move, responde e convida a participar. Sem código.', who: 'Participa', a: .88, now: true },
+  { yr: 'Próximos', y: 'Próximos anos', t: 'Apresentação que conversa', d: 'Ela se adapta a quem assiste, tira dúvidas e mede a atenção ao vivo.', who: 'Conversa', a: 1, next: true }
+];
+function bootEvo() {
+  const ev = $('#ev'); if (!ev) return;
+  const rail = $('.ev-rail', ev), inner = $('.ev-rail-in', ev), scenes = $$('.ev-scene', ev), info = $('.ev-info', ev);
+  const track = $('.ev-track', ev), fut = $('.ev-fut', ev), fill = $('.ev-fill', ev), prog = $('.ev-prog', ev), att = $('.ev-att b', ev);
+  const N = EVO.length, NOW = EVO.findIndex(e => e.now);
+  const tabs = EVO.map((e, i) => {
+    const b = el('button', 'ev-stop' + (e.now ? ' is-now' : '') + (e.next ? ' is-next' : ''));
+    b.type = 'button'; b.id = 'ev-tab-' + i; b.setAttribute('role', 'tab'); b.setAttribute('aria-controls', 'ev-panel');
+    b.innerHTML = `<i></i><span class="mono">${e.yr}${e.now ? ' <em>hoje</em>' : ''}</span><b>${e.t}</b>`;
+    b.addEventListener('click', () => { user = true; go(i); });
+    inner.appendChild(b); return b;
+  });
+  let cur = -1, timer = 0, visible = false, hold = false, user = false, seen = false, P = [];
   const layout = () => {
-    const r = wrap.getBoundingClientRect(); if (!r.width) return;
-    svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
-    const pts = lis.map(li => { const d = $('i', li).getBoundingClientRect(); return [d.left - r.left + d.width / 2, d.top - r.top + d.height / 2]; });
-    const main = curve(pts.slice(0, -1)), future = curve(pts.slice(-2), pts.length - 2);
-    base.setAttribute('d', main); draw.setAttribute('d', main); flow.setAttribute('d', main); fut.setAttribute('d', future);
-    const L = draw.getTotalLength();
-    draw.style.strokeDasharray = L; if (!played) draw.style.strokeDashoffset = L;
-    comet.style.offsetPath = `path('${main}')`;
-    return { L, pts };
+    P = tabs.map(b => { const d = $('i', b); return [b.offsetLeft + d.offsetLeft + d.offsetWidth / 2, b.offsetTop + d.offsetTop + d.offsetHeight / 2]; });
+    if (!P.length || !P[0][0]) return;
+    const y = P[0][1] - 1.5 + 'px', seg = (el, x0, x1) => { el.style.left = x0 + 'px'; el.style.width = Math.max(0, x1 - x0) + 'px'; el.style.top = y; };
+    seg(track, P[0][0], P[NOW][0]); seg(fut, P[NOW][0], P[N - 1][0]);
+    seg(fill, P[0][0], P[Math.max(0, cur)][0]);
+    if (cur >= 0 && cur < N - 1) seg(prog, P[cur][0], P[cur + 1][0]); else prog.style.width = '0px';
   };
-  const play = () => {
-    const g = layout(); if (!g) return;
-    played = true; timers.forEach(clearTimeout); timers = [];
-    wrap.classList.remove('flowing'); lis.forEach(li => li.classList.remove('lit'));
-    const dur = REDUCED ? 0 : 2600;
-    draw.style.transition = 'none'; draw.style.strokeDashoffset = g.L; void draw.getBoundingClientRect();
-    draw.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(.22,.61,.36,1)`; draw.style.strokeDashoffset = 0;
-    const xs = g.pts.map(p => p[0]), span = (xs[xs.length - 2] - xs[0]) || 1, vertical = Math.abs(span) < 40;
-    lis.forEach((li, i) => {
-      const k = i === lis.length - 1 ? 1.08 : vertical ? i / (lis.length - 2) : (g.pts[i][0] - xs[0]) / span;
-      timers.push(setTimeout(() => li.classList.add('lit'), dur * Math.min(1.1, k)));
-    });
-    timers.push(setTimeout(() => wrap.classList.add('flowing'), dur + 200));
+  const go = i => {
+    cur = i; ev.dataset.i = String(i);
+    tabs.forEach((b, k) => { b.setAttribute('aria-selected', String(k === i)); b.tabIndex = k === i ? 0 : -1; b.classList.toggle('past', k < i); });
+    scenes.forEach((s, k) => s.classList.toggle('on', k === i));
+    $('#ev-panel').setAttribute('aria-labelledby', tabs[i].id);
+    const e = EVO[i];
+    $('#ev-y').textContent = e.y; $('#ev-t').textContent = e.t; $('#ev-d').textContent = e.d; $('#ev-who').textContent = e.who;
+    att.style.setProperty('--a', e.a);
+    info.classList.remove('swap'); void info.offsetWidth; info.classList.add('swap');
+    layout();
+    const t = tabs[i], left = t.offsetLeft - (rail.clientWidth - t.offsetWidth) / 2;
+    if (rail.scrollWidth > rail.clientWidth) rail.scrollTo({ left, behavior: REDUCED ? 'auto' : 'smooth' });
+    schedule();
   };
-  new IntersectionObserver(es => { if (es[0].isIntersecting && !played) play(); }, { threshold: .35 }).observe(wrap);
-  new ResizeObserver(() => { const g = layout(); if (g && played) { draw.style.transition = 'none'; draw.style.strokeDashoffset = 0; } }).observe(wrap);
-  lis.forEach(li => { li.tabIndex = 0; });
+  const schedule = () => {
+    clearTimeout(timer); ev.classList.remove('ticking');
+    if (REDUCED || !visible || hold || user || cur < 0) return;
+    const dur = cur === NOW ? 6500 : cur === N - 1 ? 5200 : 4300;
+    ev.style.setProperty('--dur', dur + 'ms'); void ev.offsetWidth; ev.classList.add('ticking');
+    timer = setTimeout(() => go((cur + 1) % N), dur);
+  };
+  inner.addEventListener('keydown', e => {
+    const k = e.key; let n = cur;
+    if (k === 'ArrowRight' || k === 'ArrowDown') n = (cur + 1) % N; else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (cur - 1 + N) % N;
+    else if (k === 'Home') n = 0; else if (k === 'End') n = N - 1; else return;
+    e.preventDefault(); user = true; go(n); tabs[n].focus();
+  });
+  ev.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hold = true; schedule(); } });
+  ev.addEventListener('pointerleave', () => { hold = false; schedule(); });
+  ev.addEventListener('focusin', () => { hold = true; schedule(); });
+  ev.addEventListener('focusout', e => { if (!ev.contains(e.relatedTarget)) { hold = false; schedule(); } });
+  new IntersectionObserver(es => {
+    visible = es[0].isIntersecting;
+    if (visible) { if (!seen) { seen = true; go(cur); } else schedule(); } else { clearTimeout(timer); ev.classList.remove('ticking'); user = false; }
+  }, { threshold: .35 }).observe(ev);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); ev.classList.remove('ticking'); } else schedule(); });
+  new ResizeObserver(layout).observe(inner);
+  go(0); clearTimeout(timer);
 }
 
 /* O efeito Halor · dispara o desenho dos ícones e a tipografia quando a seção aparece */
