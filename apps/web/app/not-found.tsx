@@ -1,5 +1,8 @@
+import type { Metadata } from 'next';
 import NotFoundEngine from '@/components/shell/NotFoundEngine';
 import NotFoundView from '@/components/shell/NotFoundView';
+
+export const metadata: Metadata = { title: 'Página não encontrada' };
 
 export default function NotFound() {
   return (

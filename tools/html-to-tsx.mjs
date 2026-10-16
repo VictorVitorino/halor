@@ -50,7 +50,7 @@ function styleObj(css) {
   }
   return `{{ ${parts.join(', ')} } as CSSProperties}`;
 }
-const escText = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\{/g, '&#123;').replace(/\}/g, '&#125;');
+const escText = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\{/g, '&#123;').replace(/\}/g, '&#125;').replace(/\u00a0/g, '&nbsp;');
 
 function mapHref(v, inSite) {
   if (!v.startsWith('#') || v === '#') return v;
@@ -91,9 +91,11 @@ function attrs(n, ctx) {
 
 function textJSX(t, pre) {
   if (pre) return `{${jsStr(t)}}`;
-  if (!t.trim()) return `{' '}`;
-  const lead = /^\s/.test(t), trail = /\s$/.test(t);
-  const body = escText(t.trim().replace(/\s+/g, ' '));
+  /* só o espaço em branco do HTML colapsa; o espaço fixo (U+00A0, &nbsp;) é texto e fica */
+  const WS = /[ \t\n\r\f]/;
+  if (!t.replace(/[ \t\n\r\f]/g, '')) return `{' '}`;
+  const lead = WS.test(t[0]), trail = WS.test(t[t.length - 1]);
+  const body = escText(t.replace(/^[ \t\n\r\f]+|[ \t\n\r\f]+$/g, '').replace(/[ \t\n\r\f]+/g, ' '));
   return (lead ? `{' '}` : '') + body + (trail ? `{' '}` : '');
 }
 
@@ -101,7 +103,7 @@ const BLOCK = new Set(['div', 'section', 'header', 'footer', 'main', 'nav', 'asi
 // espaço em branco que o HTML ignora: no começo, no fim ou encostado em elemento de bloco
 function isGap(list, i) {
   const c = list[i]; if (c.nodeName === '#comment') return false;
-  if (c.nodeName !== '#text' || c.value.trim()) return false;
+  if (c.nodeName !== '#text' || c.value.replace(/[ \t\n\r\f]/g, '')) return false;
   if (i === 0 || i === list.length - 1) return true;
   const blk = n => n && n.tagName && BLOCK.has(n.tagName);
   return blk(list[i - 1]) || blk(list[i + 1]) || list[i - 1].nodeName === '#comment' || list[i + 1].nodeName === '#comment';

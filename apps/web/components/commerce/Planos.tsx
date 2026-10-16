@@ -1,5 +1,8 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines.
+   Os cartões de #plans e #ent-plans são montados pelo PlanosEngine (lib/engines/commerce/site.ts). */
+import PlanosEngine from './PlanosEngine';
+
 export default function Planos() {
   return (
     <section className="s-sec" id="planos">
@@ -49,6 +52,7 @@ export default function Planos() {
         </div>
         <p className="plans-note muted">Preços em reais. Cancele quando quiser. Garantia de 7 dias nos planos pagos.</p>
       </div>
+      <PlanosEngine />
     </section>
   );
 }

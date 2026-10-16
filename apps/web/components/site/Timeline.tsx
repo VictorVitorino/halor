@@ -1,6 +1,8 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines/site.
+   As abas do trilho nascem de EVO já no estado da primeira época (o protótipo montava por JS). */
 import type { CSSProperties } from 'react';
+import { EVO } from '@/lib/engines/site/data';
 
 export default function Timeline() {
   return (
@@ -14,7 +16,7 @@ export default function Timeline() {
           </p>
         </div>
         <div className="ev" id="ev" data-i="0">
-          <div className="ev-main" id="ev-panel" role="tabpanel">
+          <div className="ev-main" id="ev-panel" role="tabpanel" aria-labelledby="ev-tab-0">
             <div className="ev-stage">
               {/* 2016 · slides estáticos */}
               <div className="ev-scene ev-s0" aria-hidden="true">
@@ -320,6 +322,22 @@ export default function Timeline() {
               <span className="ev-fut" />
               <span className="ev-fill" />
               <span className="ev-prog" />
+              {EVO.map((e, i) => (
+                <button
+                  key={e.yr}
+                  className={'ev-stop' + (e.now ? ' is-now' : '') + (e.next ? ' is-next' : '')}
+                  type="button"
+                  id={'ev-tab-' + i}
+                  role="tab"
+                  aria-controls="ev-panel"
+                  aria-selected={i === 0}
+                  tabIndex={i === 0 ? 0 : -1}
+                >
+                  <i />
+                  <span className="mono">{e.now ? <>{e.yr + ' '}<em>hoje</em></> : e.yr}</span>
+                  <b>{e.t}</b>
+                </button>
+              ))}
             </div>
           </div>
         </div>

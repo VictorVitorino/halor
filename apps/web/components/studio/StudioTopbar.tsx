@@ -1,5 +1,7 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+import Link from 'next/link';
+
 export default function StudioTopbar() {
   return (
     <header className="topbar">
@@ -34,7 +36,7 @@ export default function StudioTopbar() {
           <span className="badge-dot" />
         </button>
         {' '}
-        <a className="avatar" href="/entrar" aria-label="Conta de Marina Costa. Sair">MC</a>
+        <Link className="avatar" href="/entrar" aria-label="Conta de Marina Costa. Sair">MC</Link>
       </div>
     </header>
   );

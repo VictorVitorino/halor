@@ -1,12 +1,9 @@
 'use client';
 import { useEngine } from '@/lib/hooks/useEngine';
-import { bootFields } from '@/lib/engines/particles';
+import { bootAdmin } from '@/lib/engines/studio/admin';
 
-/* Motores da tela (v-studio, sub-tela admin). Esqueleto da fundação: por enquanto liga só o Campo Halor. */
+/* Motores da sub-tela admin do Estúdio (v-studio): ligam ao montar a rota e desligam ao sair. */
 export default function StudioAdminEngine() {
-  useEngine('v-studio', () => {
-    const root = document.getElementById('v-studio') ?? document;
-    return bootFields(root);
-  }, 'admin');
+  useEngine('v-studio', bootAdmin, 'admin');
   return null;
 }

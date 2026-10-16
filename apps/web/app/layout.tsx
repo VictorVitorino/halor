@@ -27,14 +27,14 @@ export const viewport: Viewport = { themeColor: '#07040f', width: 'device-width'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`${sora.variable} ${instrument.variable} ${jetbrains.variable}`}>
+    <html lang="pt-BR" data-scroll-behavior="smooth" className={`${sora.variable} ${instrument.variable} ${jetbrains.variable}`}>
       <body>
         <a className="skip" href="#conteudo">Pular para o conteúdo</a>
         <HalorSprite />
         <ProtoBar />
         <Toast />
-        {children}
         <CoreRuntime />
+        {children}
       </body>
     </html>
   );

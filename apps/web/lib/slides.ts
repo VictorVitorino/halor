@@ -5,6 +5,25 @@
    ========================================================================== */
 
 export type SlideType = 'cover' | 'text' | 'kpi' | 'steps' | 'tl' | 'table' | 'next' | 'poll' | 'end';
+export type LayerKind = 'text' | 'shape' | 'arrow' | 'image' | 'icon';
+export type FontKey = 'ui' | 'display' | 'mono';
+export type FxKind = 'revelar' | 'brilho' | 'subir' | 'halo';
+export type Align = 'left' | 'center' | 'right';
+
+/** Camada extra do editor: posição e tamanho em % do slide, cor, texto e entrada no Palco. */
+export interface Layer {
+  id: string; k: LayerKind;
+  x: number; y: number; w: number; h: number;
+  /** cor, texto, tamanho em pt, peso e fonte (só nas camadas de texto) */
+  c?: string; t?: string; z?: number; wt?: number; f?: FontKey;
+  fx?: FxKind; fxd?: number;
+}
+
+/** Estilo do título aplicado pelo editor: cor, fonte, tamanho em pt, peso, itálico, alinhamento e posição em %. */
+export interface SlideStyle {
+  c?: string; f?: FontKey; z?: number; w?: number; i?: boolean; a?: Align; x?: number; y?: number;
+}
+
 export interface Slide {
   type: SlideType;
   /** sobretítulo, título, subtítulo e nota do apresentador */
@@ -16,8 +35,10 @@ export interface Slide {
   head?: string[]; rows?: [string, string, string][];
   items?: string[]; cta?: string;
   opts?: [string, number][]; code?: string;
-  /** camadas extras do editor (texto, forma, imagem) */
-  layers?: unknown[];
+  /** camadas extras do editor (texto, forma, imagem), estilo do título e entrada do título no Palco */
+  layers?: Layer[];
+  st?: SlideStyle;
+  fx?: FxKind; fxd?: number;
   [key: string]: unknown;
 }
 

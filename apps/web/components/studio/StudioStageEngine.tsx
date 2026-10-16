@@ -1,12 +1,9 @@
 'use client';
 import { useEngine } from '@/lib/hooks/useEngine';
-import { bootFields } from '@/lib/engines/particles';
+import { bootStage } from '@/lib/engines/studio/stage';
 
-/* Motores da tela (v-studio, sub-tela apresentar). Esqueleto da fundação: por enquanto liga só o Campo Halor. */
+/* Motores da sub-tela apresentar do Estúdio (v-studio): ligam ao montar a rota e desligam ao sair. */
 export default function StudioStageEngine() {
-  useEngine('v-studio', () => {
-    const root = document.getElementById('v-studio') ?? document;
-    return bootFields(root);
-  }, 'apresentar');
+  useEngine('v-studio', bootStage, 'apresentar');
   return null;
 }

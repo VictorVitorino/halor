@@ -1,5 +1,6 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+import Link from 'next/link';
 import type { CSSProperties } from 'react';
 
 export default function StudioEditor() {
@@ -7,11 +8,11 @@ export default function StudioEditor() {
     <section className="sub sub-editor" data-subview="editor" aria-label="Editor">
       <div className="ed-top">
         <div className="ed-file">
-          <a className="btn-icon" href="/estudio" aria-label="Voltar ao início">
+          <Link className="btn-icon" href="/estudio" aria-label="Voltar ao início">
             <svg aria-hidden="true">
               <use href="#i-back" />
             </svg>
-          </a>
+          </Link>
           <div className="ed-name">
             <input id="ed-title" defaultValue="Kickoff 2027 · Time de produto" aria-label="Título da apresentação" spellCheck={false} />
             <span className="save-pill" id="save-pill" role="status">
@@ -65,12 +66,12 @@ export default function StudioEditor() {
             <span>Salvar como</span>
           </button>
           {' '}
-          <a className="btn btn-primary btn-sm" href="/apresentar" aria-keyshortcuts="Control+Enter" title="Apresentar do slide atual (Ctrl+Enter)">
+          <Link className="btn btn-primary btn-sm" href="/apresentar" aria-keyshortcuts="Control+Enter" title="Apresentar do slide atual (Ctrl+Enter)">
             <svg aria-hidden="true">
               <use href="#i-play" />
             </svg>
             <span>Apresentar</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="ribbon" role="toolbar" aria-label="Inserir elementos" data-skip="">

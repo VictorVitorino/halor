@@ -8,7 +8,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('/opt/node-tools/node_modules/playwright');
 const arg = (k, d) => { const i = process.argv.indexOf('--' + k); return i > 0 ? process.argv[i + 1] : d; };
 const has = k => process.argv.includes('--' + k);
-const base = arg('base', 'http://127.0.0.1:4310'), out = arg('out', '/tmp/visual-diff');
+const base = arg('base', 'http://localhost:3000'), out = arg('out', '/tmp/visual-diff');
 const routes = arg('routes', 'site').split(','), widths = arg('widths', '1440').split(',').map(Number);
 const scrollSel = arg('scroll', null), full = has('full'), motion = has('motion');
 const PROTO = 'file://' + path.resolve(path.dirname(new URL(import.meta.url).pathname), '../prototype/index.html');
@@ -19,7 +19,9 @@ const shot = async (browser, url, w, file) => {
   const p = await ctx.newPage(); const errs = [];
   p.on('pageerror', e => errs.push('pageerror: ' + e.message)); p.on('console', m => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
   await p.goto(url, { waitUntil: 'networkidle' });
-  await p.evaluate(() => { const x = document.querySelector('.proto'); if (x) x.style.display = 'none'; document.querySelectorAll('canvas').forEach(c => { c.style.visibility = 'hidden'; }); });
+  /* espera a hidratação antes de esconder a barra do protótipo e os canvas (sem mexer em nós do React) */
+  await p.waitForTimeout(1200);
+  await p.addStyleTag({ content: '.proto{display:none!important}canvas{visibility:hidden!important}' });
   await p.evaluate(() => document.fonts && document.fonts.ready);
   if (scrollSel) await p.evaluate(s => document.querySelector(s)?.scrollIntoView({ block: 'start' }), scrollSel);
   await p.waitForTimeout(1500);

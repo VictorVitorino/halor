@@ -1,12 +1,12 @@
 'use client';
 import { useEngine } from '@/lib/hooks/useEngine';
-import { bootFields } from '@/lib/engines/particles';
+import { bootBrand } from '@/lib/engines/brand';
 
-/* Motores da tela (v-brand). Esqueleto da fundação: por enquanto liga só o Campo Halor. */
+/* Motores da tela (v-brand): índice, demonstrações de movimento e Campos Halor. */
 export default function BrandEngine() {
   useEngine('v-brand', () => {
-    const root = document.getElementById('v-brand') ?? document;
-    return bootFields(root);
+    const root = document.getElementById('v-brand');
+    return root ? bootBrand(root) : undefined;
   });
   return null;
 }

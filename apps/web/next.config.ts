@@ -10,6 +10,8 @@ const config: NextConfig = {
   transpilePackages: ['@halor/ui', '@halor/brand'],
   reactStrictMode: true,
   devIndicators: false,
+  /* testes automatizados acessam o dev por 127.0.0.1 */
+  allowedDevOrigins: ['127.0.0.1'],
 };
 
 export default config;

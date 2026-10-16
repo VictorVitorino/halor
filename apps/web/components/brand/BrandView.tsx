@@ -1,6 +1,11 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; as amostras de cor, a escala da cadeia, o botão de voltar e
+   os modelos de slide são componentes (BrandSwatches, BrandBack, BrandSlides) e o resto do comportamento vem de lib/engines/brand. */
 import type { CSSProperties } from 'react';
+import Link from 'next/link';
+import BrandBack from './BrandBack';
+import BrandSlides from './BrandSlides';
+import { ChainScale, Swatches } from './BrandSwatches';
 
 export default function BrandView() {
   return (
@@ -10,13 +15,7 @@ export default function BrandView() {
       <div className="wrap b-cover-in">
         <h1 className="sr-only">Manual da marca Halor</h1>
         <div className="b-cover-top">
-          <a className="btn btn-quiet btn-sm" href="/" id="b-back">
-            <svg aria-hidden="true">
-              <use href="#i-back" />
-            </svg>
-            {' '}
-            <span>Site</span>
-          </a>
+          <BrandBack />
           <span className="mono b-ver">Manual da marca · v1.0 · outubro 2026</span>
         </div>
         <div className="b-hero-logo">
@@ -33,17 +32,17 @@ export default function BrandView() {
     </header>
     <div className="b-layout wrap">
       <nav className="b-toc" aria-label="Seções do manual">
-        <a href="#b-conceito">Conceito</a>
-        <a href="#b-logo">Logo</a>
-        <a href="#b-cores">Cores</a>
-        <a href="#b-tipo">Tipografia</a>
-        <a href="#b-comp">Componentes</a>
-        <a href="#b-mov">Movimento</a>
-        <a href="#b-voz">Voz</a>
-        <a href="#b-apl">Aplicações</a>
-        <a href="#b-mapa">Canteiro → Halor</a>
-        <a href="#b-ondas">Próximas ondas</a>
-        <a href="#b-tokens">Tokens</a>
+        <Link href="#b-conceito">Conceito</Link>
+        <Link href="#b-logo">Logo</Link>
+        <Link href="#b-cores">Cores</Link>
+        <Link href="#b-tipo">Tipografia</Link>
+        <Link href="#b-comp">Componentes</Link>
+        <Link href="#b-mov">Movimento</Link>
+        <Link href="#b-voz">Voz</Link>
+        <Link href="#b-apl">Aplicações</Link>
+        <Link href="#b-mapa">Canteiro → Halor</Link>
+        <Link href="#b-ondas">Próximas ondas</Link>
+        <Link href="#b-tokens">Tokens</Link>
       </nav>
       <div className="b-content" data-skip="">
         {/* CONCEITO */}
@@ -362,20 +361,20 @@ export default function BrandView() {
             A Noite é o palco da marca: site, apresentações e momentos de impacto. O Papel é onde se trabalha: o Estúdio de construção, limpo e claro. O violeta é o fio que liga os dois. Clique em uma cor para copiar o código.
           </p>
           <h3 className="b-h3">Núcleo · Noite</h3>
-          <div className="sw-grid" data-swatches="night" />
+          <Swatches world="night" />
           <h3 className="b-h3">Estúdio · Papel</h3>
-          <div className="sw-grid" data-swatches="paper" />
+          <Swatches world="paper" />
           <h3 className="b-h3">Proporção de uso</h3>
           <div className="prop">
             <div className="prop-row">
               <span className="prop-l mono">Noite</span>
               <div className="prop-bar">
                 <i style={{ flex: "70", background: "#07040f" } as CSSProperties}>
-                  70{' '}
+                  {'70\u00a0'}
                   <span>Vazio</span>
                 </i>
                 <i style={{ flex: "20", background: "#171030" } as CSSProperties}>
-                  20{' '}
+                  {'20\u00a0'}
                   <span>Crepúsculo</span>
                 </i>
                 <i style={{ flex: "8", background: "#8b3dff" } as CSSProperties}>8</i>
@@ -386,11 +385,11 @@ export default function BrandView() {
               <span className="prop-l mono">Papel</span>
               <div className="prop-bar prop-paper">
                 <i style={{ flex: "70", background: "#ffffff", color: "#17112b" } as CSSProperties}>
-                  70{' '}
+                  {'70\u00a0'}
                   <span>Branco</span>
                 </i>
                 <i style={{ flex: "20", background: "#f3eeff", color: "#17112b" } as CSSProperties}>
-                  20{' '}
+                  {'20\u00a0'}
                   <span>Lilás</span>
                 </i>
                 <i style={{ flex: "8", background: "#17112b" } as CSSProperties}>8</i>
@@ -402,8 +401,8 @@ export default function BrandView() {
           <p className="b-p b-small">
             Um matiz só, do primeiro passo (Atenção) ao último (Valor). No Papel escurece; na Noite acende. Validada como rampa ordinal: luminosidade monotônica e passos visíveis.
           </p>
-          <div className="chain-sw" data-chain="paper" />
-          <div className="chain-sw chain-night theme-night" data-chain="night" />
+          <ChainScale world="paper" />
+          <ChainScale world="night" />
           <h3 className="b-h3">Semântica</h3>
           <div className="sem">
             <span className="chip chip-ok">
@@ -689,7 +688,7 @@ export default function BrandView() {
           <p className="eyebrow">08 · Aplicações</p>
           <h2 className="b-h">A marca viva em cada tela.</h2>
           <h3 className="b-h3">Modelos de slide</h3>
-          <div className="apl-slides" id="apl-slides" />
+          <BrandSlides />
           <div className="apl-grid">
             <figure className="apl-post theme-night">
               <div className="post">
@@ -745,7 +744,7 @@ export default function BrandView() {
                       <use href="#hl-mark" />
                     </svg>
                     <div>
-                      <b>Grupo Aurora está a 45 cm</b>
+                      <b>{'Grupo Aurora está a 45\u00a0cm'}</b>
                       <span>Voltou e perguntou no slide 6</span>
                     </div>
                   </div>

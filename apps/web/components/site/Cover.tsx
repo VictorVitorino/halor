@@ -1,5 +1,6 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+import Link from 'next/link';
 import type { CSSProperties } from 'react';
 
 export default function Cover() {
@@ -24,12 +25,12 @@ export default function Cover() {
         </p>
         <p className="lede s-lede s-in" style={{ "--d": "1.3s" } as CSSProperties}>Apresentações vivas, que prendem o olhar do começo ao fim.</p>
         <div className="s-cta s-in" style={{ "--d": "1.5s" } as CSSProperties}>
-          <a className="btn btn-primary btn-lg" href="/assinar" data-plan="faisca" data-attract="">
+          <Link className="btn btn-primary btn-lg" href="/assinar" data-plan="faisca" data-attract="">
             Começar grátis{' '}
             <svg aria-hidden="true">
               <use href="#i-arrow" />
             </svg>
-          </a>
+          </Link>
           {' '}
           <button className="btn btn-ghost btn-lg" type="button" data-film-play="" data-attract="">
             <svg aria-hidden="true">

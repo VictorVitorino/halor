@@ -1,5 +1,7 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+import Link from 'next/link';
+
 export default function StudioStage() {
   return (
     <section className="sub sub-stage theme-night" data-subview="apresentar" aria-label="Modo palco">
@@ -14,12 +16,12 @@ export default function StudioStage() {
         {' '}
         <span className="stage-clock mono num" id="stage-clock" role="timer" aria-label="Tempo de apresentação" title="Tempo de apresentação">0:00</span>
         {' '}
-        <a className="btn btn-ghost btn-sm" href="/editor" aria-keyshortcuts="Escape" title="Voltar ao editor (Esc)">
+        <Link className="btn btn-ghost btn-sm" href="/editor" aria-keyshortcuts="Escape" title="Voltar ao editor (Esc)">
           <svg aria-hidden="true">
             <use href="#i-x" />
           </svg>
           <span>Sair</span>
-        </a>
+        </Link>
       </div>
       <div className="stage-body" data-skip="">
         <div className="stage-now">

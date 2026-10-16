@@ -1,5 +1,6 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+import Link from 'next/link';
 export default function Final() {
   return (
     <section className="s-final">
@@ -13,9 +14,9 @@ export default function Final() {
           <span className="lux">Seja escolhido.</span>
         </h2>
         <div className="s-cta">
-          <a className="btn btn-lumen btn-lg" href="/assinar" data-plan="faisca" data-attract="">Começar grátis</a>
+          <Link className="btn btn-lumen btn-lg" href="/assinar" data-plan="faisca" data-attract="">Começar grátis</Link>
           {' '}
-          <a className="btn btn-ghost btn-lg" href="/entrar" data-attract="">Já tenho conta</a>
+          <Link className="btn btn-ghost btn-lg" href="/entrar" data-attract="">Já tenho conta</Link>
         </div>
         <p className="s-final-note mono">Plano Faísca grátis para sempre</p>
       </div>

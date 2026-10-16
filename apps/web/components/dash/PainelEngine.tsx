@@ -1,12 +1,12 @@
 'use client';
 import { useEngine } from '@/lib/hooks/useEngine';
-import { bootFields } from '@/lib/engines/particles';
+import { bootDash } from '@/lib/engines/dash';
 
-/* Motores da tela (v-studio, sub-tela painel). Esqueleto da fundação: por enquanto liga só o Campo Halor. */
+/* Motores da sub-tela Painel (v-studio · painel): gráficos, filtros e a troca antes/com Halor. */
 export default function PainelEngine() {
   useEngine('v-studio', () => {
-    const root = document.getElementById('v-studio') ?? document;
-    return bootFields(root);
+    const scope = document.querySelector<HTMLElement>('#v-studio .sub[data-subview="painel"]');
+    return scope ? bootDash(scope) : undefined;
   }, 'painel');
   return null;
 }

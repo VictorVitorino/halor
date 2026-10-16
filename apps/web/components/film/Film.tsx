@@ -1,6 +1,7 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; o comportamento é ligado por FilmEngine (lib/engines/film). */
 import type { CSSProperties } from 'react';
+import FilmEngine from './FilmEngine';
 
 export default function Film() {
   return (
@@ -1624,6 +1625,7 @@ export default function Film() {
           <li>Fecho: Halor. Faça cada olhar render. Comece grátis.</li>
         </ol>
       </div>
+      <FilmEngine />
     </div>
   );
 }

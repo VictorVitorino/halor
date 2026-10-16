@@ -1,6 +1,9 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; o comportamento vem de lib/engines/vitrine,
+   ligado por <VitrineEngine />. O catálogo nasce no estado do filtro "Todos" (8 de 40). */
 import type { CSSProperties } from 'react';
+import VitrineCatalog from '@/components/vitrine/VitrineCatalog';
+import VitrineEngine from '@/components/vitrine/VitrineEngine';
 
 export default function Vitrine() {
   return (
@@ -8,9 +11,9 @@ export default function Vitrine() {
       <div className="wrap">
         <div className="s-head">
           <p className="eyebrow">Vitrine de efeitos</p>
-          <h2 className="display" id="vt-h">40 efeitos que prendem o olhar.</h2>
+          <h2 className="display" id="vt-h">40 efeitos que prendem o&nbsp;olhar.</h2>
           <p className="lede">
-            Cada efeito já entra na apresentação com a marca de quem usa: suas cores, sua fonte, seu logo. Os doze abaixo estão ao vivo. Toque, arraste e experimente.
+            Cada efeito já entra na apresentação com a marca de quem usa: suas cores, sua fonte, seu logo. Os doze abaixo estão ao vivo. Toque, arraste e&nbsp;experimente.
           </p>
         </div>
         <div className="vt-filter" role="group" aria-labelledby="vt-filter-l">
@@ -46,7 +49,7 @@ export default function Vitrine() {
               <canvas className="vt-pa-cv" aria-hidden="true" />
               <div className="vt-pa-cover" aria-hidden="true">
                 <p className="vt-pa-k">Capítulo 1</p>
-                <p className="vt-pa-t">A virada começa aqui.</p>
+                <p className="vt-pa-t">A virada começa&nbsp;aqui.</p>
               </div>
             </div>
             <div className="vt-meta">
@@ -703,10 +706,10 @@ export default function Vitrine() {
             <p className="eyebrow">Catálogo completo</p>
             <h3 className="vt-cat-h">Os 40 efeitos, por número</h3>
           </div>
-          <p className="vt-count mono" id="vt-count">40 de 40</p>
+          <p className="vt-count mono" id="vt-count">8 de 40</p>
         </div>
-        <ul className="vt-cat" id="vt-cat" aria-label="Catálogo de efeitos" />
-        <button className="btn btn-ghost btn-sm vt-more" id="vt-more" type="button" aria-controls="vt-cat" aria-expanded="false">Ver os 40 efeitos</button>
+        <VitrineCatalog />
+        <button className="btn btn-ghost btn-sm vt-more" id="vt-more" type="button" aria-controls="vt-cat" aria-expanded="false" hidden>Ver os 40 efeitos</button>
         {/* VALOR · o que entra na apresentação */}
         <div className="vt-value">
           <ul className="vt-stats">
@@ -746,6 +749,7 @@ export default function Vitrine() {
           </ul>
         </div>
       </div>
+      <VitrineEngine />
     </section>
   );
 }

@@ -1,5 +1,7 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; os atalhos usam next/link e o Campo Halor vem do NotFoundEngine. */
+import Link from 'next/link';
+
 export default function NotFoundView() {
   return (
     <div className="nf">
@@ -15,8 +17,8 @@ export default function NotFoundView() {
       <h1 className="display">Esta página saiu da órbita.</h1>
       <p className="lede">O endereço pode ter mudado ou a apresentação foi para a lixeira.</p>
       <div className="s-cta">
-        <a className="btn btn-primary" href="/estudio">Ir para o acervo</a>
-        <a className="btn btn-ghost" href="/">Voltar ao site</a>
+        <Link className="btn btn-primary" href="/estudio">Ir para o acervo</Link>
+        <Link className="btn btn-ghost" href="/">Voltar ao site</Link>
       </div>
     </div>
   );

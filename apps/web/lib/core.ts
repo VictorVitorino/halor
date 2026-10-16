@@ -9,8 +9,10 @@
 export const $ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document): T | null => r.querySelector<T>(s);
 export const $$ = <T extends Element = HTMLElement>(s: string, r: ParentNode = document): T[] => Array.from(r.querySelectorAll<T>(s));
 
-/** Movimento reduzido. Vale `false` até o primeiro `initCore()` no navegador; os módulos leem o valor vivo. */
-export let REDUCED = false;
+/** Movimento reduzido. No navegador já vale desde o carregamento do módulo (antes de qualquer efeito);
+    no servidor fica `false`. Os módulos leem o valor vivo, que acompanha a preferência do sistema. */
+export let REDUCED = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+  ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
 
 export const fmtBRL = (v: number) => 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 export const fmtNum = (v: number, d = 0) => v.toFixed(d).replace('.', ',');
@@ -96,8 +98,10 @@ let installed = false;
 export function initCore(): () => void {
   if (installed) return () => {};
   installed = true;
-  REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const ac = new AbortController(), o = { signal: ac.signal };
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+  REDUCED = mq.matches;
+  mq.addEventListener('change', e => { REDUCED = e.matches; }, o);
 
   document.addEventListener('click', e => {
     const tg = e.target as Element | null; if (!tg || !tg.closest) return;

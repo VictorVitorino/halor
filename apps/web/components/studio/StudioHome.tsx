@@ -1,5 +1,6 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+import Link from 'next/link';
 import type { CSSProperties } from 'react';
 
 export default function StudioHome() {
@@ -11,7 +12,7 @@ export default function StudioHome() {
           <div className="hh-text">
             <p className="eyebrow" id="hh-date">Quinta-feira, 15 de outubro</p>
             <h1 className="hh-h" id="hh-greet">Bom dia, Marina.</h1>
-            <p className="hh-sub">3 pessoas olharam suas apresentações desde ontem. O Grupo Aurora já está a 45 cm de você.</p>
+            <p className="hh-sub">3 pessoas olharam suas apresentações desde ontem. O Grupo Aurora já está a 45{'\u00a0'}cm de você.</p>
             <div className="hh-chain" role="img" aria-label="Grupo Aurora a 45 centímetros: Confiança">
               <span className="hh-chain-k mono">Grupo Aurora</span>
               {' '}
@@ -24,7 +25,7 @@ export default function StudioHome() {
                 <i />
               </span>
               {' '}
-              <span className="hh-chain-v">45 cm · Confiança</span>
+              <span className="hh-chain-v">45{'\u00a0'}cm · Confiança</span>
             </div>
           </div>
           <div className="hh-week">
@@ -121,7 +122,7 @@ export default function StudioHome() {
             <kbd>5</kbd>
           </button>
           {' '}
-          <a className="start" href="/marca" data-key="6">
+          <Link className="start" href="/marca" data-key="6">
             <span className="st-ic">
               <svg aria-hidden="true">
                 <use href="#i-book" />
@@ -130,7 +131,7 @@ export default function StudioHome() {
             <b>Guia da marca</b>
             <small>Cores, fontes e regras</small>
             <kbd>6</kbd>
-          </a>
+          </Link>
         </div>
         <div className="home-grid">
           <div className="home-main">
@@ -180,12 +181,12 @@ export default function StudioHome() {
               </span>
             </div>
             <ol className="sig-list" id="sig-list" />
-            <a className="link" href="/painel">
+            <Link className="link" href="/painel">
               Ver tudo no Painel Halor{' '}
               <svg aria-hidden="true">
                 <use href="#i-arrow" />
               </svg>
-            </a>
+            </Link>
           </aside>
         </div>
       </div>
