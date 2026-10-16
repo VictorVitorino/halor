@@ -36,7 +36,19 @@
     "../../packages/*/src/**/*.tsx",
     "../../packages/*/src/**/*.ts",
     "../../packages/brand/tokens/*.ts",
-    ".next/dev/types/**/*.ts"
+    ".next/dev/types/**/*.ts",
+    ".next-film/types/**/*.ts",
+    ".next-film/dev/types/**/*.ts",
+    ".next-site/types/**/*.ts",
+    ".next-site/dev/types/**/*.ts",
+    ".next-dash/types/**/*.ts",
+    ".next-dash/dev/types/**/*.ts",
+    ".next-vitrine/types/**/*.ts",
+    ".next-vitrine/dev/types/**/*.ts",
+    ".next-commerce/types/**/*.ts",
+    ".next-commerce/dev/types/**/*.ts",
+    ".next-studio/types/**/*.ts",
+    ".next-studio/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
