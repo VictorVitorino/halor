@@ -31,8 +31,8 @@ function slideHTML(s, n, brand) {
     case 'table': { const hd = s.head || ['Item', 'Período', 'Valor']; return `<div class="slide sl-table sl-light"><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><table class="sl-tbl"><thead><tr>${hd.map(x => `<th>${x}</th>`).join('')}</tr></thead><tbody>${s.rows.map((r, i) => `<tr class="${i === s.rows.length - 1 ? 'tot' : ''}"><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('')}</tbody></table>${foot}</div>`; }
     case 'next': return `<div class="slide sl-next"><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><div class="sl-list">${s.items.map((x, i) => `<div><i>${i + 1}</i>${x}</div>`).join('')}</div><div class="sl-cta">${s.cta}</div>${foot}</div>`;
     case 'poll': {
-      const tot = s.opts.reduce((a, o) => a + o[1], 0) || 1, mx = Math.max(...s.opts.map(o => o[1]));
-      return `<div class="slide sl-poll sl-light"><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><div class="sl-opts">${s.opts.map(o => { const p = Math.round(o[1] / tot * 100); return `<div class="sl-opt${o[1] === mx ? ' hi' : ''}" style="--v:${p}%"><span>${o[0]}</span><b>${p}%</b></div>`; }).join('')}</div><div class="sl-vote"><small>Vote pelo celular</small><b>halor.link</b><span>código <strong>${s.code || 'K27'}</strong></span><em>${tot} votos</em></div>${foot}</div>`;
+      const raw = s.opts.reduce((a, o) => a + o[1], 0), tot = raw || 1, mx = Math.max(...s.opts.map(o => o[1]));
+      return `<div class="slide sl-poll sl-light"><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><div class="sl-opts">${s.opts.map(o => { const p = Math.round(o[1] / tot * 100); return `<div class="sl-opt${o[1] === mx ? ' hi' : ''}" style="--v:${p}%"><span>${o[0]}</span><b>${p}%</b></div>`; }).join('')}</div><div class="sl-vote"><small>Vote pelo celular</small><b>halor.link</b><span>código <strong>${s.code || 'K27'}</strong></span><em>${votesLabel(raw)}</em></div>${foot}</div>`;
     }
     case 'end': return `<div class="slide sl-end">${brand === 'halor' ? '<svg aria-hidden="true"><use href="#hl-mark"/></svg>' : ''}<p>${s.h}</p><small>${s.sub}</small></div>`;
   }
@@ -42,6 +42,7 @@ function slideHTML(s, n, brand) {
 /* ==========================================================================
    Utilitários do Estúdio
    ========================================================================== */
+const votesLabel = n => (n === 0 ? 'esperando o primeiro voto' : n === 1 ? '1 voto' : n + ' votos');
 const escHTML = t => String(t).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const plainText = h => { const d = document.createElement('div'); d.innerHTML = h; return d.textContent; };
 const fold = t => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -72,7 +73,7 @@ const LAYOUTS = {
 };
 /* x e y: onde cada tipo nasce (em % do slide), longe do título e do rodapé */
 const LAYER_KINDS = {
-  text: { n: 'Texto', ic: '#i-text', w: 34, h: 11, x: 8, y: 70 },
+  text: { n: 'Texto', ic: '#i-text', w: 34, h: 11, x: 8, y: 76 },
   shape: { n: 'Forma', ic: '#i-shape', w: 13, h: 23.1, x: 80, y: 8 },
   arrow: { n: 'Seta', ic: '#i-arrowline', w: 18, h: 9, x: 46, y: 74 },
   image: { n: 'Imagem', ic: '#i-image', w: 26, h: 38, x: 68, y: 40 },
@@ -189,7 +190,7 @@ function placeSel() {
   if (!isTitle) $('#ly-name').textContent = LAYER_KINDS[L.k].n;
   const bw = bar.offsetWidth, top = y - 3 - bar.offsetHeight - (isTitle && $('.sl-k', n.parentElement) ? 30 : 10);
   bar.style.left = clampN(x - 3, 0, Math.max(0, w.width - bw)) + 'px';
-  bar.style.top = (top < 70 - w.top ? y + r.height + 30 : top) + 'px';
+  bar.style.top = Math.max(top, -58) + 'px';
   if (isTitle) {
     const st = s.st || {};
     $('[data-fb="bold"]', fb).setAttribute('aria-pressed', String((st.w || 600) >= 700));
@@ -414,7 +415,7 @@ function openPop(btn, fill, opt = {}) {
   const box = el('div', 'pop theme-paper' + (opt.cls ? ' ' + opt.cls : ''));
   box.setAttribute('role', opt.role || 'menu'); if (opt.label) box.setAttribute('aria-label', opt.label);
   fill(box); document.body.appendChild(box);
-  POP = { el: box, btn }; btn.setAttribute('aria-expanded', 'true'); btn.classList.add('pop-on');
+  POP = { el: box, btn, t: performance.now() }; btn.setAttribute('aria-expanded', 'true'); btn.classList.add('pop-on');
   const r = btn.getBoundingClientRect(), bw = box.offsetWidth, bh = box.offsetHeight, vw = document.documentElement.clientWidth, vh = window.innerHeight;
   let x = opt.align === 'right' ? r.right - bw : r.left, y = r.bottom + 6;
   if (y + bh > vh - 8 && r.top - bh - 6 > 8) y = r.top - bh - 6;
@@ -447,7 +448,8 @@ document.addEventListener('keydown', e => {
   }
 }, true);
 window.addEventListener('resize', () => { closePop(false); placeSel(); if (STUDIO.ray) placeRay(); });
-document.addEventListener('scroll', e => { if (POP && !POP.el.contains(e.target)) closePop(false); }, true);
+/* rolar a página fecha o menu (menos o rolar que o próprio clique de abertura provoca) */
+document.addEventListener('scroll', e => { if (POP && !POP.el.contains(e.target) && performance.now() - POP.t > 250) closePop(false); }, true);
 
 const MOD = () => (IS_MAC ? '⌘' : 'Ctrl+');
 function layoutItems() { return Object.keys(LAYOUTS).map(k => ({ t: LAYOUTS[k].n, ic: LAYOUTS[k].ic, act: () => insertSlide(k) })); }
@@ -991,9 +993,9 @@ function entrance(sl, s) {
   }));
 }
 function paintPoll(sl, s) {
-  const tot = s.opts.reduce((a, o) => a + o[1], 0) || 1, mx = Math.max(...s.opts.map(o => o[1]));
+  const raw = s.opts.reduce((a, o) => a + o[1], 0), tot = raw || 1, mx = Math.max(...s.opts.map(o => o[1]));
   $$('.sl-opt', sl).forEach((n, i) => { const p = Math.round(s.opts[i][1] / tot * 100); n.style.setProperty('--v', p + '%'); $('b', n).textContent = p + '%'; n.classList.toggle('hi', s.opts[i][1] === mx); });
-  const em = $('.sl-vote em', sl); if (em) em.textContent = tot + ' votos';
+  const em = $('.sl-vote em', sl); if (em) em.textContent = votesLabel(raw);
 }
 function renderStage() {
   const now = $('#stage-now'); if (!now) return;
