@@ -12,7 +12,7 @@ export default function StudioHome() {
           <div className="hh-text">
             <p className="eyebrow" id="hh-date">Quinta-feira, 15 de outubro</p>
             <h1 className="hh-h" id="hh-greet">Bom dia, Marina.</h1>
-            <p className="hh-sub">3 pessoas olharam suas apresentações desde ontem. O Grupo Aurora já está a 45{'\u00a0'}cm de você.</p>
+            <p className="hh-sub">3 pessoas olharam suas apresentações desde ontem. O Grupo Aurora já está a 45&nbsp;cm de você.</p>
             <div className="hh-chain" role="img" aria-label="Grupo Aurora a 45 centímetros: Confiança">
               <span className="hh-chain-k mono">Grupo Aurora</span>
               {' '}
@@ -25,7 +25,7 @@ export default function StudioHome() {
                 <i />
               </span>
               {' '}
-              <span className="hh-chain-v">45{'\u00a0'}cm · Confiança</span>
+              <span className="hh-chain-v">45&nbsp;cm · Confiança</span>
             </div>
           </div>
           <div className="hh-week">

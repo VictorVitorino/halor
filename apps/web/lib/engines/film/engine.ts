@@ -97,9 +97,8 @@ export function bootFilm(root: ParentNode = document): () => void {
   const film: HTMLElement = found;
   if (current) current.dispose();
 
-  const bootReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  /** movimento reduzido: o valor vivo do núcleo (ou a preferência lida no boot, antes de initCore) */
-  const RM = () => REDUCED || bootReduced;
+  /** movimento reduzido: o valor vivo do núcleo (lido a cada quadro, segue a preferência do sistema) */
+  const RM = () => REDUCED;
 
   const ac = new AbortController(), on = { signal: ac.signal };
   let disposed = false;

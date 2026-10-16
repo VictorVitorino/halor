@@ -537,6 +537,8 @@
   .ev-scene, .ev-scene.on { transition: none; transform: none; }
   .ev-scene *, .ev-scene *::before, .ev-scene *::after, .ev-info.swap > * { animation: none !important; }
   .ev-att b, .ev-fill { transition: none; }
+  /* os loops do carrossel terminam no quadro vazio: com uma única volta instantânea a miniatura sumia */
+  .pd-carousel.run .slide *, .pd-carousel.run .slide *::before, .pd-carousel.run .slide *::after { animation: none !important; }
 }
 /* barra da gravação: o ponto ao vivo não é cortado e, no celular, fica só o ponto */
 .pd-rec-frame .pf-bar .rec-live { overflow: visible; margin-left: 8px; }
