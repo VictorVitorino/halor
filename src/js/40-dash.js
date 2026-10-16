@@ -1,6 +1,6 @@
 /* ==========================================================================
    PAINEL HALOR · gráficos em SVG desenhados à escala, com dica ao passar o
-   mouse/foco e tabela gêmea. Dados ilustrativos (carteira de exemplo).
+   mouse/foco e tabela gêmea. Dados ilustrativos (time de exemplo).
    ========================================================================== */
 const DASH = {
   mode: 'com',
@@ -14,8 +14,9 @@ const DASH = {
     { k: 'Voltaram para rever', sub: 'a cada 100 pessoas', b: 3, a: 8, u: '', spark: [3.1, 2.8, 3.4, 3.0, 3.3, 3.2, 4.6, 5.5, 6.2, 6.9, 7.4, 8.0] }
   ],
   score: { b: 54, a: 82 },
-  slides: ['Capa', 'Desafio', 'Resultado', 'Como', 'Prazo', 'Valor', 'Passos', 'Fim', 'Anexo A', 'Anexo B', 'Equipe', 'Contato'],
-  heat: { b: [6, 5, 7, 4, 3, 9, 4, 2, 1, 1, 2, 1], a: [9, 11, 22, 14, 9, 31, 16, 6, 3, 2, 5, 4] },
+  /* os 9 slides de "Kickoff 2027", na ordem do deck: a votação é onde o olhar mais fica */
+  slides: ['Capa', 'Desafio', 'Meta', 'Como funciona', 'Votação', 'Cronograma', 'Recursos', 'Próximos passos', 'Fim'],
+  heat: { b: [6, 5, 7, 4, 3, 4, 2, 2, 1], a: [9, 11, 22, 14, 31, 16, 6, 9, 4] },
   insights: [
     { ic: '#i-image', t: 'Imagem dominante segura o olhar', p: 'Slides com uma imagem ocupando mais de 30% da área tiveram 2,1× mais tempo de leitura.' },
     { ic: '#i-target', t: 'Um destaque por slide gera perguntas', p: 'Gráficos com um único valor em destaque receberam 3× mais comentários.' },
@@ -178,7 +179,7 @@ function heatCard(A) {
   ht.append(el('h3', null, 'Mapa de atenção por slide'), el('p', null, 'Segundos médios de leitura em “Kickoff 2027”'));
   hd.appendChild(ht); card.appendChild(hd);
   const vals = A ? DASH.heat.a : DASH.heat.b, steps = ['--c-chain-1', '--c-chain-2', '--c-chain-3', '--c-chain-4', '--c-chain-5', '--c-chain-6', '--c-chain-7'];
-  const row = el('div', 'd-heat-row');
+  const row = el('div', 'd-heat-row'); row.style.setProperty('--n', vals.length);
   const bin = v => Math.min(6, Math.floor(v / 5));
   vals.forEach((v, i) => {
     const c = el('div', 'd-cell'); c.tabIndex = 0; const b = bin(v);

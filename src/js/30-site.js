@@ -9,8 +9,8 @@ const CHAIN_STEPS = [
   { n: 'Curiosidade', v: 'O olhar procura mais.', t: 'Perguntas abertas e números que surpreendem fazem a pessoa avançar por conta própria até o fim.', m: 'Veem 70% dos slides ou mais', a: 40, b: 19, next: 'gera aproximação' },
   { n: 'Aproximação', v: 'Quem assiste pergunta.', t: 'Um comentário, uma dúvida, um pedido de detalhe. É o primeiro passo de quem assiste na sua direção.', m: 'Comentam ou perguntam', a: 27, b: 12, next: 'gera confiança' },
   { n: 'Confiança', v: 'Quem assiste compartilha.', t: 'Ninguém encaminha o que não confia. Cada novo leitor no link é um voto silencioso a seu favor.', m: 'Encaminham para alguém', a: 19, b: 8, next: 'gera parceria' },
-  { n: 'Parceria', v: 'Quem assiste convida.', t: 'A conversa vira reunião, e a reunião vira construção conjunta da solução.', m: 'Marcam reunião', a: 14, b: 6, next: 'gera valor' },
-  { n: 'Valor', v: 'Quem assiste diz sim.', t: 'Proposta aceita, parceria firmada, projeto aprovado. Tudo que veio antes trabalhou para este momento.', m: 'Dizem sim', a: 8, b: 3, next: null }
+  { n: 'Parceria', v: 'Quem assiste convida.', t: 'A conversa continua depois da sala: a pessoa chama outras para ver e quer construir junto.', m: 'Marcam reunião', a: 14, b: 6, next: 'gera valor' },
+  { n: 'Valor', v: 'A ideia fica.', t: 'Quem assistiu lembra, repete e volta para rever. Tudo que veio antes trabalhou para este momento.', m: 'Voltam para rever', a: 8, b: 3, next: null }
 ];
 
 /* Planos ----------------------------------------------------------------- */

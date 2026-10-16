@@ -5,7 +5,8 @@
   <header class="b-cover theme-night">
     <canvas class="halo-field halor-field" data-field="brand" aria-hidden="true"></canvas>
     <div class="wrap b-cover-in">
-      <div class="b-cover-top"><a class="btn btn-quiet btn-sm" href="#site"><svg aria-hidden="true"><use href="#i-back"/></svg> Site</a><span class="mono b-ver">Manual da marca · v1.0 · outubro 2026</span></div>
+      <h1 class="sr-only">Manual da marca Halor</h1>
+      <div class="b-cover-top"><a class="btn btn-quiet btn-sm" href="#site" id="b-back"><svg aria-hidden="true"><use href="#i-back"/></svg> <span>Site</span></a><span class="mono b-ver">Manual da marca · v1.0 · outubro 2026</span></div>
       <div class="b-hero-logo"><svg class="mk-glow" aria-hidden="true"><use href="#hl-mark"/></svg><span class="wordmark">halor</span></div>
       <p class="b-claim display">Faça cada olhar render.</p>
       <p class="lede">Identidade, cores, tipografia, componentes e regras de uso da Halor. Tudo que um time precisa para construir o site, o Estúdio e as apresentações com a mesma luz.</p>
@@ -17,7 +18,7 @@
       <a href="#b-conceito">Conceito</a><a href="#b-logo">Logo</a><a href="#b-cores">Cores</a><a href="#b-tipo">Tipografia</a><a href="#b-comp">Componentes</a><a href="#b-mov">Movimento</a><a href="#b-voz">Voz</a><a href="#b-apl">Aplicações</a><a href="#b-mapa">Canteiro → Halor</a><a href="#b-ondas">Próximas ondas</a><a href="#b-tokens">Tokens</a>
     </nav>
 
-    <div class="b-content">
+    <div class="b-content" data-skip>
       <!-- CONCEITO -->
       <section class="b-sec" id="b-conceito">
         <p class="eyebrow">01 · Conceito</p>
@@ -117,8 +118,8 @@
         <div class="sw-grid" data-swatches="paper"></div>
         <h3 class="b-h3">Proporção de uso</h3>
         <div class="prop">
-          <div class="prop-row"><span class="prop-l mono">Noite</span><div class="prop-bar"><i style="flex:70;background:#07040f">70 Vazio</i><i style="flex:20;background:#171030">20 Crepúsculo</i><i style="flex:8;background:#8b3dff">8</i><i style="flex:2;background:#f4eeff"></i></div></div>
-          <div class="prop-row"><span class="prop-l mono">Papel</span><div class="prop-bar prop-paper"><i style="flex:70;background:#ffffff;color:#17112b">70 Branco</i><i style="flex:20;background:#f3eeff;color:#17112b">20 Lilás</i><i style="flex:8;background:#17112b">8</i><i style="flex:2;background:#8b3dff"></i></div></div>
+          <div class="prop-row"><span class="prop-l mono">Noite</span><div class="prop-bar"><i style="flex:70;background:#07040f">70&nbsp;<span>Vazio</span></i><i style="flex:20;background:#171030">20&nbsp;<span>Crepúsculo</span></i><i style="flex:8;background:#8b3dff">8</i><i style="flex:2;background:#f4eeff"></i></div></div>
+          <div class="prop-row"><span class="prop-l mono">Papel</span><div class="prop-bar prop-paper"><i style="flex:70;background:#ffffff;color:#17112b">70&nbsp;<span>Branco</span></i><i style="flex:20;background:#f3eeff;color:#17112b">20&nbsp;<span>Lilás</span></i><i style="flex:8;background:#17112b">8</i><i style="flex:2;background:#8b3dff"></i></div></div>
         </div>
         <h3 class="b-h3">Escala da Cadeia Halor · dados</h3>
         <p class="b-p b-small">Um matiz só, do primeiro passo (Atenção) ao último (Valor). No Papel escurece; na Noite acende. Validada como rampa ordinal: luminosidade monotônica e passos visíveis.</p>
@@ -147,7 +148,7 @@
           <div><span class="mono">Título 1</span><p style="font:600 40px/1.05 var(--f-display);letter-spacing:-.03em">Atenção que fica</p><span class="mono">30-48 / 1,04 / -3%</span></div>
           <div><span class="mono">Título 2</span><p style="font:600 26px/1.15 var(--f-ui);letter-spacing:-.01em">O visual vira número</p><span class="mono">26 / 1,15</span></div>
           <div><span class="mono">Texto</span><p style="font:400 16px/1.55 var(--f-ui)">Cada passo de aproximação ganha um indicador.</p><span class="mono">16 / 1,55</span></div>
-          <div><span class="mono">Apoio</span><p style="font:400 13.5px/1.5 var(--f-ui);color:var(--mute)">Dados ilustrativos de uma carteira de exemplo.</p><span class="mono">13,5 / 1,5</span></div>
+          <div><span class="mono">Apoio</span><p style="font:400 13.5px/1.5 var(--f-ui);color:var(--mute)">Dados ilustrativos de um time de exemplo.</p><span class="mono">13,5 / 1,5</span></div>
           <div><span class="mono">Sobretítulo</span><p style="font:500 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--halor-violet-700)">Painel Halor</p><span class="mono">11 / caixa-alta / +16%</span></div>
         </div>
       </section>
@@ -173,7 +174,7 @@
           </div>
         </div>
         <dl class="tok-mini">
-          <div><dt>Raios</dt><dd><i style="border-radius:6px"></i>6<i style="border-radius:12px"></i>12<i style="border-radius:18px"></i>18<i style="border-radius:28px"></i>28<i style="border-radius:99px"></i>pílula</dd></div>
+          <div><dt>Raios</dt><dd><i style="border-radius:6px"></i>6<i style="border-radius:8px"></i>8<i style="border-radius:12px"></i>12<i style="border-radius:18px"></i>18<i style="border-radius:28px"></i>28<i style="border-radius:99px"></i>pílula</dd></div>
           <div><dt>Espaços</dt><dd class="mono">4 · 8 · 12 · 16 · 24 · 32 · 48 · 72 · 112</dd></div>
           <div><dt>Foco</dt><dd>anel de 2 px em Violeta (Papel) ou Brilho (Noite), afastado 3 px</dd></div>
         </dl>
@@ -185,7 +186,7 @@
         <h2 class="b-h">A luz guia o olhar. Nunca o distrai.</h2>
         <div class="mov-grid">
           <div class="mov mov-field theme-night"><span class="mv-stage"><canvas class="halo-field halor-field" data-field="demo" aria-hidden="true"></canvas></span><b>Campo Halor</b><small class="mono">partículas que respiram · o cursor reúne um halo · clique solta uma onda</small><button class="btn btn-quiet btn-xs" type="button" data-field-replay="demo"><svg aria-hidden="true"><use href="#i-replay"/></svg> Repetir entrada</button></div>
-          <button class="mov theme-night" type="button" data-replay><span class="mv-stage"><span class="mv-sweep">Parceria firmada</span></span><b>Varredura de luz</b><small class="mono">1400 ms · halo-out · uma vez por conquista</small></button>
+          <button class="mov theme-night" type="button" data-replay><span class="mv-stage"><span class="mv-sweep">Atenção conquistada</span></span><b>Varredura de luz</b><small class="mono">1400 ms · halo-out · uma vez por conquista</small></button>
           <button class="mov theme-night" type="button" data-replay><span class="mv-stage"><span class="mv-reveal"><i></i><i></i><i></i></span></span><b>Revelação em cadeia</b><small class="mono">240 ms por item · atraso 80 ms</small></button>
         </div>
         <dl class="tok-mini">
@@ -208,7 +209,7 @@
       <!-- APLICAÇÕES -->
       <section class="b-sec" id="b-apl">
         <p class="eyebrow">08 · Aplicações</p>
-        <h2 class="b-h">A marca dentro do produto que ela vende.</h2>
+        <h2 class="b-h">A marca viva em cada tela.</h2>
         <h3 class="b-h3">Modelos de slide</h3>
         <div class="apl-slides" id="apl-slides"></div>
         <div class="apl-grid">
@@ -273,8 +274,8 @@
         <h2 class="b-h">Do incremento à disrupção.</h2>
         <div class="waves">
           <div class="wv"><p class="wv-k mono">Incremental · agora</p><ul><li>Raio Halor por slide</li><li>Link medido em todo envio</li><li>Kit de marca travado por time</li><li>Modelos por setor</li><li>PowerPoint editável sem perda</li></ul></div>
-          <div class="wv"><p class="wv-k mono">Transformacional · 6 meses</p><ul><li>Coach de narrativa: reescreve títulos e ordena slides</li><li>Mapa de atenção ao vivo, slide a slide</li><li>Capas em teste A/B automático</li><li>Órbita do mês: ranking do Índice Halor no time</li><li>Provas sociais que se atualizam sozinhas</li></ul></div>
-          <div class="wv wv-hot theme-night"><p class="wv-k mono">Disruptiva · horizonte</p><ul><li>Apresentação viva: o deck se adapta a quem abre</li><li>Agente que monta o deck a partir da reunião gravada</li><li>Sala Halor: o cliente pergunta ao deck, 24 horas</li><li>Índice Halor como referência de mercado</li><li>Marketplace de modelos de alta conversão</li></ul></div>
+          <div class="wv"><p class="wv-k mono">Transformacional · 6 meses</p><ul><li>Coach de narrativa: reescreve títulos e ordena slides</li><li>Mapa de atenção ao vivo, slide a slide</li><li>Capas em teste A/B automático</li><li>Órbita do mês: ranking do Índice Halor no time</li><li>Reações da plateia que entram no slide na hora</li></ul></div>
+          <div class="wv wv-hot theme-night"><p class="wv-k mono">Disruptiva · horizonte</p><ul><li>Apresentação viva: o deck se adapta a quem abre</li><li>Agente que monta o deck a partir da reunião gravada</li><li>Sala Halor: quem assistiu pergunta ao deck, 24 horas</li><li>Índice Halor como referência de mercado</li><li>Marketplace de modelos que prendem o olhar</li></ul></div>
         </div>
       </section>
 

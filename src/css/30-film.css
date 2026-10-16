@@ -525,6 +525,11 @@
 .fpl-s, .fwb-s { position: absolute; inset: 0; visibility: hidden; }
 .fpl-s.act, .fwb-s.act { visibility: visible; }
 .fpl-s .slide, .fwb-s .slide { border-radius: .4cqw; box-shadow: 0 0 6cqw rgba(139, 61, 255, .35); }
+/* troca de slide: o antigo (.f-swap) apaga o conteúdo sobre um fundo igual (.f-bd) e o novo entra depois,
+   sem dupla exposição; com movimento reduzido, o antigo só sai quando o novo já cobriu (corte seco) */
+.film .f-bd { position: absolute; inset: 0; }
+.film .f-bd + .f-swap { box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .film .f-swap { animation-delay: calc((var(--xt) + var(--xdu) - var(--lt, 0)) * 1s) !important; } }
 .fpl-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 1cqw; height: 3.9cqw; padding: 0 1.6cqw; background: var(--halor-night); border-top: 1px solid var(--halor-rim); color: var(--halor-ash); font-size: .88cqw; white-space: nowrap; }
 .fpl-logo { display: flex; align-items: center; gap: .5cqw; color: #fff; font: 600 1.1cqw/1 var(--f-display); letter-spacing: -.03em; }
 .fpl-logo svg { width: 1.5cqw; height: 1.5cqw; }

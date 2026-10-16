@@ -15,10 +15,11 @@ const DECK = [
   { type: 'end', h: 'Obrigado.', sub: 'marina@nortesistemas.com.br', n: 'Deixar o contato na tela enquanto respondem às perguntas.' }
 ];
 
-function slideHTML(s, n, brand) {
+/* tag: nome da apresentação no rodapé (opcional; sem ele vale o Kickoff de exemplo) */
+function slideHTML(s, n, brand, tag) {
   const foot = brand === 'halor'
     ? `<div class="sl-foot"><b><svg aria-hidden="true"><use href="${s.type === 'cover' ? '#hl-mark' : '#hl-mark-paper'}"/></svg>halor</b><span>${String(n).padStart(2, '0')}</span></div>`
-    : `<div class="sl-foot"><span>Norte Sistemas · Kickoff 2027</span><span>${String(n).padStart(2, '0')}</span></div>`;
+    : `<div class="sl-foot"><span>Norte Sistemas · ${tag || 'Kickoff 2027'}</span><span>${String(n).padStart(2, '0')}</span></div>`;
   switch (s.type) {
     case 'cover': return `<div class="slide sl-cover"><span class="sl-ring"></span><span class="sl-ring sl-ring2"></span><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><p class="sl-sub">${s.sub}</p>${foot}</div>`;
     case 'text': return `<div class="slide sl-text sl-light"><p class="sl-k">${s.k}</p><p class="sl-h" style="width:48%">${s.h}</p><div class="sl-body">${s.p.map(x => `<p class="sl-p">${x}</p>`).join('')}</div><span class="sl-img"></span>${foot}</div>`;
@@ -50,6 +51,7 @@ const slugify = t => fold(t).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
 const IS_MAC = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 const modKey = e => (IS_MAC ? e.metaKey : e.ctrlKey);
+const TOUCH = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
 const typingIn = t => !!(t && t.closest && (t.closest('input, textarea, select') || t.isContentEditable));
 const studioOpen = sub => currentView === 'v-studio' && !$(`[data-subview="${sub}"]`)?.hidden;
 const modalOpen = () => $$('.modal').some(m => !m.hidden);
@@ -74,9 +76,9 @@ const LAYOUTS = {
 /* x e y: onde cada tipo nasce (em % do slide), longe do título e do rodapé */
 const LAYER_KINDS = {
   text: { n: 'Texto', ic: '#i-text', w: 34, h: 11, x: 8, y: 76 },
-  shape: { n: 'Forma', ic: '#i-shape', w: 13, h: 23.1, x: 80, y: 8 },
-  arrow: { n: 'Seta', ic: '#i-arrowline', w: 18, h: 9, x: 46, y: 74 },
-  image: { n: 'Imagem', ic: '#i-image', w: 26, h: 38, x: 68, y: 40 },
+  shape: { n: 'Forma', ic: '#i-shape', w: 13, h: 23.1, x: 80, y: 8, fem: true },
+  arrow: { n: 'Seta', ic: '#i-arrowline', w: 18, h: 9, x: 46, y: 74, fem: true },
+  image: { n: 'Imagem', ic: '#i-image', w: 26, h: 38, x: 68, y: 40, fem: true },
   icon: { n: 'Ícone', ic: '#i-spark', w: 7, h: 12.4, x: 70, y: 12 }
 };
 const PT_BASE = { cover: 56, end: 40 };
@@ -113,7 +115,9 @@ function paintSlide(slide, s) {
   }
   return slide;
 }
-function mountSlide(box, s, n) { box.innerHTML = slideHTML(s, n); return paintSlide(box.firstElementChild, s); }
+/* o rodapé dos slides acompanha a apresentação aberta */
+const deckTag = t => escHTML(String(t || '').split('·')[0].trim() || 'Kickoff 2027');
+function mountSlide(box, s, n) { box.innerHTML = slideHTML(s, n, undefined, deckTag(STUDIO.title)); return paintSlide(box.firstElementChild, s); }
 
 /* ==========================================================================
    Histórico (desfazer / refazer) e salvamento
@@ -223,8 +227,14 @@ function placeRay() {
 function toggleRay(force) {
   const b = $('#ray-toggle'); const on = force != null ? force : b.getAttribute('aria-pressed') !== 'true';
   STUDIO.ray = on; b.setAttribute('aria-pressed', String(on)); $('#ray-layer').hidden = !on;
-  if (on) { placeRay(); const g = (RAY_T[curSlide().type] || []).map(x => x[1].toLowerCase()); toast('Raio Halor: o olhar começa em ' + g[0] + ' e segue para ' + g[1] + '.'); }
+  if (on) {
+    placeRay(); const g = (RAY_T[curSlide().type] || []).map(x => x[1].toLowerCase());
+    const fem = t => RAY_FEM.test(t);
+    if (g.length > 1) toast('Raio Halor: o olhar começa ' + (fem(g[0]) ? 'na ' : 'no ') + g[0] + ' e segue para ' + (fem(g[1]) ? 'a ' : 'o ') + g[1] + '.');
+  }
 }
+/* rótulos femininos do caminho do olhar, para o artigo certo no aviso */
+const RAY_FEM = /^(imagem|fonte|etapa|pergunta|opção|linha|lista|mensagem|marca)/;
 
 /* ==========================================================================
    Inspetor: Halor, Design, Animação
@@ -329,7 +339,7 @@ function insertSlide(key, data) {
   pushUndo();
   const s = data ? JSON.parse(JSON.stringify(data)) : LAYOUTS[key].s();
   STUDIO.deck.splice(STUDIO.cur + 1, 0, s); goSlide(STUDIO.cur + 1); saved();
-  toast((data ? 'Slide do modelo' : LAYOUTS[key].n) + ' inserido como slide ' + (STUDIO.cur + 1));
+  toast((data ? 'Slide do modelo' : 'Slide de ' + LAYOUTS[key].n.toLowerCase()) + ' inserido na posição ' + (STUDIO.cur + 1));
 }
 function dupSlide(i = STUDIO.cur) {
   pushUndo(); const c = JSON.parse(JSON.stringify(STUDIO.deck[i]));
@@ -339,7 +349,7 @@ function delSlide(i = STUDIO.cur) {
   if (STUDIO.deck.length < 2) return toast('A apresentação precisa de pelo menos um slide');
   pushUndo(); STUDIO.deck.splice(i, 1);
   goSlide(Math.min(i, STUDIO.deck.length - 1), true); saved();
-  toast('Slide ' + (i + 1) + ' excluído. ' + (IS_MAC ? '⌘' : 'Ctrl') + '+Z desfaz');
+  toast('Slide ' + (i + 1) + ' excluído. ' + MOD() + 'Z desfaz');
 }
 function moveSlide(d) {
   const i = STUDIO.cur, j = i + d; if (j < 0 || j >= STUDIO.deck.length) return;
@@ -352,20 +362,21 @@ function insertLayer(k) {
   pushUndo();
   const off = (s.layers.filter(x => x.k === k).length % 5) * 3;
   const l = { id: 'l' + (STUDIO.lid++), k, x: clampN(K.x + off, 2, 98 - K.w), y: clampN(K.y + off, 3, 96 - K.h), w: K.w, h: K.h };
-  if (k === 'text') { l.t = 'Clique duas vezes para escrever'; l.z = 24; l.c = s.type === 'cover' || s.type === 'end' ? '#f4eeff' : '#17112b'; }
+  const tap = TOUCH() ? 'Toque' : 'Clique';
+  if (k === 'text') { l.t = tap + ' duas vezes para escrever'; l.z = 24; l.c = s.type === 'cover' || s.type === 'end' ? '#f4eeff' : '#17112b'; }
   if (k === 'shape' || k === 'arrow' || k === 'icon') l.c = '#8b3dff';
   s.layers.push(l); STUDIO.sel = l.id; renderEditor(); saved();
-  toast(K.n + ' no slide. Arraste para posicionar' + (k === 'text' ? ', clique duas vezes para escrever' : ''));
+  toast(K.n + ' no slide. Arraste para posicionar' + (k === 'text' ? ', ' + tap.toLowerCase() + ' duas vezes para escrever' : ''));
 }
 function dupLayer() {
   const L = selLayer(); if (!L) return; pushUndo();
   const c = Object.assign({}, L, { id: 'l' + (STUDIO.lid++), x: clampN(L.x + 3, 0, 100 - L.w), y: clampN(L.y + 3, 0, 100 - L.h) });
-  curSlide().layers.push(c); STUDIO.sel = c.id; renderEditor(); saved(); toast(LAYER_KINDS[L.k].n + ' duplicado');
+  curSlide().layers.push(c); STUDIO.sel = c.id; renderEditor(); saved(); toast(LAYER_KINDS[L.k].n + (LAYER_KINDS[L.k].fem ? ' duplicada' : ' duplicado'));
 }
 function delLayer() {
   const L = selLayer(); if (!L) return; pushUndo();
   const s = curSlide(); s.layers = s.layers.filter(x => x !== L); STUDIO.sel = null; renderEditor(); saved();
-  toast(LAYER_KINDS[L.k].n + ' excluído');
+  toast(LAYER_KINDS[L.k].n + (LAYER_KINDS[L.k].fem ? ' excluída. ' : ' excluído. ') + MOD() + 'Z desfaz');
 }
 function orderLayer(front) {
   const L = selLayer(); if (!L) return toast('Selecione um elemento do slide');
@@ -502,11 +513,29 @@ function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.cl
 addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1)}if(e.key==='ArrowLeft'||e.key==='PageUp')go(i-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}});
 document.getElementById('d').addEventListener('click',function(e){go(e.clientX>innerWidth/3?i+1:i-1)});go(0);
 <\/script></body></html>`;
-  const name = slugify(STUDIO.title) + '.html';
-  const url = URL.createObjectURL(new Blob([doc], { type: 'text/html' }));
+  saveFile(slugify(STUDIO.title) + '.html', doc, 'text/html');
+}
+
+/* Entrega um arquivo gerado. Dentro do visualizador de artifacts usa o download
+   permitido pela plataforma (a pessoa confirma); fora dele, um link comum. */
+async function saveFile(name, data, type) {
+  const done = () => toast('HTML interativo baixado: ' + name);
+  const cl = window.claude && typeof window.claude.use === 'function' ? window.claude : null;
+  if (cl) {
+    let dl = null;
+    try { dl = await cl.use('downloads'); } catch (e) { dl = null; }
+    if (dl) {
+      try { await dl.save({ filename: name, data: new Blob([data], { type }) }); done(); return; }
+      catch (e) {
+        if (e && e.code === 'declined') return;
+        if (e && e.code === 'rate_limited') { toast('Já existe um download esperando sua confirmação'); return; }
+      }
+    }
+  }
+  const url = URL.createObjectURL(new Blob([data], { type }));
   const a = el('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 4000);
-  toast('HTML interativo baixado: ' + name);
+  done();
 }
 
 /* ==========================================================================
@@ -515,7 +544,9 @@ document.getElementById('d').addEventListener('click',function(e){go(e.clientX>i
 function bindEditor() {
   const canvas = $('#ed-canvas'); if (!canvas) return;
   /* modificador da plataforma nos atalhos */
-  if (IS_MAC) $$('[data-mod]').forEach(n => { n.textContent = '⌘'; });
+  if (IS_MAC) { $$('[data-mod]').forEach(n => { n.textContent = '⌘'; }); $$('[title*="Ctrl+"]').forEach(n => { n.title = n.title.replace(/Ctrl\+/g, '⌘'); }); }
+  /* tela de toque: a dica do rodapé fala em tocar, não em clicar */
+  const tip = $('.ed-tip'); if (tip && TOUCH() && tip.firstChild && tip.firstChild.nodeType === 3) tip.firstChild.textContent = tip.firstChild.textContent.replace('Clique', 'Toque');
   $('#ray-toggle').addEventListener('click', () => toggleRay());
   /* abas do inspetor (com setas) */
   const inspTabs = $$('[data-insp]');
@@ -532,6 +563,8 @@ function bindEditor() {
   }));
   /* menus do topo */
   $$('[data-menu]').forEach(b => b.addEventListener('click', () => openPop(b, menuFill(edMenu(b.dataset.menu)), { label: b.textContent })));
+  /* telas mais estreitas: os menus do topo cabem num botão só */
+  $('#ed-more')?.addEventListener('click', e => openPop(e.currentTarget, menuFill(['arquivo', 'editar', 'slide', 'organizar', 'apresentar', 'ajuda'].flatMap((m, i) => [...(i ? ['-'] : []), { h: $(`[data-menu="${m}"]`).textContent }, ...edMenu(m).filter(x => x !== '-')])), { label: 'Menus do editor', align: 'right' }));
   $('#ed-undo').addEventListener('click', undo);
   $('#ed-redo').addEventListener('click', redo);
   $('#rail-new').addEventListener('click', e => openPop(e.currentTarget, menuFill([{ h: 'Escolha o layout' }, ...layoutItems()]), { label: 'Novo slide' }));
@@ -597,7 +630,7 @@ function bindEditor() {
     else if (b.dataset.fb === 'italic') applyStyle({ i: !st.i });
     else if (b.dataset.fb === 'align') applyStyle({ a: { left: 'center', center: 'right', right: 'left' }[st.a || 'left'] });
   });
-  $('#ly-bar').addEventListener('click', e => { const b = e.target.closest('[data-lyb]'); if (!b) return; b.dataset.lyb === 'dup' ? dupLayer() : delLayer(); });
+  $('#ly-bar').addEventListener('click', e => { const b = e.target.closest('[data-lyb]'); if (!b) return; ({ dup: dupLayer, del: delLayer, front: () => orderLayer(true), back: () => orderLayer(false) })[b.dataset.lyb](); });
   /* painel Design */
   $('#d-font').addEventListener('change', e => applyStyle({ f: e.target.value }));
   $('#d-size').addEventListener('change', e => applyStyle({ z: +e.target.value }));
@@ -789,11 +822,11 @@ function renderHome() {
   const by = { indice: (a, b) => b.score - a.score, vistas: (a, b) => b.views - a.views, titulo: (a, b) => a.t.localeCompare(b.t, 'pt-BR') }[STUDIO.sort];
   if (by) list = list.slice().sort(by);
   const qb = $('#acv-q');
-  if (STUDIO.q) { qb.hidden = false; $('#acv-q-t').textContent = (list.length === 1 ? '1 apresentação' : list.length + ' apresentações') + ' com “' + STUDIO.q + '”' + (f !== 'todas' ? ' nesta aba' : ''); } else qb.hidden = true;
+  if (STUDIO.q) { qb.hidden = false; $('#acv-q-t').textContent = (!list.length ? 'Nenhuma apresentação' : list.length === 1 ? '1 apresentação' : list.length + ' apresentações') + ' com “' + STUDIO.q + '”' + (f !== 'todas' ? ' nesta aba' : ''); } else qb.hidden = true;
   list.forEach(d => {
     const trash = d.who === 'lixeira';
     const a = el(trash ? 'div' : 'a', 'deck' + (trash ? ' deck-trash' : '')); if (!trash) { a.href = '#editor'; a.addEventListener('click', e => { e.preventDefault(); openDeck('acv', d); }); }
-    const th = el('div', 'deck-th'); th.innerHTML = slideHTML({ type: 'cover', k: d.t.split('·')[0].trim(), h: d.h, sub: d.when }, 1);
+    const th = el('div', 'deck-th'); th.innerHTML = slideHTML({ type: 'cover', k: d.t.split('·')[0].trim(), h: d.h, sub: d.when }, 1, undefined, deckTag(d.t));
     if (d.live) { const c = el('span', 'chip deck-live'); c.innerHTML = '<i class="dot dot-live"></i> sendo vista agora'; th.appendChild(c); }
     const b = el('div', 'deck-b'); b.appendChild(el('p', 'deck-t', d.t));
     const m = el('div', 'deck-m');
@@ -801,7 +834,7 @@ function renderHome() {
       m.appendChild(el('span', null, 'Apaga sozinha em 27 dias'));
       const r = el('button', 'btn btn-ghost btn-xs'); r.type = 'button'; r.innerHTML = '<svg aria-hidden="true"><use href="#i-restore"/></svg>'; r.appendChild(document.createTextNode('Restaurar'));
       r.setAttribute('aria-label', 'Restaurar ' + d.t);
-      r.addEventListener('click', () => { d.who = 'minhas'; d.when = 'agora'; renderHome(); toast('“' + d.t + '” voltou para Minhas'); });
+      r.addEventListener('click', () => { d.who = 'minhas'; d.when = 'agora'; renderHome(); toast('“' + d.t + '” voltou para Minhas'); ($('#acv .deck-trash button') || $('[data-acv][aria-selected="true"]'))?.focus(); });
       m.appendChild(r);
     } else {
       const sc = el('span', 'hscore'); const C = 2 * Math.PI * 8;
@@ -817,7 +850,7 @@ function renderHome() {
     const search = !!STUDIO.q;
     e.innerHTML = `<span class="ae-ic"><svg aria-hidden="true"><use href="${search ? '#i-search' : f === 'lixeira' ? '#i-trash' : '#i-layers'}"/></svg></span>`;
     e.append(el('b', null, search ? 'Nada com “' + STUDIO.q + '” por aqui' : f === 'lixeira' ? 'A lixeira está vazia' : 'Nenhuma apresentação ainda'),
-      el('p', null, search ? 'Confira a grafia ou busque pelo nome do cliente, do evento ou do time.' : f === 'lixeira' ? 'O que você apagar fica aqui por 30 dias antes de sumir.' : 'Comece com um modelo ou importe um arquivo.'));
+      el('p', null, search ? 'Confira a grafia ou busque pelo nome do evento, da turma ou do time.' : f === 'lixeira' ? 'O que você apagar fica aqui por 30 dias antes de sumir.' : 'Comece com um modelo ou importe um arquivo.'));
     if (search) { const c = el('button', 'btn btn-ghost btn-sm', 'Limpar busca'); c.type = 'button'; c.addEventListener('click', clearSearch); e.appendChild(c); }
     box.appendChild(e);
   }
@@ -844,8 +877,13 @@ function bindHome() {
   });
   /* busca */
   const sIn = $('#st-search');
-  if (matchMedia('(max-width: 640px)').matches) sIn.placeholder = 'Buscar no acervo';
-  sIn.addEventListener('input', () => { STUDIO.q = sIn.value.trim(); if (STUDIO.q && !studioOpen('inicio')) location.hash = '#estudio'; renderHome(); });
+  if (matchMedia('(max-width: 640px)').matches) sIn.placeholder = matchMedia('(max-width: 420px)').matches ? 'Buscar' : 'Buscar no acervo';
+  sIn.addEventListener('input', () => {
+    const was = STUDIO.q, go = sIn.value.trim() && !studioOpen('inicio');
+    STUDIO.q = sIn.value.trim(); if (go) location.hash = '#estudio'; renderHome();
+    /* começo de uma busca com o acervo fora da tela (celular): o resultado sobe até o olhar */
+    if (STUDIO.q && !was) setTimeout(() => { const h = $('.home-main > .sec-h'); if (h && h.getBoundingClientRect().top > innerHeight * .7) h.scrollIntoView({ block: 'start', behavior: REDUCED ? 'auto' : 'smooth' }); }, go ? 80 : 0);
+  });
   sIn.addEventListener('keydown', e => { if (e.key === 'Escape' && sIn.value) { e.stopPropagation(); clearSearch(); } else if (e.key === 'Enter') { const first = $('#acv a.deck'); if (first) first.focus(); } });
   $('#acv-clear').addEventListener('click', clearSearch);
   /* modelos */
@@ -878,7 +916,7 @@ function bindHome() {
    Administração
    ========================================================================== */
 const PEOPLE = [
-  { n: 'Marina Costa', m: 'marina@nortesistemas.com.br', role: 'Administradora', st: 'ativo', last: 'agora', idx: 86, av: '' },
+  { n: 'Marina Costa', m: 'marina@nortesistemas.com.br', role: 'Admin', st: 'ativo', last: 'agora', idx: 86, av: '' },
   { n: 'Rafael Lima', m: 'rafael@nortesistemas.com.br', role: 'Membro', st: 'ativo', last: 'há 1 h', idx: 81, av: 'av-2' },
   { n: 'Júlia Prado', m: 'julia@nortesistemas.com.br', role: 'Membro', st: 'ativo', last: 'ontem', idx: 77, av: 'av-3' },
   { n: 'Caio Mendes', m: 'caio@nortesistemas.com.br', role: 'Membro', st: 'convite', last: 'nunca entrou', idx: null, av: 'av-2' },
@@ -925,7 +963,7 @@ function admRows() {
 function admActions(p) {
   const me = p.n === 'Marina Costa', items = [];
   if (p.st === 'convite') items.push({ t: 'Reenviar convite', ic: '#i-mail', act: () => toast('Convite reenviado para ' + p.m) });
-  if (p.st !== 'convite') items.push(p.role === 'Administradora' ? { t: 'Tornar membro', ic: '#i-users', off: me, act: () => { p.role = 'Membro'; admRows(); toast(p.n + ' agora é membro'); } } : { t: 'Promover a administradora', ic: '#i-shield', act: () => { p.role = 'Administradora'; admRows(); toast(p.n + ' agora administra o time'); } });
+  if (p.st !== 'convite') items.push(p.role === 'Admin' ? { t: 'Tornar membro', ic: '#i-users', off: me, act: () => { p.role = 'Membro'; admRows(); toast(p.n + ' agora é membro'); } } : { t: 'Tornar admin do time', ic: '#i-shield', act: () => { p.role = 'Admin'; admRows(); toast(p.n + ' agora administra o time'); } });
   if (p.st === 'ativo') items.push({ t: 'Suspender acesso', ic: '#i-lock', off: me, act: () => { p.st = 'suspenso'; admRows(); toast('Acesso de ' + p.n + ' suspenso'); } });
   if (p.st === 'suspenso') items.push({ t: 'Reativar acesso', ic: '#i-check', act: () => { p.st = 'ativo'; p.last = 'agora'; admRows(); toast('Acesso de ' + p.n + ' reativado'); } });
   items.push('-', { t: p.st === 'convite' ? 'Cancelar convite' : 'Remover do time', ic: '#i-trash', danger: true, off: me, act: () => { PEOPLE.splice(PEOPLE.indexOf(p), 1); admRows(); toast(p.n + (p.st === 'convite' ? ': convite cancelado' : ' saiu do time')); } });
@@ -1027,7 +1065,8 @@ function stageGo(n) { const before = STUDIO.stage; STUDIO.stage = clampN(n, 0, S
 function startStage() {
   STUDIO.stage = STUDIO.cur;
   renderStage();
-  let sec = 12 * 60 + 41;
+  let sec = 0;
+  $('#stage-clock').textContent = '0:00';
   clearInterval(clockT); clearInterval(pulseT);
   clockT = setInterval(() => { if (!studioOpen('apresentar')) return; sec++; $('#stage-clock').textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }, 1000);
   const pts = Array.from({ length: 30 }, (_, i) => 70 + Math.sin(i / 3) * 8 + Math.random() * 6);
@@ -1050,6 +1089,8 @@ function bindStage() {
     else if (e.key === 'Escape' && !document.fullscreenElement) { STUDIO.cur = STUDIO.stage; location.hash = '#editor'; }
   });
   $('#stage-fs')?.addEventListener('click', fs);
+  /* clique ou toque no slide: terço da esquerda volta, o resto avança (como no HTML exportado) */
+  $('.stage-now')?.addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); stageGo(STUDIO.stage + (e.clientX - r.left < r.width / 3 ? -1 : 1)); });
   document.addEventListener('fullscreenchange', () => { const on = !!document.fullscreenElement; const b = $('#stage-fs'); if (b) { b.setAttribute('aria-label', on ? 'Sair da tela cheia' : 'Tela cheia'); b.setAttribute('aria-pressed', String(on)); } });
   /* sair pelo botão volta ao editor no slide em que o palco parou */
   $('.stage-top a[href="#editor"]')?.addEventListener('click', () => { STUDIO.cur = STUDIO.stage; });

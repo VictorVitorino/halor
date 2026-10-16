@@ -34,7 +34,7 @@
         <label class="search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="st-search" type="search" placeholder="Buscar apresentações, slides e modelos" aria-label="Buscar no acervo" aria-keyshortcuts="Control+K Meta+K" autocomplete="off"><kbd><span data-mod>Ctrl</span> K</kbd></label>
         <div class="tb-right">
           <button class="btn btn-ghost btn-sm" type="button" data-open="m-import"><svg aria-hidden="true"><use href="#i-upload"/></svg><span>Importar</span></button>
-          <button class="btn-icon" type="button" id="bell" aria-label="Notificações, 3 novas" aria-haspopup="dialog" aria-expanded="false"><svg aria-hidden="true"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
+          <button class="btn-icon" type="button" id="bell" aria-label="Notificações, 3 novas" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
           <a class="avatar" href="#entrar" aria-label="Conta de Marina Costa. Sair">MC</a>
         </div>
       </header>
@@ -112,6 +112,7 @@
             <button type="button" data-menu="arquivo" aria-haspopup="menu" aria-expanded="false">Arquivo</button><button type="button" data-menu="editar" aria-haspopup="menu" aria-expanded="false">Editar</button><button type="button" data-menu="inserir" aria-haspopup="menu" aria-expanded="false">Inserir</button><button type="button" data-menu="slide" aria-haspopup="menu" aria-expanded="false">Slide</button><button type="button" data-menu="organizar" aria-haspopup="menu" aria-expanded="false">Organizar</button><button type="button" data-menu="apresentar" aria-haspopup="menu" aria-expanded="false">Apresentar</button><button type="button" data-menu="ajuda" aria-haspopup="menu" aria-expanded="false">Ajuda</button>
           </nav>
           <div class="ed-actions">
+            <button class="btn-icon ed-more" type="button" id="ed-more" aria-label="Menus do editor" title="Menus: arquivo, editar, slide, organizar, apresentar e ajuda" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#i-dots"/></svg></button>
             <button class="btn-icon" type="button" id="ed-undo" aria-label="Desfazer" aria-keyshortcuts="Control+Z" title="Desfazer (Ctrl+Z)" aria-disabled="true"><svg aria-hidden="true"><use href="#i-undo"/></svg></button>
             <button class="btn-icon" type="button" id="ed-redo" aria-label="Refazer" aria-keyshortcuts="Control+Shift+Z" title="Refazer (Ctrl+Shift+Z)" aria-disabled="true"><svg aria-hidden="true"><use href="#i-redo"/></svg></button>
             <button class="btn btn-ghost btn-sm" type="button" data-open="m-share"><svg aria-hidden="true"><use href="#i-share"/></svg><span>Compartilhar</span></button>
@@ -119,7 +120,7 @@
             <a class="btn btn-primary btn-sm" href="#apresentar" aria-keyshortcuts="Control+Enter" title="Apresentar do slide atual (Ctrl+Enter)"><svg aria-hidden="true"><use href="#i-play"/></svg><span>Apresentar</span></a>
           </div>
         </div>
-        <div class="ribbon" role="toolbar" aria-label="Inserir elementos">
+        <div class="ribbon" role="toolbar" aria-label="Inserir elementos" data-skip>
           <button type="button" data-ins="text" title="Caixa de texto no slide"><svg aria-hidden="true"><use href="#i-text"/></svg>Texto</button>
           <button type="button" data-ins="shape" title="Forma no slide"><svg aria-hidden="true"><use href="#i-shape"/></svg>Formas</button>
           <button type="button" data-ins="arrow" title="Seta no slide"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Seta</button>
@@ -160,7 +161,10 @@
               </div>
               <div class="float-bar ly-bar" id="ly-bar" role="toolbar" aria-label="Elemento selecionado" hidden>
                 <span class="ly-name mono" id="ly-name">Forma</span>
-                <button class="btn-icon" type="button" data-lyb="dup" aria-label="Duplicar elemento" title="Duplicar elemento"><svg aria-hidden="true"><use href="#i-copy"/></svg></button>
+                <button class="btn-icon" type="button" data-lyb="front" aria-label="Trazer elemento para a frente" title="Trazer para a frente"><svg aria-hidden="true"><use href="#i-up"/></svg></button>
+                <button class="btn-icon" type="button" data-lyb="back" aria-label="Enviar elemento para trás" title="Enviar para trás"><svg aria-hidden="true"><use href="#i-down"/></svg></button>
+                <span class="fb-div" aria-hidden="true"></span>
+                <button class="btn-icon" type="button" data-lyb="dup" aria-label="Duplicar elemento" aria-keyshortcuts="Control+D" title="Duplicar elemento (Ctrl+D)"><svg aria-hidden="true"><use href="#i-copy"/></svg></button>
                 <button class="btn-icon" type="button" data-lyb="del" aria-label="Excluir elemento" title="Excluir elemento (Delete)"><svg aria-hidden="true"><use href="#i-trash"/></svg></button>
               </div>
             </div>
@@ -197,7 +201,7 @@
               </div>
               <div class="insp-sec"><p class="insp-h">Posição e tamanho</p>
                 <div class="xywh"><label>X<input class="input" id="d-x" inputmode="numeric" value="96"></label><label>Y<input class="input" id="d-y" inputmode="numeric" value="72"></label><label>L<input class="input" id="d-w" inputmode="numeric" value="720"></label><label>A<input class="input" id="d-h" inputmode="numeric" value="132"></label></div>
-                <p class="hint">Em pixels, num slide de 1280 × 720. Setas movem o elemento, com Shift andam mais.</p>
+                <p class="hint">Em pixels, num slide de 1280 × 720. As setas do teclado movem o elemento; com Shift, ele anda 5×.</p>
               </div>
             </div>
             <div class="insp-panel" id="insp-p-anim" role="tabpanel" aria-labelledby="insp-t-anim" data-insp-panel="anim" hidden>
@@ -236,10 +240,10 @@
         <div class="stage-top">
           <span class="chip"><i class="dot dot-live"></i> Ao vivo</span>
           <span class="stage-title">Kickoff 2027 · Time de produto</span>
-          <span class="stage-clock mono num" id="stage-clock" role="timer" aria-label="Tempo de apresentação" title="Tempo de apresentação">12:41</span>
+          <span class="stage-clock mono num" id="stage-clock" role="timer" aria-label="Tempo de apresentação" title="Tempo de apresentação">0:00</span>
           <a class="btn btn-ghost btn-sm" href="#editor" aria-keyshortcuts="Escape" title="Voltar ao editor (Esc)"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Sair</span></a>
         </div>
-        <div class="stage-body">
+        <div class="stage-body" data-skip>
           <div class="stage-now"><div id="stage-now"></div></div>
           <div class="stage-side">
             <div class="stage-next"><p class="sk mono">A seguir · slide 4</p><div id="stage-next"></div></div>
@@ -258,7 +262,7 @@
           <span class="dock-sep"></span>
           <button class="btn-icon" type="button" aria-label="Tela cheia" aria-keyshortcuts="F" title="Tela cheia (F)" id="stage-fs"><svg aria-hidden="true"><use href="#i-expand"/></svg></button>
         </div>
-        <p class="stage-keys mono" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> navega · <kbd>F</kbd> tela cheia · <kbd>Esc</kbd> volta ao editor</p>
+        <p class="stage-keys mono" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> ou clique no slide · <kbd>F</kbd> tela cheia · <kbd>Esc</kbd> volta ao editor</p>
         <p class="sr-only" id="stage-live" aria-live="polite"></p>
       </section>
 
@@ -295,7 +299,7 @@
               <div><h2 class="adm-h">Convidar para o time</h2><p class="muted adm-p">Quem entra já recebe o kit de marca, os modelos e a biblioteca de efeitos do time.</p></div>
               <div class="adm-inv-row">
                 <div class="field"><label for="adm-mail">E-mail</label><input class="input" id="adm-mail" type="email" placeholder="nome@nortesistemas.com.br" autocomplete="off" aria-describedby="adm-mail-h"></div>
-                <div class="field"><label for="adm-role">Papel</label><select class="select" id="adm-role"><option>Membro</option><option>Administradora</option><option>Só assiste</option></select></div>
+                <div class="field"><label for="adm-role">Papel</label><select class="select" id="adm-role"><option>Membro</option><option>Admin</option><option>Só assiste</option></select></div>
                 <button class="btn btn-primary" type="submit"><svg aria-hidden="true"><use href="#i-mail"/></svg> Enviar convite</button>
               </div>
               <p class="hint" id="adm-mail-h">Separe vários e-mails com vírgula. O convite vale por 7 dias.</p>
@@ -344,9 +348,9 @@
       <label class="drop" for="imp-file" id="imp-drop"><svg aria-hidden="true"><use href="#i-upload"/></svg><b>Arraste os arquivos para cá</b><span class="muted">ou clique para escolher · .pptx, .pdf e acervo .json</span><input id="imp-file" type="file" multiple accept=".pptx,.pdf,.json" class="sr-only"></label>
       <div><p class="insp-h">Fila de importação</p>
         <ul class="queue" id="imp-queue">
-          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Pitch Investidores Q3.pptx</b><span class="qbar"><i style="width:100%"></i></span></div><span class="chip chip-ok">Pronto · 18 slides</span></li>
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Abertura do evento Q3.pptx</b><span class="qbar"><i style="width:100%"></i></span></div><span class="chip chip-ok">Pronto · 18 slides</span></li>
           <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Relatório de resultados.pdf</b><span class="qbar"><i class="run" style="width:62%"></i></span></div><span class="chip">62%</span></li>
-          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Onboarding cliente.pptx</b><span class="qbar"><i style="width:0"></i></span></div><span class="chip chip-line">Na fila</span></li>
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Boas-vindas ao time.pptx</b><span class="qbar"><i style="width:0"></i></span></div><span class="chip chip-line">Na fila</span></li>
         </ul>
       </div>
     </div>

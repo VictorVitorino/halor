@@ -105,6 +105,7 @@ const ROUTES = {
 const viewHooks = {};   // id da view -> função chamada ao mostrar
 const subHooks = {};    // sub-tela do estúdio -> função
 let currentView = null;
+let protoT = 0;
 
 function showView(id) {
   if (currentView === id) return;
@@ -141,10 +142,28 @@ function route() {
     const l = pa.offsetLeft, r = l + pa.offsetWidth;
     if (l < pb.scrollLeft) pb.scrollLeft = l - 8; else if (r > pb.scrollLeft + pb.clientWidth) pb.scrollLeft = r - pb.clientWidth + 8;
   }
+  /* no editor a barra do protótipo recolhe depois de um instante (o CSS decide em que telas isso vale) */
+  const proto = $('.proto');
+  if (proto) { clearTimeout(protoT); if (r.sub === 'editor') protoT = setTimeout(() => proto.classList.add('peek'), 1200); else proto.classList.remove('peek'); }
   if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }));
   else window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
+
+/* "Pular para o conteúdo": fora do site, leva ao conteúdo da tela atual em vez de trocar de tela */
+document.addEventListener('click', e => {
+  const s = e.target.closest('a.skip'); if (!s) return;
+  const v = currentView && document.getElementById(currentView); if (!v || v.contains(document.getElementById('conteudo'))) return;
+  const shown = (q, r) => $$(q, r).find(n => n.getClientRects().length);
+  const sub = $$('.sub', v).find(x => !x.hidden);
+  const t = (sub && (shown('[data-skip]', sub) || shown('h1, h2', sub) || sub)) || shown('[data-skip]', v) || shown('main, h1', v) || v;
+  e.preventDefault();
+  if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+  t.focus({ preventScroll: true });
+  /* só rola quando o destino não está à vista (o CSS dá a folga da barra fixa com scroll-margin) */
+  const tr = t.getBoundingClientRect();
+  if (tr.top < 72 || tr.top > innerHeight * .6) t.scrollIntoView({ block: 'start', behavior: REDUCED ? 'auto' : 'smooth' });
+});
 
 /* Rolagem: barra do site ganha fundo */
 window.addEventListener('scroll', () => {

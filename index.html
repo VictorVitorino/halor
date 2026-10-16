@@ -51,7 +51,7 @@
   --ink-2: #4a4366;           /* Grafite */
   --mute: #6e6789;
 
-  /* · Cadeia Halor · rampa ordinal (anel 1 Atenção → anel 7 Proposta) · */
+  /* · Cadeia Halor · rampa ordinal (anel 1 Atenção → anel 7 Valor) · */
   --chain-p1: #c4a6ff; --chain-p2: #b08aff; --chain-p3: #9c6cff; --chain-p4: #8b4ffa;
   --chain-p5: #7a33eb; --chain-p6: #6420cc; --chain-p7: #4a11a0;
   --chain-n1: #5a35a8; --chain-n2: #7040d6; --chain-n3: #8752f5; --chain-n4: #9f70ff;
@@ -198,6 +198,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .skip:focus { top: 16px; }
 
 :focus-visible { outline: 2px solid var(--focus, var(--halor-glow)); outline-offset: 3px; border-radius: 6px; }
+/* destino do "Pular para o conteúdo": recebe o foco sem desenhar um anel em volta da área inteira */
+[data-skip]:focus { outline: none; }
 
 .view { min-height: 100vh; background: var(--bg); color: var(--text); }
 
@@ -346,10 +348,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
   background: var(--halor-dusk); color: var(--halor-lumen);
   border: 1px solid rgba(201, 166, 255, .3);
-  padding: 12px 18px; border-radius: var(--r-pill); font-size: 14px; font-weight: 500;
+  padding: 12px 18px; border-radius: 22px; font-size: 14px; font-weight: 500;
   box-shadow: var(--glow-md);
   transition: opacity var(--t-base) var(--ease-halo), transform var(--t-base) var(--ease-halo);
-  display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px);
+  display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(560px, calc(100vw - 32px));
 }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 .toast svg { width: 18px; height: 18px; color: var(--halor-glow); flex: none; }
@@ -378,6 +380,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .proto a[aria-current="page"] { background: var(--halor-violet); color: #fff; box-shadow: var(--glow-sm); }
 .proto a svg { width: 15px; height: 15px; }
 @media (max-width: 760px) { .proto-tag span { display: none; } .proto a { padding: 0 10px; } }
+/* No editor em tela larga a barra recolhe para não cobrir o rodapé do app: fica uma alça e ela volta ao passar o mouse ou com o foco */
+@media (hover: hover) and (min-width: 1181px) and (min-height: 620px) {
+  .proto { transition: transform var(--t-slow) var(--ease-halo), box-shadow var(--t-slow) var(--ease-halo); }
+  .proto.peek { overflow: visible; transform: translate(-50%, calc(100% + 4px)); box-shadow: none; }
+  .proto.peek::after { content: ""; position: absolute; top: 3px; left: 50%; width: 40px; height: 3px; margin-left: -20px; border-radius: 3px; background: rgba(201, 166, 255, .7); transition: opacity var(--t-base); }
+  .proto.peek:hover, .proto.peek:focus-within { transform: translateX(-50%); box-shadow: 0 18px 50px -12px rgba(0, 0, 0, .65), 0 0 0 1px rgba(0, 0, 0, .3); }
+  .proto.peek:hover::after, .proto.peek:focus-within::after { opacity: 0; }
+}
 
 /* · Modal · */
 .modal { position: fixed; inset: 0; z-index: 250; display: grid; place-items: center; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }
@@ -2299,6 +2309,11 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 .fpl-s, .fwb-s { position: absolute; inset: 0; visibility: hidden; }
 .fpl-s.act, .fwb-s.act { visibility: visible; }
 .fpl-s .slide, .fwb-s .slide { border-radius: .4cqw; box-shadow: 0 0 6cqw rgba(139, 61, 255, .35); }
+/* troca de slide: o antigo (.f-swap) apaga o conteúdo sobre um fundo igual (.f-bd) e o novo entra depois,
+   sem dupla exposição; com movimento reduzido, o antigo só sai quando o novo já cobriu (corte seco) */
+.film .f-bd { position: absolute; inset: 0; }
+.film .f-bd + .f-swap { box-shadow: none; }
+@media (prefers-reduced-motion: reduce) { .film .f-swap { animation-delay: calc((var(--xt) + var(--xdu) - var(--lt, 0)) * 1s) !important; } }
 .fpl-bar { position: absolute; left: 0; right: 0; bottom: 0; display: flex; align-items: center; gap: 1cqw; height: 3.9cqw; padding: 0 1.6cqw; background: var(--halor-night); border-top: 1px solid var(--halor-rim); color: var(--halor-ash); font-size: .88cqw; white-space: nowrap; }
 .fpl-logo { display: flex; align-items: center; gap: .5cqw; color: #fff; font: 600 1.1cqw/1 var(--f-display); letter-spacing: -.03em; }
 .fpl-logo svg { width: 1.5cqw; height: 1.5cqw; }
@@ -2685,6 +2700,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 @media (max-width: 640px) { .search kbd, .tb-right .btn span { display: none; } .tb-right .btn { width: 36px; padding: 0; } }
 
 .sub { flex: 1; }
+/* destino do "Pular para o conteúdo" e de rolagens: para logo abaixo da barra superior fixa */
+#v-studio .sub [data-skip], #v-studio .sub h1, #v-studio .sub h2, .home-main > .sec-h { scroll-margin-top: 80px; }
 .st-pad > * { min-width: 0; }
 .st-pad { padding: clamp(20px, 3vw, 36px) max(20px, env(safe-area-inset-right, 0px)) 120px max(20px, env(safe-area-inset-left, 0px)); max-width: 1440px; width: 100%; margin-inline: auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 28px; align-content: start; }
 .st-h1 { font-family: var(--f-display); font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -.03em; line-height: 1.12; max-width: 30ch; }
@@ -2733,6 +2750,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .start b { font-size: 14.5px; margin-top: 10px; }
 .start small { font-size: 12.5px; color: var(--mute); line-height: 1.4; }
 .start kbd { position: absolute; top: 14px; right: 14px; }
+@media (hover: none) { .start kbd { display: none; } }
 .st-ic { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--lilac-50); color: var(--halor-violet); }
 .st-ic svg { width: 19px; height: 19px; }
 .start-new { background: linear-gradient(150deg, #8b3dff, #6421d1); border-color: transparent; color: #fff; box-shadow: var(--glow-sm); }
@@ -2802,7 +2820,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .ed-menu button.pop-on { background: var(--lilac-50); color: var(--halor-violet-700); }
 .ed-actions .btn-icon[aria-disabled="true"] { opacity: .4; }
 .ed-actions .btn-icon[aria-disabled="true"]:hover { background: transparent; color: var(--text-2); }
-@media (max-width: 1480px) { .ed-menu { display: none; } }
+.ed-more { display: none; }
+.ed-actions .btn-icon.pop-on { background: var(--lilac-50); color: var(--halor-violet-700); }
+@media (max-width: 1480px) { .ed-menu { display: none; } .ed-more { display: inline-flex; } }
 .ed-actions { display: flex; gap: 6px; align-items: center; margin-left: auto; }
 @media (max-width: 700px) { .ed-actions .btn span { display: none; } .ed-actions .btn { width: 36px; padding: 0; } }
 .ribbon { display: flex; gap: 2px; align-items: center; padding: 6px max(12px, env(safe-area-inset-left, 0px)); background: var(--paper); border-bottom: 1px solid var(--line); overflow-x: auto; scrollbar-width: none; }
@@ -2826,7 +2846,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .rb-ray[aria-pressed="true"] svg { color: #fff !important; }
 .ed-body { flex: 1; display: grid; grid-template-columns: 168px minmax(0, 1fr) 300px; min-height: 0; }
 .ed-rail { background: var(--paper); border-right: 1px solid var(--line); padding: 12px; display: flex; flex-direction: column; gap: 10px; overflow-y: auto; }
-@media (max-width: 1180px) { .ed-body { grid-template-columns: 132px minmax(0, 1fr); } .insp { grid-column: 1 / -1; border-left: 0 !important; border-top: 1px solid var(--line); } }
+@media (max-width: 1180px) { .ed-body { grid-template-columns: 132px minmax(0, 1fr); } .insp { grid-column: 1 / -1; border-left: 0 !important; border-top: 1px solid var(--line); padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); } }
+/* tela larga mas baixa (sem o app de altura fixa): folga para a barra flutuante não cobrir o rodapé do editor */
+@media (min-width: 1181px) and (max-height: 619px) { .sub-editor { padding-bottom: 72px; } }
 .rail-h { display: flex; justify-content: space-between; font-size: 12px; font-weight: 700; color: var(--ink-2); text-transform: uppercase; letter-spacing: .08em; }
 .rail-list { display: grid; gap: 10px; counter-reset: s; }
 .rail-list li { position: relative; display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 6px; align-items: start; counter-increment: s; }
@@ -2859,7 +2881,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .ed-status { margin-top: auto; }
 /* Tela larga: o editor vira um app de altura fixa. Trilho e inspetor rolam por dentro e a tela fica no centro. */
 @media (min-width: 1181px) and (min-height: 620px) {
-  .sub-editor { height: calc(100vh - 64px); min-height: 0; }
+  .sub-editor { flex: none; height: calc(100vh - 64px); min-height: 0; }
   .ed-body { min-height: 0; overflow: hidden; grid-template-rows: minmax(0, 1fr); }
   .ed-rail { min-height: 0; overscroll-behavior: contain; }
   .insp { min-height: 0; overflow: hidden; }
@@ -2867,6 +2889,9 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
   .ed-stage { min-height: 0; overflow-y: auto; }
   .ed-canvas-wrap { margin: auto; }
   .ed-status { margin-top: 0; }
+  /* Novo slide sempre à mão no pé do trilho */
+  .ed-rail .rail-new { position: sticky; bottom: 0; z-index: 2; background: var(--paper); box-shadow: 0 0 0 6px var(--paper), 0 12px 0 6px var(--paper), 0 -16px 16px 2px var(--paper); }
+  .ed-rail .rail-new:hover { background: var(--lilac-50); }
 }
 .ed-canvas { box-shadow: var(--sh-paper-3); border-radius: 4px; overflow: hidden; touch-action: none; }
 .ed-canvas .sl-h, .ed-canvas .ly { cursor: move; }
@@ -2968,6 +2993,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .stage-clock { font-size: 22px; color: var(--halor-glow); letter-spacing: .02em; }
 .stage-body { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 24px; padding: 24px max(20px, env(safe-area-inset-right, 0px)) 24px max(20px, env(safe-area-inset-left, 0px)); align-items: start; }
 @media (max-width: 1080px) { .stage-body { grid-template-columns: 1fr; } }
+.stage-now { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .stage-now .slide { border-radius: 8px; box-shadow: 0 30px 90px -30px rgba(139, 61, 255, .6), 0 0 0 1px rgba(201, 166, 255, .2); }
 .stage-side { display: grid; gap: 16px; }
 .stage-side > div { border: 1px solid var(--line-c); border-radius: var(--r-md); padding: 14px; background: rgba(14, 8, 32, .82); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); display: grid; gap: 10px; }
@@ -2994,6 +3020,13 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .stage-keys kbd { background: rgba(244, 238, 255, .06); border-color: rgba(201, 166, 255, .3); color: var(--halor-lumen); margin: 0 1px; }
 @media (hover: none) { .stage-keys { visibility: hidden; } }
 .dock-sep { width: 1px; height: 22px; background: var(--line-c-2); }
+/* coluna única: os controles do palco ficam presos no pé da tela enquanto as notas rolam */
+@media (max-width: 1080px) {
+  .stage-dock { position: sticky; bottom: calc(66px + env(safe-area-inset-bottom, 0px)); z-index: 5; align-self: center; max-width: calc(100% - 24px); margin-top: 8px; padding: 6px 10px; border-radius: var(--r-pill); background: rgba(14, 8, 32, .88); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border: 1px solid var(--line-c); box-shadow: 0 18px 40px -16px rgba(0, 0, 0, .7); }
+  .stage-keys { padding-top: 10px; }
+  /* no palco o aviso sobe para não cobrir os controles presos no pé da tela */
+  body:has(#v-studio:not([hidden]) .sub-stage:not([hidden])) .toast { bottom: calc(128px + env(safe-area-inset-bottom, 0px)); }
+}
 
 /* · Admin · */
 .adm-sum { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
@@ -3054,6 +3087,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .exp button[aria-checked="true"] { border-color: var(--halor-violet); background: var(--lilac-50); box-shadow: 0 0 0 3px rgba(139, 61, 255, .14); }
 .exp-hot .exp-ic { background: var(--halor-violet); color: #fff; box-shadow: var(--glow-sm); }
 .share-row { display: grid; grid-template-columns: 1fr 150px; gap: 8px; }
+@media (max-width: 480px) { .share-row { grid-template-columns: minmax(0, 1fr); } }
 .sel-sm { height: 46px; }
 .people { display: grid; gap: 12px; }
 .people li { display: grid; grid-template-columns: auto 1fr auto; gap: 12px; align-items: center; font-size: 14px; }
@@ -3068,6 +3102,8 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 
 /* · Administração: painéis das abas · */
 .adm-panel { display: grid; gap: 16px; animation: fade var(--t-base) var(--ease-halo); }
+/* abas que rolam no celular: a borda direita esmaece para mostrar que há mais */
+@media (max-width: 600px) { .adm-tabs { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); padding-right: 24px; } }
 .adm-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: clamp(16px, 2.4vw, 24px); display: grid; gap: 16px; box-shadow: var(--sh-paper-1); }
 .adm-h { font-size: 17px; letter-spacing: -.01em; }
 .adm-h3 { font-size: 14px; font-weight: 700; }
@@ -3326,16 +3362,16 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
 .d-tbl th { color: var(--text-mute); font-weight: 600; }
 .d-tbl td.n, .d-tbl th.n { text-align: right; font-variant-numeric: tabular-nums; }
 
-.d-heat-row { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 4px; }
-.d-cell { aspect-ratio: 1 / 1.1; border-radius: 6px; background: var(--c); display: grid; align-content: end; padding: 6px; position: relative; transition: background .6s var(--ease-halo), transform var(--t-fast); min-width: 0; }
+.d-heat-row { display: grid; grid-template-columns: repeat(var(--n, 12), minmax(0, 1fr)); gap: 4px; }
+.d-cell { aspect-ratio: 1 / 1.1; width: 100%; max-width: 95px; justify-self: center; border-radius: 6px; background: var(--c); display: grid; align-content: end; padding: 6px; position: relative; transition: background .6s var(--ease-halo), transform var(--t-fast); min-width: 0; }
 .d-cell:hover, .d-cell:focus-visible { transform: translateY(-2px); outline: 2px solid var(--focus); outline-offset: 1px; }
 .d-cell b { font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink-c, #fff); }
 .d-hcol { display: grid; gap: 6px; min-width: 0; }
-.d-hlab { font-size: 10.5px; color: var(--text-mute); text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.d-hlab { font-size: 10.5px; line-height: 1.25; color: var(--text-mute); text-align: center; overflow-wrap: break-word; }
 .d-scale { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--text-mute); margin-top: 14px; }
 .d-scale i { display: flex; height: 8px; width: 160px; border-radius: 99px; overflow: hidden; }
 .d-scale i b { flex: 1; background: var(--c); }
-@media (max-width: 640px) { .d-heat-row { grid-template-columns: repeat(6, minmax(0, 1fr)); row-gap: 12px; } }
+@media (max-width: 640px) { .d-heat-row { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 12px; } }
 
 .d-ins { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 900px) { .d-ins { grid-template-columns: 1fr; } }
@@ -3370,7 +3406,7 @@ kbd { font-family: var(--f-mono); font-size: 11px; color: var(--mute); border: 1
   .b-toc a { border-left: 0; border-bottom: 2px solid transparent; margin: 0; white-space: nowrap; padding: 12px 10px; }
   .b-toc a.on { border-bottom-color: var(--halor-violet); }
 }
-.b-content { min-width: 0; display: grid; gap: clamp(72px, 9vw, 120px); }
+.b-content { min-width: 0; display: grid; gap: clamp(72px, 9vw, 120px); scroll-margin-top: 72px; }
 .b-sec { display: grid; gap: 22px; align-content: start; scroll-margin-top: 72px; }
 .b-h { font-family: var(--f-display); font-size: clamp(28px, 3.6vw, 44px); letter-spacing: -.03em; line-height: 1.05; max-width: 20ch; }
 .b-h3 { font-size: 15px; font-weight: 700; letter-spacing: .02em; margin-top: 18px; }
@@ -3386,6 +3422,12 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
 .nm-w small { font-size: 13px; color: var(--mute); line-height: 1.4; }
 .nm-op { font-family: var(--f-display); font-size: clamp(28px, 4vw, 44px); color: var(--lilac-300); line-height: 1.15; }
 .nm-res b { color: var(--ink); text-shadow: 0 0 24px rgba(139, 61, 255, .35); }
+/* celular: a conta vira coluna, com o operador na frente de cada palavra */
+@media (max-width: 560px) {
+  .name-math { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 14px; row-gap: 14px; }
+  .nm-w { grid-column: 2; max-width: none; }
+  .nm-op { grid-column: 1; line-height: 1; padding-top: 2px; }
+}
 .persona { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
 @media (max-width: 760px) { .persona { grid-template-columns: 1fr; } }
 .persona > div { padding: 22px 22px 22px 0; display: grid; gap: 8px; border-bottom: 1px solid var(--line); }
@@ -3431,7 +3473,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
 .anat-spec dd { margin: 0; color: var(--ink-2); }
 .versions { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
 @media (max-width: 760px) { .versions { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.versions figure, .misuse figure { margin: 0; display: grid; gap: 8px; }
+.versions figure, .misuse figure { margin: 0; display: grid; gap: 8px; align-content: start; }
 .versions figcaption, .misuse figcaption { font-size: 13px; color: var(--mute); display: flex; align-items: center; gap: 6px; }
 .v-box { aspect-ratio: 1; border-radius: var(--r-lg); display: grid; place-items: center; }
 .v-box svg { width: 46%; height: 46%; }
@@ -3469,10 +3511,12 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
 .prop-bar i { display: flex; align-items: center; padding: 0 12px; font: 600 11px/1 var(--f-mono); font-style: normal; color: rgba(244, 238, 255, .85); white-space: nowrap; overflow: hidden; }
 .chain-sw { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; border-radius: var(--r-md); }
 .chain-night { background: var(--halor-deep); padding: 4px; }
-.chain-sw div { display: grid; gap: 2px; padding: 34px 10px 10px; border-radius: 8px; background: var(--c); min-width: 0; }
-.chain-sw b { font-size: 12.5px; color: var(--t); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chain-sw div { display: grid; gap: 2px; align-content: end; padding: 34px 10px 10px; border-radius: 8px; background: var(--c); min-width: 0; }
+.chain-sw b { font-size: 12.5px; line-height: 1.25; color: var(--t); overflow-wrap: break-word; }
 .chain-sw span { font: 500 10.5px/1.2 var(--f-mono); color: var(--t); opacity: .85; }
-@media (max-width: 640px) { .chain-sw { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .chain-sw { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* celular: a barra de proporção mostra só os números, o nome de cada cor está nas amostras acima */
+@media (max-width: 600px) { .prop-bar i span { display: none; } }
 .sem { display: flex; gap: 10px; flex-wrap: wrap; }
 
 /* Tipografia */
@@ -3515,7 +3559,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
 .mv-pulse { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; animation: mvpulse 2.4s ease-in-out infinite; }
 .mv-pulse svg { width: 64px; height: 64px; }
 @keyframes mvpulse { 50% { filter: drop-shadow(0 0 18px rgba(169, 112, 255, 1)); transform: scale(1.06); } }
-.mv-sweep { font-family: var(--f-display); font-size: 22px; letter-spacing: -.04em; position: relative; background: linear-gradient(100deg, #a69cc4 30%, #fff 50%, #a69cc4 70%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: mvsweep 2.8s var(--ease-halo) infinite; }
+.mv-sweep { font-family: var(--f-display); font-size: 22px; letter-spacing: -.04em; line-height: 1.15; text-align: center; padding-inline: 12px; position: relative; background: linear-gradient(100deg, #a69cc4 30%, #fff 50%, #a69cc4 70%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: mvsweep 2.8s var(--ease-halo) infinite; }
 @keyframes mvsweep { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 .mv-reveal { display: grid; gap: 8px; width: 60%; }
 .mv-reveal i { height: 12px; border-radius: 99px; background: linear-gradient(90deg, #8b3dff, #c9a6ff); animation: mvrev 2.4s var(--ease-halo) infinite; transform-origin: left; }
@@ -3825,6 +3869,8 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
            .fa = entrada no tempo --at · .fd = mudança no tempo --xt · data-on="a b|c d" liga .act.
            Cena: data-from/to, fusão de entrada e saída (data-fi/fo), espera antes de entrar (data-fw),
            leve crescimento na entrada (data-fz) e corte com movimento reduzido (data-rc).
+           Troca de slide (modo palco e aba do arquivo): o slide antigo (.f-swap) apaga o conteúdo sobre
+           um fundo igual (.f-bd) e só então o novo entra, sem dois textos sobrepostos.
            Dentro de .fw (a janela do app), cqw é a largura da janela. -->
       <div class="wrap s-film-wrap" id="filme">
         <div class="film" id="film" data-state="poster" role="region" aria-label="Filme Conheça o Halor" aria-describedby="film-roteiro">
@@ -3843,7 +3889,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
 
           <div class="film-scenes" aria-hidden="true">
             <!-- 0:00 · abertura no mundo Noite -->
-            <div class="sc sc-c sc-open" data-from="0" data-to="3.2" data-fi=".5" data-fo=".55" data-rc=".45">
+            <div class="sc sc-c sc-open" data-from="0" data-to="3.15" data-fi=".5" data-fo=".5" data-rc=".5">
               <span class="f-mk" data-anchor="mark">
                 <svg class="f-mark" viewBox="0 0 64 64">
                   <path class="fa fa-draw" style="--at:.25;--du:1.1;--len:146" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
@@ -3926,7 +3972,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
                         </div>
 
                         <!-- Passo 2 · Modelos -->
-                        <div class="sc fm-main" data-from="10" data-to="16.15" data-o="0" data-fw=".08" data-fi=".34" data-fo="0" data-fz=".012">
+                        <div class="sc fm-main" data-from="10" data-to="16.15" data-o="0" data-fw=".15" data-fi=".34" data-fo="0" data-fz=".012">
                           <div class="fm-head">
                             <span class="fm-back"><svg aria-hidden="true"><use href="#i-back"/></svg>Início</span>
                             <div><p class="fm-h">Modelos</p><p class="fm-sub">Roteiros completos para adaptar. Todos com o seu kit de marca.</p></div>
@@ -3949,7 +3995,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
                       </div>
 
                       <!-- Passos 3 a 11 · Editor -->
-                      <div class="sc fe" data-from="15.9" data-to="75.5" data-o="0" data-fw=".08" data-fi=".38" data-fo="0" data-fz=".014">
+                      <div class="sc fe" data-from="15.9" data-to="75.5" data-o="0" data-fw=".16" data-fi=".38" data-fo="0" data-fz=".014">
                         <div class="fe-top">
                           <span class="fe-back"><svg aria-hidden="true"><use href="#i-back"/></svg></span>
                           <div class="fe-name"><b>Kickoff de projeto 2027</b><span><svg aria-hidden="true"><use href="#i-check"/></svg>Salvo às 09:42</span></div>
@@ -4161,9 +4207,10 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
                       <div class="sc fpl" data-from="60.05" data-to="67.72" data-o="0" data-fi=".5" data-fo=".5" data-fz=".02">
                         <div class="fpl-stage fd" style="--xt:67.6;--xdu:.26;--xez:cubic-bezier(.25,.5,.45,1)">
                           <div class="fpl-s" data-on="0 62.9">
-                            <div class="slide sl-cover fpl-cover"><span class="sl-ring fa fa-fade" style="--at:60.4;--du:1"></span><span class="sl-ring sl-ring2"></span><p class="sl-k fa fa-up" style="--at:60.5">Kickoff · 2027</p><p class="sl-h"><span class="fa fa-mask" style="--at:60.7;--du:.7">Plano 2027 em 12 semanas.</span></p><p class="sl-sub fa fa-up" style="--at:61.2">Time de produto · 4 de novembro</p><div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark"/></svg>halor</b><span>01</span></div></div>
+                            <div class="slide sl-cover f-bd"></div>
+                            <div class="slide sl-cover fd f-swap" style="--xt:62.3;--xdu:.15;--xez:cubic-bezier(.37,0,.63,1)"><span class="sl-ring fa fa-fade" style="--at:60.4;--du:1"></span><span class="sl-ring sl-ring2"></span><p class="sl-k fa fa-up" style="--at:60.5">Kickoff · 2027</p><p class="sl-h"><span class="fa fa-mask" style="--at:60.7;--du:.7">Plano 2027 em 12 semanas.</span></p><p class="sl-sub fa fa-up" style="--at:61.2">Time de produto · 4 de novembro</p><div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark"/></svg>halor</b><span>01</span></div></div>
                           </div>
-                          <div class="fpl-s fa fa-fade" style="--at:62.35;--du:.5" data-on="62.35 99">
+                          <div class="fpl-s fa fa-fade" style="--at:62.45;--du:.45" data-on="62.35 99">
                             <div class="slide sl-light fs5">
                               <p class="sl-k">Sua vez</p><p class="sl-h">Qual frente começa primeiro?</p>
                               <div class="fs5-poll">
@@ -4196,10 +4243,12 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
                       <div class="sc fwb" data-from="74.9" data-to="84.9" data-o="0" data-fi=".45" data-fo="0">
                         <div class="fwb-stage">
                           <div class="fwb-s" data-on="0 78.6">
-                            <div class="slide sl-cover"><span class="sl-ring fa fa-fade" style="--at:75.2;--du:1"></span><span class="sl-ring sl-ring2"></span><p class="sl-k fa fa-up" style="--at:75.3">Kickoff · 2027</p><p class="sl-h"><span class="fa fa-mask" style="--at:75.5;--du:.7">Plano 2027 em 12 semanas.</span></p><p class="sl-sub fa fa-up" style="--at:76">Time de produto · 4 de novembro</p><div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark"/></svg>halor</b><span>01</span></div></div>
+                            <div class="slide sl-cover f-bd"></div>
+                            <div class="slide sl-cover fd f-swap" style="--xt:78;--xdu:.15;--xez:cubic-bezier(.37,0,.63,1)"><span class="sl-ring fa fa-fade" style="--at:75.2;--du:1"></span><span class="sl-ring sl-ring2"></span><p class="sl-k fa fa-up" style="--at:75.3">Kickoff · 2027</p><p class="sl-h"><span class="fa fa-mask" style="--at:75.5;--du:.7">Plano 2027 em 12 semanas.</span></p><p class="sl-sub fa fa-up" style="--at:76">Time de produto · 4 de novembro</p><div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark"/></svg>halor</b><span>01</span></div></div>
                           </div>
-                          <div class="fwb-s fa fa-fade" style="--at:78.05;--du:.5" data-on="78.05 80.9">
-                            <div class="slide sl-light fs3">
+                          <div class="fwb-s fa fa-fade" style="--at:78.15;--du:.45" data-on="78.05 80.9">
+                            <div class="slide sl-light f-bd"></div>
+                            <div class="slide sl-light fs3 fd f-swap" style="--xt:80.3;--xdu:.15;--xez:cubic-bezier(.37,0,.63,1)">
                               <p class="sl-k">Meta</p><p class="sl-h">Do kickoff à entrega.</p>
                               <div class="fs3-chart act">
                                 <i class="fa fa-bar" style="--at:78.2;--h:30%"><em>S4</em></i><i class="fa fa-bar" style="--at:78.35;--h:52%"><em>S8</em></i><i class="fa fa-bar" style="--at:78.5;--h:74%"><em>S10</em></i><i class="fs3-hi fa fa-bar" style="--at:78.65;--h:96%"><em>S12</em></i>
@@ -4210,7 +4259,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
                               <div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg>halor</b><span>03</span></div>
                             </div>
                           </div>
-                          <div class="fwb-s fa fa-fade" style="--at:80.35;--du:.5" data-on="80.35 99">
+                          <div class="fwb-s fa fa-fade" style="--at:80.45;--du:.45" data-on="80.35 99">
                             <div class="slide sl-light fs5">
                               <p class="sl-k">Sua vez</p><p class="sl-h">Qual frente começa primeiro?</p>
                               <div class="fs5-poll fwb-poll">
@@ -4263,15 +4312,15 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
             <div class="sc sc-c sc-end" data-from="84" data-to="89" data-fi=".8">
               <span class="f-mk f-mk-end" aria-hidden="true" data-anchor="mark2">
                 <svg class="f-mark" viewBox="0 0 64 64">
-                  <path class="fa fa-draw" style="--at:.3;--du:1;--len:146" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
-                  <circle class="fa fa-fade" style="--at:.7;--du:.5" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6"/>
-                  <circle class="f-core fa fa-core" style="--at:.45;--du:.55" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
-                  <path class="f-spark fa fa-spark" style="--at:.95;--du:.6" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#fff"/>
+                  <path class="fa fa-draw" style="--at:.55;--du:1;--len:146" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
+                  <circle class="fa fa-fade" style="--at:.9;--du:.5" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6"/>
+                  <circle class="f-core fa fa-core" style="--at:.7;--du:.55" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
+                  <path class="f-spark fa fa-spark" style="--at:1.15;--du:.6" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#fff"/>
                 </svg>
               </span>
-              <p class="f-word wordmark fa fa-up" style="--at:.6">halor</p>
-              <p class="f-tag fa fa-up" style="--at:.8">Faça cada olhar <span class="f-lux" style="--lat:1">render.</span></p>
-              <a class="btn btn-primary f-cta fa fa-pop" style="--at:1.1;--du:.6" href="#assinar">Comece grátis</a>
+              <p class="f-word wordmark fa fa-up" style="--at:.8">halor</p>
+              <p class="f-tag fa fa-up" style="--at:1">Faça cada olhar <span class="f-lux" style="--lat:1.2">render.</span></p>
+              <a class="btn btn-primary f-cta fa fa-pop" style="--at:1.3;--du:.6" href="#assinar">Comece grátis</a>
             </div>
           </div>
 
@@ -5279,7 +5328,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <label class="search"><svg aria-hidden="true"><use href="#i-search"/></svg><input id="st-search" type="search" placeholder="Buscar apresentações, slides e modelos" aria-label="Buscar no acervo" aria-keyshortcuts="Control+K Meta+K" autocomplete="off"><kbd><span data-mod>Ctrl</span> K</kbd></label>
         <div class="tb-right">
           <button class="btn btn-ghost btn-sm" type="button" data-open="m-import"><svg aria-hidden="true"><use href="#i-upload"/></svg><span>Importar</span></button>
-          <button class="btn-icon" type="button" id="bell" aria-label="Notificações, 3 novas" aria-haspopup="dialog" aria-expanded="false"><svg aria-hidden="true"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
+          <button class="btn-icon" type="button" id="bell" aria-label="Notificações, 3 novas" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#i-bell"/></svg><span class="badge-dot"></span></button>
           <a class="avatar" href="#entrar" aria-label="Conta de Marina Costa. Sair">MC</a>
         </div>
       </header>
@@ -5357,6 +5406,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
             <button type="button" data-menu="arquivo" aria-haspopup="menu" aria-expanded="false">Arquivo</button><button type="button" data-menu="editar" aria-haspopup="menu" aria-expanded="false">Editar</button><button type="button" data-menu="inserir" aria-haspopup="menu" aria-expanded="false">Inserir</button><button type="button" data-menu="slide" aria-haspopup="menu" aria-expanded="false">Slide</button><button type="button" data-menu="organizar" aria-haspopup="menu" aria-expanded="false">Organizar</button><button type="button" data-menu="apresentar" aria-haspopup="menu" aria-expanded="false">Apresentar</button><button type="button" data-menu="ajuda" aria-haspopup="menu" aria-expanded="false">Ajuda</button>
           </nav>
           <div class="ed-actions">
+            <button class="btn-icon ed-more" type="button" id="ed-more" aria-label="Menus do editor" title="Menus: arquivo, editar, slide, organizar, apresentar e ajuda" aria-haspopup="menu" aria-expanded="false"><svg aria-hidden="true"><use href="#i-dots"/></svg></button>
             <button class="btn-icon" type="button" id="ed-undo" aria-label="Desfazer" aria-keyshortcuts="Control+Z" title="Desfazer (Ctrl+Z)" aria-disabled="true"><svg aria-hidden="true"><use href="#i-undo"/></svg></button>
             <button class="btn-icon" type="button" id="ed-redo" aria-label="Refazer" aria-keyshortcuts="Control+Shift+Z" title="Refazer (Ctrl+Shift+Z)" aria-disabled="true"><svg aria-hidden="true"><use href="#i-redo"/></svg></button>
             <button class="btn btn-ghost btn-sm" type="button" data-open="m-share"><svg aria-hidden="true"><use href="#i-share"/></svg><span>Compartilhar</span></button>
@@ -5364,7 +5414,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
             <a class="btn btn-primary btn-sm" href="#apresentar" aria-keyshortcuts="Control+Enter" title="Apresentar do slide atual (Ctrl+Enter)"><svg aria-hidden="true"><use href="#i-play"/></svg><span>Apresentar</span></a>
           </div>
         </div>
-        <div class="ribbon" role="toolbar" aria-label="Inserir elementos">
+        <div class="ribbon" role="toolbar" aria-label="Inserir elementos" data-skip>
           <button type="button" data-ins="text" title="Caixa de texto no slide"><svg aria-hidden="true"><use href="#i-text"/></svg>Texto</button>
           <button type="button" data-ins="shape" title="Forma no slide"><svg aria-hidden="true"><use href="#i-shape"/></svg>Formas</button>
           <button type="button" data-ins="arrow" title="Seta no slide"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Seta</button>
@@ -5405,7 +5455,10 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
               </div>
               <div class="float-bar ly-bar" id="ly-bar" role="toolbar" aria-label="Elemento selecionado" hidden>
                 <span class="ly-name mono" id="ly-name">Forma</span>
-                <button class="btn-icon" type="button" data-lyb="dup" aria-label="Duplicar elemento" title="Duplicar elemento"><svg aria-hidden="true"><use href="#i-copy"/></svg></button>
+                <button class="btn-icon" type="button" data-lyb="front" aria-label="Trazer elemento para a frente" title="Trazer para a frente"><svg aria-hidden="true"><use href="#i-up"/></svg></button>
+                <button class="btn-icon" type="button" data-lyb="back" aria-label="Enviar elemento para trás" title="Enviar para trás"><svg aria-hidden="true"><use href="#i-down"/></svg></button>
+                <span class="fb-div" aria-hidden="true"></span>
+                <button class="btn-icon" type="button" data-lyb="dup" aria-label="Duplicar elemento" aria-keyshortcuts="Control+D" title="Duplicar elemento (Ctrl+D)"><svg aria-hidden="true"><use href="#i-copy"/></svg></button>
                 <button class="btn-icon" type="button" data-lyb="del" aria-label="Excluir elemento" title="Excluir elemento (Delete)"><svg aria-hidden="true"><use href="#i-trash"/></svg></button>
               </div>
             </div>
@@ -5442,7 +5495,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
               </div>
               <div class="insp-sec"><p class="insp-h">Posição e tamanho</p>
                 <div class="xywh"><label>X<input class="input" id="d-x" inputmode="numeric" value="96"></label><label>Y<input class="input" id="d-y" inputmode="numeric" value="72"></label><label>L<input class="input" id="d-w" inputmode="numeric" value="720"></label><label>A<input class="input" id="d-h" inputmode="numeric" value="132"></label></div>
-                <p class="hint">Em pixels, num slide de 1280 × 720. Setas movem o elemento, com Shift andam mais.</p>
+                <p class="hint">Em pixels, num slide de 1280 × 720. As setas do teclado movem o elemento; com Shift, ele anda 5×.</p>
               </div>
             </div>
             <div class="insp-panel" id="insp-p-anim" role="tabpanel" aria-labelledby="insp-t-anim" data-insp-panel="anim" hidden>
@@ -5481,10 +5534,10 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <div class="stage-top">
           <span class="chip"><i class="dot dot-live"></i> Ao vivo</span>
           <span class="stage-title">Kickoff 2027 · Time de produto</span>
-          <span class="stage-clock mono num" id="stage-clock" role="timer" aria-label="Tempo de apresentação" title="Tempo de apresentação">12:41</span>
+          <span class="stage-clock mono num" id="stage-clock" role="timer" aria-label="Tempo de apresentação" title="Tempo de apresentação">0:00</span>
           <a class="btn btn-ghost btn-sm" href="#editor" aria-keyshortcuts="Escape" title="Voltar ao editor (Esc)"><svg aria-hidden="true"><use href="#i-x"/></svg><span>Sair</span></a>
         </div>
-        <div class="stage-body">
+        <div class="stage-body" data-skip>
           <div class="stage-now"><div id="stage-now"></div></div>
           <div class="stage-side">
             <div class="stage-next"><p class="sk mono">A seguir · slide 4</p><div id="stage-next"></div></div>
@@ -5503,7 +5556,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           <span class="dock-sep"></span>
           <button class="btn-icon" type="button" aria-label="Tela cheia" aria-keyshortcuts="F" title="Tela cheia (F)" id="stage-fs"><svg aria-hidden="true"><use href="#i-expand"/></svg></button>
         </div>
-        <p class="stage-keys mono" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> navega · <kbd>F</kbd> tela cheia · <kbd>Esc</kbd> volta ao editor</p>
+        <p class="stage-keys mono" aria-hidden="true"><kbd>←</kbd><kbd>→</kbd> ou clique no slide · <kbd>F</kbd> tela cheia · <kbd>Esc</kbd> volta ao editor</p>
         <p class="sr-only" id="stage-live" aria-live="polite"></p>
       </section>
 
@@ -5540,7 +5593,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
               <div><h2 class="adm-h">Convidar para o time</h2><p class="muted adm-p">Quem entra já recebe o kit de marca, os modelos e a biblioteca de efeitos do time.</p></div>
               <div class="adm-inv-row">
                 <div class="field"><label for="adm-mail">E-mail</label><input class="input" id="adm-mail" type="email" placeholder="nome@nortesistemas.com.br" autocomplete="off" aria-describedby="adm-mail-h"></div>
-                <div class="field"><label for="adm-role">Papel</label><select class="select" id="adm-role"><option>Membro</option><option>Administradora</option><option>Só assiste</option></select></div>
+                <div class="field"><label for="adm-role">Papel</label><select class="select" id="adm-role"><option>Membro</option><option>Admin</option><option>Só assiste</option></select></div>
                 <button class="btn btn-primary" type="submit"><svg aria-hidden="true"><use href="#i-mail"/></svg> Enviar convite</button>
               </div>
               <p class="hint" id="adm-mail-h">Separe vários e-mails com vírgula. O convite vale por 7 dias.</p>
@@ -5589,9 +5642,9 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
       <label class="drop" for="imp-file" id="imp-drop"><svg aria-hidden="true"><use href="#i-upload"/></svg><b>Arraste os arquivos para cá</b><span class="muted">ou clique para escolher · .pptx, .pdf e acervo .json</span><input id="imp-file" type="file" multiple accept=".pptx,.pdf,.json" class="sr-only"></label>
       <div><p class="insp-h">Fila de importação</p>
         <ul class="queue" id="imp-queue">
-          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Pitch Investidores Q3.pptx</b><span class="qbar"><i style="width:100%"></i></span></div><span class="chip chip-ok">Pronto · 18 slides</span></li>
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Abertura do evento Q3.pptx</b><span class="qbar"><i style="width:100%"></i></span></div><span class="chip chip-ok">Pronto · 18 slides</span></li>
           <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Relatório de resultados.pdf</b><span class="qbar"><i class="run" style="width:62%"></i></span></div><span class="chip">62%</span></li>
-          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Onboarding cliente.pptx</b><span class="qbar"><i style="width:0"></i></span></div><span class="chip chip-line">Na fila</span></li>
+          <li><svg aria-hidden="true"><use href="#i-file"/></svg><div><b>Boas-vindas ao time.pptx</b><span class="qbar"><i style="width:0"></i></span></div><span class="chip chip-line">Na fila</span></li>
         </ul>
       </div>
     </div>
@@ -5688,7 +5741,8 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
   <header class="b-cover theme-night">
     <canvas class="halo-field halor-field" data-field="brand" aria-hidden="true"></canvas>
     <div class="wrap b-cover-in">
-      <div class="b-cover-top"><a class="btn btn-quiet btn-sm" href="#site"><svg aria-hidden="true"><use href="#i-back"/></svg> Site</a><span class="mono b-ver">Manual da marca · v1.0 · outubro 2026</span></div>
+      <h1 class="sr-only">Manual da marca Halor</h1>
+      <div class="b-cover-top"><a class="btn btn-quiet btn-sm" href="#site" id="b-back"><svg aria-hidden="true"><use href="#i-back"/></svg> <span>Site</span></a><span class="mono b-ver">Manual da marca · v1.0 · outubro 2026</span></div>
       <div class="b-hero-logo"><svg class="mk-glow" aria-hidden="true"><use href="#hl-mark"/></svg><span class="wordmark">halor</span></div>
       <p class="b-claim display">Faça cada olhar render.</p>
       <p class="lede">Identidade, cores, tipografia, componentes e regras de uso da Halor. Tudo que um time precisa para construir o site, o Estúdio e as apresentações com a mesma luz.</p>
@@ -5700,7 +5754,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
       <a href="#b-conceito">Conceito</a><a href="#b-logo">Logo</a><a href="#b-cores">Cores</a><a href="#b-tipo">Tipografia</a><a href="#b-comp">Componentes</a><a href="#b-mov">Movimento</a><a href="#b-voz">Voz</a><a href="#b-apl">Aplicações</a><a href="#b-mapa">Canteiro → Halor</a><a href="#b-ondas">Próximas ondas</a><a href="#b-tokens">Tokens</a>
     </nav>
 
-    <div class="b-content">
+    <div class="b-content" data-skip>
       <!-- CONCEITO -->
       <section class="b-sec" id="b-conceito">
         <p class="eyebrow">01 · Conceito</p>
@@ -5800,8 +5854,8 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <div class="sw-grid" data-swatches="paper"></div>
         <h3 class="b-h3">Proporção de uso</h3>
         <div class="prop">
-          <div class="prop-row"><span class="prop-l mono">Noite</span><div class="prop-bar"><i style="flex:70;background:#07040f">70 Vazio</i><i style="flex:20;background:#171030">20 Crepúsculo</i><i style="flex:8;background:#8b3dff">8</i><i style="flex:2;background:#f4eeff"></i></div></div>
-          <div class="prop-row"><span class="prop-l mono">Papel</span><div class="prop-bar prop-paper"><i style="flex:70;background:#ffffff;color:#17112b">70 Branco</i><i style="flex:20;background:#f3eeff;color:#17112b">20 Lilás</i><i style="flex:8;background:#17112b">8</i><i style="flex:2;background:#8b3dff"></i></div></div>
+          <div class="prop-row"><span class="prop-l mono">Noite</span><div class="prop-bar"><i style="flex:70;background:#07040f">70&nbsp;<span>Vazio</span></i><i style="flex:20;background:#171030">20&nbsp;<span>Crepúsculo</span></i><i style="flex:8;background:#8b3dff">8</i><i style="flex:2;background:#f4eeff"></i></div></div>
+          <div class="prop-row"><span class="prop-l mono">Papel</span><div class="prop-bar prop-paper"><i style="flex:70;background:#ffffff;color:#17112b">70&nbsp;<span>Branco</span></i><i style="flex:20;background:#f3eeff;color:#17112b">20&nbsp;<span>Lilás</span></i><i style="flex:8;background:#17112b">8</i><i style="flex:2;background:#8b3dff"></i></div></div>
         </div>
         <h3 class="b-h3">Escala da Cadeia Halor · dados</h3>
         <p class="b-p b-small">Um matiz só, do primeiro passo (Atenção) ao último (Valor). No Papel escurece; na Noite acende. Validada como rampa ordinal: luminosidade monotônica e passos visíveis.</p>
@@ -5830,7 +5884,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           <div><span class="mono">Título 1</span><p style="font:600 40px/1.05 var(--f-display);letter-spacing:-.03em">Atenção que fica</p><span class="mono">30-48 / 1,04 / -3%</span></div>
           <div><span class="mono">Título 2</span><p style="font:600 26px/1.15 var(--f-ui);letter-spacing:-.01em">O visual vira número</p><span class="mono">26 / 1,15</span></div>
           <div><span class="mono">Texto</span><p style="font:400 16px/1.55 var(--f-ui)">Cada passo de aproximação ganha um indicador.</p><span class="mono">16 / 1,55</span></div>
-          <div><span class="mono">Apoio</span><p style="font:400 13.5px/1.5 var(--f-ui);color:var(--mute)">Dados ilustrativos de uma carteira de exemplo.</p><span class="mono">13,5 / 1,5</span></div>
+          <div><span class="mono">Apoio</span><p style="font:400 13.5px/1.5 var(--f-ui);color:var(--mute)">Dados ilustrativos de um time de exemplo.</p><span class="mono">13,5 / 1,5</span></div>
           <div><span class="mono">Sobretítulo</span><p style="font:500 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:var(--halor-violet-700)">Painel Halor</p><span class="mono">11 / caixa-alta / +16%</span></div>
         </div>
       </section>
@@ -5856,7 +5910,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
           </div>
         </div>
         <dl class="tok-mini">
-          <div><dt>Raios</dt><dd><i style="border-radius:6px"></i>6<i style="border-radius:12px"></i>12<i style="border-radius:18px"></i>18<i style="border-radius:28px"></i>28<i style="border-radius:99px"></i>pílula</dd></div>
+          <div><dt>Raios</dt><dd><i style="border-radius:6px"></i>6<i style="border-radius:8px"></i>8<i style="border-radius:12px"></i>12<i style="border-radius:18px"></i>18<i style="border-radius:28px"></i>28<i style="border-radius:99px"></i>pílula</dd></div>
           <div><dt>Espaços</dt><dd class="mono">4 · 8 · 12 · 16 · 24 · 32 · 48 · 72 · 112</dd></div>
           <div><dt>Foco</dt><dd>anel de 2 px em Violeta (Papel) ou Brilho (Noite), afastado 3 px</dd></div>
         </dl>
@@ -5868,7 +5922,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <h2 class="b-h">A luz guia o olhar. Nunca o distrai.</h2>
         <div class="mov-grid">
           <div class="mov mov-field theme-night"><span class="mv-stage"><canvas class="halo-field halor-field" data-field="demo" aria-hidden="true"></canvas></span><b>Campo Halor</b><small class="mono">partículas que respiram · o cursor reúne um halo · clique solta uma onda</small><button class="btn btn-quiet btn-xs" type="button" data-field-replay="demo"><svg aria-hidden="true"><use href="#i-replay"/></svg> Repetir entrada</button></div>
-          <button class="mov theme-night" type="button" data-replay><span class="mv-stage"><span class="mv-sweep">Parceria firmada</span></span><b>Varredura de luz</b><small class="mono">1400 ms · halo-out · uma vez por conquista</small></button>
+          <button class="mov theme-night" type="button" data-replay><span class="mv-stage"><span class="mv-sweep">Atenção conquistada</span></span><b>Varredura de luz</b><small class="mono">1400 ms · halo-out · uma vez por conquista</small></button>
           <button class="mov theme-night" type="button" data-replay><span class="mv-stage"><span class="mv-reveal"><i></i><i></i><i></i></span></span><b>Revelação em cadeia</b><small class="mono">240 ms por item · atraso 80 ms</small></button>
         </div>
         <dl class="tok-mini">
@@ -5891,7 +5945,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
       <!-- APLICAÇÕES -->
       <section class="b-sec" id="b-apl">
         <p class="eyebrow">08 · Aplicações</p>
-        <h2 class="b-h">A marca dentro do produto que ela vende.</h2>
+        <h2 class="b-h">A marca viva em cada tela.</h2>
         <h3 class="b-h3">Modelos de slide</h3>
         <div class="apl-slides" id="apl-slides"></div>
         <div class="apl-grid">
@@ -5956,8 +6010,8 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <h2 class="b-h">Do incremento à disrupção.</h2>
         <div class="waves">
           <div class="wv"><p class="wv-k mono">Incremental · agora</p><ul><li>Raio Halor por slide</li><li>Link medido em todo envio</li><li>Kit de marca travado por time</li><li>Modelos por setor</li><li>PowerPoint editável sem perda</li></ul></div>
-          <div class="wv"><p class="wv-k mono">Transformacional · 6 meses</p><ul><li>Coach de narrativa: reescreve títulos e ordena slides</li><li>Mapa de atenção ao vivo, slide a slide</li><li>Capas em teste A/B automático</li><li>Órbita do mês: ranking do Índice Halor no time</li><li>Provas sociais que se atualizam sozinhas</li></ul></div>
-          <div class="wv wv-hot theme-night"><p class="wv-k mono">Disruptiva · horizonte</p><ul><li>Apresentação viva: o deck se adapta a quem abre</li><li>Agente que monta o deck a partir da reunião gravada</li><li>Sala Halor: o cliente pergunta ao deck, 24 horas</li><li>Índice Halor como referência de mercado</li><li>Marketplace de modelos de alta conversão</li></ul></div>
+          <div class="wv"><p class="wv-k mono">Transformacional · 6 meses</p><ul><li>Coach de narrativa: reescreve títulos e ordena slides</li><li>Mapa de atenção ao vivo, slide a slide</li><li>Capas em teste A/B automático</li><li>Órbita do mês: ranking do Índice Halor no time</li><li>Reações da plateia que entram no slide na hora</li></ul></div>
+          <div class="wv wv-hot theme-night"><p class="wv-k mono">Disruptiva · horizonte</p><ul><li>Apresentação viva: o deck se adapta a quem abre</li><li>Agente que monta o deck a partir da reunião gravada</li><li>Sala Halor: quem assistiu pergunta ao deck, 24 horas</li><li>Índice Halor como referência de mercado</li><li>Marketplace de modelos que prendem o olhar</li></ul></div>
         </div>
       </section>
 
@@ -6098,6 +6152,7 @@ const ROUTES = {
 const viewHooks = {};   // id da view -> função chamada ao mostrar
 const subHooks = {};    // sub-tela do estúdio -> função
 let currentView = null;
+let protoT = 0;
 
 function showView(id) {
   if (currentView === id) return;
@@ -6134,10 +6189,28 @@ function route() {
     const l = pa.offsetLeft, r = l + pa.offsetWidth;
     if (l < pb.scrollLeft) pb.scrollLeft = l - 8; else if (r > pb.scrollLeft + pb.clientWidth) pb.scrollLeft = r - pb.clientWidth + 8;
   }
+  /* no editor a barra do protótipo recolhe depois de um instante (o CSS decide em que telas isso vale) */
+  const proto = $('.proto');
+  if (proto) { clearTimeout(protoT); if (r.sub === 'editor') protoT = setTimeout(() => proto.classList.add('peek'), 1200); else proto.classList.remove('peek'); }
   if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }));
   else window.scrollTo(0, 0);
 }
 window.addEventListener('hashchange', route);
+
+/* "Pular para o conteúdo": fora do site, leva ao conteúdo da tela atual em vez de trocar de tela */
+document.addEventListener('click', e => {
+  const s = e.target.closest('a.skip'); if (!s) return;
+  const v = currentView && document.getElementById(currentView); if (!v || v.contains(document.getElementById('conteudo'))) return;
+  const shown = (q, r) => $$(q, r).find(n => n.getClientRects().length);
+  const sub = $$('.sub', v).find(x => !x.hidden);
+  const t = (sub && (shown('[data-skip]', sub) || shown('h1, h2', sub) || sub)) || shown('[data-skip]', v) || shown('main, h1', v) || v;
+  e.preventDefault();
+  if (!t.hasAttribute('tabindex')) t.setAttribute('tabindex', '-1');
+  t.focus({ preventScroll: true });
+  /* só rola quando o destino não está à vista (o CSS dá a folga da barra fixa com scroll-margin) */
+  const tr = t.getBoundingClientRect();
+  if (tr.top < 72 || tr.top > innerHeight * .6) t.scrollIntoView({ block: 'start', behavior: REDUCED ? 'auto' : 'smooth' });
+});
 
 /* Rolagem: barra do site ganha fundo */
 window.addEventListener('scroll', () => {
@@ -6636,11 +6709,12 @@ function bootFields() {
    guiadas por animation-delay; cursor, câmera, paleta, contadores e digitação
    são calculados aqui a partir do mesmo tempo, então qualquer ponto da trilha
    mostra o quadro exato.
-   Câmera: poucos movimentos, cada um com 1,6 a 2,2 s e pausas de verdade entre
+   Câmera: poucos movimentos, cada um com 1,2 a 2 s e pausas de verdade entre
    eles. O zoom anda em escala logarítmica e o ponto fixo da transformação fica
    parado na tela (zoom ancorado), então o quadro nunca escorrega de lado
    durante uma aproximação. Nas pausas, um avanço lento (quase imperceptível)
-   mantém o quadro vivo. Cortes entre telas são fusões sobrepostas.
+   mantém o quadro vivo. Nas trocas de tela e de slide, a antiga some antes de a nova
+   entrar (passagem pelo fundo), sem dupla exposição.
    ========================================================================== */
 const Film = (() => {
   const D = 88, END = 84;
@@ -6687,11 +6761,11 @@ const Film = (() => {
     [49.95, 1.8, '.fr-ray+.fe-cvw+.fi-score', 1.45],
     [53.45, 2, '.fw', 1],
     [59.95, 1.9, '.fpl-stage', 1.12],
-    [62.5, 2, '.fpl-stage@.5,.6', 1.28],
-    [67.6, 1.75, '.fsv@.5,.42', 1.3],
-    [71.25, 1.8, '.fdl@.32,.5', 1.3],
+    [62.9, 2, '.fpl-stage@.5,.6', 1.28],
+    [67.65, 1.2, '.fsv@.5,.42', 1.3],
+    [71.5, 1.75, '.fdl@.32,.5', 1.3],
     [74.15, 1.9, '.fw', 1.1],
-    [80.45, 1.7, '.fwb-stage@.3,.6', 1.3],
+    [80.45, 1.4, '.fwb-stage@.3,.6', 1.3],
     [83.4, 2, '.fw', 1]
   ];
   const CAM_M = [
@@ -6702,21 +6776,21 @@ const Film = (() => {
     [20.05, 1.6, '.fe-body@.7,.42', 2.1],
     [27.25, 1.95, '.fe-rail+.fe-cvw', 1.6],
     [34.9, 1.9, '.fe-cvw+.flb@.6,.5', 1.3],
-    [41.15, 2, '.fw@.5,.5', 1.06],
+    [40.15, 1.55, '.fw@.5,.5', 1.06],
     [49.95, 1.9, '.fe-cvw+.fi-score@.5,.5', 1.45],
     [57.75, 2, '.fw@.5,.5', 1.06],
-    [62.3, 1.8, '.fpl-stage@.27,.6', 1.9],
-    [64.5, 2, '.fpl-stage@.76,.6', 1.9],
-    [67.6, 1.6, '.fsv+.fe-save', 1.6],
-    [71.2, 1.9, '.fdl@.3,.5', 1.4],
+    [62.35, 1.7, '.fpl-stage@.27,.6', 1.9],
+    [64.95, 1.75, '.fpl-stage@.76,.6', 1.9],
+    [67.65, 1.2, '.fsv+.fe-save', 1.6],
+    [71.5, 1.8, '.fdl@.3,.5', 1.4],
     [74.15, 1.9, '.fw@.5,.5', 1.06],
-    [80.4, 1.7, '.fwb-poll', 1.9],
+    [80.4, 1.6, '.fwb-poll', 1.9],
     [83.4, 2, '.fw@.5,.5', 1]
   ];
   /* paleta do slide: [tempo, matiz em graus, saturação] · Halor → Oceano → Coral → Halor */
   const PAL = [[0, 0, 1], [23.7, -82, 1.1], [25.3, 112, 1], [26.9, 0, 1]];
   // trilha: um sino por passo, subindo pela escala; acorde no fecho
-  const CUES = [[.3, 0], [1.2, 7]].concat(STEPS.map((s, i) => [s.t, [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26][i]]), [[END + .3, 'chord']]);
+  const CUES = [[.3, 0], [1.2, 7]].concat(STEPS.map((s, i) => [s.t, [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26][i]]), [[END + .55, 'chord']]);
   const TAU = Math.PI * 2;
 
   /* slides das miniaturas (renderizados por slideHTML) */
@@ -7082,14 +7156,14 @@ const Film = (() => {
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .7, ry: .7, rot: 0, s: 3.5, len: 2.6, w: 2.2 * u * 1.6, sp: 0, o: .75 }, 0);
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .95, ry: .62, rot: .1, s: 4, len: 1.6, w: 1.2 * u * 1.6, sp: 0, o: .4 }, 0);
     } else if (t < 4.7) {                                   // abertura: o símbolo acende e os arcos giram atrás dele
-      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 3.15) / .9), out = 1 - q;
-      starsAt(u, 1 - .5 * q);                               // o céu baixa até o tom da gravação, sem salto
+      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 2.95) / .7), out = 1 - q;
+      starsAt(u, 1 - .5 * q);                               // o céu baixa até o tom da gravação, sem salto; os arcos somem junto com o símbolo, antes da janela entrar
       arcs(mk.x, mk.y, R * 1.25, u, k * out, t * .12);
       glow(mk.x, mk.y, mk.w * .7, .35 * k * out);
     } else if (t < END) {                                   // gravação: só um céu discreto atrás da janela
       starsAt(u, .5);
     } else {                                                // fecho: os arcos voltam e respiram
-      const lt = t - END, mk = A.mark2 || { x: cx, y: cy * .7, w: R * .4 }, kk = ease((lt - .1) / 1.4);
+      const lt = t - END, mk = A.mark2 || { x: cx, y: cy * .7, w: R * .4 }, kk = ease((lt - .55) / 1.4);   // espera a janela quase sumir
       const br = REDUCED ? 1 : 1 + .03 * Math.sin(lt * TAU / 2.4);
       starsAt(u, .5 + .5 * sine(lt / .9));
       arcs(cx, cy * 1.04, R * 1.1 * br, u, kk, lt * .06);
@@ -7154,8 +7228,8 @@ const CHAIN_STEPS = [
   { n: 'Curiosidade', v: 'O olhar procura mais.', t: 'Perguntas abertas e números que surpreendem fazem a pessoa avançar por conta própria até o fim.', m: 'Veem 70% dos slides ou mais', a: 40, b: 19, next: 'gera aproximação' },
   { n: 'Aproximação', v: 'Quem assiste pergunta.', t: 'Um comentário, uma dúvida, um pedido de detalhe. É o primeiro passo de quem assiste na sua direção.', m: 'Comentam ou perguntam', a: 27, b: 12, next: 'gera confiança' },
   { n: 'Confiança', v: 'Quem assiste compartilha.', t: 'Ninguém encaminha o que não confia. Cada novo leitor no link é um voto silencioso a seu favor.', m: 'Encaminham para alguém', a: 19, b: 8, next: 'gera parceria' },
-  { n: 'Parceria', v: 'Quem assiste convida.', t: 'A conversa vira reunião, e a reunião vira construção conjunta da solução.', m: 'Marcam reunião', a: 14, b: 6, next: 'gera valor' },
-  { n: 'Valor', v: 'Quem assiste diz sim.', t: 'Proposta aceita, parceria firmada, projeto aprovado. Tudo que veio antes trabalhou para este momento.', m: 'Dizem sim', a: 8, b: 3, next: null }
+  { n: 'Parceria', v: 'Quem assiste convida.', t: 'A conversa continua depois da sala: a pessoa chama outras para ver e quer construir junto.', m: 'Marcam reunião', a: 14, b: 6, next: 'gera valor' },
+  { n: 'Valor', v: 'A ideia fica.', t: 'Quem assistiu lembra, repete e volta para rever. Tudo que veio antes trabalhou para este momento.', m: 'Voltam para rever', a: 8, b: 3, next: null }
 ];
 
 /* Planos ----------------------------------------------------------------- */
@@ -8194,7 +8268,7 @@ VT_DEMO.flow = card => {
 
 /* ==========================================================================
    PAINEL HALOR · gráficos em SVG desenhados à escala, com dica ao passar o
-   mouse/foco e tabela gêmea. Dados ilustrativos (carteira de exemplo).
+   mouse/foco e tabela gêmea. Dados ilustrativos (time de exemplo).
    ========================================================================== */
 const DASH = {
   mode: 'com',
@@ -8208,8 +8282,9 @@ const DASH = {
     { k: 'Voltaram para rever', sub: 'a cada 100 pessoas', b: 3, a: 8, u: '', spark: [3.1, 2.8, 3.4, 3.0, 3.3, 3.2, 4.6, 5.5, 6.2, 6.9, 7.4, 8.0] }
   ],
   score: { b: 54, a: 82 },
-  slides: ['Capa', 'Desafio', 'Resultado', 'Como', 'Prazo', 'Valor', 'Passos', 'Fim', 'Anexo A', 'Anexo B', 'Equipe', 'Contato'],
-  heat: { b: [6, 5, 7, 4, 3, 9, 4, 2, 1, 1, 2, 1], a: [9, 11, 22, 14, 9, 31, 16, 6, 3, 2, 5, 4] },
+  /* os 9 slides de "Kickoff 2027", na ordem do deck: a votação é onde o olhar mais fica */
+  slides: ['Capa', 'Desafio', 'Meta', 'Como funciona', 'Votação', 'Cronograma', 'Recursos', 'Próximos passos', 'Fim'],
+  heat: { b: [6, 5, 7, 4, 3, 4, 2, 2, 1], a: [9, 11, 22, 14, 31, 16, 6, 9, 4] },
   insights: [
     { ic: '#i-image', t: 'Imagem dominante segura o olhar', p: 'Slides com uma imagem ocupando mais de 30% da área tiveram 2,1× mais tempo de leitura.' },
     { ic: '#i-target', t: 'Um destaque por slide gera perguntas', p: 'Gráficos com um único valor em destaque receberam 3× mais comentários.' },
@@ -8372,7 +8447,7 @@ function heatCard(A) {
   ht.append(el('h3', null, 'Mapa de atenção por slide'), el('p', null, 'Segundos médios de leitura em “Kickoff 2027”'));
   hd.appendChild(ht); card.appendChild(hd);
   const vals = A ? DASH.heat.a : DASH.heat.b, steps = ['--c-chain-1', '--c-chain-2', '--c-chain-3', '--c-chain-4', '--c-chain-5', '--c-chain-6', '--c-chain-7'];
-  const row = el('div', 'd-heat-row');
+  const row = el('div', 'd-heat-row'); row.style.setProperty('--n', vals.length);
   const bin = v => Math.min(6, Math.floor(v / 5));
   vals.forEach((v, i) => {
     const c = el('div', 'd-cell'); c.tabIndex = 0; const b = bin(v);
@@ -8447,10 +8522,11 @@ const DECK = [
   { type: 'end', h: 'Obrigado.', sub: 'marina@nortesistemas.com.br', n: 'Deixar o contato na tela enquanto respondem às perguntas.' }
 ];
 
-function slideHTML(s, n, brand) {
+/* tag: nome da apresentação no rodapé (opcional; sem ele vale o Kickoff de exemplo) */
+function slideHTML(s, n, brand, tag) {
   const foot = brand === 'halor'
     ? `<div class="sl-foot"><b><svg aria-hidden="true"><use href="${s.type === 'cover' ? '#hl-mark' : '#hl-mark-paper'}"/></svg>halor</b><span>${String(n).padStart(2, '0')}</span></div>`
-    : `<div class="sl-foot"><span>Norte Sistemas · Kickoff 2027</span><span>${String(n).padStart(2, '0')}</span></div>`;
+    : `<div class="sl-foot"><span>Norte Sistemas · ${tag || 'Kickoff 2027'}</span><span>${String(n).padStart(2, '0')}</span></div>`;
   switch (s.type) {
     case 'cover': return `<div class="slide sl-cover"><span class="sl-ring"></span><span class="sl-ring sl-ring2"></span><p class="sl-k">${s.k}</p><p class="sl-h">${s.h}</p><p class="sl-sub">${s.sub}</p>${foot}</div>`;
     case 'text': return `<div class="slide sl-text sl-light"><p class="sl-k">${s.k}</p><p class="sl-h" style="width:48%">${s.h}</p><div class="sl-body">${s.p.map(x => `<p class="sl-p">${x}</p>`).join('')}</div><span class="sl-img"></span>${foot}</div>`;
@@ -8482,6 +8558,7 @@ const slugify = t => fold(t).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
 const clampN = (v, a, b) => Math.max(a, Math.min(b, v));
 const IS_MAC = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
 const modKey = e => (IS_MAC ? e.metaKey : e.ctrlKey);
+const TOUCH = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
 const typingIn = t => !!(t && t.closest && (t.closest('input, textarea, select') || t.isContentEditable));
 const studioOpen = sub => currentView === 'v-studio' && !$(`[data-subview="${sub}"]`)?.hidden;
 const modalOpen = () => $$('.modal').some(m => !m.hidden);
@@ -8506,9 +8583,9 @@ const LAYOUTS = {
 /* x e y: onde cada tipo nasce (em % do slide), longe do título e do rodapé */
 const LAYER_KINDS = {
   text: { n: 'Texto', ic: '#i-text', w: 34, h: 11, x: 8, y: 76 },
-  shape: { n: 'Forma', ic: '#i-shape', w: 13, h: 23.1, x: 80, y: 8 },
-  arrow: { n: 'Seta', ic: '#i-arrowline', w: 18, h: 9, x: 46, y: 74 },
-  image: { n: 'Imagem', ic: '#i-image', w: 26, h: 38, x: 68, y: 40 },
+  shape: { n: 'Forma', ic: '#i-shape', w: 13, h: 23.1, x: 80, y: 8, fem: true },
+  arrow: { n: 'Seta', ic: '#i-arrowline', w: 18, h: 9, x: 46, y: 74, fem: true },
+  image: { n: 'Imagem', ic: '#i-image', w: 26, h: 38, x: 68, y: 40, fem: true },
   icon: { n: 'Ícone', ic: '#i-spark', w: 7, h: 12.4, x: 70, y: 12 }
 };
 const PT_BASE = { cover: 56, end: 40 };
@@ -8545,7 +8622,9 @@ function paintSlide(slide, s) {
   }
   return slide;
 }
-function mountSlide(box, s, n) { box.innerHTML = slideHTML(s, n); return paintSlide(box.firstElementChild, s); }
+/* o rodapé dos slides acompanha a apresentação aberta */
+const deckTag = t => escHTML(String(t || '').split('·')[0].trim() || 'Kickoff 2027');
+function mountSlide(box, s, n) { box.innerHTML = slideHTML(s, n, undefined, deckTag(STUDIO.title)); return paintSlide(box.firstElementChild, s); }
 
 /* ==========================================================================
    Histórico (desfazer / refazer) e salvamento
@@ -8655,8 +8734,14 @@ function placeRay() {
 function toggleRay(force) {
   const b = $('#ray-toggle'); const on = force != null ? force : b.getAttribute('aria-pressed') !== 'true';
   STUDIO.ray = on; b.setAttribute('aria-pressed', String(on)); $('#ray-layer').hidden = !on;
-  if (on) { placeRay(); const g = (RAY_T[curSlide().type] || []).map(x => x[1].toLowerCase()); toast('Raio Halor: o olhar começa em ' + g[0] + ' e segue para ' + g[1] + '.'); }
+  if (on) {
+    placeRay(); const g = (RAY_T[curSlide().type] || []).map(x => x[1].toLowerCase());
+    const fem = t => RAY_FEM.test(t);
+    if (g.length > 1) toast('Raio Halor: o olhar começa ' + (fem(g[0]) ? 'na ' : 'no ') + g[0] + ' e segue para ' + (fem(g[1]) ? 'a ' : 'o ') + g[1] + '.');
+  }
 }
+/* rótulos femininos do caminho do olhar, para o artigo certo no aviso */
+const RAY_FEM = /^(imagem|fonte|etapa|pergunta|opção|linha|lista|mensagem|marca)/;
 
 /* ==========================================================================
    Inspetor: Halor, Design, Animação
@@ -8761,7 +8846,7 @@ function insertSlide(key, data) {
   pushUndo();
   const s = data ? JSON.parse(JSON.stringify(data)) : LAYOUTS[key].s();
   STUDIO.deck.splice(STUDIO.cur + 1, 0, s); goSlide(STUDIO.cur + 1); saved();
-  toast((data ? 'Slide do modelo' : LAYOUTS[key].n) + ' inserido como slide ' + (STUDIO.cur + 1));
+  toast((data ? 'Slide do modelo' : 'Slide de ' + LAYOUTS[key].n.toLowerCase()) + ' inserido na posição ' + (STUDIO.cur + 1));
 }
 function dupSlide(i = STUDIO.cur) {
   pushUndo(); const c = JSON.parse(JSON.stringify(STUDIO.deck[i]));
@@ -8771,7 +8856,7 @@ function delSlide(i = STUDIO.cur) {
   if (STUDIO.deck.length < 2) return toast('A apresentação precisa de pelo menos um slide');
   pushUndo(); STUDIO.deck.splice(i, 1);
   goSlide(Math.min(i, STUDIO.deck.length - 1), true); saved();
-  toast('Slide ' + (i + 1) + ' excluído. ' + (IS_MAC ? '⌘' : 'Ctrl') + '+Z desfaz');
+  toast('Slide ' + (i + 1) + ' excluído. ' + MOD() + 'Z desfaz');
 }
 function moveSlide(d) {
   const i = STUDIO.cur, j = i + d; if (j < 0 || j >= STUDIO.deck.length) return;
@@ -8784,20 +8869,21 @@ function insertLayer(k) {
   pushUndo();
   const off = (s.layers.filter(x => x.k === k).length % 5) * 3;
   const l = { id: 'l' + (STUDIO.lid++), k, x: clampN(K.x + off, 2, 98 - K.w), y: clampN(K.y + off, 3, 96 - K.h), w: K.w, h: K.h };
-  if (k === 'text') { l.t = 'Clique duas vezes para escrever'; l.z = 24; l.c = s.type === 'cover' || s.type === 'end' ? '#f4eeff' : '#17112b'; }
+  const tap = TOUCH() ? 'Toque' : 'Clique';
+  if (k === 'text') { l.t = tap + ' duas vezes para escrever'; l.z = 24; l.c = s.type === 'cover' || s.type === 'end' ? '#f4eeff' : '#17112b'; }
   if (k === 'shape' || k === 'arrow' || k === 'icon') l.c = '#8b3dff';
   s.layers.push(l); STUDIO.sel = l.id; renderEditor(); saved();
-  toast(K.n + ' no slide. Arraste para posicionar' + (k === 'text' ? ', clique duas vezes para escrever' : ''));
+  toast(K.n + ' no slide. Arraste para posicionar' + (k === 'text' ? ', ' + tap.toLowerCase() + ' duas vezes para escrever' : ''));
 }
 function dupLayer() {
   const L = selLayer(); if (!L) return; pushUndo();
   const c = Object.assign({}, L, { id: 'l' + (STUDIO.lid++), x: clampN(L.x + 3, 0, 100 - L.w), y: clampN(L.y + 3, 0, 100 - L.h) });
-  curSlide().layers.push(c); STUDIO.sel = c.id; renderEditor(); saved(); toast(LAYER_KINDS[L.k].n + ' duplicado');
+  curSlide().layers.push(c); STUDIO.sel = c.id; renderEditor(); saved(); toast(LAYER_KINDS[L.k].n + (LAYER_KINDS[L.k].fem ? ' duplicada' : ' duplicado'));
 }
 function delLayer() {
   const L = selLayer(); if (!L) return; pushUndo();
   const s = curSlide(); s.layers = s.layers.filter(x => x !== L); STUDIO.sel = null; renderEditor(); saved();
-  toast(LAYER_KINDS[L.k].n + ' excluído');
+  toast(LAYER_KINDS[L.k].n + (LAYER_KINDS[L.k].fem ? ' excluída. ' : ' excluído. ') + MOD() + 'Z desfaz');
 }
 function orderLayer(front) {
   const L = selLayer(); if (!L) return toast('Selecione um elemento do slide');
@@ -8934,11 +9020,29 @@ function go(n){i=Math.max(0,Math.min(S.length-1,n));S.forEach(function(s,k){s.cl
 addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(i+1)}if(e.key==='ArrowLeft'||e.key==='PageUp')go(i-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen()}});
 document.getElementById('d').addEventListener('click',function(e){go(e.clientX>innerWidth/3?i+1:i-1)});go(0);
 <\/script></body></html>`;
-  const name = slugify(STUDIO.title) + '.html';
-  const url = URL.createObjectURL(new Blob([doc], { type: 'text/html' }));
+  saveFile(slugify(STUDIO.title) + '.html', doc, 'text/html');
+}
+
+/* Entrega um arquivo gerado. Dentro do visualizador de artifacts usa o download
+   permitido pela plataforma (a pessoa confirma); fora dele, um link comum. */
+async function saveFile(name, data, type) {
+  const done = () => toast('HTML interativo baixado: ' + name);
+  const cl = window.claude && typeof window.claude.use === 'function' ? window.claude : null;
+  if (cl) {
+    let dl = null;
+    try { dl = await cl.use('downloads'); } catch (e) { dl = null; }
+    if (dl) {
+      try { await dl.save({ filename: name, data: new Blob([data], { type }) }); done(); return; }
+      catch (e) {
+        if (e && e.code === 'declined') return;
+        if (e && e.code === 'rate_limited') { toast('Já existe um download esperando sua confirmação'); return; }
+      }
+    }
+  }
+  const url = URL.createObjectURL(new Blob([data], { type }));
   const a = el('a'); a.href = url; a.download = name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 4000);
-  toast('HTML interativo baixado: ' + name);
+  done();
 }
 
 /* ==========================================================================
@@ -8947,7 +9051,9 @@ document.getElementById('d').addEventListener('click',function(e){go(e.clientX>i
 function bindEditor() {
   const canvas = $('#ed-canvas'); if (!canvas) return;
   /* modificador da plataforma nos atalhos */
-  if (IS_MAC) $$('[data-mod]').forEach(n => { n.textContent = '⌘'; });
+  if (IS_MAC) { $$('[data-mod]').forEach(n => { n.textContent = '⌘'; }); $$('[title*="Ctrl+"]').forEach(n => { n.title = n.title.replace(/Ctrl\+/g, '⌘'); }); }
+  /* tela de toque: a dica do rodapé fala em tocar, não em clicar */
+  const tip = $('.ed-tip'); if (tip && TOUCH() && tip.firstChild && tip.firstChild.nodeType === 3) tip.firstChild.textContent = tip.firstChild.textContent.replace('Clique', 'Toque');
   $('#ray-toggle').addEventListener('click', () => toggleRay());
   /* abas do inspetor (com setas) */
   const inspTabs = $$('[data-insp]');
@@ -8964,6 +9070,8 @@ function bindEditor() {
   }));
   /* menus do topo */
   $$('[data-menu]').forEach(b => b.addEventListener('click', () => openPop(b, menuFill(edMenu(b.dataset.menu)), { label: b.textContent })));
+  /* telas mais estreitas: os menus do topo cabem num botão só */
+  $('#ed-more')?.addEventListener('click', e => openPop(e.currentTarget, menuFill(['arquivo', 'editar', 'slide', 'organizar', 'apresentar', 'ajuda'].flatMap((m, i) => [...(i ? ['-'] : []), { h: $(`[data-menu="${m}"]`).textContent }, ...edMenu(m).filter(x => x !== '-')])), { label: 'Menus do editor', align: 'right' }));
   $('#ed-undo').addEventListener('click', undo);
   $('#ed-redo').addEventListener('click', redo);
   $('#rail-new').addEventListener('click', e => openPop(e.currentTarget, menuFill([{ h: 'Escolha o layout' }, ...layoutItems()]), { label: 'Novo slide' }));
@@ -9029,7 +9137,7 @@ function bindEditor() {
     else if (b.dataset.fb === 'italic') applyStyle({ i: !st.i });
     else if (b.dataset.fb === 'align') applyStyle({ a: { left: 'center', center: 'right', right: 'left' }[st.a || 'left'] });
   });
-  $('#ly-bar').addEventListener('click', e => { const b = e.target.closest('[data-lyb]'); if (!b) return; b.dataset.lyb === 'dup' ? dupLayer() : delLayer(); });
+  $('#ly-bar').addEventListener('click', e => { const b = e.target.closest('[data-lyb]'); if (!b) return; ({ dup: dupLayer, del: delLayer, front: () => orderLayer(true), back: () => orderLayer(false) })[b.dataset.lyb](); });
   /* painel Design */
   $('#d-font').addEventListener('change', e => applyStyle({ f: e.target.value }));
   $('#d-size').addEventListener('change', e => applyStyle({ z: +e.target.value }));
@@ -9221,11 +9329,11 @@ function renderHome() {
   const by = { indice: (a, b) => b.score - a.score, vistas: (a, b) => b.views - a.views, titulo: (a, b) => a.t.localeCompare(b.t, 'pt-BR') }[STUDIO.sort];
   if (by) list = list.slice().sort(by);
   const qb = $('#acv-q');
-  if (STUDIO.q) { qb.hidden = false; $('#acv-q-t').textContent = (list.length === 1 ? '1 apresentação' : list.length + ' apresentações') + ' com “' + STUDIO.q + '”' + (f !== 'todas' ? ' nesta aba' : ''); } else qb.hidden = true;
+  if (STUDIO.q) { qb.hidden = false; $('#acv-q-t').textContent = (!list.length ? 'Nenhuma apresentação' : list.length === 1 ? '1 apresentação' : list.length + ' apresentações') + ' com “' + STUDIO.q + '”' + (f !== 'todas' ? ' nesta aba' : ''); } else qb.hidden = true;
   list.forEach(d => {
     const trash = d.who === 'lixeira';
     const a = el(trash ? 'div' : 'a', 'deck' + (trash ? ' deck-trash' : '')); if (!trash) { a.href = '#editor'; a.addEventListener('click', e => { e.preventDefault(); openDeck('acv', d); }); }
-    const th = el('div', 'deck-th'); th.innerHTML = slideHTML({ type: 'cover', k: d.t.split('·')[0].trim(), h: d.h, sub: d.when }, 1);
+    const th = el('div', 'deck-th'); th.innerHTML = slideHTML({ type: 'cover', k: d.t.split('·')[0].trim(), h: d.h, sub: d.when }, 1, undefined, deckTag(d.t));
     if (d.live) { const c = el('span', 'chip deck-live'); c.innerHTML = '<i class="dot dot-live"></i> sendo vista agora'; th.appendChild(c); }
     const b = el('div', 'deck-b'); b.appendChild(el('p', 'deck-t', d.t));
     const m = el('div', 'deck-m');
@@ -9233,7 +9341,7 @@ function renderHome() {
       m.appendChild(el('span', null, 'Apaga sozinha em 27 dias'));
       const r = el('button', 'btn btn-ghost btn-xs'); r.type = 'button'; r.innerHTML = '<svg aria-hidden="true"><use href="#i-restore"/></svg>'; r.appendChild(document.createTextNode('Restaurar'));
       r.setAttribute('aria-label', 'Restaurar ' + d.t);
-      r.addEventListener('click', () => { d.who = 'minhas'; d.when = 'agora'; renderHome(); toast('“' + d.t + '” voltou para Minhas'); });
+      r.addEventListener('click', () => { d.who = 'minhas'; d.when = 'agora'; renderHome(); toast('“' + d.t + '” voltou para Minhas'); ($('#acv .deck-trash button') || $('[data-acv][aria-selected="true"]'))?.focus(); });
       m.appendChild(r);
     } else {
       const sc = el('span', 'hscore'); const C = 2 * Math.PI * 8;
@@ -9249,7 +9357,7 @@ function renderHome() {
     const search = !!STUDIO.q;
     e.innerHTML = `<span class="ae-ic"><svg aria-hidden="true"><use href="${search ? '#i-search' : f === 'lixeira' ? '#i-trash' : '#i-layers'}"/></svg></span>`;
     e.append(el('b', null, search ? 'Nada com “' + STUDIO.q + '” por aqui' : f === 'lixeira' ? 'A lixeira está vazia' : 'Nenhuma apresentação ainda'),
-      el('p', null, search ? 'Confira a grafia ou busque pelo nome do cliente, do evento ou do time.' : f === 'lixeira' ? 'O que você apagar fica aqui por 30 dias antes de sumir.' : 'Comece com um modelo ou importe um arquivo.'));
+      el('p', null, search ? 'Confira a grafia ou busque pelo nome do evento, da turma ou do time.' : f === 'lixeira' ? 'O que você apagar fica aqui por 30 dias antes de sumir.' : 'Comece com um modelo ou importe um arquivo.'));
     if (search) { const c = el('button', 'btn btn-ghost btn-sm', 'Limpar busca'); c.type = 'button'; c.addEventListener('click', clearSearch); e.appendChild(c); }
     box.appendChild(e);
   }
@@ -9276,8 +9384,13 @@ function bindHome() {
   });
   /* busca */
   const sIn = $('#st-search');
-  if (matchMedia('(max-width: 640px)').matches) sIn.placeholder = 'Buscar no acervo';
-  sIn.addEventListener('input', () => { STUDIO.q = sIn.value.trim(); if (STUDIO.q && !studioOpen('inicio')) location.hash = '#estudio'; renderHome(); });
+  if (matchMedia('(max-width: 640px)').matches) sIn.placeholder = matchMedia('(max-width: 420px)').matches ? 'Buscar' : 'Buscar no acervo';
+  sIn.addEventListener('input', () => {
+    const was = STUDIO.q, go = sIn.value.trim() && !studioOpen('inicio');
+    STUDIO.q = sIn.value.trim(); if (go) location.hash = '#estudio'; renderHome();
+    /* começo de uma busca com o acervo fora da tela (celular): o resultado sobe até o olhar */
+    if (STUDIO.q && !was) setTimeout(() => { const h = $('.home-main > .sec-h'); if (h && h.getBoundingClientRect().top > innerHeight * .7) h.scrollIntoView({ block: 'start', behavior: REDUCED ? 'auto' : 'smooth' }); }, go ? 80 : 0);
+  });
   sIn.addEventListener('keydown', e => { if (e.key === 'Escape' && sIn.value) { e.stopPropagation(); clearSearch(); } else if (e.key === 'Enter') { const first = $('#acv a.deck'); if (first) first.focus(); } });
   $('#acv-clear').addEventListener('click', clearSearch);
   /* modelos */
@@ -9310,7 +9423,7 @@ function bindHome() {
    Administração
    ========================================================================== */
 const PEOPLE = [
-  { n: 'Marina Costa', m: 'marina@nortesistemas.com.br', role: 'Administradora', st: 'ativo', last: 'agora', idx: 86, av: '' },
+  { n: 'Marina Costa', m: 'marina@nortesistemas.com.br', role: 'Admin', st: 'ativo', last: 'agora', idx: 86, av: '' },
   { n: 'Rafael Lima', m: 'rafael@nortesistemas.com.br', role: 'Membro', st: 'ativo', last: 'há 1 h', idx: 81, av: 'av-2' },
   { n: 'Júlia Prado', m: 'julia@nortesistemas.com.br', role: 'Membro', st: 'ativo', last: 'ontem', idx: 77, av: 'av-3' },
   { n: 'Caio Mendes', m: 'caio@nortesistemas.com.br', role: 'Membro', st: 'convite', last: 'nunca entrou', idx: null, av: 'av-2' },
@@ -9357,7 +9470,7 @@ function admRows() {
 function admActions(p) {
   const me = p.n === 'Marina Costa', items = [];
   if (p.st === 'convite') items.push({ t: 'Reenviar convite', ic: '#i-mail', act: () => toast('Convite reenviado para ' + p.m) });
-  if (p.st !== 'convite') items.push(p.role === 'Administradora' ? { t: 'Tornar membro', ic: '#i-users', off: me, act: () => { p.role = 'Membro'; admRows(); toast(p.n + ' agora é membro'); } } : { t: 'Promover a administradora', ic: '#i-shield', act: () => { p.role = 'Administradora'; admRows(); toast(p.n + ' agora administra o time'); } });
+  if (p.st !== 'convite') items.push(p.role === 'Admin' ? { t: 'Tornar membro', ic: '#i-users', off: me, act: () => { p.role = 'Membro'; admRows(); toast(p.n + ' agora é membro'); } } : { t: 'Tornar admin do time', ic: '#i-shield', act: () => { p.role = 'Admin'; admRows(); toast(p.n + ' agora administra o time'); } });
   if (p.st === 'ativo') items.push({ t: 'Suspender acesso', ic: '#i-lock', off: me, act: () => { p.st = 'suspenso'; admRows(); toast('Acesso de ' + p.n + ' suspenso'); } });
   if (p.st === 'suspenso') items.push({ t: 'Reativar acesso', ic: '#i-check', act: () => { p.st = 'ativo'; p.last = 'agora'; admRows(); toast('Acesso de ' + p.n + ' reativado'); } });
   items.push('-', { t: p.st === 'convite' ? 'Cancelar convite' : 'Remover do time', ic: '#i-trash', danger: true, off: me, act: () => { PEOPLE.splice(PEOPLE.indexOf(p), 1); admRows(); toast(p.n + (p.st === 'convite' ? ': convite cancelado' : ' saiu do time')); } });
@@ -9459,7 +9572,8 @@ function stageGo(n) { const before = STUDIO.stage; STUDIO.stage = clampN(n, 0, S
 function startStage() {
   STUDIO.stage = STUDIO.cur;
   renderStage();
-  let sec = 12 * 60 + 41;
+  let sec = 0;
+  $('#stage-clock').textContent = '0:00';
   clearInterval(clockT); clearInterval(pulseT);
   clockT = setInterval(() => { if (!studioOpen('apresentar')) return; sec++; $('#stage-clock').textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0'); }, 1000);
   const pts = Array.from({ length: 30 }, (_, i) => 70 + Math.sin(i / 3) * 8 + Math.random() * 6);
@@ -9482,6 +9596,8 @@ function bindStage() {
     else if (e.key === 'Escape' && !document.fullscreenElement) { STUDIO.cur = STUDIO.stage; location.hash = '#editor'; }
   });
   $('#stage-fs')?.addEventListener('click', fs);
+  /* clique ou toque no slide: terço da esquerda volta, o resto avança (como no HTML exportado) */
+  $('.stage-now')?.addEventListener('click', e => { const r = e.currentTarget.getBoundingClientRect(); stageGo(STUDIO.stage + (e.clientX - r.left < r.width / 3 ? -1 : 1)); });
   document.addEventListener('fullscreenchange', () => { const on = !!document.fullscreenElement; const b = $('#stage-fs'); if (b) { b.setAttribute('aria-label', on ? 'Sair da tela cheia' : 'Tela cheia'); b.setAttribute('aria-pressed', String(on)); } });
   /* sair pelo botão volta ao editor no slide em que o palco parou */
   $('.stage-top a[href="#editor"]')?.addEventListener('click', () => { STUDIO.cur = STUDIO.stage; });
@@ -9887,7 +10003,7 @@ function renderBrand() {
       const em = el('em', null, 'Copiar'); em.style.color = '#17112b'; c.appendChild(em);
       const t = el('span', 'sw-b'); t.append(el('b', null, n), el('span', null, hex), el('small', null, use));
       b.append(c, t);
-      b.addEventListener('click', () => copyText(hex));
+      b.addEventListener('click', () => copyText(hex, null, n + ' ' + hex + ' copiado'));
       box.appendChild(b);
     });
   });
@@ -9909,6 +10025,16 @@ function renderBrand() {
     es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); });
   }, { rootMargin: '-30% 0px -60% 0px' });
   $$('.b-sec').forEach(s => obs.observe(s));
+  // voltar: leva de volta ao Estúdio quando o manual foi aberto de lá
+  const back = $('#b-back');
+  let from = null;
+  document.addEventListener('halor:view', e => {
+    if (e.detail !== 'v-brand') { from = e.detail; return; }
+    if (!back) return;
+    const studio = from === 'v-studio';
+    back.setAttribute('href', studio ? '#estudio' : '#site');
+    $('span', back).textContent = studio ? 'Estúdio' : 'Site';
+  });
   // reinicia a animação ao clicar
   $$('[data-replay]').forEach(b => b.addEventListener('click', () => {
     const s = $('.mv-stage > *', b); const c = s.cloneNode(true); s.replaceWith(c);

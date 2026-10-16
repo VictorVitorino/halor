@@ -27,6 +27,8 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .skip:focus { top: 16px; }
 
 :focus-visible { outline: 2px solid var(--focus, var(--halor-glow)); outline-offset: 3px; border-radius: 6px; }
+/* destino do "Pular para o conteúdo": recebe o foco sem desenhar um anel em volta da área inteira */
+[data-skip]:focus { outline: none; }
 
 .view { min-height: 100vh; background: var(--bg); color: var(--text); }
 
@@ -175,10 +177,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   transform: translate(-50%, 20px); opacity: 0; pointer-events: none;
   background: var(--halor-dusk); color: var(--halor-lumen);
   border: 1px solid rgba(201, 166, 255, .3);
-  padding: 12px 18px; border-radius: var(--r-pill); font-size: 14px; font-weight: 500;
+  padding: 12px 18px; border-radius: 22px; font-size: 14px; font-weight: 500;
   box-shadow: var(--glow-md);
   transition: opacity var(--t-base) var(--ease-halo), transform var(--t-base) var(--ease-halo);
-  display: flex; align-items: center; gap: 10px; max-width: calc(100vw - 32px);
+  display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(560px, calc(100vw - 32px));
 }
 .toast.on { opacity: 1; transform: translate(-50%, 0); }
 .toast svg { width: 18px; height: 18px; color: var(--halor-glow); flex: none; }
@@ -207,6 +209,14 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .proto a[aria-current="page"] { background: var(--halor-violet); color: #fff; box-shadow: var(--glow-sm); }
 .proto a svg { width: 15px; height: 15px; }
 @media (max-width: 760px) { .proto-tag span { display: none; } .proto a { padding: 0 10px; } }
+/* No editor em tela larga a barra recolhe para não cobrir o rodapé do app: fica uma alça e ela volta ao passar o mouse ou com o foco */
+@media (hover: hover) and (min-width: 1181px) and (min-height: 620px) {
+  .proto { transition: transform var(--t-slow) var(--ease-halo), box-shadow var(--t-slow) var(--ease-halo); }
+  .proto.peek { overflow: visible; transform: translate(-50%, calc(100% + 4px)); box-shadow: none; }
+  .proto.peek::after { content: ""; position: absolute; top: 3px; left: 50%; width: 40px; height: 3px; margin-left: -20px; border-radius: 3px; background: rgba(201, 166, 255, .7); transition: opacity var(--t-base); }
+  .proto.peek:hover, .proto.peek:focus-within { transform: translateX(-50%); box-shadow: 0 18px 50px -12px rgba(0, 0, 0, .65), 0 0 0 1px rgba(0, 0, 0, .3); }
+  .proto.peek:hover::after, .proto.peek:focus-within::after { opacity: 0; }
+}
 
 /* · Modal · */
 .modal { position: fixed; inset: 0; z-index: 250; display: grid; place-items: center; padding: 24px max(16px, env(safe-area-inset-left, 0px)); }

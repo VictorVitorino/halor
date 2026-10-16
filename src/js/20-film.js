@@ -11,11 +11,12 @@
    guiadas por animation-delay; cursor, câmera, paleta, contadores e digitação
    são calculados aqui a partir do mesmo tempo, então qualquer ponto da trilha
    mostra o quadro exato.
-   Câmera: poucos movimentos, cada um com 1,6 a 2,2 s e pausas de verdade entre
+   Câmera: poucos movimentos, cada um com 1,2 a 2 s e pausas de verdade entre
    eles. O zoom anda em escala logarítmica e o ponto fixo da transformação fica
    parado na tela (zoom ancorado), então o quadro nunca escorrega de lado
    durante uma aproximação. Nas pausas, um avanço lento (quase imperceptível)
-   mantém o quadro vivo. Cortes entre telas são fusões sobrepostas.
+   mantém o quadro vivo. Nas trocas de tela e de slide, a antiga some antes de a nova
+   entrar (passagem pelo fundo), sem dupla exposição.
    ========================================================================== */
 const Film = (() => {
   const D = 88, END = 84;
@@ -62,11 +63,11 @@ const Film = (() => {
     [49.95, 1.8, '.fr-ray+.fe-cvw+.fi-score', 1.45],
     [53.45, 2, '.fw', 1],
     [59.95, 1.9, '.fpl-stage', 1.12],
-    [62.5, 2, '.fpl-stage@.5,.6', 1.28],
-    [67.6, 1.75, '.fsv@.5,.42', 1.3],
-    [71.25, 1.8, '.fdl@.32,.5', 1.3],
+    [62.9, 2, '.fpl-stage@.5,.6', 1.28],
+    [67.65, 1.2, '.fsv@.5,.42', 1.3],
+    [71.5, 1.75, '.fdl@.32,.5', 1.3],
     [74.15, 1.9, '.fw', 1.1],
-    [80.45, 1.7, '.fwb-stage@.3,.6', 1.3],
+    [80.45, 1.4, '.fwb-stage@.3,.6', 1.3],
     [83.4, 2, '.fw', 1]
   ];
   const CAM_M = [
@@ -77,21 +78,21 @@ const Film = (() => {
     [20.05, 1.6, '.fe-body@.7,.42', 2.1],
     [27.25, 1.95, '.fe-rail+.fe-cvw', 1.6],
     [34.9, 1.9, '.fe-cvw+.flb@.6,.5', 1.3],
-    [41.15, 2, '.fw@.5,.5', 1.06],
+    [40.15, 1.55, '.fw@.5,.5', 1.06],
     [49.95, 1.9, '.fe-cvw+.fi-score@.5,.5', 1.45],
     [57.75, 2, '.fw@.5,.5', 1.06],
-    [62.3, 1.8, '.fpl-stage@.27,.6', 1.9],
-    [64.5, 2, '.fpl-stage@.76,.6', 1.9],
-    [67.6, 1.6, '.fsv+.fe-save', 1.6],
-    [71.2, 1.9, '.fdl@.3,.5', 1.4],
+    [62.35, 1.7, '.fpl-stage@.27,.6', 1.9],
+    [64.95, 1.75, '.fpl-stage@.76,.6', 1.9],
+    [67.65, 1.2, '.fsv+.fe-save', 1.6],
+    [71.5, 1.8, '.fdl@.3,.5', 1.4],
     [74.15, 1.9, '.fw@.5,.5', 1.06],
-    [80.4, 1.7, '.fwb-poll', 1.9],
+    [80.4, 1.6, '.fwb-poll', 1.9],
     [83.4, 2, '.fw@.5,.5', 1]
   ];
   /* paleta do slide: [tempo, matiz em graus, saturação] · Halor → Oceano → Coral → Halor */
   const PAL = [[0, 0, 1], [23.7, -82, 1.1], [25.3, 112, 1], [26.9, 0, 1]];
   // trilha: um sino por passo, subindo pela escala; acorde no fecho
-  const CUES = [[.3, 0], [1.2, 7]].concat(STEPS.map((s, i) => [s.t, [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26][i]]), [[END + .3, 'chord']]);
+  const CUES = [[.3, 0], [1.2, 7]].concat(STEPS.map((s, i) => [s.t, [0, 2, 4, 7, 9, 12, 14, 16, 19, 21, 24, 26][i]]), [[END + .55, 'chord']]);
   const TAU = Math.PI * 2;
 
   /* slides das miniaturas (renderizados por slideHTML) */
@@ -457,14 +458,14 @@ const Film = (() => {
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .7, ry: .7, rot: 0, s: 3.5, len: 2.6, w: 2.2 * u * 1.6, sp: 0, o: .75 }, 0);
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .95, ry: .62, rot: .1, s: 4, len: 1.6, w: 1.2 * u * 1.6, sp: 0, o: .4 }, 0);
     } else if (t < 4.7) {                                   // abertura: o símbolo acende e os arcos giram atrás dele
-      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 3.15) / .9), out = 1 - q;
-      starsAt(u, 1 - .5 * q);                               // o céu baixa até o tom da gravação, sem salto
+      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 2.95) / .7), out = 1 - q;
+      starsAt(u, 1 - .5 * q);                               // o céu baixa até o tom da gravação, sem salto; os arcos somem junto com o símbolo, antes da janela entrar
       arcs(mk.x, mk.y, R * 1.25, u, k * out, t * .12);
       glow(mk.x, mk.y, mk.w * .7, .35 * k * out);
     } else if (t < END) {                                   // gravação: só um céu discreto atrás da janela
       starsAt(u, .5);
     } else {                                                // fecho: os arcos voltam e respiram
-      const lt = t - END, mk = A.mark2 || { x: cx, y: cy * .7, w: R * .4 }, kk = ease((lt - .1) / 1.4);
+      const lt = t - END, mk = A.mark2 || { x: cx, y: cy * .7, w: R * .4 }, kk = ease((lt - .55) / 1.4);   // espera a janela quase sumir
       const br = REDUCED ? 1 : 1 + .03 * Math.sin(lt * TAU / 2.4);
       starsAt(u, .5 + .5 * sine(lt / .9));
       arcs(cx, cy * 1.04, R * 1.1 * br, u, kk, lt * .06);

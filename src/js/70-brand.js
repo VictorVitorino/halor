@@ -32,7 +32,7 @@ function renderBrand() {
       const em = el('em', null, 'Copiar'); em.style.color = '#17112b'; c.appendChild(em);
       const t = el('span', 'sw-b'); t.append(el('b', null, n), el('span', null, hex), el('small', null, use));
       b.append(c, t);
-      b.addEventListener('click', () => copyText(hex));
+      b.addEventListener('click', () => copyText(hex, null, n + ' ' + hex + ' copiado'));
       box.appendChild(b);
     });
   });
@@ -54,6 +54,16 @@ function renderBrand() {
     es.forEach(e => { if (e.isIntersecting) links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); });
   }, { rootMargin: '-30% 0px -60% 0px' });
   $$('.b-sec').forEach(s => obs.observe(s));
+  // voltar: leva de volta ao Estúdio quando o manual foi aberto de lá
+  const back = $('#b-back');
+  let from = null;
+  document.addEventListener('halor:view', e => {
+    if (e.detail !== 'v-brand') { from = e.detail; return; }
+    if (!back) return;
+    const studio = from === 'v-studio';
+    back.setAttribute('href', studio ? '#estudio' : '#site');
+    $('span', back).textContent = studio ? 'Estúdio' : 'Site';
+  });
   // reinicia a animação ao clicar
   $$('[data-replay]').forEach(b => b.addEventListener('click', () => {
     const s = $('.mv-stage > *', b); const c = s.cloneNode(true); s.replaceWith(c);
