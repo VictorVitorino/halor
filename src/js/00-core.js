@@ -19,11 +19,20 @@ function toast(msg) {
   toastT = setTimeout(() => t.classList.remove('on'), 2600);
 }
 
-/* Copiar (com recuo para seleção quando a área de transferência é recusada) */
-function copyText(text, node) {
-  const done = () => toast('Copiado');
+/* Copiar (com recuo para execCommand e, por fim, para seleção do texto).
+   label é opcional: a mensagem do toast quando a cópia dá certo. */
+function copyText(text, node, label) {
+  const done = () => toast(label || 'Copiado');
+  const legacy = () => {
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly', ''); ta.style.cssText = 'position:fixed;left:-9999px;top:0;opacity:0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    ta.remove(); return ok;
+  };
   const fallback = () => {
-    if (!node) return toast('Selecione e copie manualmente');
+    if (legacy()) return done();
+    if (!node) return toast('Não deu para copiar aqui. Selecione o texto e use Ctrl+C');
     const r = document.createRange(); r.selectNodeContents(node);
     const s = getSelection(); s.removeAllRanges(); s.addRange(r);
     toast('Texto selecionado. Use Ctrl+C');
@@ -34,7 +43,7 @@ document.addEventListener('click', e => {
   const c = e.target.closest('[data-copy]');
   if (c) { const n = $(c.dataset.copy); if (n) copyText(n.textContent, n); }
   const ct = e.target.closest('[data-copy-text]');
-  if (ct) copyText(ct.dataset.copyText);
+  if (ct) copyText(ct.dataset.copyText, null, ct.dataset.copyLabel);
   const tt = e.target.closest('[data-toast]');
   if (tt) toast(tt.dataset.toast);
 });
@@ -55,8 +64,18 @@ document.addEventListener('click', e => {
   const c = e.target.closest('[data-close]');
   if (c) { const m = c.closest('.modal'); if (m) closeModal(m); }
 });
+const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { const m = $$('.modal').find(x => !x.hidden); if (m) closeModal(m); }
+  const m = $$('.modal').find(x => !x.hidden); if (!m) return;
+  if (e.key === 'Escape') { e.preventDefault(); closeModal(m); return; }
+  /* foco preso dentro do modal aberto */
+  if (e.key === 'Tab') {
+    const f = $$(FOCUSABLE, m).filter(n => n.offsetParent !== null && !n.closest('.sr-only'));
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && (document.activeElement === first || !m.contains(document.activeElement))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (document.activeElement === last || !m.contains(document.activeElement))) { e.preventDefault(); first.focus(); }
+  }
 });
 
 /* Mostrar/ocultar senha */
@@ -98,6 +117,7 @@ function showSub(sub) {
   $$('#v-studio .sub').forEach(s => { s.hidden = s.dataset.subview !== sub; });
   $$('#v-studio .side-nav a[data-sub]').forEach(a => { if (a.dataset.sub === sub) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   $('#side')?.classList.remove('open');
+  $('#side-toggle')?.setAttribute('aria-expanded', 'false');
   if (subHooks[sub]) subHooks[sub]();
 }
 function route() {
@@ -115,6 +135,12 @@ function route() {
   if (r.sub) showSub(r.sub);
   const routeKey = r.anchor ? (r.view === 'v-site' ? 'site' : r.view === 'v-brand' ? 'marca' : '') : (ROUTES[key] ? key : '');
   $$('.proto a').forEach(a => { if (a.dataset.route === routeKey) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  /* barra do protótipo: mantém a tela atual à vista quando ela rola na horizontal */
+  const pa = $('.proto a[aria-current="page"]'), pb = pa && pa.parentElement;
+  if (pb && pb.scrollWidth > pb.clientWidth) {
+    const l = pa.offsetLeft, r = l + pa.offsetWidth;
+    if (l < pb.scrollLeft) pb.scrollLeft = l - 8; else if (r > pb.scrollLeft + pb.clientWidth) pb.scrollLeft = r - pb.clientWidth + 8;
+  }
   if (target) requestAnimationFrame(() => target.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }));
   else window.scrollTo(0, 0);
 }

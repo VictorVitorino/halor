@@ -5,7 +5,8 @@
    com efeitos → torne lúdico (votação e post-its) → Raio Halor → importe .pptx
    e .pdf → apresente ao vivo → baixe em HTML → abra em qualquer navegador →
    Faça cada olhar render.
-   Relógio: cada cena recebe --lt (segundos). As telas do app usam data-o="0",
+   Relógio: cada cena tem o seu tempo local (lt, em segundos), gravado como --lt
+   em cada elemento animado dela. As telas do app usam data-o="0",
    então o relógio delas é o tempo global. As animações CSS ficam pausadas e
    guiadas por animation-delay; cursor, câmera, paleta, contadores e digitação
    são calculados aqui a partir do mesmo tempo, então qualquer ponto da trilha
@@ -31,7 +32,7 @@ const Film = (() => {
   const CUR = [
     [4.5, '64,94'], [6, '.fh-st1'], [7.2, '.fh-st4'], [8.35, '.fh-st2'], [8.7, '!'],
     [10.8, '.fm-c3'], [11.6, '.fm-c2'], [12.3, '.fm-c1'], [12.6, '!'], [14.1, '.fm-use'], [14.5, '!'],
-    [16.95, '.fe-cv .sl-h'], [17.3, '!'], [17.5, '!'], [20.5, '58,34'], [21.55, '.fi-tab-design'], [21.9, '!'],
+    [17.1, '.fe-cv .sl-h'], [17.3, '!'], [17.5, '!'], [20.5, '58,34'], [21.55, '.fi-tab-design'], [21.9, '!'],
     [23.3, '.fp-p2'], [23.7, '!'], [24.9, '.fp-p3'], [25.3, '!'], [26.5, '.fp-p1'], [26.9, '!'],
     [28.85, '.fe-rl li:nth-child(3)'], [29.2, '!'], [29.95, '.fr-chart'], [30.3, '!'], [31, '.fdd-col'], [31.35, '!'],
     [32.55, '.fr-icon'], [32.9, '!'], [33.75, '.fr-cards'], [34.1, '!'], [34.95, '.fe-cv .fs3-chart'], [35.3, '!'],
@@ -44,7 +45,7 @@ const Film = (() => {
     [59.75, '.fe-play'], [60.05, '!'], [61.6, '.fpl-next'], [62.3, '!'], [64.4, '76,62'], [67.25, '.fpl-exit'], [67.6, '!'],
     [68.55, '.fe-save'], [68.9, '!'], [69.75, '.fsv-o2'], [70.3, '.fsv-o1'], [70.6, '!'], [71.15, '.fsv-dl'], [71.45, '!'],
     [73.7, '.fdl-item'], [74.1, '!'], [76.6, '82,64'], [77.6, '.fwb-next'], [78, '!'], [79.9, '.fwb-next'], [80.3, '!'],
-    [81.2, '.fwb-opt2'], [81.5, '!'], [83, '70,70']
+    [81.85, '.fwb-opt2'], [82.15, '!'], [83, '70,70']
   ];
   /* câmera: [início, duração, alvo, zoom máximo]. Uma lista para o palco largo e outra para o celular (4:5).
      Alvo = seletor, "a+b" (enquadra a união das caixas, com folga, até o zoom máximo), "alvo@fx,fy"
@@ -53,39 +54,39 @@ const Film = (() => {
   const CAM_D = [
     [0, 0, '.fw', 1],
     [4.5, 2, '.fh-main@.5,.46', 1.13],
-    [12.85, 1.8, '.fm-main@.56,.66', 1.3],
-    [15.55, 1.9, '.fe-cvw@.5,.44', 1.45],
-    [20.2, 1.9, '.fe-body@.6,.47', 1.2],
+    [12.65, 1.7, '.fm-main@.56,.66', 1.3],
+    [15.5, 1.7, '.fe-cvw@.5,.44', 1.45],
+    [20.05, 1.6, '.fe-body@.6,.47', 1.2],
     [27.3, 1.8, '.fe@.43,.42', 1.14],
     [34.9, 1.8, '.fe-body@.6,.5', 1.17],
-    [48.95, 1.9, '.fr-ray+.fe-cvw+.fi-score', 1.45],
-    [53.2, 2, '.fw', 1],
+    [49.95, 1.8, '.fr-ray+.fe-cvw+.fi-score', 1.45],
+    [53.45, 2, '.fw', 1],
     [59.95, 1.9, '.fpl-stage', 1.12],
     [62.5, 2, '.fpl-stage@.5,.6', 1.28],
-    [67.6, 1.9, '.fsv@.5,.42', 1.3],
+    [67.6, 1.75, '.fsv@.5,.42', 1.3],
     [71.25, 1.8, '.fdl@.32,.5', 1.3],
-    [73.2, 2, '.fw', 1.1],
-    [80.45, 1.8, '.fwb-stage@.3,.6', 1.3]
+    [74.15, 1.9, '.fw', 1.1],
+    [80.45, 1.7, '.fwb-stage@.3,.6', 1.3],
+    [83.4, 2, '.fw', 1]
   ];
   const CAM_M = [
     [0, 0, '.fw', 1],
     [4.5, 2, '.fh-starts@.38,.5', 1.7],
-    [12.75, 1.8, '.fm-strip@.74,.5', 1.7],
-    [15.55, 1.9, '.fe-sel1', 2.15],
-    [20.2, 1.9, '.fe-body@.7,.42', 1.85],
-    [27.3, 1.9, '.fe-rail+.fe-cvw', 1.6],
+    [12.65, 1.7, '.fm-strip@.74,.5', 1.7],
+    [15.5, 1.7, '.fe-sel1', 2.1],
+    [20.05, 1.6, '.fe-body@.7,.42', 2.1],
+    [27.25, 1.95, '.fe-rail+.fe-cvw', 1.6],
     [34.9, 1.9, '.fe-cvw+.flb@.6,.5', 1.3],
     [41.15, 2, '.fw@.5,.5', 1.06],
-    [48.95, 1.9, '.fr-ray+.fe-cvw', 1.75],
-    [51.2, 2, '.fe-cvw+.fi-score@.62,.5', 1.75],
-    [53.5, 2, '.fe-cvw', 1.75],
+    [49.95, 1.9, '.fe-cvw+.fi-score@.5,.5', 1.45],
     [57.75, 2, '.fw@.5,.5', 1.06],
-    [62.35, 2, '.fpl-stage@.27,.6', 1.9],
-    [64.4, 2.2, '.fpl-stage@.76,.6', 1.9],
-    [67.65, 1.9, '.fsv+.fe-save', 1.6],
+    [62.3, 1.8, '.fpl-stage@.27,.6', 1.9],
+    [64.5, 2, '.fpl-stage@.76,.6', 1.9],
+    [67.6, 1.6, '.fsv+.fe-save', 1.6],
     [71.2, 1.9, '.fdl@.3,.5', 1.4],
-    [73.2, 2, '.fw@.5,.5', 1.06],
-    [80.4, 1.9, '.fwb-poll', 1.9]
+    [74.15, 1.9, '.fw@.5,.5', 1.06],
+    [80.4, 1.7, '.fwb-poll', 1.9],
+    [83.4, 2, '.fw@.5,.5', 1]
   ];
   /* paleta do slide: [tempo, matiz em graus, saturação] · Halor → Oceano → Coral → Halor */
   const PAL = [[0, 0, 1], [23.7, -82, 1.1], [25.3, 112, 1], [26.9, 0, 1]];
@@ -115,9 +116,9 @@ const Film = (() => {
     i2: { type: 'tl', k: 'Pesquisa do piloto', h: 'O que o piloto mostrou.', ms: [['S1', 'Escuta', .1], ['S2', 'Testes', .37], ['S3', 'Ajustes', .63], ['S4', 'Relatório', .9]] }
   };
 
-  let film, cv, ctx, fillEl, timeEl, chapEl, track, camEl, winEl, appSc, capsEl, legSc;
+  let film, cv, ctx, fillEl, timeEl, chapEl, track, camEl, winEl, appSc, capsEl, legSc, palEls = [];
   let scenes = [], state = 'poster', t = 0, last = 0, raf = 0, w = 0, h = 0, stars;
-  let audio = null, soundOn = false, dragging = false, camLast = '', palLast = '', portrait = false, legLast = null;
+  let audio = null, soundOn = false, dragging = false, camLast = '', palLast = '', portrait = false, legLast = null, idleT = 0;
   const A = {}, CK = [], MK = { pts: [], hov: [], drags: [], clicks: [], ok: false };
   const clamp = v => Math.max(0, Math.min(1, v));
   const ease = v => 1 - Math.pow(1 - clamp(v), 3);
@@ -157,7 +158,10 @@ const Film = (() => {
 
   function parseScene(n) {
     const own = e => e.closest('.sc') === n;   // cada elemento obedece só à cena mais próxima
-    const s = { n, from: +n.dataset.from, to: +n.dataset.to, o: n.dataset.o != null ? +n.dataset.o : +n.dataset.from, fi: n.dataset.fi != null ? +n.dataset.fi : .3, fo: n.dataset.fo != null ? +n.dataset.fo : .3, fz: +(n.dataset.fz || 0), vis: false, tf: '' };
+    const s = { n, from: +n.dataset.from, to: +n.dataset.to, o: n.dataset.o != null ? +n.dataset.o : +n.dataset.from, fi: n.dataset.fi != null ? +n.dataset.fi : .3, fo: n.dataset.fo != null ? +n.dataset.fo : .3, fw: +(n.dataset.fw || 0), rc: +(n.dataset.rc || 0), fz: +(n.dataset.fz || 0), vis: false, tf: '', lt: '' };
+    // o relógio (--lt) vai direto em cada elemento animado da cena: a propriedade não é herdada,
+    // então mudar o tempo recalcula só esses elementos e não a árvore inteira da janela a cada quadro
+    s.anims = $$('.fa, .fd, .f-lux', n).filter(own);
     s.counts = $$('[data-n]', n).filter(own).map(e => ({ e, segs: [nums(e.dataset.n)], dec: +(e.dataset.dec || 0), fn: e.dataset.ez === 'lin' ? lin : ease, ring: e.hasAttribute('data-ring'), last: null }));
     s.types = $$('[data-type]', n).filter(own).map(e => { const [at, du] = nums(e.dataset.type); return { e, at, du, full: e.textContent, last: -1 }; });
     s.ons = $$('[data-on]', n).filter(own).map(e => ({ e, r: ranges(e.dataset.on), last: null }));
@@ -171,7 +175,7 @@ const Film = (() => {
     camEl = $('.fw-cam', film); winEl = $('[data-cur]', film); appSc = camEl.closest('.sc');
     build();
     scenes = $$('.sc', film).map(parseScene);
-    capsEl = $('[data-caps]', film); legSc = scenes.find(s => s.n.classList.contains('f-legsc'));
+    capsEl = $('[data-caps]', film); legSc = scenes.find(s => s.n.classList.contains('f-legsc')); palEls = $$('.fw-pal', film);
     MK.cur = $('.fw-cur', winEl); MK.rip = $('.fw-rip', winEl);
     MK.way = CUR.map(([t0, tg]) => ({ t: t0, tg }));
     MK.clicks = MK.way.filter(x => x.tg === '!').map(x => x.t);
@@ -204,6 +208,7 @@ const Film = (() => {
       e.preventDefault();
     });
     document.addEventListener('halor:view', e => { if (e.detail !== 'v-site' && state === 'playing') pause(); });
+    ['pointermove', 'pointerdown', 'keydown'].forEach(ev => film.addEventListener(ev, wake));
     measure();
     render();
   }
@@ -281,12 +286,17 @@ const Film = (() => {
       else if (wp.tg !== '!') { const e = $(wp.tg, m); if (e) { const b = box(e, m); p = { x: (b.x + b.w * .5) / W * 100, y: (b.y + b.h * .55) / H * 100 }; } }
       prev = p; return p;
     });
-    MK.hov = MK.hovEls.map(e => { const b = box(e, m); return { e, r: [b.x / W * 100, b.y / H * 100, (b.x + b.w) / W * 100, (b.y + b.h) / H * 100] }; });
+    MK.hov = MK.hovEls.map(e => { const b = box(e, m); return { e, on: e.classList.contains('hov'), r: [b.x / W * 100, b.y / H * 100, (b.x + b.w) / W * 100, (b.y + b.h) / H * 100] }; });
     MK.ok = true;
   }
 
+  // tocando e sem mexer o mouse por 2,5 s: a barra e o ponteiro somem e só o filme fica na tela
+  function wake() {
+    clearTimeout(idleT); film.classList.remove('idle');
+    if (state === 'playing') idleT = setTimeout(() => { if (state === 'playing') film.classList.add('idle'); }, 2500);
+  }
   function setState(s) {
-    state = s; film.dataset.state = s;
+    state = s; film.dataset.state = s; wake();
     const b = $('[data-film-toggle]', film);
     $('use', b).setAttribute('href', s === 'playing' ? '#i-pause' : s === 'ended' ? '#i-replay' : '#i-play');
     b.setAttribute('aria-label', s === 'playing' ? 'Pausar' : s === 'ended' ? 'Assistir de novo' : 'Reproduzir');
@@ -312,20 +322,23 @@ const Film = (() => {
   /* · quadro: cenas, câmera, cursor, paleta, barra e canvas · */
   function render() {
     for (const s of scenes) {
-      const vis = t >= s.from && t < s.to + (REDUCED ? 0 : s.fo);
+      // com movimento reduzido não há fusão: a cena sai em data-to (ou data-rc segundos depois, para emendar na próxima)
+      const vis = t >= s.from && t < s.to + (REDUCED ? s.rc : s.fo);
       if (vis !== s.vis) { s.vis = vis; s.n.classList.toggle('on', vis); }
       if (!vis) continue;
-      // fusões com curva suave; a cena que entra pode crescer de leve até o lugar (data-fz)
+      // fusões com curva suave; a cena que entra pode crescer de leve até o lugar (data-fz).
+      // Nas trocas de tela dentro do app, a tela nova espera a antiga quase sumir (data-fw):
+      // nunca dois textos sobrepostos pela metade
       let op = 1, inq = 1;
       if (!REDUCED) {
-        if (s.fi > 0 && t < s.from + s.fi) { inq = sine((t - s.from) / s.fi); op = inq; }
+        if (s.fi > 0 && t < s.from + s.fw + s.fi) { inq = sine((t - s.from - s.fw) / s.fi); op = inq; }
         if (t > s.to && s.fo > 0) op = Math.min(op, 1 - sine((t - s.to) / s.fo));
       }
       s.n.style.opacity = op.toFixed(3);
       const tf = s.fz && inq < 1 ? 'scale(' + (1 - s.fz * (1 - inq)).toFixed(4) + ')' : '';
       if (tf !== s.tf) { s.n.style.transform = tf; s.tf = tf; }
-      const lt = t - s.o;
-      s.n.style.setProperty('--lt', lt.toFixed(3));
+      const lt = t - s.o, lts = lt.toFixed(3);
+      if (lts !== s.lt) { for (const e of s.anims) e.style.setProperty('--lt', lts); s.lt = lts; }
       update(s, lt);
     }
     if (appSc.classList.contains('on')) { camFrame(); curFrame(); palFrame(); }
@@ -387,16 +400,17 @@ const Film = (() => {
     let c = null; for (const ct of MK.clicks) if (t >= ct && t < ct + .5) c = ct;
     if (c == null || REDUCED) MK.rip.style.opacity = 0;
     else { const q = ease((t - c) / .5); MK.rip.style.left = p.x.toFixed(2) + '%'; MK.rip.style.top = p.y.toFixed(2) + '%'; MK.rip.style.opacity = (.85 * (1 - q)).toFixed(3); MK.rip.style.transform = 'scale(' + (.35 + .75 * q).toFixed(3) + ')'; }
+    // sem ler o layout a cada quadro (nenhum alvo some com display: none); só escreve quando muda
     for (const o of MK.hov) {
-      const vis = o.e.offsetParent !== null && !o.e.closest('.sc:not(.on)');
-      o.e.classList.toggle('hov', shown && vis && p.x >= o.r[0] && p.x <= o.r[2] && p.y >= o.r[1] && p.y <= o.r[3]);
+      const on = shown && p.x >= o.r[0] && p.x <= o.r[2] && p.y >= o.r[1] && p.y <= o.r[3] && !o.e.closest('.sc:not(.on)');
+      if (on !== o.on) { o.e.classList.toggle('hov', on); o.on = on; }
     }
     for (const d of MK.drags) {
       const on = t >= d.a && t < d.b; d.e.classList.toggle('act', on);
       if (on) { d.e.style.left = p.x.toFixed(2) + '%'; d.e.style.top = p.y.toFixed(2) + '%'; }
     }
   }
-  // paleta: o matiz dos slides corre suave de uma paleta para a outra
+  // paleta: o matiz dos slides corre suave de uma paleta para a outra (só nas miniaturas e no slide do editor)
   function palFrame() {
     let hue = PAL[0][1], sat = PAL[0][2];
     for (let i = 1; i < PAL.length; i++) {
@@ -405,7 +419,7 @@ const Film = (() => {
       hue = h0 + (ph - h0) * q; sat = s0 + (ps - s0) * q;
     }
     const str = hue.toFixed(1) + '|' + sat.toFixed(3);
-    if (str !== palLast) { film.style.setProperty('--hue', hue.toFixed(1)); film.style.setProperty('--sat', sat.toFixed(3)); palLast = str; }
+    if (str !== palLast) { for (const e of palEls) { e.style.setProperty('--hue', hue.toFixed(1)); e.style.setProperty('--sat', sat.toFixed(3)); } palLast = str; }
   }
   function barFrame() {
     fillEl.style.width = (t / D * 100) + '%';
@@ -443,7 +457,7 @@ const Film = (() => {
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .7, ry: .7, rot: 0, s: 3.5, len: 2.6, w: 2.2 * u * 1.6, sp: 0, o: .75 }, 0);
       drawHaloArc(ctx, cx, cy * 1.08, R * 1.1, { rx: .95, ry: .62, rot: .1, s: 4, len: 1.6, w: 1.2 * u * 1.6, sp: 0, o: .4 }, 0);
     } else if (t < 4.7) {                                   // abertura: o símbolo acende e os arcos giram atrás dele
-      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 3.7) / 1), out = 1 - q;
+      const mk = A.mark || { x: cx, y: cy * .8, w: R * .5 }, k = ease((t - .2) / 1.6), q = sine((t - 3.15) / .9), out = 1 - q;
       starsAt(u, 1 - .5 * q);                               // o céu baixa até o tom da gravação, sem salto
       arcs(mk.x, mk.y, R * 1.25, u, k * out, t * .12);
       glow(mk.x, mk.y, mk.w * .7, .35 * k * out);

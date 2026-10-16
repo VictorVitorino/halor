@@ -7,7 +7,7 @@
    Uso: <canvas class="halo-field halor-field" data-field="hero"></canvas>
    ========================================================================== */
 const FIELD_PRESETS = {
-  hero:  { theme: 'night', density: 1.15, entrance: 'load', calm: '.s-hero-copy .s-h1', attract: '[data-attract]', ring: 96 },
+  hero:  { theme: 'night', density: 1.15, entrance: 'load', calm: '.s-hero-copy .s-h1, .s-hero-copy .s-sub, .s-hero-copy .s-lede, .s-hero-copy .s-cta', calmMerge: true, attract: '[data-attract]', ring: 96 },
   final: { theme: 'night', density: .85, entrance: 'view', calm: '.s-final-in h2', attract: '[data-attract]', ring: 90 },
   auth:  { theme: 'night', density: .75, entrance: 'view', calm: '.auth-quote, .eye-wrap', ring: 80 },
   brand: { theme: 'night', density: .9, entrance: 'view', calm: '.b-hero-logo, .b-claim, .b-cover-in > .lede', ring: 90 },
@@ -45,12 +45,24 @@ function makeHalorField(cv) {
     if (!p.calm) return;
     const hr = cv.getBoundingClientRect();
     $$(p.calm, host).forEach(n => { const r = n.getBoundingClientRect(); if (r.width) F.calm.push({ x: r.left - hr.left - 24, y: r.top - hr.top - 18, w: r.width + 48, h: r.height + 36 }); });
+    const c0 = F.calm[0]; F.calmO = c0 ? { x: c0.x + c0.w / 2, y: c0.y + c0.h / 2 } : null;
+    /* zonas que se tocam viram uma só: entre duas zonas vizinhas os pontos ficariam presos numa fresta sobre o texto */
+    if (p.calmMerge) for (let i = 0; i < F.calm.length; i++) for (let j = i + 1; j < F.calm.length; j++) {
+      const a = F.calm[i], b = F.calm[j];
+      if (a.x <= b.x + b.w && b.x <= a.x + a.w && a.y <= b.y + b.h && b.y <= a.y + a.h) {
+        const x = Math.min(a.x, b.x), y = Math.min(a.y, b.y);
+        F.calm[i] = { x, y, w: Math.max(a.x + a.w, b.x + b.w) - x, h: Math.max(a.y + a.h, b.y + b.h) - y };
+        F.calm.splice(j, 1); j = i;
+      }
+    }
   };
   const seed = burst => {
     const n = Math.round(fClamp(F.W * F.H / (5600 / p.density), 36, 200));
     const o = F.origin || { x: F.W / 2, y: F.H / 2 };
     F.P = Array.from({ length: n }, () => {
-      const hx = Math.random() * F.W, hy = Math.random() * F.H;
+      let hx = Math.random() * F.W, hy = Math.random() * F.H;
+      /* a casa já nasce longe do texto: sem movimento nada empurra os pontos para fora, e na capa a zona calma é grande */
+      for (let k = REDUCED ? 8 : p.calmMerge ? 6 : 0; k > 0 && inCalm(hx, hy); k--) { hx = Math.random() * F.W; hy = Math.random() * F.H; }
       const q = { x: hx, y: hy, hx, hy, vx: 0, vy: 0, bx: (Math.random() - .5) * .3, by: (Math.random() - .5) * .3, r: .7 + Math.random() * 1.8, ph: Math.random() * 6.283 };
       if (burst) { const a = Math.random() * 6.283, s = Math.random() * 8; q.x = o.x + Math.cos(a) * s; q.y = o.y + Math.sin(a) * s; q.vx = (hx - q.x) * .055; q.vy = (hy - q.y) * .055; }
       return q;
@@ -59,8 +71,7 @@ function makeHalorField(cv) {
   const pulse = (x, y, brand) => { F.pulses.push({ x, y, t: 0, brand: !!brand }); };
   const entrance = () => {
     if (!size()) return;
-    const c = F.calm[0];
-    F.origin = c ? { x: c.x + c.w / 2, y: c.y + c.h / 2 } : { x: F.W / 2, y: F.H / 2 };
+    F.origin = F.calmO || { x: F.W / 2, y: F.H / 2 };
     F.t0 = performance.now();
     seed(!REDUCED); F.pulses = [];
     if (!REDUCED) { pulse(F.origin.x, F.origin.y, true); F.flash = 1; }

@@ -19,7 +19,7 @@ const DASH = {
   insights: [
     { ic: '#i-image', t: 'Imagem dominante segura o olhar', p: 'Slides com uma imagem ocupando mais de 30% da área tiveram 2,1× mais tempo de leitura.' },
     { ic: '#i-target', t: 'Um destaque por slide gera perguntas', p: 'Gráficos com um único valor em destaque receberam 3× mais comentários.' },
-    { ic: '#i-clock', t: 'O slide de valor decide', p: 'Quem passa mais de 25 s no slide de investimento assina 4× mais.' }
+    { ic: '#i-vote', t: 'Perguntar segura a sala', p: 'Slides com votação ao vivo tiveram 3× mais tempo de olhar que slides só de texto.' }
   ]
 };
 
@@ -33,7 +33,7 @@ function dashRender(root) {
   ring.innerHTML = `<svg viewBox="0 0 112 112" aria-hidden="true"><circle cx="56" cy="56" r="46" class="trk"/><circle cx="56" cy="56" r="46" class="val" style="stroke-dasharray:${(sc / 100 * C).toFixed(1)} ${C.toFixed(1)}"/></svg>`;
   ring.appendChild(el('b', null, String(sc)));
   const ht = el('div', 'd-hero-t');
-  ht.append(el('p', 'd-label', 'Índice Halor da carteira'), el('p', 'd-delta' + (A ? '' : ' flat'), A ? '+28 pontos desde julho' : 'Base antes do Halor'), el('p', null, 'Média do quanto suas apresentações prendem o olhar, de 0 a 100.'));
+  ht.append(el('p', 'd-label', 'Índice Halor do time'), el('p', 'd-delta' + (A ? '' : ' flat'), A ? '+28 pontos desde julho' : 'Base antes do Halor'), el('p', null, 'Média do quanto suas apresentações prendem o olhar, de 0 a 100.'));
   hero.append(ring, ht);
   const kp = el('div', 'd-card d-kpis');
   DASH.kpis.forEach(k => {
@@ -51,9 +51,16 @@ function dashRender(root) {
 
   /* linha + cadeia */
   const row = el('div', 'd-row');
-  row.append(lineCard(A), chainCard(A));
+  row.append(lineCard(A, chartW(root, 1.1 / 2.1)), chainCard(A, chartW(root, 1 / 2.1)));
   root.appendChild(row);
   if (app) { root.appendChild(heatCard(A)); root.appendChild(insightsRow()); }
+}
+
+/* largura do desenho = largura real do cartão, para o texto do gráfico ficar sempre em 11 a 12 px */
+function chartW(root, share) {
+  const avail = root.clientWidth || Math.min(1180, window.innerWidth - 300);
+  const card = window.innerWidth > 1060 ? (avail - 16) * share : avail;
+  return Math.round(Math.max(300, Math.min(720, card - 46)));
 }
 
 function sparkline(vals, A) {
@@ -79,13 +86,13 @@ function showTip(tip, chart, x, y, title, rows) {
   tip.classList.add('on');
 }
 
-function lineCard(A) {
+function lineCard(A, W) {
   const card = el('div', 'd-card');
   const hd = el('div', 'd-head'), ht = el('div');
   ht.append(el('h3', null, 'Pessoas que voltaram para rever, a cada 100'), el('p', null, A ? 'Por mês. Apresentações Halor a partir de julho.' : 'Por mês, antes das apresentações Halor.'));
   hd.appendChild(ht); card.appendChild(hd);
   const ch = el('div', 'd-chart'); card.appendChild(ch);
-  const W = 560, H = 240, L = 34, Rr = 44, T = 14, B = 26, iw = W - L - Rr, ih = H - T - B, ymax = 10;
+  const H = W < 420 ? 220 : 240, L = 34, Rr = 44, T = 14, B = 26, iw = W - L - Rr, ih = H - T - B, ymax = 10;
   const n = A ? 12 : 6, data = DASH.signed.slice(0, n);
   const X = i => L + i / 11 * iw, Y = v => T + ih - v / ymax * ih;
   const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Linha mensal de pessoas que voltaram para rever, a cada 100' });
@@ -93,7 +100,7 @@ function lineCard(A) {
     s.appendChild(svgEl('rect', { x: X(5.5), y: T, width: X(11) - X(5.5) + 8, height: ih, class: 'evt-band' }));
   }
   [0, 2, 4, 6, 8, 10].forEach(v => { s.appendChild(svgEl('line', { x1: L, x2: W - Rr + 8, y1: Y(v), y2: Y(v), class: 'grid' })); const t = svgEl('text', { x: L - 8, y: Y(v) + 4, 'text-anchor': 'end', class: 'tick' }); t.textContent = v; s.appendChild(t); });
-  DASH.months.forEach((mo, i) => { if (i % (window.innerWidth < 520 ? 2 : 1)) return; const t = svgEl('text', { x: X(i), y: H - 6, 'text-anchor': 'middle', class: 'tick' }); t.textContent = mo; s.appendChild(t); });
+  DASH.months.forEach((mo, i) => { if (i % (W < 440 ? 2 : 1)) return; const t = svgEl('text', { x: X(i), y: H - 6, 'text-anchor': 'middle', class: 'tick' }); t.textContent = mo; s.appendChild(t); });
   const pts = data.map((v, i) => [X(i), Y(v)]);
   const dLine = 'M' + pts.map(p => p[0].toFixed(1) + ' ' + p[1].toFixed(1)).join(' L');
   s.appendChild(svgEl('path', { d: dLine + ` L${pts[pts.length - 1][0].toFixed(1)} ${Y(0)} L${X(0)} ${Y(0)} Z`, class: 'area' }));
@@ -126,17 +133,17 @@ function lineCard(A) {
   return card;
 }
 
-function chainCard(A) {
+function chainCard(A, W) {
   const card = el('div', 'd-card');
   const hd = el('div', 'd-head'), ht = el('div');
-  ht.append(el('h3', null, 'Cadeia Halor: quantos chegam a cada passo'), el('p', null, 'A cada 100 apresentações enviadas'));
+  ht.append(el('h3', null, 'Cadeia Halor: quantos chegam a cada passo'), el('p', null, 'A cada 100 pessoas que receberam a apresentação'));
   const lg = el('div', 'd-legend');
   const l1 = el('span'); const i1 = el('i'); i1.style.setProperty('--c', 'var(--c-before)'); l1.append(i1, document.createTextNode('Antes'));
   lg.appendChild(l1);
   if (A) { const l2 = el('span'); const i2 = el('i'); i2.style.setProperty('--c', 'var(--c-after)'); l2.append(i2, document.createTextNode('Com Halor')); lg.appendChild(l2); }
   hd.append(ht, lg); card.appendChild(hd);
   const ch = el('div', 'd-chart'); card.appendChild(ch);
-  const W = 520, LW = 104, RW = 40, rowH = 34, H = CHAIN_STEPS.length * rowH + 4, iw = W - LW - RW, X = v => v / 100 * iw;
+  const LW = 104, RW = 40, rowH = 34, H = CHAIN_STEPS.length * rowH + 4, iw = W - LW - RW, X = v => v / 100 * iw;
   const s = svgEl('svg', { viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': 'Barras por passo da cadeia, antes e com Halor' });
   [0, 25, 50, 75, 100].forEach(v => s.appendChild(svgEl('line', { x1: LW + X(v), x2: LW + X(v), y1: 0, y2: H - 2, class: 'grid' })));
   const tip = chartTip(card);
@@ -171,7 +178,7 @@ function heatCard(A) {
   ht.append(el('h3', null, 'Mapa de atenção por slide'), el('p', null, 'Segundos médios de leitura em “Kickoff 2027”'));
   hd.appendChild(ht); card.appendChild(hd);
   const vals = A ? DASH.heat.a : DASH.heat.b, steps = ['--c-chain-1', '--c-chain-2', '--c-chain-3', '--c-chain-4', '--c-chain-5', '--c-chain-6', '--c-chain-7'];
-  const row = el('div', 'd-heat-row'), labs = el('div', 'd-cell-lab');
+  const row = el('div', 'd-heat-row');
   const bin = v => Math.min(6, Math.floor(v / 5));
   vals.forEach((v, i) => {
     const c = el('div', 'd-cell'); c.tabIndex = 0; const b = bin(v);
@@ -180,9 +187,9 @@ function heatCard(A) {
     c.title = DASH.slides[i] + ' · ' + v + ' s';
     const val = el('b', null, v + 's'); c.appendChild(val);
     c.dataset.bin = b;
-    row.appendChild(c); labs.appendChild(el('span', null, DASH.slides[i]));
+    const col = el('div', 'd-hcol'); col.append(c, el('span', 'd-hlab', DASH.slides[i])); row.appendChild(col);
   });
-  card.append(row, labs);
+  card.appendChild(row);
   const scl = el('div', 'd-scale'), bar = el('i');
   steps.forEach(sv => { const b = el('b'); b.style.setProperty('--c', 'var(' + sv + ')'); bar.appendChild(b); });
   scl.append(document.createTextNode('0 s'), bar, document.createTextNode('30 s ou mais'));
@@ -211,7 +218,17 @@ function tableToggle(head, rows) {
   w.appendChild(t); d.appendChild(w); return d;
 }
 
-function dashAll() { $$('.dash').forEach(dashRender); }
+function dashAll() { $$('.dash').forEach(d => { if (d.offsetParent !== null || !d.children.length) dashRender(d); }); }
+/* redesenha quando a largura muda de faixa (texto dos gráficos sempre legível) */
+let dashW = 0, dashT = 0;
+window.addEventListener('resize', () => { clearTimeout(dashT); dashT = setTimeout(() => { const w = Math.round(window.innerWidth / 80); if (w !== dashW) { dashW = w; dashAll(); } }, 180); });
+/* filtros do painel: dados ilustrativos, mas a tela responde */
+document.addEventListener('change', e => {
+  const s = e.target.closest('.filters select'); if (!s) return;
+  const lab = s.closest('.flt').querySelector('span').textContent;
+  $$('.dash').forEach(d => { d.classList.add('busy'); setTimeout(() => { dashRender(d); d.classList.remove('busy'); }, 160); });
+  toast(lab + ': ' + s.value + '. Dados ilustrativos.');
+});
 document.addEventListener('click', e => {
   const b = e.target.closest('[data-dash-mode]'); if (!b) return;
   DASH.mode = b.dataset.dashMode;

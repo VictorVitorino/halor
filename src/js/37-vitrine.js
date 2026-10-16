@@ -147,7 +147,7 @@ function vtFilter(sec) {
     stage.hidden = nd === 0;
     empty.hidden = nd !== 0;
     if (!nd) empty.textContent = `Para ${VT_INTENT[k].toLowerCase()}, os efeitos estão no catálogo logo abaixo.`;
-    count.textContent = `${Math.min(ni, SHOW)} de ${VT_FX.length}`;
+    count.textContent = `${Math.min(ni, SHOW)} de ${ni}`;
     moreSync(ni);
     status.textContent = k === 'todos' ? `Todos os efeitos: ${ni} no catálogo, ${nd} ao vivo.` : `${VT_INTENT[k]}: ${ni} efeitos no catálogo, ${nd} ao vivo.`;
   };

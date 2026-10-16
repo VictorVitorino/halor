@@ -2,6 +2,8 @@
            Cada cena tem relógio próprio (--lt). As telas do app usam data-o="0": o relógio
            delas é o tempo global do filme, então todos os tempos dentro da janela são globais.
            .fa = entrada no tempo --at · .fd = mudança no tempo --xt · data-on="a b|c d" liga .act.
+           Cena: data-from/to, fusão de entrada e saída (data-fi/fo), espera antes de entrar (data-fw),
+           leve crescimento na entrada (data-fz) e corte com movimento reduzido (data-rc).
            Dentro de .fw (a janela do app), cqw é a largura da janela. -->
       <div class="wrap s-film-wrap" id="filme">
         <div class="film" id="film" data-state="poster" role="region" aria-label="Filme Conheça o Halor" aria-describedby="film-roteiro">
@@ -20,7 +22,7 @@
 
           <div class="film-scenes" aria-hidden="true">
             <!-- 0:00 · abertura no mundo Noite -->
-            <div class="sc sc-c sc-open" data-from="0" data-to="3.9" data-fi=".5" data-fo=".8">
+            <div class="sc sc-c sc-open" data-from="0" data-to="3.2" data-fi=".5" data-fo=".55" data-rc=".45">
               <span class="f-mk" data-anchor="mark">
                 <svg class="f-mark" viewBox="0 0 64 64">
                   <path class="fa fa-draw" style="--at:.25;--du:1.1;--len:146" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
@@ -34,9 +36,9 @@
             </div>
 
             <!-- 0:04 a 1:24 · a gravação de tela do Estúdio -->
-            <div class="sc sc-app" data-from="3.7" data-to="84" data-o="0" data-fi=".01" data-fo=".8">
+            <div class="sc sc-app" data-from="3.65" data-to="84" data-o="0" data-fi=".01" data-fo=".8">
               <div class="fw-cam">
-                <div class="fw fa fa-win" style="--at:3.6;--du:1.2" data-cur>
+                <div class="fw fa fa-win" style="--at:3.65;--du:1.2" data-cur>
                   <div class="fw-in">
                     <!-- navegador -->
                     <div class="fw-chrome">
@@ -61,7 +63,7 @@
 
                     <div class="fw-app">
                       <!-- casca do Início e dos Modelos: barra lateral e barra superior -->
-                      <div class="sc fw-shell" data-from="3.7" data-to="16.5" data-o="0" data-fi="0" data-fo="0">
+                      <div class="sc fw-shell" data-from="3.65" data-to="15.9" data-o="0" data-fi="0" data-fo=".22">
                         <aside class="fh-side">
                           <p class="fh-logo"><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg><b>halor</b></p>
                           <span class="fh-new"><svg aria-hidden="true"><use href="#i-plus"/></svg>Nova apresentação</span>
@@ -81,7 +83,7 @@
                         </div>
 
                         <!-- Passo 1 · Início -->
-                        <div class="sc fh-main" data-from="3.7" data-to="10.6" data-o="0" data-fi="0" data-fo="0">
+                        <div class="sc fh-main" data-from="3.65" data-to="10" data-o="0" data-fi="0" data-fo=".2">
                           <p class="fh-eb">Quinta-feira, 15 de outubro</p>
                           <p class="fh-h">Bom dia, Marina.</p>
                           <p class="fh-sub">O que vamos apresentar hoje?</p>
@@ -103,7 +105,7 @@
                         </div>
 
                         <!-- Passo 2 · Modelos -->
-                        <div class="sc fm-main" data-from="10" data-to="16.5" data-o="0" data-fi=".55" data-fo="0" data-fz=".012">
+                        <div class="sc fm-main" data-from="10" data-to="16.15" data-o="0" data-fw=".08" data-fi=".34" data-fo="0" data-fz=".012">
                           <div class="fm-head">
                             <span class="fm-back"><svg aria-hidden="true"><use href="#i-back"/></svg>Início</span>
                             <div><p class="fm-h">Modelos</p><p class="fm-sub">Roteiros completos para adaptar. Todos com o seu kit de marca.</p></div>
@@ -126,7 +128,7 @@
                       </div>
 
                       <!-- Passos 3 a 11 · Editor -->
-                      <div class="sc fe" data-from="15.9" data-to="75.5" data-o="0" data-fi=".6" data-fo="0" data-fz=".014">
+                      <div class="sc fe" data-from="15.9" data-to="75.5" data-o="0" data-fw=".08" data-fi=".38" data-fo="0" data-fz=".014">
                         <div class="fe-top">
                           <span class="fe-back"><svg aria-hidden="true"><use href="#i-back"/></svg></span>
                           <div class="fe-name"><b>Kickoff de projeto 2027</b><span><svg aria-hidden="true"><use href="#i-check"/></svg>Salvo às 09:42</span></div>
@@ -335,8 +337,8 @@
                       </div>
 
                       <!-- Passo 10 · Apresentar (modo palco) -->
-                      <div class="sc fpl" data-from="60.05" data-to="67.75" data-o="0" data-fi=".5" data-fo=".55" data-fz=".02">
-                        <div class="fpl-stage">
+                      <div class="sc fpl" data-from="60.05" data-to="67.72" data-o="0" data-fi=".5" data-fo=".5" data-fz=".02">
+                        <div class="fpl-stage fd" style="--xt:67.6;--xdu:.26;--xez:cubic-bezier(.25,.5,.45,1)">
                           <div class="fpl-s" data-on="0 62.9">
                             <div class="slide sl-cover fpl-cover"><span class="sl-ring fa fa-fade" style="--at:60.4;--du:1"></span><span class="sl-ring sl-ring2"></span><p class="sl-k fa fa-up" style="--at:60.5">Kickoff · 2027</p><p class="sl-h"><span class="fa fa-mask" style="--at:60.7;--du:.7">Plano 2027 em 12 semanas.</span></p><p class="sl-sub fa fa-up" style="--at:61.2">Time de produto · 4 de novembro</p><div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark"/></svg>halor</b><span>01</span></div></div>
                           </div>
@@ -357,7 +359,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="fpl-bar">
+                        <div class="fpl-bar fd" style="--xt:67.6;--xdu:.26;--xez:cubic-bezier(.25,.5,.45,1)">
                           <span class="fpl-logo"><svg aria-hidden="true"><use href="#hl-mark"/></svg>halor</span>
                           <span class="fpl-t">Kickoff de projeto 2027</span>
                           <span class="fpl-b">Anterior</span>
@@ -393,11 +395,11 @@
                               <div class="fs5-poll fwb-poll">
                                 <p><svg aria-hidden="true"><use href="#fi-vote"/></svg>Votação · toque para votar</p>
                                 <span><b>Produto</b><i><u style="width:100%"></u></i><em>17</em></span>
-                                <span class="fwb-opt2" data-hov data-on="81.5 99"><b>Design</b><i><u class="fa fa-w" style="--at:81.55;--du:.5;--w0:76%;--w1:82%"></u></i><em data-n="13 14 81.55 .3">13</em></span>
+                                <span class="fwb-opt2" data-hov data-on="82.15 99"><b>Design</b><i><u class="fa fa-w" style="--at:82.2;--du:.5;--w0:76%;--w1:82%"></u></i><em data-n="13 14 82.2 .3">13</em></span>
                                 <span><b>Operação</b><i><u style="width:47%"></u></i><em>8</em></span>
                               </div>
                               <div class="fs5-notes fs5-live"><p><svg aria-hidden="true"><use href="#fi-note"/></svg>Post-its da plateia</p><span style="--r:-3deg">integração</span><span style="--r:2deg">prazos</span><span style="--r:-1deg">dados do piloto</span><span style="--r:3deg">agenda</span><span style="--r:-2deg">metas claras</span><span style="--r:1deg">acessos</span></div>
-                              <span class="fwb-ok fa fa-up" style="--at:81.65"><svg aria-hidden="true"><use href="#i-check"/></svg>Seu voto entrou</span>
+                              <span class="fwb-ok fa fa-up" style="--at:82.3"><svg aria-hidden="true"><use href="#i-check"/></svg>Seu voto entrou</span>
                               <div class="sl-foot"><b><svg aria-hidden="true"><use href="#hl-mark-paper"/></svg>halor</b><span>05</span></div>
                             </div>
                           </div>

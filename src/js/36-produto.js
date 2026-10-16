@@ -92,7 +92,10 @@ function bootEvo() {
     seg(fill, P[0][0], P[Math.max(0, cur)][0]);
     if (cur >= 0 && cur < N - 1) seg(prog, P[cur][0], P[cur + 1][0]); else prog.style.width = '0px';
   };
+  /* leitor de tela: anuncia a época quando a pessoa escolhe ou pausa; no avanço automático fica em silêncio */
+  const live = () => info.setAttribute('aria-live', REDUCED || !visible || hold || user ? 'polite' : 'off');
   const go = i => {
+    live();
     cur = i; ev.dataset.i = String(i);
     tabs.forEach((b, k) => { b.setAttribute('aria-selected', String(k === i)); b.tabIndex = k === i ? 0 : -1; b.classList.toggle('past', k < i); });
     scenes.forEach((s, k) => s.classList.toggle('on', k === i));
@@ -107,7 +110,7 @@ function bootEvo() {
     schedule();
   };
   const schedule = () => {
-    clearTimeout(timer); ev.classList.remove('ticking');
+    clearTimeout(timer); ev.classList.remove('ticking'); live();
     if (REDUCED || !visible || hold || user || cur < 0) return;
     const dur = cur === NOW ? 6500 : cur === N - 1 ? 5200 : 4300;
     ev.style.setProperty('--dur', dur + 'ms'); void ev.offsetWidth; ev.classList.add('ticking');

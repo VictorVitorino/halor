@@ -17,6 +17,8 @@ function boot() {
   subHooks.apresentar = startStage;
   subHooks.admin = renderAdmin;
   subHooks.editor = renderEditor;
+  subHooks.painel = dashAll;
+  subHooks.inicio = renderHome;
   route();
   bootHalos();
   bootFields();

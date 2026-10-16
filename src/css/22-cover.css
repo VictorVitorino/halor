@@ -43,6 +43,10 @@
 .s-cover:not(.field-in) .lux::after { animation: none; }
 @keyframes coverWord { from { opacity: 0; transform: translateY(.42em) scale(.98); filter: blur(10px); } }
 @keyframes coverIn { from { opacity: 0; transform: translateY(14px); } }
+/* sem movimento: a capa aparece inteira de uma vez (os atrasos escondiam CTA e subtítulo por até 1,6 s) */
+@media (prefers-reduced-motion: reduce) {
+  .s-cover .w, .s-cover .s-in, .s-cover .lux::after, .s-cover .s-sub .neon-band::after { animation: none !important; }
+}
 
 /* Campo Halor dentro do sistema */
 .sub-stage { position: relative; isolation: isolate; }

@@ -288,7 +288,8 @@
 
 /* etapas: título e uma frase só, sem quebrar linha no desktop */
 @media (min-width: 961px) {
-  .pd-rec { grid-template-columns: minmax(0, 1.65fr) minmax(370px, 1fr); }
+  /* a coluna das etapas nunca fica menor que a frase mais longa: sem quebra e sem vazar da página entre 961 e 1100 px */
+  .pd-rec { grid-template-columns: minmax(0, 1.65fr) minmax(max-content, 1fr); }
   .rec-steps small { white-space: nowrap; }
 }
 
@@ -324,6 +325,13 @@
 .ev-info.swap > * { animation: evInfo .55s var(--ease-halo) both; }
 .ev-info.swap > :nth-child(2) { animation-delay: .05s; } .ev-info.swap > :nth-child(3) { animation-delay: .1s; } .ev-info.swap > :nth-child(4) { animation-delay: .15s; } .ev-info.swap > :nth-child(5) { animation-delay: .2s; }
 @keyframes evInfo { from { opacity: 0; transform: translateY(10px); } }
+/* tablet: com o palco em cima, a informação usa a largura toda em duas colunas, sem metade vazia */
+@media (min-width: 561px) and (max-width: 880px) {
+  .ev-info { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); grid-template-areas: "y y" "t who" "d att"; column-gap: clamp(24px, 5vw, 48px); justify-items: stretch; }
+  .ev-y { grid-area: y; } .ev-t { grid-area: t; } .ev-d { grid-area: d; }
+  .ev-who { grid-area: who; margin-top: 0; }
+  .ev-att { grid-area: att; align-self: start; margin-top: 4px; }
+}
 
 /* trilho: linha cheia até a época escolhida, luz andando até a próxima, futuro tracejado */
 .ev-rail { overflow-x: auto; scrollbar-width: none; margin-inline: -4px; }
@@ -348,7 +356,7 @@
 .ev-stop[aria-selected="true"] b { color: var(--text); }
 .ev-stop:hover i { transform: scale(1.2); }
 .ev-stop[aria-selected="true"]:hover i { transform: scale(1.3); }
-.ev-stop:focus-visible { outline: 2px solid var(--halor-violet); outline-offset: 2px; }
+.ev-stop:focus-visible { outline: 2px solid var(--halor-violet); outline-offset: -2px; }
 @media (max-width: 700px) {
   .ev-rail-in { grid-template-columns: repeat(7, 72px); min-width: 0; width: max-content; }
   .ev-stop b { display: none; }
@@ -534,3 +542,5 @@
 .pd-rec-frame .pf-bar .rec-live { overflow: visible; margin-left: 8px; }
 .pd-rec-frame .pf-bar .rec-live .dot { width: 8px; height: 8px; background: currentColor; }
 @media (max-width: 600px) { .pd-rec-frame .pf-bar .rec-live { font-size: 0; gap: 0; } .ev-stop span em { display: none; } }
+/* equação no celular: um termo por linha, operadores centralizados entre eles */
+@media (max-width: 560px) { #efeito .equation { flex-direction: column; gap: 6px; } #efeito .eq-op { line-height: 1; } }

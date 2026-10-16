@@ -12,6 +12,9 @@
    Elementos com .fa e .fd juntos entram e saem pelo mesmo relógio.
    No celular o palco fica em 4:5 e a câmera aproxima mais da ação.
    ========================================================================== */
+/* o relógio --lt não é herdado: o script grava o tempo em cada elemento animado, então avançar
+   um quadro recalcula só esses elementos (e não a janela inteira, com mais de mil nós) */
+@property --lt { syntax: '<number>'; inherits: false; initial-value: 0; }
 @property --at { syntax: '<number>'; inherits: false; initial-value: 0; }
 @property --du { syntax: '<number>'; inherits: false; initial-value: .5; }
 @property --xt { syntax: '<number>'; inherits: false; initial-value: 99; }
@@ -111,7 +114,7 @@
 .f-word { font-size: 6.6cqw; letter-spacing: -.035em; color: #fff; }
 .f-tag { font-size: 2.4cqw; color: #d9d0f5; }
 .f-lux { position: relative; display: inline-block; color: #fff; text-shadow: 0 0 1.6cqw rgba(169, 112, 255, .9), 0 0 4cqw rgba(139, 61, 255, .6); }
-.f-lux::after { content: ""; position: absolute; left: -3%; right: -3%; bottom: -.1em; height: .12em; border-radius: 99px; background: linear-gradient(90deg, transparent, var(--halor-violet) 18%, #fff 60%, var(--halor-glow) 82%, transparent); filter: drop-shadow(0 0 .6cqw rgba(169, 112, 255, .9)); transform-origin: left; animation: f-lux-sweep 1.4s var(--ease-halo) both paused; animation-delay: calc((var(--lat, 0) - var(--lt, 0)) * 1s); }
+.f-lux::after { content: ""; position: absolute; left: -3%; right: -3%; bottom: -.1em; height: .12em; border-radius: 99px; background: linear-gradient(90deg, transparent, var(--halor-violet) 18%, #fff 60%, var(--halor-glow) 82%, transparent); filter: drop-shadow(0 0 .6cqw rgba(169, 112, 255, .9)); transform-origin: left; animation: f-lux-sweep 1.4s var(--ease-halo) both paused; --lt: inherit; animation-delay: calc((var(--lat, 0) - var(--lt, 0)) * 1s); }
 @keyframes f-lux-sweep { from { transform: scaleX(0); opacity: 0; } }
 .f-mk-end { width: 10cqw; height: 10cqw; animation: f-breathe 2.4s ease-in-out infinite; }
 @keyframes f-breathe { 50% { transform: scale(1.04); filter: brightness(1.15); } }
@@ -497,7 +500,7 @@
 .fs5-poll p, .fs5-notes p { display: flex; align-items: center; gap: .8cqw; font: 600 1.3cqw/1 var(--f-mono); letter-spacing: .04em; text-transform: uppercase; color: var(--halor-violet-700); }
 .fs5-poll p svg, .fs5-notes p svg { width: 2cqw; height: 2cqw; }
 .fs5-poll p b { font-weight: 700; }
-.fs5-poll > span { display: grid; grid-template-columns: 9.5cqw minmax(0, 1fr) 3cqw; align-items: center; gap: 1cqw; padding: .3cqw; border-radius: 1cqw; font-size: 1.8cqw; transition: background-color .3s; }
+.fs5-poll > span { display: grid; grid-template-columns: 9.5cqw minmax(0, 1fr) 3cqw; align-items: center; gap: 1cqw; padding: .35cqw .8cqw; margin: 0 -.5cqw; border-radius: 1cqw; font-size: 1.8cqw; transition: background-color .3s; }
 .fs5-poll > span b { font-weight: 600; }
 .fs5-poll > span i { display: block; height: 2.4cqw; overflow: hidden; border-radius: 99px; background: #fff; box-shadow: inset 0 0 0 .15cqw var(--lilac-100); }
 .fs5-poll u { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--halor-violet), #b48aff); }
@@ -567,6 +570,9 @@
 }
 .film[data-state="poster"] .film-bar { opacity: 0; pointer-events: none; }
 .film[data-state="playing"]:not(:hover):not(:focus-within) .film-bar { opacity: 0; }
+/* tocando e parado por 2,5 s: barra e ponteiro somem (voltam ao mexer o mouse, tocar ou usar o teclado) */
+.film[data-state="playing"].idle:not(:has(:focus-visible)) { cursor: none; }
+.film[data-state="playing"].idle:not(:has(:focus-visible)) .film-bar { opacity: 0; }
 .film-btn { color: #fff; --h: 34px; }
 .film-btn:hover { background: rgba(255, 255, 255, .12); color: #fff; }
 .film-btn svg { width: 18px; height: 18px; }
