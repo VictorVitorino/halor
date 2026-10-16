@@ -1,19 +1,33 @@
 /* ==========================================================================
-   BIA · aparência e articulação da mascote (lê só variáveis numéricas; nada de transition)
-   Host: <div class="bia" data-pose="idle" data-face="happy" style="--x:…; --y:…; --s:1"> (template clonado dentro).
+   BIA · aparência e articulação da mascote · rig v2 (lê só variáveis numéricas; nada de transition)
+   Host: <div class="bia" data-pose="idle" data-face="happy" data-props="tablet" style="--x:…; --y:…; --s:1"> (template clonado dentro).
+   Variante cliente: <div class="bia" data-skin="cliente" …> (corpo lilás, óculos, gravatinha, sem halo e sem selo).
    Convenções (contract.md · Mascote):
    · --arm-l/--arm-r, --fore-l/--fore-r em graus: 0 = braço caído, negativo = levanta PARA FORA, positivo = cruza para dentro.
-   · --lean graus (positivo = topo inclina para a direita do espectador), --hop px (0..-40), --squash 0..1.
+   · --lean graus (positivo = topo inclina para a direita do espectador), --hop px (0..-60), --squash -1..1 (negativo = estica).
+   · --carry 0..1 (tablet desliza para o centro, entre as mãos), --face-x/--face-y px (rosto olha para cima / reverência),
+     --squint 0..1 (olho direito fecha pela pose: lupa), --halo-y (px, centro do halo no viewBox), --halo 0..1 (acende/apaga; fora das tabelas).
    · rosto: --brow-l/--brow-r (-1 franzida … 1 erguida), --brow-ang (graus; positivo = pontas internas descem, decidida;
      negativo = pontas internas sobem, preocupada), --eye-x/--eye-y (-1..1), --eye-open, --eye-happy, --wink (olho direito fecha),
-     --eye-glow (íris neon), --mouth-smile/--mouth-open/--mouth-flat/--mouth-o/--mouth-sad, --cheek, --glow (0..1).
-   · props: --p-stamp, --p-clip, --p-ring, --p-wand (0..1), --stamp-press (0..1), --ring-y (px, centro do anel no viewBox),
-     --point-l/--point-r (dedo apontando), --wave (balanço do antebraço direito), --sway (gingado de caminhar).
-   · relógio: loops (piscar, respirar, acenar, gingar) andam por --t herdado; --lph desloca a fase por instância.
+     --eye-glow (íris neon), --eye-scale (1 = normal), --mouth-smile/--mouth-open/--mouth-flat/--mouth-o/--mouth-sad, --cheek, --glow (0..1).
+   · props: --p-tablet, --p-clicker, --p-lens, --p-wand, --p-ring, --p-bubble (0..1); --p-stamp fica só por compatibilidade (nada aparece).
+     --stamp-press (0..1) virou a onda de luz das palmas; --ring-y (px, centro do anel); --point-l/--point-r (dedo apontando);
+     --wave (aceno do antebraço direito); --sway (gingado de caminhar).
+   · relógio: TODOS os loops (flutuar, braços, olhos, piscar, halo, bochechas, aceno, gingado, faíscas, pontinhos) andam por --t
+     herdado, com animation-play-state: paused e animation-delay negativo; --lph desloca a fase por instância. Tudo escala por --s.
    ========================================================================== */
-@property --wv { syntax: '<number>'; inherits: true; initial-value: 0; }
-@property --sw { syntax: '<number>'; inherits: true; initial-value: 0; }
-@property --bb { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --fl { syntax: '<number>'; inherits: true; initial-value: 0; }   /* flutuar 0..1 (2,4 s) */
+@property --fa { syntax: '<number>'; inherits: true; initial-value: 0; }   /* inclinação do flutuar -1..1, um quarto atrasada */
+@property --as { syntax: '<number>'; inherits: true; initial-value: 0; }   /* balanço dos braços -1..1 */
+@property --ex { syntax: '<number>'; inherits: true; initial-value: 0; }   /* deriva do olhar x -1..1 */
+@property --ey { syntax: '<number>'; inherits: true; initial-value: 0; }   /* deriva do olhar y -1..1 */
+@property --bl { syntax: '<number>'; inherits: true; initial-value: 0; }   /* piscada 0..1 */
+@property --cp { syntax: '<number>'; inherits: true; initial-value: 0; }   /* pulso das bochechas 0..1 */
+@property --wv { syntax: '<number>'; inherits: true; initial-value: 0; }   /* aceno -1..1 */
+@property --sw { syntax: '<number>'; inherits: true; initial-value: 0; }   /* gingado -1..1 */
+@property --bb { syntax: '<number>'; inherits: true; initial-value: 0; }   /* passo (sobe/desce) 0..1 */
+@property --hb { syntax: '<number>'; inherits: true; initial-value: 0; }   /* flutuar do halo (atrasado 200 ms) */
+@property --ha { syntax: '<number>'; inherits: true; initial-value: 0; }   /* balanço do halo (atrasado 200 ms) */
 
 .bia {
   position: absolute; left: var(--x, 0px); top: var(--y, 0px);
@@ -22,30 +36,66 @@
   /* · defaults = pose idle + rosto happy + sem props · */
   --arm-l: -18; --arm-r: -10; --fore-l: 80; --fore-r: 100; --lean: 0; --hop: 0; --squash: 0;
   --wave: 0; --sway: 0; --point-l: 0; --point-r: 0; --stamp-press: 0; --ring-y: 90;
-  --brow-l: 0; --brow-r: 0; --brow-ang: 4; --eye-x: 0; --eye-y: 0; --eye-open: 1; --eye-happy: 0; --wink: 0; --eye-glow: 0;
+  --carry: 0; --face-x: 0; --face-y: 0; --squint: 0; --halo-y: 42; --halo: 1;
+  --brow-l: 0; --brow-r: 0; --brow-ang: 4; --eye-x: 0; --eye-y: 0; --eye-open: 1; --eye-happy: 0; --wink: 0; --eye-glow: 0; --eye-scale: 1;
   --mouth-smile: 1; --mouth-open: 0; --mouth-flat: 0; --mouth-o: 0; --mouth-sad: 0; --cheek: .6; --glow: 0;
-  --p-stamp: 0; --p-clip: 0; --p-ring: 0; --p-wand: 0;
-}
-.bia-svg {
-  display: block; width: 100%; height: auto; overflow: visible;
-  /* loops auxiliares (acenar / gingar): valores -1..1 que as poses multiplicam por --wave / --sway */
-  animation: bia-loop 900ms ease-in-out infinite; animation-play-state: paused;
-  animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
-}
-@keyframes bia-loop {
-  0%   { --wv: -1; --sw: -1; --bb: 0; }
-  25%  { --bb: 1; }
-  50%  { --wv: 1;  --sw: 1;  --bb: 0; }
-  75%  { --bb: 1; }
-  100% { --wv: -1; --sw: -1; --bb: 0; }
+  --p-stamp: 0; --p-tablet: 0; --p-clicker: 0; --p-lens: 0; --p-wand: 0; --p-ring: 0; --p-bubble: 0;
 }
 
-/* · corpo inteiro: pulo, inclinação, squash (origem no centro da base, 120,270) · */
+/* ----------------------------------------------------------------------
+   VIDA · loops de valores (registrados) no <svg>; tudo abaixo lê por herança
+   ---------------------------------------------------------------------- */
+.bia-svg {
+  display: block; width: 100%; height: auto; overflow: visible;
+  animation-name: bia-float, bia-arms, bia-gaze, bia-blink, bia-cheek, bia-wave, bia-walk;
+  animation-duration: 2400ms, 2400ms, 5200ms, 9600ms, 1800ms, 900ms, 1100ms;
+  animation-timing-function: ease-in-out, ease-in-out, ease-in-out, linear, ease-in-out, ease-in-out, ease-in-out;
+  animation-iteration-count: infinite;
+  animation-play-state: paused;
+  animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
+}
+/* flutuar: 0..1 (12 px) · inclinação --fa um quarto de volta atrasada */
+@keyframes bia-float {
+  0%   { --fl: 0; --fa: 0; }
+  25%  { --fl: .5; --fa: 1; }
+  50%  { --fl: 1; --fa: 0; }
+  75%  { --fl: .5; --fa: -1; }
+  100% { --fl: 0; --fa: 0; }
+}
+/* braços: pêndulo ±7°, atrasado em relação ao corpo */
+@keyframes bia-arms { 0% { --as: -.3; } 30% { --as: 1; } 65% { --as: -1; } 100% { --as: -.3; } }
+/* olhar: deriva lenta ±2 px */
+@keyframes bia-gaze {
+  0%   { --ex: 0;   --ey: 0; }
+  28%  { --ex: 1;   --ey: -.6; }
+  48%  { --ex: .2;  --ey: -1; }
+  66%  { --ex: -1;  --ey: .3; }
+  84%  { --ex: -.3; --ey: 1; }
+  100% { --ex: 0;   --ey: 0; }
+}
+/* piscar: a cada 3,2 s; a cada terceira vez pisca duas vezes seguidas (1 % = 96 ms) */
+@keyframes bia-blink {
+  0%, 16.0% { --bl: 0; } 16.6%, 17.2% { --bl: 1; } 17.9%, 49.4% { --bl: 0; }
+  50.0%, 50.6% { --bl: 1; } 51.3%, 82.7% { --bl: 0; }
+  83.3%, 83.8% { --bl: 1; } 84.4%, 85.1% { --bl: 0; } 85.7%, 86.2% { --bl: 1; } 86.8%, 100% { --bl: 0; }
+}
+@keyframes bia-cheek { 0%, 100% { --cp: 0; } 50% { --cp: 1; } }
+/* aceno (--wave) e gingado (--sway): valores -1..1 / 0..1 que as poses ligam */
+@keyframes bia-wave { 0%, 100% { --wv: -1; } 50% { --wv: 1; } }
+@keyframes bia-walk {
+  0%   { --sw: -1; --bb: 0; }
+  25%  { --bb: 1; }
+  50%  { --sw: 1;  --bb: 0; }
+  75%  { --bb: 1; }
+  100% { --sw: -1; --bb: 0; }
+}
+
+/* · corpo inteiro: flutuar + pulo + inclinação + gingado + squash (origem no centro da base, 120,270) · */
 .bia .rig {
   transform-box: view-box; transform-origin: 120px 270px;
   transform:
-    translateY(calc((var(--hop) + var(--sway) * var(--bb) * -5) * 1px))
-    rotate(calc((var(--lean) + var(--sway) * var(--sw) * 3) * 1deg))
+    translateY(calc((var(--hop) + var(--fl) * -12 + var(--sway) * var(--bb) * -6) * 1px))
+    rotate(calc((var(--lean) + var(--fa) * 2 + var(--sway) * var(--sw) * 4) * 1deg))
     scale(calc(1 + var(--squash) * .16), calc(1 - var(--squash) * .2));
 }
 /* · respiração (2,6 s) no tronco, origem na base · */
@@ -54,14 +104,14 @@
   animation: bia-breathe 2600ms ease-in-out infinite; animation-play-state: paused;
   animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
 }
-@keyframes bia-breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(.992, 1.022); } }
+@keyframes bia-breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(.99, 1.025); } }
 
 /* · sombra: encolhe e clareia quando ela sobe · */
 .bia .shadow {
   fill: url(#bia-g-shadow);
   transform-box: view-box; transform-origin: 120px 300px;
-  transform: scale(calc(1 + var(--hop) / 130));
-  opacity: calc(1 + var(--hop) / 80);
+  transform: scale(calc(1 + (var(--hop) - var(--fl) * 12 - var(--sway) * var(--bb) * 6) / 130));
+  opacity: calc(1 + (var(--hop) - var(--fl) * 12) / 90);
 }
 .pitch[data-world="night"] .bia .shadow, .bia.night .shadow { fill: url(#bia-g-shadow-night); }
 
@@ -71,33 +121,40 @@
 /* · corpo · */
 .bia .body { fill: url(#bia-g-body); }
 .bia .body-side { fill: url(#bia-g-body-side); }
+.bia .cap-hi { fill: url(#bia-g-cap); opacity: .55; }
 .bia .sheen { fill: none; stroke: url(#bia-g-sheen); stroke-width: 9; stroke-linecap: round; opacity: .9; }
 .bia .sheen-dot { fill: #fff; opacity: .5; }
+.bia .sheen-dot-2 { opacity: .35; }
 
 /* · selo Halor · */
 .bia .seal circle { fill: #6421d1; stroke: rgba(244, 238, 255, .28); stroke-width: 1.5; }
+.bia .bowtie, .bia .glasses { display: none; }
 
-/* · rosto · */
-.bia .cheek { fill: #ff9ad5; opacity: calc(var(--cheek) * .42); }
+/* · rosto (desloca por --face-x/--face-y) · */
+.bia .face { transform: translate(calc(var(--face-x) * 1px), calc(var(--face-y) * 1px)); }
+.bia .cheek { transform-box: fill-box; transform-origin: 50% 50%; transform: scale(calc(1 + var(--cp) * var(--eye-happy) * .16)); }
+.bia .cheek ellipse { fill: #ff9ad5; opacity: calc(var(--cheek) * .42 + var(--cp) * var(--eye-happy) * .14); }
+.bia .eye { transform-box: fill-box; transform-origin: 50% 50%; transform: scale(var(--eye-scale)); }
 .bia .eye .white { fill: #f4eeff; }
-.bia .eye .eye-glow { fill: url(#bia-g-eyeglow); opacity: var(--eye-glow); }
-.bia .eye .iris { transform: translate(calc(var(--eye-x) * 5px), calc(var(--eye-y) * 4px)); }
+.bia .eye .eye-glow { fill: url(#bia-g-eyeglow); }
+.bia .eye .iris { transform: translate(calc(var(--eye-x) * 5px + var(--ex) * 2px), calc(var(--eye-y) * 4px + var(--ey) * 2px)); }
 .bia .iris-ring { fill: #8b3dff; }
 .bia .iris-core { fill: color-mix(in srgb, #5a35a8 calc(100% - var(--eye-glow) * 100%), #c9a6ff); }
 .bia .pupil { fill: color-mix(in srgb, #2a1f4d calc(100% - var(--eye-glow) * 100%), #ffffff); }
 .bia .hi { fill: #ffffff; }
-.bia .lid { fill: #8b3dff; transform-box: fill-box; transform-origin: 50% 0; }
+.bia .lid { fill: #9c5cff; transform-box: fill-box; transform-origin: 50% 0; }
 .bia .lid-open { transform: scaleY(calc(1 - var(--eye-open))); }
-.bia .eye-r .lid-open { transform: scaleY(calc(1 - var(--eye-open) * (1 - var(--wink)))); }
-.bia .lid-blink { --ldur: 3400; transform: scaleY(0); animation-fill-mode: both; }   /* usa .l.blink do motor (scaleY 0→1 por ~100 ms a cada 3,4 s); fora do loop fica recolhida */
-.bia .eye .white, .bia .eye .iris, .bia .eye .lid, .bia .eye .eye-glow { opacity: calc(1 - var(--eye-happy)); }
+.bia .eye-r .lid-open { transform: scaleY(calc(1 - var(--eye-open) * (1 - var(--wink)) * (1 - var(--squint)))); }
+.bia .lid-blink { transform: scaleY(var(--bl)); }
+.bia .eye .white, .bia .eye .iris, .bia .eye .lid { opacity: calc(1 - var(--eye-happy)); }
 .bia .eye .eye-glow { opacity: calc(var(--eye-glow) * (1 - var(--eye-happy))); }
 .bia .happy-arc { fill: none; stroke: #171030; stroke-width: 5.5; stroke-linecap: round; opacity: var(--eye-happy); }
-.bia .wink-arc { fill: none; stroke: #171030; stroke-width: 5; stroke-linecap: round; opacity: calc(var(--wink) * (1 - var(--eye-happy))); }
+.bia .wink-arc { fill: none; stroke: #171030; stroke-width: 5; stroke-linecap: round; opacity: calc(max(var(--wink), var(--squint)) * (1 - var(--eye-happy))); }
+.bia .wink-arc-l { opacity: 0; }
 
 .bia .brow { fill: none; stroke: #171030; stroke-width: 6.5; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 50%; }
-.bia .brow-l { transform: translateY(calc(var(--brow-l) * -7px)) rotate(calc(var(--brow-ang) * 1deg)); }
-.bia .brow-r { transform: translateY(calc(var(--brow-r) * -7px)) rotate(calc(var(--brow-ang) * -1deg)); }
+.bia .brow-l { transform: translateY(calc(var(--brow-l) * -7px + var(--fl) * -1px)) rotate(calc(var(--brow-ang) * 1deg)); }
+.bia .brow-r { transform: translateY(calc(var(--brow-r) * -7px + var(--fl) * -1px)) rotate(calc(var(--brow-ang) * -1deg)); }
 
 .bia .m { transform-box: fill-box; transform-origin: 50% 50%; }
 .bia .m-smile, .bia .m-sad, .bia .m-flat { fill: none; stroke: #f4eeff; stroke-width: 5.5; stroke-linecap: round; }
@@ -107,24 +164,40 @@
 .bia .m-o     { opacity: var(--mouth-o);     transform: scale(calc(.45 + .55 * var(--mouth-o))); }
 .bia .m-open  { opacity: var(--mouth-open);  transform: scale(calc(.5 + .5 * var(--mouth-open))); }
 
-/* · boina · */
-.bia .hat-crown { fill: url(#bia-g-hat); }
-.bia .hat-rim { fill: #1b1238; }
-.bia .hat-visor { fill: #130c28; }
-.bia .hat-hi { fill: none; stroke: #c9a6ff; stroke-width: 2.4; stroke-linecap: round; opacity: .35; }
-.bia .hat-button { fill: #a970ff; }
+/* · halo: anel aberto, neon, flutua 200 ms atrás do corpo e balança · */
+.bia .halo-pos {
+  transform: translate(120px, calc(var(--halo-y) * 1px));
+  animation: bia-halo 2400ms ease-in-out infinite; animation-play-state: paused;
+  animation-delay: calc((var(--lph, 0) + 200 - var(--t, 0)) * 1ms);
+}
+@keyframes bia-halo {
+  0%   { --hb: 0; --ha: 0; }
+  25%  { --hb: .5; --ha: 1; }
+  50%  { --hb: 1; --ha: 0; }
+  75%  { --hb: .5; --ha: -1; }
+  100% { --hb: 0; --ha: 0; }
+}
+.bia .halo {
+  opacity: var(--halo);
+  transform-box: view-box; transform-origin: 0px 0px;
+  transform: translateY(calc((var(--hb) - var(--fl)) * -14px)) rotate(calc(var(--ha) * 5deg)) scale(calc(.55 + .45 * var(--halo)));
+}
+.bia .halo-glow { fill: url(#bia-g-haloglow); opacity: .28; }
+.bia .halo-back { fill: none; stroke: #8b3dff; stroke-width: 11; stroke-linecap: round; opacity: .28; filter: url(#bia-f-blur2); }
+.bia .halo-arc { fill: none; stroke: #a970ff; stroke-width: 6; stroke-linecap: round; filter: url(#bia-f-neon); }
+.bia .halo-spark { fill: #f4eeff; filter: url(#bia-f-neon-sm); }
 
 /* · braços (ombro em 0,0 de cada grupo; cotovelo em 0,0 do .fore; mão em 0,0 do .hand) · */
 .bia .limb { fill: none; stroke: #7a2ef0; stroke-width: 17; stroke-linecap: round; }
 .bia .limb-fore { stroke: #7430e6; }
 .bia .arm, .bia .fore, .bia .hand, .bia .up { transform-box: view-box; transform-origin: 0px 0px; }
-.bia .arm-l  { transform: rotate(calc((var(--arm-l) + var(--sway) * var(--sw) * -9) * -1deg)); }
-.bia .arm-r  { transform: rotate(calc((var(--arm-r) + var(--sway) * var(--sw) *  9) *  1deg)); }
+.bia .arm-l  { transform: rotate(calc((var(--arm-l) + var(--as) * 7 + var(--sway) * var(--sw) * -14) * -1deg)); }
+.bia .arm-r  { transform: rotate(calc((var(--arm-r) + var(--as) * -7 + var(--sway) * var(--sw) * 14) *  1deg)); }
 .bia .fore-l { transform: rotate(calc(var(--fore-l) * -1deg)); }
-.bia .fore-r { transform: rotate(calc((var(--fore-r) + var(--wave) * var(--wv) * 18) * 1deg)); }
-/* os props ficam sempre "em pé": desfaz a rotação acumulada do braço */
-.bia .up-l { transform: rotate(calc((var(--arm-l) + var(--fore-l)) * 1deg)); }
-.bia .up-r { transform: rotate(calc((var(--arm-r) + var(--fore-r) + var(--wave) * var(--wv) * 18) * -1deg)); }
+.bia .fore-r { transform: rotate(calc((var(--fore-r) + var(--wave) * var(--wv) * 28) * 1deg)); }
+/* os props ficam sempre "em pé": desfaz a rotação acumulada do braço (inclusive os loops) */
+.bia .up-l { transform: rotate(calc((var(--arm-l) + var(--as) * 7 + var(--sway) * var(--sw) * -14 + var(--fore-l)) * 1deg)); }
+.bia .up-r { transform: rotate(calc((var(--arm-r) + var(--as) * -7 + var(--sway) * var(--sw) * 14 + var(--fore-r) + var(--wave) * var(--wv) * 28) * -1deg)); }
 .bia .glove { fill: #c9a6ff; }
 .bia .glove-hi { fill: #fff; opacity: .55; }
 .bia .finger { fill: none; stroke: #c9a6ff; stroke-width: 9.5; stroke-linecap: round; }
@@ -133,39 +206,106 @@
 
 /* · props na mão · */
 .bia .prop { transform-box: view-box; transform-origin: 0px 0px; }
-.bia .prop-stamp { opacity: var(--p-stamp); transform: scale(calc(.75 + .5 * var(--p-stamp))); }
-.bia .prop-clip  { opacity: var(--p-clip);  transform: scale(calc(.6 + .4 * var(--p-clip))); }
-.bia .prop-wand  { opacity: var(--p-wand);  transform: scale(calc(.6 + .4 * var(--p-wand))); }
+.bia .prop-tablet  { opacity: var(--p-tablet);  transform: scale(calc(.6 + .4 * var(--p-tablet))); }
+.bia .prop-clicker { opacity: var(--p-clicker); transform: scale(calc(.6 + .4 * var(--p-clicker))); }
+.bia .prop-lens    { opacity: var(--p-lens);    transform: scale(calc(.6 + .4 * var(--p-lens))); }
+.bia .prop-wand    { opacity: var(--p-wand);    transform: scale(calc(.6 + .4 * var(--p-wand))); }
+.bia .prop-bubble  { opacity: var(--p-bubble);  transform: scale(calc(.4 + .6 * var(--p-bubble))); }
 
-.bia .stamp-press { transform: translateY(calc(var(--stamp-press) * 7px)); }
-.bia .stamp-neck { fill: #171030; }
-.bia .stamp-knob { fill: #2a1f4d; }
-.bia .stamp-base { fill: url(#bia-g-stamp); }
-.bia .stamp-pad { fill: #6421d1; }
-.bia .stamp-check { fill: none; stroke: #f4eeff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
-.bia .stamp-ring {
+/* tablet lúmen: na mão direita; com --carry desliza para o centro do corpo (entre as duas mãos) */
+.bia .tablet-pos { transform: translate(calc(23px + var(--carry) * -40px), calc(24px + var(--carry) * -20px)); }
+.bia .tablet-body { fill: url(#bia-g-tablet); stroke: #4a4366; stroke-width: 1.2; }
+.bia .tablet-screen { fill: url(#bia-g-screen); }
+.bia .tablet-bar { fill: #8b3dff; }
+.bia .tablet-bar.b2 { fill: #a970ff; }
+.bia .tablet-bar.b3 { fill: #c9a6ff; }
+.bia .tablet-base { fill: none; stroke: #d3cbe8; stroke-width: 1.6; stroke-linecap: round; }
+.bia .tablet-home { fill: #5a35a8; }
+
+/* clicker: controle pequeno, violeta escuro, botão neon e LED piscando */
+.bia .clicker-body { fill: #2a1f4d; stroke: #4a4366; stroke-width: 1.2; }
+.bia .clicker-hi { fill: #ffffff; opacity: .14; }
+.bia .clicker-btn { fill: #a970ff; filter: url(#bia-f-neon-sm); }
+.bia .clicker-led { fill: #c9a6ff; }
+.bia .clicker-beam { fill: none; stroke: #c9a6ff; stroke-width: 1.8; stroke-linecap: round; opacity: .7; }
+
+/* lupa de luz: lente neon translúcida */
+.bia .lens-handle { fill: none; stroke: #2a1f4d; stroke-width: 6; stroke-linecap: round; }
+.bia .lens-halo { fill: url(#bia-g-haloglow); opacity: .6; }
+.bia .lens-glass { fill: url(#bia-g-lens); }
+.bia .lens-rim { fill: none; stroke: #c9a6ff; stroke-width: 3.5; filter: url(#bia-f-neon-sm); }
+.bia .lens-hi { fill: none; stroke: #ffffff; stroke-width: 2.4; stroke-linecap: round; opacity: .75; }
+
+/* varinha de luz: faísca pisca, brilho pulsa */
+.bia .wand-stick { fill: none; stroke: url(#bia-g-wand); stroke-width: 5.5; stroke-linecap: round; }
+.bia .wand-glow { fill: url(#bia-g-eyeglow); transform-box: fill-box; transform-origin: 50% 50%; }
+.bia .wand-spark { fill: #8b3dff; stroke: #f4eeff; stroke-width: 1.5; stroke-linejoin: round; filter: url(#bia-f-neon); }
+.bia .wand-spark-2 { fill: #f4eeff; stroke: none; filter: url(#bia-f-neon-sm); }
+
+/* onda de luz das palmas (três tempos: ergue, bate, onda) */
+.bia .clap-ring {
   fill: none; stroke: #a970ff; stroke-width: 3; filter: url(#bia-f-neon);
   transform-box: fill-box; transform-origin: 50% 50%;
-  transform: scale(calc(.25 + var(--stamp-press) * 1.6));
+  transform: scale(calc(.25 + var(--stamp-press) * 1.8));
+  opacity: calc(var(--stamp-press) * (1 - var(--stamp-press)) * 4);
+}
+.bia .clap-spark {
+  fill: #f4eeff; filter: url(#bia-f-neon-sm);
+  transform-box: fill-box; transform-origin: 50% 50%;
+  transform: scale(calc(.2 + var(--stamp-press) * 1.4)) rotate(calc(var(--stamp-press) * 40deg));
   opacity: calc(var(--stamp-press) * (1 - var(--stamp-press)) * 4);
 }
 
-.bia .clip-board { fill: #f4eeff; stroke: #d9c7ff; stroke-width: 1.5; }
-.bia .clip-clip { fill: #2a1f4d; }
-.bia .clip-clip2 { fill: #5a35a8; }
-.bia .clip-line { fill: none; stroke: #a69cc4; stroke-width: 4; stroke-linecap: round; }
-.bia .clip-check { fill: none; stroke: #8b3dff; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
-
-.bia .wand-stick { fill: none; stroke: #2a1f4d; stroke-width: 5.5; stroke-linecap: round; }
-.bia .wand-glow { fill: url(#bia-g-eyeglow); }
-.bia .wand-spark { fill: #8b3dff; stroke: #f4eeff; stroke-width: 1.5; stroke-linejoin: round; filter: url(#bia-f-neon); transform-box: fill-box; transform-origin: 50% 50%; }
+/* balão de fala: pontinhos "pensando/falando" */
+.bia .bubble-body { fill: #f4eeff; stroke: #d9c7ff; stroke-width: 1.5; stroke-linejoin: round; }
+.bia .bubble-dot {
+  fill: #8b3dff; transform-box: fill-box; transform-origin: 50% 50%;
+  animation: bia-dot 1200ms ease-in-out infinite; animation-play-state: paused;
+  animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
+}
+.bia .bubble-dot.d2 { animation-delay: calc((var(--lph, 0) - var(--t, 0) - 160) * 1ms); }
+.bia .bubble-dot.d3 { animation-delay: calc((var(--lph, 0) - var(--t, 0) - 320) * 1ms); }
+@keyframes bia-dot { 0%, 100% { transform: translateY(0) scale(.85); opacity: .45; } 35% { transform: translateY(-4px) scale(1.15); opacity: 1; } 70% { transform: translateY(0) scale(.9); opacity: .55; } }
 
 /* · anel de luz (portal) · */
 .bia .ring-pos { transform: translate(120px, calc(var(--ring-y) * 1px)); opacity: var(--p-ring); }
 .bia .ring { transform-box: fill-box; transform-origin: 50% 50%; transform: scale(calc(.5 + .5 * var(--p-ring))); }
 .bia .ring-arc { fill: none; stroke: #a970ff; stroke-width: 6; stroke-linecap: round; filter: url(#bia-f-neon); }
 .bia .ring-in { fill: none; stroke: #c9a6ff; stroke-width: 1.5; opacity: .35; }
-.bia .ring-spark { fill: #f4eeff; filter: url(#bia-f-neon); transform-box: fill-box; transform-origin: 50% 50%; }
+.bia .ring-spark { fill: #f4eeff; filter: url(#bia-f-neon); }
 
-/* · loop twinkle (faíscas) · se o motor não estiver carregado, fica parado · */
-.bia .twinkle { animation-play-state: paused; }
+/* · faíscas, pulsos e LED (loops próprios, por --t) · */
+.bia .bia-tw, .bia .bia-tw2 {
+  transform-box: fill-box; transform-origin: 50% 50%;
+  animation: bia-twinkle 1600ms ease-in-out infinite; animation-play-state: paused;
+  animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
+}
+.bia .bia-tw2 { animation-duration: 1100ms; animation-delay: calc((var(--lph, 0) - var(--t, 0) - 500) * 1ms); }
+@keyframes bia-twinkle { 0%, 100% { transform: scale(.55) rotate(0); opacity: .35; } 50% { transform: scale(1.2) rotate(30deg); opacity: 1; } }
+.bia .bia-pulse { animation: bia-pulse 1600ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms); }
+@keyframes bia-pulse { 0%, 100% { transform: scale(.8); opacity: .6; } 50% { transform: scale(1.15); opacity: 1; } }
+.bia .bia-led { animation: bia-led 1600ms steps(1, end) infinite; animation-play-state: paused; animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms); }
+@keyframes bia-led { 0%, 100% { opacity: 1; } 50% { opacity: .15; } }
+
+/* ----------------------------------------------------------------------
+   VARIANTE CLIENTE · data-skin="cliente": lilás claro, óculos, gravatinha, sem halo, sem selo
+   ---------------------------------------------------------------------- */
+.bia[data-skin="cliente"] { --halo: 0; }
+.bia[data-skin="cliente"] .body { fill: url(#bia-g-body-cli); }
+.bia[data-skin="cliente"] .body-side { opacity: .45; }
+.bia[data-skin="cliente"] .cap-hi { opacity: .7; }
+.bia[data-skin="cliente"] .seal, .bia[data-skin="cliente"] .halo-pos { display: none; }
+.bia[data-skin="cliente"] .bowtie, .bia[data-skin="cliente"] .glasses { display: initial; }
+.bia[data-skin="cliente"] .bowtie path { fill: #2a1f4d; }
+.bia[data-skin="cliente"] .bowtie rect { fill: #5a35a8; }
+.bia[data-skin="cliente"] .glasses circle { fill: rgba(255, 255, 255, .10); stroke: #2a1f4d; stroke-width: 2.6; }
+.bia[data-skin="cliente"] .glasses path { fill: none; stroke: #2a1f4d; stroke-width: 2.6; stroke-linecap: round; }
+.bia[data-skin="cliente"] .lid { fill: #c9a6ff; }
+.bia[data-skin="cliente"] .iris-ring { fill: #5a35a8; }
+.bia[data-skin="cliente"] .iris-core { fill: color-mix(in srgb, #2a1f4d calc(100% - var(--eye-glow) * 100%), #c9a6ff); }
+.bia[data-skin="cliente"] .m-smile, .bia[data-skin="cliente"] .m-sad, .bia[data-skin="cliente"] .m-flat { stroke: #2a1f4d; }
+.bia[data-skin="cliente"] .limb { stroke: #b08aff; }
+.bia[data-skin="cliente"] .limb-fore { stroke: #a67cff; }
+.bia[data-skin="cliente"] .glove { fill: #ece3ff; }
+.bia[data-skin="cliente"] .finger { stroke: #ece3ff; }
+.bia[data-skin="cliente"] .cheek ellipse { fill: #ff8ac8; }

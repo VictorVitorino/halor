@@ -1,46 +1,38 @@
-<!-- CENA 1 · O primeiro olhar · noite, Campo Halor com entrada. Só partículas até 3,4 s. -->
-<section class="scene s1" id="s1" data-field="1" data-field-entrance="1">
-  <!-- a plateia: pares de olhos acendem em semicírculo, olhando para o centro (na palavra "olhar") -->
-  <div class="s1-aud" style="left: 0; top: 0; --stag: 120">
-    <div class="eyes k pop e1" style="--in: 3400; --i: 0; left: 420px; top: 330px; --ex: .8; --ey: .3"><i></i><i></i></div>
-    <div class="eyes k pop e2" style="--in: 3400; --i: 1; left: 330px; top: 600px; --ex: .9; --ey: -.1"><i></i><i></i></div>
-    <div class="eyes k pop e3" style="--in: 3400; --i: 2; left: 1380px; top: 330px; --ex: -.8; --ey: .3"><i></i><i></i></div>
-    <div class="eyes k pop e4" style="--in: 3400; --i: 3; left: 1470px; top: 600px; --ex: -.9; --ey: -.1"><i></i><i></i></div>
-    <div class="eyes k pop e5" style="--in: 3400; --i: 4; left: 900px; top: 820px; --ex: 0; --ey: -1"><i></i><i></i></div>
-    <div class="eyes k pop e6" style="--in: 3400; --i: 5; left: 620px; top: 780px; --ex: .6; --ey: -.8"><i></i><i></i></div>
-    <div class="eyes k pop e7" style="--in: 3400; --i: 6; left: 1180px; top: 780px; --ex: -.6; --ey: -.8"><i></i><i></i></div>
-    <div class="s1-phone k pop" style="--in: 5100; --dur: 500; left: 420px; top: 680px"><i></i></div>
-    <p class="s1-zzz k up" style="--in: 5700; left: 1610px; top: 540px">z<span>z</span><span>z</span></p>
+<!-- CENA 1 · Da proposta ao negócio · abre no escuro com o Campo Halor; a luz abre em círculo e revela o mundo lavanda -->
+<section class="scene s1" id="s1" data-world="paper" data-world-from="night" data-world-at="2600" data-world-cx="960" data-world-cy="560" data-field="1" data-field-until="2800" data-field-entrance="1">
+  <!-- a estrela da oportunidade -->
+  <div class="s1-star k pop" style="--in: var(--w-oportunidade); --dur: 500; left: 230px; top: 290px">
+    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"><g class="l twinkle"><path d="M60 4v20M60 96v20M4 60h20M96 60h20M20 20l14 14M86 86l14 14M100 20L86 34M34 86L20 100"/></g></svg>
+    <b>O</b>
+  </div>
+  <i class="ring k ring-x" style="--in: calc(var(--w-oportunidade) + 100); --dur: 900; left: 800px; top: 690px"></i>
+
+  <!-- trilha, moeda "?", muro e a porta NEGÓCIO -->
+  <div class="s1-path k grow-x" style="--in: var(--w-o); --dur: 900; left: 600px; top: 850px; width: 1000px"></div>
+  <div class="s1-coin k pop" style="--in: var(--w-dificil); --dur: 400; left: 900px; top: 842px">?</div>
+  <div class="s1-wall k up" style="--in: calc(var(--w-dificil) + 350); --dur: 400; left: 1130px; top: 790px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="s1-door k up" style="--in: var(--w-transformala); --dur: 600; left: 1500px; top: 470px">
+    <span class="s1-door-sign">Negócio</span>
+    <span class="s1-door-sign lit k fade" style="--in: var(--w-negocio); --dur: 300">Negócio</span>
+    <i class="s1-door-frame"><b class="s1-door-light k fade" style="--in: calc(var(--w-negocio) - 200); --dur: 500"></b></i>
+    <i class="s1-door-halo k fade" style="--in: var(--w-negocio); --dur: 600"></i>
   </div>
 
-  <!-- slide com carinha, no centro -->
-  <div class="k down s1-slide" style="--in: 3800; --dur: 800; left: 690px; top: 330px">
-    <div class="slide live k s1-hop" style="--in: 6500; --dur: 900; position: relative">
-      <span class="sl-glow"></span>
-      <p class="sl-k">Kickoff 2027</p>
-      <p class="sl-t">Plano em <em>12 semanas</em></p>
-      <ul><li>Objetivos do trimestre</li><li>Responsáveis por frente</li></ul>
-      <div class="sl-bars"><i style="--v:.42"></i><i style="--v:.58"></i><i style="--v:.74"></i><i class="hot" style="--v:.94"></i></div>
-      <svg class="sl-face face-ok" viewBox="0 0 92 60" aria-hidden="true">
-        <ellipse cx="26" cy="22" rx="14" ry="16" fill="#fff"/><ellipse cx="66" cy="22" rx="14" ry="16" fill="#fff"/>
-        <circle cx="29" cy="24" r="6.5" fill="#2a1f4d"/><circle cx="69" cy="24" r="6.5" fill="#2a1f4d"/>
-        <circle cx="31.5" cy="21.5" r="2.2" fill="#fff"/><circle cx="71.5" cy="21.5" r="2.2" fill="#fff"/>
-        <path d="M32 48q14 12 28 0" fill="none" stroke="#f4eeff" stroke-width="4" stroke-linecap="round"/>
-      </svg>
-      <svg class="sl-face face-worried k fade" style="--in: 5300; --dur: 400" viewBox="0 0 92 60" aria-hidden="true">
-        <rect width="92" height="60" rx="10" fill="#120b26"/>
-        <path d="M10 8l22 5M82 8l-22 5" stroke="#f4eeff" stroke-width="4" stroke-linecap="round"/>
-        <ellipse cx="26" cy="26" rx="14" ry="15" fill="#fff"/><ellipse cx="66" cy="26" rx="14" ry="15" fill="#fff"/>
-        <circle cx="30" cy="29" r="6.5" fill="#2a1f4d"/><circle cx="62" cy="29" r="6.5" fill="#2a1f4d"/>
-        <path d="M34 50h24" fill="none" stroke="#f4eeff" stroke-width="4" stroke-linecap="round"/>
-      </svg>
+  <!-- a Proposta: nasce em "oportunidade", ganha carinha e pezinhos em "O difícil" e caminha até a porta -->
+  <div class="kx" style="--out: calc(var(--w-negocio) + 700); --xdur: 500; left: 0; top: 0">
+    <div class="s1-walker k s1-walk" style="--in: var(--w-o); --dur: calc(var(--w-negocio) - var(--w-o) + 600); left: 660px; top: 520px">
+      <div class="s1-doc k pop" style="--in: calc(var(--w-oportunidade) - 150); --dur: 600">
+        <p class="dt">Proposta</p><i class="dl"></i><i class="dl s"></i>
+        <div class="db"><i style="--v:.45"></i><i style="--v:.7"></i><i class="hot" style="--v:1"></i></div>
+        <svg class="df k fade" style="--in: var(--w-o); --dur: 300" viewBox="0 0 120 70" aria-hidden="true">
+          <ellipse cx="34" cy="26" rx="13" ry="15" fill="#fff" stroke="#17112b" stroke-width="3"/><ellipse cx="86" cy="26" rx="13" ry="15" fill="#fff" stroke="#17112b" stroke-width="3"/>
+          <circle cx="37" cy="29" r="6" fill="#17112b"/><circle cx="89" cy="29" r="6" fill="#17112b"/>
+          <circle cx="39" cy="27" r="2" fill="#fff"/><circle cx="91" cy="27" r="2" fill="#fff"/>
+          <path d="M42 54q18 14 36 0" fill="none" stroke="#17112b" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="16" cy="48" r="7" fill="#ff9ad5" opacity=".6"/><circle cx="104" cy="48" r="7" fill="#ff9ad5" opacity=".6"/>
+        </svg>
+        <div class="legs k fade" style="--in: var(--w-o); --dur: 300"><i class="fl"></i><i class="fr"></i></div>
+      </div>
     </div>
-  </div>
-
-  <!-- medidor de atenção -->
-  <div class="s1-meter k right" style="--in: 4100; left: 1270px; top: 330px">
-    <span class="mono">Atenção</span>
-    <div class="s1-meter-bar"><i class="k s1-drop" style="--in: 4700; --dur: 2500"></i></div>
-    <b class="mono"><span class="num-n k counter" style="--n0: 100; --n1: 22; --in: 4700; --dur: 2500"></span> %</b>
   </div>
 </section>

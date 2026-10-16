@@ -40,13 +40,21 @@ svg { display: block; }
 }
 .bg-paper {
   /* acende como luz a partir do cordão do interruptor (canto direito), em varredura radial */
-  clip-path: circle(calc(var(--paper-k, 0) * 2400px) at 1690px 520px);
+  clip-path: circle(calc(var(--paper-k, 0) * 2400px) at calc(var(--paper-cx, 1690) * 1px) calc(var(--paper-cy, 520) * 1px));
   background:
-    radial-gradient(55% 60% at 12% 18%, rgba(233, 223, 255, .9), transparent 70%),
-    radial-gradient(45% 55% at 88% 80%, rgba(217, 199, 255, .7), transparent 70%),
-    radial-gradient(35% 40% at 75% 12%, rgba(243, 238, 255, 1), transparent 70%),
+    radial-gradient(34% 44% at 18% 30%, rgba(217, 199, 255, .75), transparent 72%),
+    radial-gradient(30% 42% at 80% 26%, rgba(255, 214, 240, .55), transparent 72%),
+    radial-gradient(44% 36% at 50% 68%, rgba(233, 223, 255, .95), transparent 72%),
+    radial-gradient(24% 30% at 90% 72%, rgba(201, 166, 255, .35), transparent 72%),
     var(--mist);
 }
+.bg-paper::before {
+  /* chão: uma linha de luz suave onde as peças e a Bia se apoiam */
+  content: ""; position: absolute; left: 0; right: 0; top: 896px; height: 3px; z-index: 1;
+  background: linear-gradient(90deg, transparent, rgba(139, 61, 255, .28) 12%, rgba(139, 61, 255, .28) 88%, transparent);
+  box-shadow: 0 10px 40px rgba(139, 61, 255, .12);
+}
+.bg-paper .doodles { position: absolute; inset: 0; width: 1920px; height: 1080px; color: var(--halor-violet); opacity: .28; }
 .bg-paper::after {
   content: ""; position: absolute; inset: 0; opacity: .55;
   background-image: linear-gradient(rgba(139, 61, 255, .07) 1px, transparent 1px), linear-gradient(90deg, rgba(139, 61, 255, .07) 1px, transparent 1px);

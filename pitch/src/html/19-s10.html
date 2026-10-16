@@ -1,37 +1,45 @@
-<!-- CENA 10 · PPTX e PDF viram HTML · papel -->
-<section class="scene s10" id="s10" data-world="paper">
-  <!-- arquivos sonolentos entram pela esquerda (em PowerPoint, em PDF) e voam para o anel em "Importe" -->
-  <div class="file k left s10-f1" style="--in: 800; --dur: 800; left: 220px; top: 420px">
-    <svg class="fl-face" viewBox="0 0 70 44" aria-hidden="true"><path d="M8 18q10-8 20 0M42 18q10-8 20 0" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/><path d="M24 36q11 4 22 0" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/></svg>
-    <span class="fl-tag">PPTX</span>
-  </div>
-  <div class="file pdf k left s10-f2" style="--in: 1500; --dur: 800; left: 400px; top: 500px">
-    <svg class="fl-face" viewBox="0 0 70 44" aria-hidden="true"><path d="M8 18q10-8 20 0M42 18q10-8 20 0" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/><circle cx="35" cy="36" r="5" fill="none" stroke="#4a4366" stroke-width="4"/></svg>
-    <span class="fl-tag">PDF</span>
-  </div>
-  <p class="s10-zzz k up" style="--in: 1700; left: 300px; top: 340px">z<span>z</span><span>z</span></p>
-
-  <!-- a Bia ergue o anel aberto -->
-  <div class="bia" data-pose="idle" data-face="happy" data-props="" data-keys="1900:pose=hold-ring,face=focus,dur=600;3600:face=wow;5400:face=proud;5900:pose=stamp,props=stamp,dur=400;6300:pose=stamp-down,dur=140;6800:pose=present,props=,face=proud" style="--x: 960px; --y: 960px; --s: 1.1"></div>
-  <div class="k pop" style="--in: 2100; --dur: 700; left: 960px; top: 470px; width: 0; height: 0"><i class="s10-portal l pulse"></i></div>
-  <i class="s10-portal-glow k fade" style="--in: 2300; --dur: 900; left: 960px; top: 470px"></i>
-
-  <!-- arquivos atravessam o portal -->
-  <div class="s10-sweep k s10-cross" style="--in: 3100; --dur: 700; left: 960px; top: 470px"></div>
-
-  <!-- do outro lado, o slide vivo -->
-  <div class="slide paper live k s10-emerge" style="--in: 3600; --dur: 900; left: 1190px; top: 330px; width: 580px">
-    <p class="sl-k">Plano 2027</p>
-    <p class="sl-t k up" style="--in: 4060">Objetivos em <em>quatro fases</em></p>
-    <div class="s9-cols" style="grid-template-columns: 1fr 1fr">
-      <div class="sl-bars" style="height: 100px; --stag: 120"><i class="k grow-y" style="--v:.4; --in: 4400; --i: 0"></i><i class="k grow-y" style="--v:.6; --in: 4400; --i: 1"></i><i class="hot k grow-y" style="--v:.9; --in: 4400; --i: 2"></i></div>
-      <ul class="k fade" style="--in: 4700; font-size: 16px"><li>Cronograma em 12 semanas</li><li>Responsáveis por frente</li><li>Próximos passos</li></ul>
+<!-- CENA 10 · PDF e PPT viram HTML · a máquina de importar; depois o editor com o slide importado -->
+<section class="scene s10" id="s10" data-world="night">
+  <div class="s10-machine kx x-down" style="--out: calc(var(--w-transforme) + 200); --xdur: 500; left: 660px; top: 300px">
+    <div class="s10-inner k up" style="--in: 100; --dur: 700">
+      <div class="s10-funnel"></div>
+      <div class="s10-body k s10-shake" style="--in: var(--w-importe); --dur: calc(var(--w-transforme) - var(--w-importe) + 200)">
+        <p class="mw"><svg viewBox="0 0 64 64"><use href="#hl-mark"/></svg>halor</p>
+        <p class="mm">PDF · PPTX → HTML</p>
+        <div class="mp"><i class="k s10-fill" style="--in: var(--w-importe); --dur: calc(var(--w-transforme) - var(--w-importe) + 200)"></i></div>
+        <b class="mn"><span class="num-n k counter" style="--n0: 0; --n1: 100; --in: var(--w-importe); --dur: calc(var(--w-transforme) - var(--w-importe) + 200)"></span> %</b>
+      </div>
+      <i class="s10-side"></i>
+      <div class="s10-gear" style="left: -30px; top: 380px"><svg viewBox="0 0 100 100" class="l spin" style="--ldur: 3600"><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="16" stroke-dasharray="12 11.9"/><circle cx="50" cy="50" r="30" fill="#2a1f4d" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="50" r="9" fill="#0e0820"/></svg></div>
+      <div class="s10-gear" style="left: 520px; top: 380px"><svg viewBox="0 0 100 100" class="l spin" style="--ldur: 3600; animation-direction: reverse"><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="16" stroke-dasharray="12 11.9"/><circle cx="50" cy="50" r="30" fill="#2a1f4d" stroke="currentColor" stroke-width="6"/><circle cx="50" cy="50" r="9" fill="#0e0820"/></svg></div>
+      <i class="s10-wheel" style="left: 110px"></i><i class="s10-wheel" style="left: 420px"></i>
+      <!-- bolhas de luz saindo do funil -->
+      <i class="s10-bub k s10-rise" style="--in: calc(var(--w-importe) + 100); --dur: 1400; left: 300px; top: 40px; width: 30px; height: 30px"></i>
+      <i class="s10-bub k s10-rise" style="--in: calc(var(--w-importe) + 500); --dur: 1400; left: 360px; top: 50px; width: 20px; height: 20px"></i>
+      <i class="s10-bub k s10-rise" style="--in: calc(var(--w-importe) + 900); --dur: 1400; left: 250px; top: 60px; width: 24px; height: 24px"></i>
+      <i class="s10-bub k s10-rise" style="--in: calc(var(--w-adapte) + 200); --dur: 1400; left: 330px; top: 30px; width: 36px; height: 36px"></i>
+      <i class="s10-bub k s10-rise" style="--in: calc(var(--w-adapte) + 600); --dur: 1400; left: 280px; top: 50px; width: 18px; height: 18px"></i>
+      <i class="s10-bub k s10-rise" style="--in: calc(var(--w-e) + 100); --dur: 1400; left: 380px; top: 40px; width: 26px; height: 26px"></i>
     </div>
-    <span class="pill solid s10-tag k pop" style="--in: 5340; position: absolute; right: 22px; bottom: 18px"><svg style="width:18px;height:18px"><use href="#i-check"/></svg>HTML · editável</span>
-    <span class="s3-check k pop" style="--in: 6300; --dur: 420; left: 22px; bottom: 18px; right: auto"><svg><use href="#i-check"/></svg></span>
   </div>
-  <div class="s10-tags" style="left: 0; top: 0">
-    <span class="pill paper k fade" style="--in: 1600; left: 240px; top: 760px">antes</span>
-    <span class="pill solid k fade" style="--in: 4300; left: 1420px; top: 760px">depois</span>
+  <!-- os arquivos caem no funil, um por palavra -->
+  <div class="file pdf k s10-drop" style="--in: var(--w-pdf); --dur: 1500; left: 875px; top: 180px"><i class="fl-prev"></i><span class="fl-tag">PDF</span></div>
+  <div class="file k s10-drop" style="--in: var(--w-powerpoint); --dur: 1500; left: 875px; top: 180px"><i class="fl-prev"></i><span class="fl-tag">PPTX</span></div>
+  <svg class="spark k pop" style="--in: calc(var(--w-pdf) + 600); left: 760px; top: 300px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: calc(var(--w-powerpoint) + 600); left: 1140px; top: 260px; width: 28px; height: 28px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+
+  <!-- o editor com o slide importado -->
+  <div class="s10-win k zoom" style="--in: calc(var(--w-transforme) + 300); --dur: 700; left: 300px; top: 160px">
+    <div class="s10-rail"><p class="rh">Slides · 3</p><i></i><i class="on"></i><i></i></div>
+    <div class="s10-slide">
+      <p class="st k type" style="--in: calc(var(--w-transforme) + 700); --dur: 700">Plano de transformação do PMO</p>
+      <ul style="--stag: 160"><li class="k fade" style="--in: calc(var(--w-em) + 200); --i: 0">Contexto e objetivos</li><li class="k fade" style="--in: calc(var(--w-em) + 200); --i: 1">Escopo e cronograma</li><li class="k fade" style="--in: calc(var(--w-em) + 200); --i: 2">Equipe e governança</li><li class="k fade" style="--in: calc(var(--w-em) + 200); --i: 3">Investimento e próximos passos</li></ul>
+    </div>
+    <svg class="cursor k s3-cursor" style="--in: calc(var(--w-transforme) + 800); --dur: 1500; left: 560px; top: 140px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
   </div>
+  <span class="label k pop-c" style="--in: var(--w-editavel); --dur: 500; left: 960px; top: 890px; font-size: 30px; padding: 14px 34px"><svg style="width:26px;height:26px;display:inline-block;vertical-align:-5px;margin-right:10px"><use href="#i-check"/></svg>HTML · editável</span>
+  <i class="ring k ring-x" style="--in: var(--w-editavel); --dur: 900; left: 960px; top: 910px"></i>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="lens" data-keys="@ja:pose=lens-look,face=focus,dur=600;@powerpoint:pose=idle,face=wow;@importe:pose=point-right,face=happy;@adapte:face=focus;@transforme:pose=present,face=wow;@html:pose=celebrate,face=laugh;@editavel+800:pose=idle,face=proud" style="--x: 190px; --y: 960px; --s: .9"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@pdf:pose=think,face=think;@importe:face=wow;@html:pose=look-up,face=surprised;@editavel:pose=celebrate,face=laugh;@editavel+900:pose=idle,face=happy" style="--x: 1740px; --y: 960px; --s: .85"></div>
 </section>

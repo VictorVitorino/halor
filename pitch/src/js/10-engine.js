@@ -119,11 +119,20 @@ const BIA_DEFAULT_POSE_VARS = ['arm-l', 'arm-r', 'fore-l', 'fore-r', 'lean', 'ho
 const BIA_DEFAULT_FACE_VARS = ['brow-l', 'brow-r', 'brow-ang', 'eye-x', 'eye-y', 'eye-open', 'eye-happy', 'mouth-smile', 'mouth-open', 'mouth-flat', 'mouth-o', 'mouth-sad', 'cheek', 'glow'];
 const BIA_PROPS = ['stamp', 'clip', 'ring', 'wand'];
 
-function parseKeys(s) {
+function wordTime(tok, w) {
+  /* "1200" | "@palavra" | "@palavra+200" | "@palavra-end-150" → ms relativo ao início da cena */
+  tok = String(tok).trim();
+  if (tok[0] !== '@') return +tok;
+  const m = tok.match(/^@([a-z0-9-]+?)(?:([+-])(\d+))?$/i);
+  if (!m) return 0;
+  const base = w && w[m[1]] != null ? +w[m[1]] : 0;
+  return base + (m[2] === '-' ? -1 : 1) * (+(m[3] || 0));
+}
+function parseKeys(s, w) {
   if (!s) return [];
   return s.split(';').map(x => x.trim()).filter(Boolean).map(seg => {
-    const [at, rest] = seg.split(':');
-    const o = { at: +at, set: {} };
+    const i = seg.indexOf(':'), at = seg.slice(0, i), rest = seg.slice(i + 1);
+    const o = { at: wordTime(at, w), set: {} };
     (rest || '').split(',').forEach(kv => { const [k, v] = kv.split('='); if (k) o.set[k.trim()] = (v ?? '').trim(); });
     return o;
   }).sort((a, b) => a.at - b.at);
@@ -141,7 +150,7 @@ function makeBia(el, scene) {
   const x0 = parseFloat(el.dataset.x || el.style.getPropertyValue('--x')) || 0, y0 = parseFloat(el.dataset.y || el.style.getPropertyValue('--y')) || 0;
   const s0 = parseFloat(el.dataset.s || el.style.getPropertyValue('--s')) || 1, flip0 = +(el.dataset.flip || 1);
   const base = stateOf(el.dataset.pose || 'idle', el.dataset.face || 'happy', el.dataset.props || '', x0, y0, s0, flip0);
-  const keys = parseKeys(el.dataset.keys);
+  const keys = parseKeys(el.dataset.keys, scene && scene.w);
   /* estados absolutos por chave, encadeados */
   const states = [{ at: -1e9, dur: 1, ease: 'halo', st: base }];
   let cur = { pose: el.dataset.pose || 'idle', face: el.dataset.face || 'happy', props: el.dataset.props || '', x: x0, y: y0, s: s0, flip: flip0 };
@@ -187,7 +196,9 @@ const P = (() => {
     const r = (ROTEIRO.scenes || []).find(s => s.id === sec.id) || {};
     const from = +(sec.dataset.from ?? r.from ?? 0), to = +(sec.dataset.to ?? r.to ?? from + 8000);
     const world = sec.dataset.world || r.world || 'night';
-    const s = { el: sec, i, id: sec.id, from, to, world, field: sec.dataset.field === '1' || (sec.dataset.field === undefined && !!r.field), n: sec.dataset.n || r.n || i + 1, kicker: sec.dataset.kicker ?? r.kicker ?? '', chip: sec.dataset.chip ?? r.chip ?? '', entrance: sec.dataset.fieldEntrance === '1', fieldPulse: sec.dataset.fieldPulse === '1', bias: [], fi: +(sec.dataset.fi || 350), fo: +(sec.dataset.fo || 300) };
+    const s = { el: sec, i, id: sec.id, from, to, world, worldFrom: sec.dataset.worldFrom || world, worldAt: +(sec.dataset.worldAt || 0), field: sec.dataset.field === '1' || (sec.dataset.field === undefined && !!r.field), fieldUntil: +(sec.dataset.fieldUntil || 0), n: sec.dataset.n || r.n || i + 1, kicker: sec.dataset.kicker ?? r.kicker ?? '', chip: sec.dataset.chip ?? r.chip ?? '', entrance: sec.dataset.fieldEntrance === '1', fieldPulse: sec.dataset.fieldPulse === '1', bias: [], fi: +(sec.dataset.fi || 350), fo: +(sec.dataset.fo || 300) };
+    s.w = r.w || {}; s.cx = +(sec.dataset.worldCx || 1690); s.cy = +(sec.dataset.worldCy || 520);
+    Object.entries(s.w).forEach(([k, v]) => sec.style.setProperty('--w-' + k, v));
     sec.style.setProperty('--t0', from); sec.style.setProperty('--t1', to); sec.style.setProperty('--fi', s.fi); sec.style.setProperty('--fo', s.fo);
     s.bias = $$('.bia', sec).map(el => makeBia(el, s));
     scenes.push(s);
@@ -203,25 +214,27 @@ const P = (() => {
   const capHtml = c => { let h = esc(c.text); [...c.hl].sort((a, b) => b.length - a.length).forEach(w => { h = h.replace(esc(w), `<b>${esc(w)}</b>`); }); return h; };
 
   /* mundo e campo: rampas calculadas por T */
-  const worldK = t => { /* 0 = noite, 1 = papel */
-    let k = scenes[0].world === 'paper' ? 1 : 0;
-    for (let i = 1; i < scenes.length; i++) {
-      const a = scenes[i - 1], b = scenes[i]; if (a.world === b.world) continue;
-      /* a troca acontece no início da cena nova (a Bia puxa o cordão), em 650 ms */
-      const target = b.world === 'paper' ? 1 : 0, r = clamp((t - b.from) / 650, 0, 1);
-      if (t >= b.from) k = lerp(k, target, easeHalo(r));
+  /* eventos de mundo e de campo: (tempo, alvo). Uma cena pode começar num mundo (data-world-from)
+     e trocar em data-world-at; o campo pode apagar dentro da cena em data-field-until. */
+  const worldEv = [], fieldEv = [];
+  scenes.forEach(s => {
+    worldEv.push([s.from, s.worldFrom === 'paper' ? 1 : 0, s.cx, s.cy]);
+    if (s.worldAt) worldEv.push([s.from + s.worldAt, s.world === 'paper' ? 1 : 0, s.cx, s.cy]);
+    fieldEv.push([s.from, s.field ? 1 : 0]);
+    if (s.fieldUntil) fieldEv.push([s.from + s.fieldUntil, 0]);
+  });
+  const ramp = (ev, t, lead, dur) => {
+    let k = ev[0][1];
+    for (let i = 1; i < ev.length; i++) {
+      const [at, target] = ev[i]; if (target === ev[i - 1][1]) continue;
+      const r = clamp((t - (at - lead)) / dur, 0, 1);
+      if (t >= at - lead) k = lerp(k, target, easeHalo(r));
     }
     return k;
   };
-  const fieldK = t => {
-    let k = scenes[0].field ? 1 : 0;
-    for (let i = 1; i < scenes.length; i++) {
-      const a = scenes[i - 1], b = scenes[i]; if (a.field === b.field) continue;
-      const target = b.field ? 1 : 0, r = clamp((t - (b.from - 300)) / 700, 0, 1);
-      if (t >= b.from - 300) k = lerp(k, target, easeHalo(r));
-    }
-    return k;
-  };
+  const worldK = t => ramp(worldEv, t, 0, 650);     /* 0 = noite, 1 = papel/lavanda */
+  const worldC = t => { let c = [1690, 520]; for (let i = 1; i < worldEv.length; i++) { if (worldEv[i][1] !== worldEv[i - 1][1] && t >= worldEv[i][0]) c = [worldEv[i][2], worldEv[i][3]]; } return c; };
+  const fieldK = t => ramp(fieldEv, t, 300, 700);
   const sceneAt = t => { let cur = scenes[0]; for (const s of scenes) if (t >= s.from) cur = s; return cur; };
 
   /* campo: sincroniza por passos fixos; entradas nas cenas marcadas */
@@ -262,6 +275,7 @@ const P = (() => {
       pitch.style.setProperty('--chip-t0', cur.from);
     }
     pitch.style.setProperty('--paper-k', worldK(T).toFixed(3));
+    const wc = worldC(T); pitch.style.setProperty('--paper-cx', wc[0]); pitch.style.setProperty('--paper-cy', wc[1]);
     pitch.style.setProperty('--field-k', fieldK(T).toFixed(3));
     /* legenda */
     let c = null; for (const x of captions) if (T >= x.at && T < x.end) { c = x; break; }

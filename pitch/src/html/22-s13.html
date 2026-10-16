@@ -1,32 +1,29 @@
-<!-- CENA 13 · Fecho · noite, Campo Halor com nova entrada -->
-<section class="scene s13" id="s13" data-field="1" data-field-entrance="1" data-chip="">
-  <svg class="s13-mark k pop" style="--in: 200; --dur: 800; left: 860px; top: 150px; width: 200px; height: 200px" viewBox="0 0 64 64">
-    <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
-    <circle cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6" opacity=".6"/>
-    <circle class="s13-core k s13-pulse" style="--in: 8400; --dur: 900" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
-    <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#ffffff"/>
-  </svg>
-  <h1 class="s2-word k up" style="--in: 500; --dur: 800; left: 0; right: 0; top: 330px; text-align: center; font-size: 170px">halor</h1>
-  <div class="s13-pills" style="left: 0; right: 0; top: 600px">
-    <span class="pill k left" style="--in: 500; --dur: 600">Menos slide parado</span>
-    <span class="pill solid k right" style="--in: 2000; --dur: 600">Mais olhar que fica</span>
-  </div>
-  <p class="s13-url mono k up" style="--in: 3600; left: 0; right: 0; top: 700px; text-align: center">halor.app · plano Faísca grátis para sempre</p>
-  <p class="s13-tag k up" style="--in: 9200; --dur: 800; left: 0; right: 0; top: 790px; text-align: center">Faça cada <span class="lux">olhar render.</span></p>
+<!-- CENA 13 · Fecho · noite com o Campo Halor: Halor. / Menos PPT na gaveta / Mais interação com o cliente -->
+<section class="scene s13" id="s13" data-world="night" data-field="1" data-field-entrance="1" data-chip="">
+  <h1 class="s13-word" style="left: 0; right: 0; top: 190px; --stag: 100">
+    <span class="k pop" style="--in: var(--w-halor); --i: 0">H</span><span class="k pop" style="--in: var(--w-halor); --i: 1">a</span><span class="k pop" style="--in: var(--w-halor); --i: 2">l</span><span class="k pop" style="--in: var(--w-halor); --i: 3">o</span><span class="k pop" style="--in: var(--w-halor); --i: 4">r</span><span class="dot k pop" style="--in: var(--w-halor); --i: 5">.</span>
+  </h1>
+  <i class="ring k ring-x" style="--in: calc(var(--w-halor) + 400); --dur: 900; left: 960px; top: 290px"></i>
+  <div class="s13-pill outline k pop-c" style="--in: var(--w-menos); --dur: 600; top: 470px">Menos <em>PPT</em> na gaveta <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 10h18v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1zM5 10l2-5h10l2 5"/><path d="M10 14h4"/></svg></div>
+  <div class="s13-pill solid k pop-c" style="--in: var(--w-mais); --dur: 600; top: 570px">Mais interação com o <b>cliente</b></div>
+  <div class="s13-mini minus k pop" style="--in: calc(var(--w-cliente) + 400); left: 560px; top: 700px">–PPT</div>
+  <div class="s13-mini plus k pop" style="--in: calc(var(--w-cliente) + 700); left: 740px; top: 700px">+HTML</div>
+  <div class="s13-mini eq k pop" style="--in: calc(var(--w-cliente) + 1000); left: 930px; top: 700px">= mais negócio fechado</div>
 
-  <!-- a plateia volta: todos olhando para o símbolo -->
-  <div class="s13-eyes" style="left: 0; top: 0; --stag: 120">
-    <div class="eyes k pop" style="--in: 8600; --i: 0; left: 520px; top: 200px; --ex: .9; --ey: -.2"><i></i><i></i></div>
-    <div class="eyes k pop" style="--in: 8600; --i: 1; left: 400px; top: 420px; --ex: 1; --ey: -.6"><i></i><i></i></div>
-    <div class="eyes k pop" style="--in: 8600; --i: 2; left: 1280px; top: 200px; --ex: -.9; --ey: -.2"><i></i><i></i></div>
-    <div class="eyes k pop" style="--in: 8600; --i: 3; left: 1400px; top: 420px; --ex: -1; --ey: -.6"><i></i><i></i></div>
-    <div class="eyes k pop s13-wake" style="--in: 8600; --i: 4; left: 300px; top: 650px; --ex: 1; --ey: -.9"><i></i><i></i></div>
+  <!-- estrelas -->
+  <i class="s13-star k fade" style="--in: 300; left: 330px; top: 160px; width: 30px; height: 30px"><svg viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg></i>
+  <i class="s13-star k fade" style="--in: 500; left: 1520px; top: 120px; width: 22px; height: 22px"><svg viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg></i>
+  <i class="s13-star k fade" style="--in: 700; left: 1650px; top: 300px; width: 34px; height: 34px"><svg viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg></i>
+  <i class="s13-star k fade" style="--in: 900; left: 240px; top: 520px; width: 26px; height: 26px"><svg viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg></i>
+  <i class="s13-star k fade" style="--in: 1100; left: 1380px; top: 660px; width: 20px; height: 20px"><svg viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg></i>
+  <div class="confetti" style="left: 960px; top: 560px; --stag: 30">
+    <i class="k fly" style="--in: var(--w-cliente); --i: 0; --dx: -360px; --dy: -200px"></i><i class="k fly" style="--in: var(--w-cliente); --i: 1; --dx: 380px; --dy: -180px"></i>
+    <i class="k fly" style="--in: var(--w-cliente); --i: 2; --dx: -240px; --dy: -340px"></i><i class="k fly" style="--in: var(--w-cliente); --i: 3; --dx: 260px; --dy: -320px"></i>
+    <i class="k fly" style="--in: var(--w-cliente); --i: 4; --dx: -480px; --dy: -60px"></i><i class="k fly" style="--in: var(--w-cliente); --i: 5; --dx: 500px; --dy: -40px"></i>
+    <i class="k fly" style="--in: var(--w-cliente); --i: 6; --dx: -120px; --dy: -420px"></i><i class="k fly" style="--in: var(--w-cliente); --i: 7; --dx: 140px; --dy: -400px"></i>
+    <i class="k fly" style="--in: var(--w-cliente); --i: 8; --dx: -560px; --dy: -260px"></i><i class="k fly" style="--in: var(--w-cliente); --i: 9; --dx: 540px; --dy: -240px"></i>
   </div>
 
-  <!-- a Bia entra em "Halor." e dá a carimbada final -->
-  <div class="k s2-rise" style="--in: 6400; --dur: 900; left: 1640px; top: 960px">
-    <div class="bia" data-pose="wave" data-face="happy" data-props="stamp" data-keys="7300:pose=stamp,face=focus,dur=250;7600:pose=stamp-down,dur=140;8200:pose=cheer,face=proud" style="--x: 0px; --y: 0px; --s: .95"></div>
-  </div>
-  <span class="s3-check s13-check k s13-fly" style="--in: 7600; --dur: 900; left: 1450px; top: 640px"><svg><use href="#i-check"/></svg></span>
-  <i class="s5-ring k" style="--in: 7600; --dur: 900; left: 1485px; top: 675px"></i>
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@halor:pose=jump,face=laugh;@halor+700:pose=wave,face=happy;@menos:pose=point-right,face=focus;@mais:pose=present,face=proud;@cliente:pose=celebrate,face=laugh;@cliente+1200:pose=idle,face=happy" style="--x: 260px; --y: 960px; --s: .95"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@halor:face=wow;@mais:pose=look-up,face=surprised;@cliente:pose=jump,face=laugh;@cliente+700:pose=celebrate,face=laugh;@cliente+1500:pose=idle,face=proud" style="--x: 1660px; --y: 960px; --s: .85"></div>
 </section>

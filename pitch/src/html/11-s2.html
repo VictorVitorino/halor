@@ -1,22 +1,32 @@
-<!-- CENA 2 · Halor e a Bia · noite, Campo Halor com onda da marca -->
-<section class="scene s2" id="s2" data-field="1" data-field-pulse="1">
-  <!-- o símbolo se forma peça a peça -->
-  <svg class="s2-mark" viewBox="0 0 64 64" style="left: 840px; top: 120px; width: 240px; height: 240px; --stag: 280" aria-hidden="true">
-    <path class="k spin-in mk-spark" style="--in: 100; --i: 0; --dur: 500" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#ffffff"/>
-    <path class="k draw mk-ring" style="--in: 100; --i: 1; --dur: 900" pathLength="1" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
-    <circle class="k draw mk-inner" style="--in: 100; --i: 2; --dur: 800" pathLength="1" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6" opacity=".6"/>
-    <circle class="k pop mk-core" style="--in: 100; --i: 3; --dur: 500" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
-  </svg>
-  <!-- na palavra "Halor!" -->
-  <p class="t-eyebrow k fade s2-eyebrow" style="--in: 2500; left: 0; right: 0; top: 392px; text-align: center">Apresentações vivas em HTML</p>
-  <h1 class="s2-word k up" style="--in: 2500; --dur: 800; left: 0; right: 0; top: 420px; text-align: center">halor</h1>
-  <i class="s2-line k grow-x" style="--in: 3200; --dur: 700; left: 760px; top: 662px"></i>
-
-  <!-- a Bia sobe do chão à direita; carimba o ar em "inteligência" e a pílula aparece -->
-  <div class="k s2-rise" style="--in: 3700; --dur: 1000; left: 1300px; top: 940px">
-    <div class="bia" data-pose="idle" data-face="happy" data-props="clipboard stamp" data-keys="4100:pose=wave,face=happy;4500:pose=stamp,face=focus,dur=250;4900:pose=stamp-down,dur=120;5500:pose=idle,face=proud;6200:face=wink;6700:face=happy,pose=present" style="--x: 0px; --y: 0px; --s: 1.05"></div>
+<!-- CENA 2 · Halor e a Bia · o logotipo desce pendurado numa viga de luz; a Bia entra pela esquerda em "Bia" -->
+<section class="scene s2" id="s2" data-world="paper">
+  <!-- viga de luz com gancho e fios: desce, segura as letras e vai embora depois de "Halor!" -->
+  <div class="kx" style="--out: calc(var(--w-halor) + 1300); --xdur: 700; left: 0; top: 0">
+    <div class="s2-beam k down" style="--in: 100; --dur: 700; left: 520px; top: 150px"><i class="s2-hook"></i></div>
+    <div class="s2-strings" style="--stag: 110">
+      <i class="s2-str k grow-y" style="--in: 700; --i: 0; left: 664px; top: 184px; height: 120px"></i>
+      <i class="s2-str k grow-y" style="--in: 700; --i: 1; left: 790px; top: 184px; height: 150px"></i>
+      <i class="s2-str k grow-y" style="--in: 700; --i: 2; left: 880px; top: 184px; height: 120px"></i>
+      <i class="s2-str k grow-y" style="--in: 700; --i: 3; left: 975px; top: 184px; height: 150px"></i>
+      <i class="s2-str k grow-y" style="--in: 700; --i: 4; left: 1080px; top: 184px; height: 150px"></i>
+      <i class="s2-str k grow-y" style="--in: 700; --i: 5; left: 1225px; top: 184px; height: 130px"></i>
+    </div>
   </div>
-  <div class="tag-pill k pop" style="--in: 4950; --dur: 420; left: 860px; top: 760px"><i><svg><use href="#i-spark"/></svg></i>Bia · IA do Halor</div>
-  <i class="s5-ring k" style="--in: 4950; --dur: 900; left: 1010px; top: 790px"></i>
-  <svg class="s2-spark k pop" style="--in: 6200; left: 1250px; top: 650px; width: 44px; height: 44px; color: #fff" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <h1 class="s2-word" style="left: 600px; top: 290px; --stag: 130">
+    <span class="k s2-hang" style="--in: 900; --i: 0; --dur: 1100">h</span><span class="k s2-hang" style="--in: 900; --i: 1; --dur: 1100">a</span><span class="k s2-hang" style="--in: 900; --i: 2; --dur: 1100">l</span><span class="k s2-hang" style="--in: 900; --i: 3; --dur: 1100">o</span><span class="k s2-hang" style="--in: 900; --i: 4; --dur: 1100">r</span>
+  </h1>
+  <svg class="s2-mk k s2-hang" style="--in: 1550; --dur: 1100; left: 1150px; top: 300px" viewBox="0 0 64 64" aria-hidden="true"><use href="#hl-mark-paper"/></svg>
+  <!-- em "Halor!": estalo de luz e faíscas -->
+  <i class="ring k ring-x" style="--in: var(--w-halor); --dur: 900; left: 930px; top: 400px"></i>
+  <svg class="spark k pop" style="--in: var(--w-halor); left: 1310px; top: 250px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: calc(var(--w-halor) + 200); left: 556px; top: 430px; width: 28px; height: 28px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <p class="s2-sub k fade" style="--in: calc(var(--w-halor) + 500); left: 606px; top: 530px">Apresentações vivas em <em>HTML</em></p>
+  <i class="s2-line k grow-x" style="--in: calc(var(--w-halor) + 700); --dur: 700; left: 606px; top: 584px"></i>
+
+  <!-- a Bia entra pela esquerda, acena, se apresenta -->
+  <div class="k walk-in-l" style="--in: calc(var(--w-bia) - 700); --dur: 1000; left: 330px; top: 960px">
+    <div class="bia" data-pose="walk" data-face="happy" data-props="tablet" data-keys="@bia+300:pose=idle,face=happy;@bia+900:pose=wave,face=laugh;@nossa:pose=present,face=proud;@inteligencia:pose=look-up,face=wow;@artificial+400:pose=bow,face=wink;@artificial+1100:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: 1.1"></div>
+  </div>
+  <i class="s2-bia-ring k fade" style="--in: calc(var(--w-bia) + 300); --dur: 500; left: 330px; top: 790px"></i>
+  <div class="tag-pill paper k pop-c" style="--in: calc(var(--w-bia) + 200); --dur: 450; left: 330px; top: 520px"><i><svg><use href="#i-spark"/></svg></i>Bia · IA do Halor</div>
 </section>

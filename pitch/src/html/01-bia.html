@@ -1,9 +1,10 @@
 <!-- ==========================================================================
-     BIA · a berinjela IA do Halor (mascote)
+     BIA · a berinjela IA do Halor (mascote) · rig v2 (sem boina, sem carimbo: halo + peças novas)
      Defs compartilhados (prefixo bia-) + <template id="bia-tpl"> clonado pelo motor dentro de cada .bia.
      Toda articulação e expressão vem de variáveis CSS lidas em src/css/20-bia.css (tabelas em src/js/20-bia.js).
-     Convenção de lados: "l" = lado ESQUERDO do espectador (mão do carimbo), "r" = direito (mão da prancheta).
+     Convenção de lados: "l" = lado ESQUERDO do espectador (mão da lupa), "r" = direito (mão do tablet / clicker / varinha).
      Grupos com transform CSS ficam sempre dentro de um <g transform="translate(...)"> fixo: a articulação gira em (0,0).
+     Variante: data-skin="cliente" no host .bia (corpo lilás, óculos, gravatinha, sem halo e sem selo).
      ========================================================================== -->
 <svg class="defs bia-defs" xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
   <defs>
@@ -12,6 +13,12 @@
       <stop offset=".22" stop-color="#a970ff"/>
       <stop offset=".58" stop-color="#8b3dff"/>
       <stop offset="1" stop-color="#6421d1"/>
+    </linearGradient>
+    <linearGradient id="bia-g-body-cli" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ece3ff"/>
+      <stop offset=".2" stop-color="#d9c7ff"/>
+      <stop offset=".62" stop-color="#c4a6ff"/>
+      <stop offset="1" stop-color="#b08aff"/>
     </linearGradient>
     <linearGradient id="bia-g-body-side" x1="0" y1="0" x2="1" y2="0">
       <stop offset="0" stop-color="#4a11a0" stop-opacity="0"/>
@@ -22,18 +29,31 @@
       <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
       <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
-    <linearGradient id="bia-g-hat" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#2a1f4d"/>
-      <stop offset="1" stop-color="#171030"/>
+    <linearGradient id="bia-g-cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
     <linearGradient id="bia-g-arm" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0" stop-color="#8236f2"/>
       <stop offset="1" stop-color="#6e27dc"/>
     </linearGradient>
-    <linearGradient id="bia-g-stamp" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#a970ff"/>
-      <stop offset="1" stop-color="#8b3dff"/>
+    <linearGradient id="bia-g-tablet" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a1f4d"/>
+      <stop offset="1" stop-color="#171030"/>
     </linearGradient>
+    <linearGradient id="bia-g-screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#ede4ff"/>
+    </linearGradient>
+    <linearGradient id="bia-g-wand" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#171030"/>
+      <stop offset="1" stop-color="#5a35a8"/>
+    </linearGradient>
+    <radialGradient id="bia-g-lens" cx=".4" cy=".35" r=".65">
+      <stop offset="0" stop-color="#f4eeff" stop-opacity=".55"/>
+      <stop offset=".55" stop-color="#c9a6ff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#8b3dff" stop-opacity=".42"/>
+    </radialGradient>
     <radialGradient id="bia-g-shadow" cx=".5" cy=".5" r=".5">
       <stop offset="0" stop-color="#17112b" stop-opacity=".30"/>
       <stop offset=".7" stop-color="#17112b" stop-opacity=".12"/>
@@ -48,9 +68,17 @@
       <stop offset="0" stop-color="#c9a6ff" stop-opacity=".9"/>
       <stop offset="1" stop-color="#a970ff" stop-opacity="0"/>
     </radialGradient>
+    <radialGradient id="bia-g-haloglow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#a970ff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#a970ff" stop-opacity="0"/>
+    </radialGradient>
     <filter id="bia-f-soft" x="-60%" y="-40%" width="220%" height="180%"><feGaussianBlur stdDeviation="11"/></filter>
     <filter id="bia-f-neon" x="-60%" y="-60%" width="220%" height="220%">
       <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bia-f-neon-sm" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="2" result="b"/>
       <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <filter id="bia-f-blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
@@ -59,7 +87,7 @@
 
 <template id="bia-tpl">
   <svg class="bia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320" role="img" aria-label="Bia, a berinjela IA do Halor" overflow="visible">
-    <!-- sombra no chão (fica fora do rig: não pula com a Bia, encolhe quando ela sobe) -->
+    <!-- sombra no chão (fica fora do rig: não sobe com a Bia, encolhe quando ela flutua) -->
     <ellipse class="shadow" cx="120" cy="300" rx="58" ry="10"/>
 
     <g class="rig">
@@ -67,20 +95,41 @@
       <g class="ring-pos"><g class="ring">
         <circle class="ring-in" cx="0" cy="0" r="58"/>
         <path class="ring-arc" d="M60.62 -35A70 70 0 1 1 35 -60.62"/>
-        <path class="ring-spark l twinkle" d="M52 -68Q52 -58 62 -58Q52 -58 52 -48Q52 -58 42 -58Q52 -58 52 -68Z"/>
+        <path class="ring-spark bia-tw" d="M52 -68Q52 -58 62 -58Q52 -58 52 -48Q52 -58 42 -58Q52 -58 52 -68Z"/>
       </g></g>
 
       <!-- brilho neon em volta (--glow) -->
       <ellipse class="glow" cx="120" cy="170" rx="66" ry="112"/>
 
+      <!-- balão de fala (--p-bubble): três pontinhos pulsando -->
+      <g class="bubble-pos" transform="translate(166 86)"><g class="prop prop-bubble">
+        <path class="bubble-body" d="M8 -2Q2 -4 0 0L10 -14Q4 -32 22 -40H54Q72 -40 72 -24V-20Q72 -4 54 -4H26Q16 -4 8 -2Z"/>
+        <circle class="bubble-dot d1" cx="28" cy="-22" r="4"/>
+        <circle class="bubble-dot d2" cx="41" cy="-22" r="4"/>
+        <circle class="bubble-dot d3" cx="54" cy="-22" r="4"/>
+      </g></g>
+
+      <!-- halo: anel ABERTO do símbolo (vão no alto à direita), flutua com atraso em relação ao corpo -->
+      <g class="halo-pos"><g class="halo">
+        <ellipse class="halo-glow" cx="0" cy="0" rx="44" ry="24"/>
+        <g class="halo-tilt" transform="scale(1 .5)">
+          <path class="halo-back" d="M30.81 -14.37A34 34 0 1 1 14.37 -30.81"/>
+          <path class="halo-arc" d="M30.81 -14.37A34 34 0 1 1 14.37 -30.81"/>
+        </g>
+        <path class="halo-spark bia-tw" transform="translate(24 -12)" d="M0 -7Q0 0 7 0Q0 0 0 7Q0 0 -7 0Q0 0 0 -7Z"/>
+      </g></g>
+
       <g class="torso">
         <!-- corpo cápsula -->
         <rect class="body" x="66" y="64" width="108" height="206" rx="54"/>
         <rect class="body-side" x="66" y="64" width="108" height="206" rx="54"/>
+        <!-- topo da cápsula: reflexo largo (agora aparece, sem boina) -->
+        <path class="cap-hi" d="M78 96C78 76 96 66 120 66C144 66 162 76 162 96C150 86 134 82 120 82C106 82 90 86 78 96Z"/>
         <path class="sheen" d="M84 118C80 98 86 82 100 76" />
         <circle class="sheen-dot" cx="94" cy="82" r="3"/>
+        <circle class="sheen-dot sheen-dot-2" cx="146" cy="78" r="2"/>
 
-        <!-- selo Halor no corpo -->
+        <!-- selo Halor no corpo (some na variante cliente) -->
         <g class="seal">
           <circle cx="121" cy="208" r="19"/>
           <g class="seal-mark" transform="translate(110 197) scale(.344)">
@@ -90,12 +139,19 @@
           </g>
         </g>
 
-        <!-- rosto -->
-        <g class="face">
-          <ellipse class="cheek cheek-l" cx="82" cy="150" rx="10" ry="6.5"/>
-          <ellipse class="cheek cheek-r" cx="158" cy="150" rx="10" ry="6.5"/>
+        <!-- gravatinha (variante cliente) -->
+        <g class="bowtie">
+          <path d="M106 196L118 203L106 210Q100 203 106 196Z"/>
+          <path d="M134 196L122 203L134 210Q140 203 134 196Z"/>
+          <rect x="116" y="199" width="8" height="8" rx="2.5"/>
+        </g>
 
-          <!-- olhos (ESQ do espectador = eye-l) -->
+        <!-- rosto (desloca por --face-x/--face-y: olhar para cima, reverência) -->
+        <g class="face">
+          <g class="cheek cheek-l"><ellipse cx="82" cy="150" rx="10" ry="6.5"/></g>
+          <g class="cheek cheek-r"><ellipse cx="158" cy="150" rx="10" ry="6.5"/></g>
+
+          <!-- olhos (ESQ do espectador = eye-l) · escala por --eye-scale -->
           <g class="eye eye-l">
             <circle class="eye-glow" cx="99" cy="126" r="20"/>
             <ellipse class="white" cx="99" cy="126" rx="15" ry="17"/>
@@ -107,8 +163,9 @@
               <circle class="hi hi-small" cx="102.6" cy="130.4" r="1.5"/>
             </g>
             <ellipse class="lid lid-open" cx="99" cy="126" rx="15.6" ry="17.6"/>
-            <ellipse class="lid lid-blink l blink" cx="99" cy="126" rx="15.6" ry="17.6"/>
+            <ellipse class="lid lid-blink" cx="99" cy="126" rx="15.6" ry="17.6"/>
             <path class="happy-arc" d="M86 131Q99 115 112 131"/>
+            <path class="wink-arc wink-arc-l" d="M87 128Q99 137 111 128"/>
           </g>
           <g class="eye eye-r">
             <circle class="eye-glow" cx="141" cy="126" r="20"/>
@@ -121,9 +178,18 @@
               <circle class="hi hi-small" cx="144.6" cy="130.4" r="1.5"/>
             </g>
             <ellipse class="lid lid-open" cx="141" cy="126" rx="15.6" ry="17.6"/>
-            <ellipse class="lid lid-blink l blink" cx="141" cy="126" rx="15.6" ry="17.6"/>
+            <ellipse class="lid lid-blink" cx="141" cy="126" rx="15.6" ry="17.6"/>
             <path class="happy-arc" d="M128 131Q141 115 154 131"/>
             <path class="wink-arc" d="M129 128Q141 137 153 128"/>
+          </g>
+
+          <!-- óculos redondos (variante cliente) -->
+          <g class="glasses">
+            <circle cx="99" cy="126" r="18.5"/>
+            <circle cx="141" cy="126" r="18.5"/>
+            <path d="M117.5 124Q120 120 122.5 124"/>
+            <path d="M80.5 123L72 119"/>
+            <path d="M159.5 123L168 119"/>
           </g>
 
           <!-- sobrancelhas -->
@@ -146,35 +212,26 @@
             </g>
           </g>
         </g>
-
-        <!-- boina (copa grande caída para a esquerda, aro fino, aba curta à esquerda) -->
-        <g class="hat">
-          <path class="hat-crown" d="M52 84C42 60 84 40 126 42C166 44 186 60 178 84Z"/>
-          <path class="hat-hi" d="M74 60Q98 48 126 48"/>
-          <path class="hat-rim" d="M62 80H178Q186 80 186 86Q186 92 178 92H62Q54 92 54 86Q54 80 62 80Z"/>
-          <path class="hat-visor" d="M40 92Q36 81 48 81H76L74 93Z"/>
-          <circle class="hat-button" cx="124" cy="43" r="5"/>
-        </g>
       </g>
 
-      <!-- braço ESQUERDO do espectador (carimbo) · ombro em (70,186) -->
+      <!-- braço ESQUERDO do espectador (lupa / palmas) · ombro em (70,186) -->
       <g transform="translate(70 186)"><g class="arm arm-l">
         <path class="limb" d="M0 0V30"/>
         <g transform="translate(0 30)"><g class="fore fore-l">
           <path class="limb limb-fore" d="M0 0V28"/>
           <g transform="translate(0 28)"><g class="hand hand-l">
             <g class="up up-l">
-              <!-- carimbo -->
-              <g class="prop prop-stamp">
-                <g class="stamp-press">
-                  <rect class="stamp-neck" x="-5" y="-26" width="10" height="34" rx="4"/>
-                  <ellipse class="stamp-knob" cx="0" cy="-27" rx="10" ry="7.5"/>
-                  <rect class="stamp-base" x="-20" y="6" width="40" height="13" rx="3.5"/>
-                  <rect class="stamp-pad" x="-20" y="15" width="40" height="4.5" rx="1.5"/>
-                  <path class="stamp-check" d="M-5 11.5l3.2 3.2 6.4-6.4" />
-                </g>
-                <ellipse class="stamp-ring" cx="0" cy="19.5" rx="22" ry="6"/>
+              <!-- lupa de luz -->
+              <g class="prop prop-lens">
+                <path class="lens-handle" d="M2 -4L18 -26"/>
+                <circle class="lens-halo" cx="26" cy="-36" r="19"/>
+                <circle class="lens-glass" cx="26" cy="-36" r="15"/>
+                <circle class="lens-rim" cx="26" cy="-36" r="15"/>
+                <path class="lens-hi" d="M16 -42Q20 -49 28 -49"/>
               </g>
+              <!-- onda de luz das palmas (--stamp-press: ergue, bate, onda) -->
+              <ellipse class="clap-ring" cx="8" cy="0" rx="22" ry="8"/>
+              <path class="clap-spark" transform="translate(16 -14)" d="M0 -6Q0 0 6 0Q0 0 0 6Q0 0 -6 0Q0 0 0 -6Z"/>
             </g>
             <circle class="glove" r="11.5"/>
             <circle class="glove-hi" cx="-4" cy="-4" r="3"/>
@@ -183,28 +240,37 @@
         </g></g>
       </g></g>
 
-      <!-- braço DIREITO do espectador (prancheta / varinha) · ombro em (170,186) -->
+      <!-- braço DIREITO do espectador (tablet / clicker / varinha) · ombro em (170,186) -->
       <g transform="translate(170 186)"><g class="arm arm-r">
         <path class="limb" d="M0 0V30"/>
         <g transform="translate(0 30)"><g class="fore fore-r">
           <path class="limb limb-fore" d="M0 0V28"/>
           <g transform="translate(0 28)"><g class="hand hand-r">
             <g class="up up-r">
-              <!-- prancheta -->
-              <g class="prop prop-clip">
-                <rect class="clip-board" x="-4" y="-10" width="54" height="68" rx="6"/>
-                <rect class="clip-clip" x="10" y="-17" width="26" height="13" rx="4.5"/>
-                <rect class="clip-clip2" x="15" y="-14" width="16" height="4" rx="2"/>
-                <path class="clip-line" d="M6 12H42"/>
-                <path class="clip-line" d="M6 24H30"/>
-                <path class="clip-line" d="M6 36H38"/>
-                <path class="clip-check" d="M9 49l6 6 14-14"/>
+              <!-- tablet lúmen (na mão direita; na pose carry desliza para o centro, entre as duas mãos) -->
+              <g class="prop prop-tablet"><g class="tablet-pos">
+                <rect class="tablet-body" x="-27" y="-32" width="54" height="64" rx="7"/>
+                <rect class="tablet-screen" x="-22" y="-27" width="44" height="48" rx="4"/>
+                <rect class="tablet-bar b1" x="-14" y="-2" width="7" height="16" rx="2"/>
+                <rect class="tablet-bar b2" x="-3.5" y="-12" width="7" height="26" rx="2"/>
+                <rect class="tablet-bar b3" x="7" y="-20" width="7" height="34" rx="2"/>
+                <path class="tablet-base" d="M-14 17H14"/>
+                <circle class="tablet-home" cx="0" cy="26.5" r="2.2"/>
+              </g></g>
+              <!-- clicker de apresentação -->
+              <g class="prop prop-clicker">
+                <rect class="clicker-body" x="-8" y="-25" width="16" height="34" rx="7"/>
+                <rect class="clicker-hi" x="-5" y="-22" width="4" height="10" rx="2"/>
+                <circle class="clicker-btn" cx="0" cy="-13" r="4.2"/>
+                <circle class="clicker-led bia-led" cx="0" cy="-22" r="1.6"/>
+                <path class="clicker-beam" d="M6 -22Q12 -22 14 -17M8 -27Q17 -27 20 -19"/>
               </g>
               <!-- varinha de luz -->
               <g class="prop prop-wand">
                 <path class="wand-stick" d="M-2 6L20 -30"/>
-                <circle class="wand-glow" cx="22" cy="-33" r="14"/>
-                <path class="wand-spark l twinkle" d="M22 -47Q22 -33 36 -33Q22 -33 22 -19Q22 -33 8 -33Q22 -33 22 -47Z"/>
+                <circle class="wand-glow bia-pulse" cx="22" cy="-33" r="15"/>
+                <path class="wand-spark bia-tw" transform="translate(22 -33)" d="M0 -14Q0 0 14 0Q0 0 0 14Q0 0 -14 0Q0 0 0 -14Z"/>
+                <path class="wand-spark wand-spark-2 bia-tw2" transform="translate(34 -44)" d="M0 -5Q0 0 5 0Q0 0 0 5Q0 0 -5 0Q0 0 0 -5Z"/>
               </g>
             </g>
             <circle class="glove" r="11.5"/>

@@ -1,46 +1,84 @@
-<!-- CENA 9 · Do zero ou de um modelo · papel -->
-<section class="scene s9" id="s9" data-world="paper">
-  <!-- cartões de início -->
-  <div class="kx x-left" style="--out: 1900; --xdur: 400; left: 0; top: 0">
-    <div class="s9-card k up" style="--in: 100; left: 430px; top: 250px">
-      <span class="s9-plus">+</span><b>Nova apresentação</b><small>Do zero, já no seu kit de marca</small>
+<!-- CENA 9 · Do zero ou projetos prontos · tela inicial do Halor; depois o editor com modelos, gráficos, frames, personagens e efeitos -->
+<section class="scene s9" id="s9" data-world="night">
+  <!-- tela inicial -->
+  <div class="s9-home kx x-shrink" style="--out: calc(var(--w-combine) - 200); --xdur: 400; left: 300px; top: 160px">
+    <div>
+      <p class="he k fade" style="--in: 200">Boa noite, vamos apresentar?</p>
+      <p class="ht k up" style="--in: 300">halor<em>.</em></p>
+      <p class="hs k fade" style="--in: 500">Acervo de apresentações <em>vivas</em></p>
+      <p class="hl k fade" style="--in: 600">Monte, anime e apresente, peça por peça.</p>
+      <div class="hcards" style="--stag: 90">
+        <div class="hc k pop" style="--in: 800; --i: 0"><em>1</em><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></i><b>Apresentação nova</b><small>Começar com um slide em branco</small><span class="sel k fade" style="--in: var(--w-nova); --dur: 300"></span></div>
+        <div class="hc k pop" style="--in: 800; --i: 1"><em>2</em><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 10h16"/></svg></i><b>Projetos prontos</b><small>Roteiros completos para adaptar</small><span class="sel k fade" style="--in: var(--w-prontos); --dur: 300"></span></div>
+        <div class="hc dim k pop" style="--in: 800; --i: 2"><em>3</em><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12a8 8 0 1 0 3-6.2M4 4v5h5"/></svg></i><b>Retomar</b><small>Nenhum rascunho salvo ainda</small></div>
+        <div class="hc k pop" style="--in: 800; --i: 3"><em>4</em><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2-2h4l2 2h6a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></i><b>Abrir arquivo</b><small>Uma apresentação .html salva</small></div>
+        <div class="hc k pop" style="--in: 800; --i: 4"><em>5</em><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></i><b>Biblioteca</b><small>Modelos, personagens e efeitos</small></div>
+        <div class="hc k pop" style="--in: 800; --i: 5"><em>6</em><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h7a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-7a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h7z"/></svg></i><b>Manual</b><small>Como funciona e atalhos</small></div>
+      </div>
+    </div>
+    <div class="bp k fade" style="--in: 700">
+      <svg viewBox="0 0 520 600" fill="none" stroke="#c9a6ff" stroke-width="1.5" stroke-dasharray="7 6" opacity=".85">
+        <text x="30" y="40" fill="#a970ff" stroke="none" font-family="JetBrains Mono, monospace" font-size="13" letter-spacing="3">HALOR · PRANCHA 01 · ELEVAÇÃO</text>
+        <rect x="60" y="150" width="400" height="225"/><path d="M80 170h360M80 200h220M80 230h300M80 260h160"/>
+        <text x="200" y="135" fill="#a69cc4" stroke="none" font-family="JetBrains Mono, monospace" font-size="12" letter-spacing="2">1920 × 1080</text>
+        <path d="M60 390v20M460 390v20M60 400h400" stroke-dasharray="0"/><path d="M40 150h-10M40 375h-10M35 150v225" stroke-dasharray="0"/>
+        <path class="k draw" style="--in: calc(var(--w-nova) + 200); --dur: 1200" pathLength="1" d="M260 60v70" stroke="#fff" stroke-dasharray="1" stroke-width="2"/>
+        <g class="k down" style="--in: calc(var(--w-nova) + 900); --dur: 900"><circle cx="260" cy="60" r="16" stroke="#fff" stroke-dasharray="0"/><rect x="200" y="108" width="120" height="68" fill="rgba(139,61,255,.45)" stroke="#fff" stroke-dasharray="0"/><text x="214" y="98" fill="#fff" stroke="none" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2">PEÇA 01</text></g>
+        <text x="30" y="470" fill="#a69cc4" stroke="none" font-family="JetBrains Mono, monospace" font-size="11" letter-spacing="2">PEÇAS NA PRANCHA</text>
+        <path d="M30 500h460M30 530h460" stroke-dasharray="2 6"/>
+        <text x="30" y="520" fill="#a69cc4" stroke="none" font-family="JetBrains Mono, monospace" font-size="11">☐ modelos  ☐ gráficos  ☐ frames  ☐ personagens  ☐ efeitos</text>
+      </svg>
     </div>
   </div>
-  <div class="kx s9-fan-x" style="--out: 5700; --xdur: 500; left: 0; top: 0">
-    <div class="s9-card s9-card-models k up" style="--in: 300; left: 1050px; top: 250px">
-      <span class="s9-grid"><i></i><i></i><i></i><i></i></span><b>Modelos prontos</b><small>Cada um com os efeitos certos</small>
+  <svg class="cursor k s3-cursor" style="--in: calc(var(--w-nova) - 400); --dur: 1200; left: 560px; top: 640px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+  <i class="s9-ping k ping" style="--in: var(--w-nova); --dur: 700; left: 690px; top: 620px"></i>
+  <i class="s9-ping k ping" style="--in: var(--w-prontos); --dur: 700; left: 910px; top: 620px"></i>
+
+  <!-- o editor, em "Combine" -->
+  <div class="studio dark-frame k zoom" style="--in: var(--w-combine); --dur: 700; left: 300px; top: 160px">
+    <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Proposta comercial</span><span class="su-saved">Salvo</span><span class="su-go">Apresentar</span></div>
+    <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span class="k s8-on" style="--in: var(--w-graficos)">Gráficos</span><span>Cards</span><span class="k s8-on" style="--in: var(--w-frames)">Frames</span><span class="k s8-on" style="--in: var(--w-personagens)">Personagens</span><span class="k s8-on" style="--in: var(--w-modelos)">Modelos</span><span class="k s8-on" style="--in: var(--w-efeitos)"><svg><use href="#i-wand"/></svg>Efeitos</span></div>
+    <div class="su-body">
+      <div class="su-rail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="su-canvas">
+        <div class="slide paper">
+          <div class="s9-chart">
+            <p class="ct">Horas liberadas por área</p>
+            <div class="bars" style="--stag: 110"><i class="hot k grow-y" style="--v:.95; --in: calc(var(--w-graficos) + 200); --i: 0"></i><i class="hot k grow-y" style="--v:.7; --in: calc(var(--w-graficos) + 200); --i: 1"></i><i class="hot k grow-y" style="--v:.58; --in: calc(var(--w-graficos) + 200); --i: 2"></i><i class="k grow-y" style="--v:.36; --in: calc(var(--w-graficos) + 200); --i: 3"></i><i class="k grow-y" style="--v:.22; --in: calc(var(--w-graficos) + 200); --i: 4"></i></div>
+          </div>
+          <i class="s9-sel k fade" style="--in: calc(var(--w-graficos) + 300); left: 30px; top: 110px; width: 580px; height: 220px"></i>
+          <span class="s9-fxchip k pop" style="--in: var(--w-efeitos)"><svg><use href="#i-spark"/></svg>Efeito: Barras crescendo</span>
+          <div class="k pop" style="--in: var(--w-personagens); --dur: 500; position: absolute; right: 40px; bottom: 30px; width: 0; height: 0"><div class="bia" data-pose="wave" data-face="laugh" data-props="" style="--x: 0px; --y: 0px; --s: .42"></div></div>
+        </div>
+        <div class="s9-lib k right" style="--in: var(--w-modelos); --dur: 600">
+          <p class="lh">Biblioteca de modelos</p>
+          <p class="ls">Escolha um modelo e insira. Depois, escolha um efeito no seletor acima do elemento.</p>
+          <div class="lt"><span class="on">Modelos</span><span>Efeitos e animações</span></div>
+          <div class="lq">Buscar modelo: RACI, SWOT, Gantt, stakeholders…</div>
+          <div class="lc"><span class="on">Matrizes</span><span>Riscos</span><span>Estratégia</span><span>Gráficos</span><span>Indicadores</span><span>Frames</span></div>
+          <div class="lg" style="--stag: 80"><i class="on k pop" style="--in: calc(var(--w-modelos) + 300); --i: 0"></i><i class="k pop" style="--in: calc(var(--w-modelos) + 300); --i: 1"></i><i class="k pop" style="--in: calc(var(--w-modelos) + 300); --i: 2"></i><i class="k pop" style="--in: calc(var(--w-modelos) + 300); --i: 3"></i></div>
+        </div>
+      </div>
+      <div class="su-insp">
+        <p class="in-h">Gráfico de barras</p>
+        <div class="in-row"><span>Título</span><b>Horas liberadas</b></div>
+        <div class="in-row"><span>Categorias</span><b>5</b></div>
+        <div class="in-fx k pop" style="--in: calc(var(--w-efeitos) + 200)"><svg><use href="#i-spark"/></svg>Barras crescendo</div>
+        <div class="in-row k fade" style="--in: var(--w-frames)"><span>Frame</span><b>Moldura fina</b></div>
+      </div>
     </div>
-    <!-- leque de modelos, um por palavra: kickoff, resultados, aula, lançamento -->
-    <div class="s9-fan" style="left: 960px; top: 300px; --stag: 770">
-      <div class="s9-model k s9-deal" style="--in: 2460; --i: 0; --rx: -540px; --rr: -8deg"><i class="s9-cover"></i><b>Kickoff</b><em class="mono">time</em></div>
-      <div class="s9-model k s9-deal" style="--in: 2460; --i: 1; --rx: -180px; --rr: -3deg"><i class="s9-cover c2"></i><b>Resultados</b><em class="mono">diretoria</em></div>
-      <div class="s9-model k s9-deal" style="--in: 2460; --i: 2; --rx: 180px; --rr: 3deg"><i class="s9-cover c4"></i><b>Aula</b><em class="mono">sala de aula</em></div>
-      <div class="s9-model k s9-deal" style="--in: 2460; --i: 3; --rx: 540px; --rr: 8deg"><i class="s9-cover c5"></i><b>Lançamento</b><em class="mono">evento</em></div>
-    </div>
+  </div>
+  <i class="s9-ping k ping" style="--in: var(--w-graficos); --dur: 700; left: 596px; top: 254px"></i>
+
+  <!-- pílulas: uma acende por palavra -->
+  <div class="s9-pills k up" style="--in: calc(var(--w-combine) + 300); left: 0; right: 0; top: 870px">
+    <span class="pw"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>modelos</span><span class="pill lit k fade" style="--in: var(--w-modelos); --dur: 250"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>modelos</span></span>
+    <span class="pw"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg>gráficos</span><span class="pill lit k fade" style="--in: var(--w-graficos); --dur: 250"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg>gráficos</span></span>
+    <span class="pw"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>frames</span><span class="pill lit k fade" style="--in: var(--w-frames); --dur: 250"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg>frames</span></span>
+    <span class="pw"><span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0M16 4.5a3.5 3.5 0 0 1 0 7M21 20a6 6 0 0 0-4-5.6"/></svg>personagens</span><span class="pill lit k fade" style="--in: var(--w-personagens); --dur: 250"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="9" cy="8" r="3.5"/><path d="M3 20a6 6 0 0 1 12 0M16 4.5a3.5 3.5 0 0 1 0 7M21 20a6 6 0 0 0-4-5.6"/></svg>personagens</span></span>
+    <span class="pw"><span class="pill"><svg viewBox="0 0 24 24"><use href="#i-wand"/></svg>efeitos animados</span><span class="pill lit k fade" style="--in: var(--w-efeitos); --dur: 250"><svg viewBox="0 0 24 24"><use href="#i-wand"/></svg>efeitos animados</span></span>
   </div>
 
-  <!-- fichas de componentes, uma por palavra: kit de marca, gráficos, votação, post-its, 40 efeitos -->
-  <div class="s9-fichas" style="left: 160px; top: 150px; --stag: 920">
-    <div class="fich paper k pop" style="--in: 6300; --i: 0; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="8" r="2.5"/><circle cx="14" cy="7" r="2.5"/><circle cx="17.5" cy="13" r="2.5"/><path d="M5 18h14"/></svg></i>kit de marca</div>
-    <div class="fich paper k pop" style="--in: 6300; --i: 1; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i>gráficos</div>
-    <div class="fich paper k pop" style="--in: 6300; --i: 2; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></i>votação</div>
-    <div class="fich paper k pop" style="--in: 6300; --i: 3; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4.5h14v9.5l-5 5H5z"/><path d="M14 19v-5h5"/></svg></i>post-its</div>
-    <div class="fich paper k pop" style="--in: 6300; --i: 4; position: static"><i><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></i>40 efeitos</div>
-  </div>
-
-  <!-- o slide sobe e se monta, peça por palavra -->
-  <div class="slide paper live s9-build k s9-rise" style="--in: 6000; --dur: 700; left: 560px; top: 300px; width: 800px; padding: 44px 50px">
-    <p class="sl-k k fade" style="--in: 6300">Resultados do trimestre</p>
-    <p class="sl-t k up" style="--in: 6500; font-size: 48px">Crescemos <em>2×</em> em leitura completa</p>
-    <div class="s9-cols">
-      <div class="sl-bars" style="height: 150px; --stag: 120"><i class="k grow-y" style="--v:.34; --in: 7340; --i: 0"></i><i class="k grow-y" style="--v:.45; --in: 7340; --i: 1"></i><i class="k grow-y" style="--v:.57; --in: 7340; --i: 2"></i><i class="hot k grow-y" style="--v:.9; --in: 7340; --i: 3"></i></div>
-      <div class="sl-vote k fade" style="--in: 8220; align-self: end"><div><span>Produto</span><i><b class="k grow-x" style="--v:.62; --in: 8300; --dur: 700"></b></i><b>62 %</b></div><div><span>Design</span><i><b class="k grow-x" style="--v:.28; --in: 8450; --dur: 700"></b></i><b>28 %</b></div></div>
-    </div>
-    <div class="s9-postit k s9-fall" style="--in: 9100; --dur: 700"><span class="k s9-flick" style="--in: 10300; --dur: 500; display: block">Falar do T3 primeiro!</span></div>
-    <svg class="s8-spark k pop" style="--in: 9980; left: 560px; top: 60px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
-    <span class="s3-check k pop" style="--in: 11300; --dur: 420"><svg><use href="#i-check"/></svg></span>
-    <i class="s3-wave k s3-ring" style="--in: 11300; --dur: 900"></i>
-  </div>
-
-  <div class="bia" data-pose="present" data-face="happy" data-props="stamp" data-keys="1980:pose=point-right,face=wow;6300:pose=point-left,face=happy;7000:face=happy,pose=idle;9400:face=oops;10100:pose=point-left,face=think,dur=200;10900:pose=stamp,face=proud,dur=250;11300:pose=stamp-down,dur=140;11800:pose=idle" style="--x: 1560px; --y: 960px; --s: .95"></div>
+  <div class="bia" data-pose="idle" data-face="happy" data-props="tablet" data-keys="@comece:pose=point-right,face=happy;@nova:face=wow;@prontos:face=proud;@combine:pose=present,face=happy;@modelos:face=wow;@graficos:face=focus;@frames:face=happy;@personagens:pose=wave,face=laugh;@efeitos:pose=celebrate,face=laugh;@animados+800:pose=idle,face=proud" style="--x: 170px; --y: 960px; --s: .85"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@nova:face=wow;@prontos:pose=think,face=think;@combine:face=surprised;@personagens:pose=look-up,face=laugh;@animados:pose=bow,face=proud;@animados+800:pose=idle,face=happy" style="--x: 1750px; --y: 960px; --s: .8"></div>
 </section>

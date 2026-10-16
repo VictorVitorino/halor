@@ -1,18 +1,36 @@
-<!-- CENA 11 · HTML · PDF · PPTX · papel (torradeira) -->
-<section class="scene s11" id="s11" data-world="paper">
-  <!-- barra do topo do Estúdio como fenda de torradeira -->
-  <div class="s11-toaster k down" style="--in: 100; --dur: 600; left: 460px; top: 330px">
-    <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Kickoff 2027</span><span class="su-saved">Salvo</span><span class="su-go">Baixar</span></div>
-    <div class="s11-slot"></div>
+<!-- CENA 11 · Exportar · o diálogo "Salvar como" e os três arquivos -->
+<section class="scene s11" id="s11" data-world="night">
+  <div class="studio dark-frame k zoom" style="--in: 100; --dur: 600; left: 300px; top: 160px">
+    <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Proposta comercial</span><span class="su-saved">Salvo</span><span class="su-go">Salvar apresentação ▾</span></div>
+    <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span>Gráficos</span><span>Cards</span><span>Marca</span><span>Modelos</span><span><svg><use href="#i-wand"/></svg>Efeitos</span></div>
+    <div class="su-body">
+      <div class="su-rail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
+      <div class="su-canvas">
+        <div class="slide paper"><p class="sl-k">Proposta comercial</p><p class="sl-t">Plano do PMO · <em>versão final</em></p><ul><li>Contexto e objetivos</li><li>Escopo e cronograma</li><li>Investimento e próximos passos</li></ul><div class="sl-bars" style="height: 80px"><i style="--v:.4"></i><i style="--v:.6"></i><i class="hot" style="--v:.9"></i></div></div>
+      </div>
+      <div class="su-insp">
+        <p class="in-h">Posição e tamanho</p>
+        <div class="in-row"><span>X · Y</span><b>57,6 · 172,8</b></div>
+        <div class="in-row"><span>Largura · altura</span><b>844 · 485</b></div>
+        <div class="in-row"><span>Opacidade</span><b>1</b></div>
+      </div>
+    </div>
   </div>
-  <!-- arquivos pulam da fenda, um por palavra: HTML vivo, PDF, PowerPoint -->
-  <div class="s11-files" style="left: 0; top: 0; --stag: 1120">
-    <div class="file html k s11-toast" style="--in: 1100; --i: 0; --dur: 900; --tx: 0px; --ty: -300px; --tr: -6deg; left: 875px; top: 350px"><svg class="fl-face" viewBox="0 0 70 44" aria-hidden="true"><ellipse cx="20" cy="16" rx="9" ry="11" fill="#fff" stroke="#17112b" stroke-width="2"/><ellipse cx="50" cy="16" rx="9" ry="11" fill="#fff" stroke="#17112b" stroke-width="2"/><circle cx="22" cy="18" r="4" fill="#17112b"/><circle cx="52" cy="18" r="4" fill="#17112b"/><path d="M22 36q13 10 26 0" fill="none" stroke="#17112b" stroke-width="4" stroke-linecap="round"/></svg><span class="fl-tag">HTML</span></div>
-    <div class="file pdf k s11-toast" style="--in: 1100; --i: 1; --dur: 900; --tx: -330px; --ty: 110px; --tr: -14deg; left: 875px; top: 350px"><svg class="fl-face" viewBox="0 0 70 44" aria-hidden="true"><ellipse cx="20" cy="16" rx="9" ry="11" fill="#fff" stroke="#17112b" stroke-width="2"/><ellipse cx="50" cy="16" rx="9" ry="11" fill="#fff" stroke="#17112b" stroke-width="2"/><circle cx="21" cy="18" r="4" fill="#17112b"/><circle cx="51" cy="18" r="4" fill="#17112b"/><path d="M24 36q11 6 22 0" fill="none" stroke="#17112b" stroke-width="4" stroke-linecap="round"/></svg><span class="fl-tag">PDF</span></div>
-    <div class="file k s11-toast" style="--in: 1100; --i: 2; --dur: 900; --tx: 330px; --ty: 110px; --tr: 14deg; left: 875px; top: 350px"><svg class="fl-face" viewBox="0 0 70 44" aria-hidden="true"><ellipse cx="20" cy="16" rx="9" ry="11" fill="#fff" stroke="#17112b" stroke-width="2"/><ellipse cx="50" cy="16" rx="9" ry="11" fill="#fff" stroke="#17112b" stroke-width="2"/><circle cx="21" cy="18" r="4" fill="#17112b"/><circle cx="51" cy="18" r="4" fill="#17112b"/><path d="M24 36q11 6 22 0" fill="none" stroke="#17112b" stroke-width="4" stroke-linecap="round"/></svg><span class="fl-tag">PPTX</span></div>
+  <!-- o diálogo Salvar como -->
+  <div class="s11-dialog k down" style="--in: 700; --dur: 500; left: 1000px; top: 230px">
+    <p class="s11-h">Salvar como</p>
+    <div class="s11-opt k s11-on" style="--in: var(--w-html)"><i><svg><use href="#i-file"/></svg></i><span><b>HTML interativo (.html)</b> <em>· com efeitos</em></span><kbd>Ctrl+S</kbd></div>
+    <div class="s11-opt k s11-on" style="--in: var(--w-pdf)"><i><svg><use href="#i-file"/></svg></i><span><b>PDF (.pdf)</b> <em>· imagem em alta resolução, idêntico</em></span><kbd></kbd></div>
+    <div class="s11-opt"><i><svg><use href="#i-file"/></svg></i><span><b>PDF pelo navegador</b> <em>· texto selecionável</em></span><kbd></kbd></div>
+    <div class="s11-opt k s11-on" style="--in: var(--w-pptx)"><i><svg><use href="#i-file"/></svg></i><span><b>PowerPoint (.pptx)</b> <em>· editável</em></span><kbd></kbd></div>
   </div>
-  <div class="k fade" style="--in: 1500; --dur: 800; left: 960px; top: 160px; width: 0; height: 0"><i class="s11-glow l pulse"></i></div>
-  <div class="k s2-rise" style="--in: 1600; --dur: 800; left: 960px; top: 965px">
-    <div class="bia" data-pose="present" data-face="wow" data-props="" data-keys="2600:pose=cheer,face=proud;3800:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: 1"></div>
-  </div>
+  <!-- os arquivos saltam, um por palavra -->
+  <div class="file html k s11-jump" style="--in: var(--w-html); --dur: 900; --tx: -40px; --ty: -20px; --tr: -6deg; left: 540px; top: 420px"><i class="fl-prev"></i><span class="fl-tag">HTML</span><span class="label fl-lab">HTML · interativo</span></div>
+  <div class="file pdf k s11-jump" style="--in: var(--w-pdf); --dur: 900; --tx: 0px; --ty: -10px; --tr: 4deg; left: 760px; top: 440px"><i class="fl-prev"></i><span class="fl-tag">PDF</span><span class="label red fl-lab">PDF</span></div>
+  <div class="file k s11-jump" style="--in: var(--w-pptx); --dur: 900; --tx: 30px; --ty: -20px; --tr: 8deg; left: 980px; top: 430px"><i class="fl-prev"></i><span class="fl-tag">PPTX</span><span class="label ink fl-lab">PPTX</span></div>
+  <svg class="spark k pop" style="--in: calc(var(--w-html) + 300); left: 480px; top: 400px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: calc(var(--w-pptx) + 300); left: 1180px; top: 520px; width: 28px; height: 28px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@exporte:pose=point-right,face=happy;@html:face=wow;@pdf:face=proud;@pptx:pose=celebrate,face=laugh;@pptx+900:pose=idle,face=proud" style="--x: 170px; --y: 960px; --s: .9"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@exporte:face=wow;@pdf:pose=look-up,face=surprised;@pptx:pose=jump,face=laugh;@pptx+900:pose=idle,face=happy" style="--x: 1750px; --y: 960px; --s: .85"></div>
 </section>

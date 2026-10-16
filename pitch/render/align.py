@@ -13,6 +13,7 @@ e atualiza pitch/src/roteiro.json: `from`/`to` de cada cena e `at` de cada fala.
 import json
 import pathlib
 import subprocess
+import unicodedata
 
 HERE = pathlib.Path(__file__).resolve().parent
 PITCH = HERE.parent
@@ -20,12 +21,17 @@ AUDIO = PITCH / "audio"
 ROTEIRO = PITCH / "src" / "roteiro.json"
 
 # respiro antes da primeira palavra (lead) e depois da última (tail) de cada cena, em segundos
-LEAD = {"s1": 1.6, "s2": .3, "s3": .3, "s4": .3, "s5": .3, "s6": .3, "s7": .3, "s8": .8, "s9": .3, "s10": .3, "s11": .3, "s12": .9, "s13": .3}
-TAIL = {"s1": 1.3, "s2": 1.2, "s3": 1.2, "s4": 1.1, "s5": 1.0, "s6": .5, "s7": .4, "s8": .4, "s9": .9, "s10": 1.1, "s11": .5, "s12": 1.1, "s13": 1.8}
+LEAD = {"s1": 1.9, "s2": .5, "s3": .4, "s4": .4, "s5": .4, "s6": .4, "s7": .4, "s8": .9, "s9": .4, "s10": .4, "s11": .5, "s12": .5, "s13": .6}
+TAIL = {"s1": 1.4, "s2": 1.1, "s3": 1.3, "s4": 1.3, "s5": 1.2, "s6": 1.3, "s7": 1.2, "s8": .9, "s9": .9, "s10": 1.1, "s11": .7, "s12": 1.0, "s13": 2.4}
 
 
 def norm(w):
     return "".join(ch for ch in w.lower() if ch.isalnum())
+
+
+def akey(w):
+    """chave ASCII da palavra (sem acentos) para --w-<chave> e @chave"""
+    return "".join(ch for ch in unicodedata.normalize("NFKD", norm(w)) if ch.isalnum() and ord(ch) < 128)
 
 
 def main():
@@ -83,11 +89,24 @@ def main():
 
     # grava roteiro e tabela
     by_id = {s["id"]: s for s in timeline}
-    for sc in rot["scenes"]:
+    wi = 0
+    for sc, scn in zip(rot["scenes"], scenes):
         s = by_id[sc["id"]]
         sc["from"] = int(round(s["from"] * 1000)); sc["to"] = int(round(s["to"] * 1000))
         for ln, l in zip(sc["lines"], s["lines"]):
             ln["at"] = int(round(l["at"] * 1000))
+        # tempos por palavra, relativos ao início da cena (as cenas usam --in: var(--w-palavra) e @palavra nas chaves da Bia)
+        w = {}
+        for ln in sc["lines"]:
+            for t in ln["text"].split():
+                if not norm(t): continue
+                k = akey(t)
+                wd = words[wi]; wi += 1
+                key = k; n = 2
+                while key in w: key = f"{k}{n}"; n += 1
+                w[key] = int(round((wd["start"] + s["offset"] - s["from"]) * 1000))
+                w[key + "-end"] = int(round((wd["end"] + s["offset"] - s["from"]) * 1000))
+        sc["w"] = w
     ROTEIRO.write_text(json.dumps(rot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (AUDIO / "timing.json").write_text(json.dumps(timeline, indent=1), encoding="utf-8")
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(AUDIO / "narration.mp3")]).decode())

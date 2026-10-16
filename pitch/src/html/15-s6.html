@@ -1,40 +1,35 @@
-<!-- CENA 6 · Onde o olhar ficou · noite -->
-<section class="scene s6" id="s6">
-  <!-- notebook que fecha em "termina" -->
-  <div class="s6-laptop k up" style="--in: 100; left: 250px; top: 300px">
-    <div class="s6-lid k s6-close" style="--in: 900; --dur: 1300">
-      <div class="s6-screen">
-        <div class="slide live" style="left: 18px; top: 16px; width: 460px; padding: 26px 30px">
-          <span class="sl-glow"></span><p class="sl-k">Kickoff 2027</p><p class="sl-t" style="font-size: 30px">Plano em <em>12 semanas</em></p>
-          <div class="sl-bars" style="height: 80px"><i style="--v:.42"></i><i style="--v:.58"></i><i style="--v:.74"></i><i class="hot" style="--v:.94"></i></div>
-        </div>
-      </div>
-    </div>
-    <div class="s6-base"></div>
+<!-- CENA 6 · Do papel ao contrato · a proposta fecha, a trilha de luz segue até o contrato, a Bia e o cliente comemoram -->
+<section class="scene s6" id="s6" data-world="paper">
+  <div class="s6-book k up" style="--in: 100; --dur: 600; left: 80px; top: 540px">
+    <div class="pg"><i class="h"></i><i></i><i style="width: 80%"></i><div class="bars"><i style="--v:.4"></i><i style="--v:.6"></i><i class="hot" style="--v:.9"></i><i style="--v:.5"></i></div></div>
+    <div class="cv k s6-shut" style="--in: var(--w-termina); --dur: 900"><svg viewBox="0 0 64 64"><use href="#hl-mark"/></svg><b>PROPOSTA</b><i></i></div>
   </div>
-  <p class="s6-off mono k fade" style="--in: 2000; left: 340px; top: 660px">reunião encerrada</p>
 
-  <!-- celular acende e vibra em "continua" -->
-  <div class="s6-phone k pop" style="--in: 2300; left: 820px; top: 330px">
-    <div class="k shake" style="--in: 2700; --dur: 600; position: absolute; inset: 0">
-      <div class="s6-pscreen k fade" style="--in: 3100; --dur: 500">
-        <p class="sl-k">Kickoff 2027</p><p class="s6-mini-t">Plano em <em>12 semanas</em></p>
-        <div class="sl-bars" style="height: 70px"><i style="--v:.42"></i><i style="--v:.58"></i><i style="--v:.74"></i><i class="hot l pulse" style="--v:.94"></i></div>
-      </div>
-    </div>
+  <!-- trilha de luz do papel ao contrato -->
+  <svg class="s6-trail" viewBox="0 0 1300 120" style="left: 330px; top: 820px; width: 1300px; height: 120px" aria-hidden="true">
+    <path class="k draw" style="--in: var(--w-a2); --dur: 1600" pathLength="1" d="M0 60 C 110 20, 190 100, 300 60 S 490 20, 600 60 S 800 100, 900 60 S 1100 20, 1300 60" fill="none" stroke="#8b3dff" stroke-width="8" stroke-dasharray="1" stroke-linecap="round"/>
+  </svg>
+
+  <!-- contrato no cavalete, à direita -->
+  <div class="s6-clip k up" style="--in: calc(var(--w-termina) + 500); --dur: 700; left: 1490px; top: 470px">
+    <i class="leg l"></i><i class="leg r"></i>
+    <div class="board"></div><i class="clipk"></i>
+    <div class="paper"><i class="h"></i><i></i><i style="width: 85%"></i><i style="width: 70%"></i><i style="width: 90%"></i></div>
+    <b class="sigx k pop" style="--in: var(--w-continua)">×</b>
+    <svg class="sig" viewBox="0 0 220 70" aria-hidden="true"><path class="k draw" style="--in: calc(var(--w-continua) + 200); --dur: 900" pathLength="1" d="M10 50 C 30 10, 50 10, 60 40 S 90 70, 100 30 S 130 10, 150 40 S 190 60, 210 30" fill="none" stroke="currentColor" stroke-width="5" stroke-dasharray="1" stroke-linecap="round"/></svg>
+    <i class="flag k pop" style="--in: calc(var(--w-termina) + 800)"></i>
+    <i class="s6-halo k fade" style="--in: calc(var(--w-continua) + 900); --dur: 500; left: 280px; top: 50px"></i>
+    <i class="ring k ring-x" style="--in: calc(var(--w-continua) + 1000); --dur: 900; left: 280px; top: 50px"></i>
+    <span class="chk k pop" style="--in: calc(var(--w-continua) + 1000); --dur: 450; left: 248px; top: 18px"><svg><use href="#i-check"/></svg></span>
   </div>
-  <div class="pill k pop s6-link" style="--in: 3600; left: 760px; top: 250px"><svg style="width:20px;height:20px"><use href="#i-link"/></svg>halor.app/kickoff-2027</div>
 
-  <!-- Painel Halor em "Painel Halor": onde o olhar ficou -->
-  <div class="s6-panel k right" style="--in: 5500; --dur: 700; left: 1100px; top: 190px">
-    <p class="mono s6-ph">Painel Halor</p>
-    <p class="s6-title">Onde o olhar ficou</p>
-    <div class="s6-bars" style="--stag: 110"><i class="k grow-y" style="--v:.35; --in: 6000; --i: 0"></i><i class="k grow-y" style="--v:.5; --in: 6000; --i: 1"></i><i class="hot k grow-y" style="--v:.95; --in: 6000; --i: 2"><b>41 s</b></i><i class="k grow-y" style="--v:.6; --in: 6000; --i: 3"></i><i class="k grow-y" style="--v:.45; --in: 6000; --i: 4"></i><i class="k grow-y" style="--v:.3; --in: 6000; --i: 5"></i></div>
-    <p class="mono s6-axis">slide 1 · 2 · <b>3</b> · 4 · 5 · 6</p>
-    <div class="s6-idx k fade" style="--in: 6800"><span class="mono">Índice Halor</span><b><span class="num-n k counter" style="--n0: 0; --n1: 84; --in: 6800; --dur: 900"></span></b></div>
-    <p class="mono s6-foot">link halor medido</p>
+  <!-- a Bia e o cliente caminham juntos pela trilha, com ideias nos balões -->
+  <div class="k sway-x" style="--in: var(--w-a2); --dur: calc(var(--w-continua) - var(--w-a2) + 500); --dx: 380px; left: 500px; top: 960px">
+    <div class="bia" data-pose="walk" data-face="happy" data-props="tablet" data-keys="@termina:face=focus;@a2:face=happy;@oportunidade:face=wow;@continua+500:pose=idle,face=proud;@continua+1000:pose=celebrate,face=laugh;@continua+1900:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .95"></div>
+    <div class="note k pop" style="--in: var(--w-oportunidade); left: -48px; top: -360px"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.1 2.2h5c0-.9.5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg></i></div>
   </div>
-  <div class="s6-toast k up" style="--in: 7340; left: 1000px; top: 720px"><i></i><span><b>Lia</b> abriu seu link</span><em class="mono">41 s no slide 3</em></div>
-
-  <div class="bia" data-pose="idle" data-face="sleepy" data-props="clipboard" data-keys="2300:face=wow,pose=point-right,dur=200;4400:pose=present,face=happy;7400:face=proud,pose=idle" style="--x: 640px; --y: 960px; --s: .95"></div>
+  <div class="k sway-x" style="--in: var(--w-a2); --dur: calc(var(--w-continua) - var(--w-a2) + 500); --dx: 380px; left: 680px; top: 960px">
+    <div class="bia" data-skin="cliente" data-pose="walk" data-face="happy" data-props="" data-keys="@termina:face=think;@a2:face=happy;@oportunidade:face=wow;@continua+500:pose=idle,face=proud;@continua+1000:pose=jump,face=laugh;@continua+1900:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .85"></div>
+    <div class="note k pop" style="--in: calc(var(--w-oportunidade) + 250); left: -48px; top: -330px"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i></div>
+  </div>
 </section>

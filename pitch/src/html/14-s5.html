@@ -1,78 +1,84 @@
-<!-- CENA 5 · Da faísca ao valor que fica · noite -->
-<section class="scene s5" id="s5">
-  <!-- trilho e postes -->
-  <div class="rail k grow-x" style="--in: 0; --dur: 900; top: 770px; left: 0; right: 0"></div>
-  <div class="s5-stations" style="left: 0; top: 0; --stag: 180">
-    <div class="s5-st k down" style="--in: 300; --i: 0; left: 75px">
-      <i class="post" style="left: 158px; top: 190px; height: 390px"></i>
+<!-- CENA 5 · Impressionar → decidir · esteira com quatro estações; o cartão viaja; a Bia acompanha com o clicker -->
+<section class="scene s5" id="s5" data-world="paper">
+  <div class="rail paper k grow-x" style="--in: 0; --dur: 900; top: 770px; left: 0; right: 0"></div>
+  <i class="s5-wheel k pop" style="--in: 600; left: 140px; top: 760px"></i>
+  <i class="s5-wheel k pop" style="--in: 700; left: 925px; top: 760px"></i>
+  <i class="s5-wheel k pop" style="--in: 800; left: 1710px; top: 760px"></i>
+
+  <div class="s5-stations" style="--stag: 180">
+    <div class="s5-st k down" style="--in: 300; --i: 0; left: 40px">
+      <i class="post"></i>
       <div class="station">
-        <span class="st-on k fade" style="--in: 1420; --dur: 500"></span>
+        <span class="st-on k fade" style="--in: var(--w-impressionar); --dur: 400"></span>
         <span class="st-n">1</span>
-        <span class="st-ic k s5-lit" style="--in: 1420"><svg viewBox="0 0 64 64"><path class="k spin-in" style="--in: 1420; --dur: 500" d="M32 6Q32 32 58 32Q32 32 32 58Q32 32 6 32Q32 32 32 6Z" fill="currentColor"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: 1420">Faísca</span>
+        <span class="st-ic k s5-lit" style="--in: var(--w-impressionar)"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></span>
+        <span class="st-t k s5-lit" style="--in: var(--w-impressionar)">Impressionar</span>
       </div>
+      <div class="s5-prop s5-door k pop" style="--in: calc(var(--w-impressionar) + 150); top: 540px"><i class="k fade" style="--in: calc(var(--w-impressionar) + 400); --dur: 500"></i></div>
     </div>
-    <div class="s5-st k down" style="--in: 300; --i: 1; left: 515px">
-      <i class="post" style="left: 158px; top: 190px; height: 390px"></i>
+    <div class="s5-st k down" style="--in: 300; --i: 1; left: 500px">
+      <i class="post"></i>
       <div class="station">
-        <span class="st-on k fade" style="--in: 3500; --dur: 500"></span>
+        <span class="st-on k fade" style="--in: var(--w-clareza); --dur: 400"></span>
         <span class="st-n">2</span>
-        <span class="st-ic k s5-lit" style="--in: 3500"><svg viewBox="0 0 64 64"><path class="k draw" style="--in: 3500; --dur: 800" pathLength="1" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: 3500">Atenção</span>
+        <span class="st-ic k s5-lit" style="--in: var(--w-clareza)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.1 2.2h5c0-.9.5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg></span>
+        <span class="st-t k s5-lit" style="--in: var(--w-clareza)">Entender</span>
       </div>
+      <div class="s5-prop s5-monitor k pop" style="--in: calc(var(--w-clareza) + 150); top: 540px; --stag: 100"><i class="k grow-y" style="--v:.45; --in: calc(var(--w-entendimento) - 200); --i: 0"></i><i class="k grow-y" style="--v:.7; --in: calc(var(--w-entendimento) - 200); --i: 1"></i><i class="k grow-y" style="--v:.55; --in: calc(var(--w-entendimento) - 200); --i: 2"></i><i class="hot k grow-y" style="--v:1; --in: calc(var(--w-entendimento) - 200); --i: 3"></i></div>
     </div>
-    <div class="s5-st k down" style="--in: 300; --i: 2; left: 955px">
-      <i class="post" style="left: 158px; top: 190px; height: 390px"></i>
+    <div class="s5-st k down" style="--in: 300; --i: 2; left: 960px">
+      <i class="post"></i>
       <div class="station">
-        <span class="st-on k fade" style="--in: 5660; --dur: 500"></span>
+        <span class="st-on k fade" style="--in: var(--w-confianca); --dur: 400"></span>
         <span class="st-n">3</span>
-        <span class="st-ic k s5-lit" style="--in: 5660"><svg viewBox="0 0 64 64"><circle class="k draw" style="--in: 5660; --dur: 800" pathLength="1" cx="32" cy="32" r="20" fill="none" stroke="currentColor" stroke-width="3.5"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: 5660">Confiança</span>
+        <span class="st-ic k s5-lit" style="--in: var(--w-confianca)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <span class="st-t k s5-lit" style="--in: var(--w-confianca)">Confiar</span>
       </div>
+      <div class="s5-prop s5-shield k pop" style="--in: calc(var(--w-confianca) + 150); top: 545px"><svg viewBox="0 0 150 170" fill="none"><path d="M75 8l62 24v44c0 44-30 74-62 86-32-12-62-42-62-86V32z" fill="#2a1f4d" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/><path d="M75 30l44 17v31c0 32-22 54-44 64-22-10-44-32-44-64V47z" fill="#5a35a8"/><path class="k draw" style="--in: calc(var(--w-confianca) + 500); --dur: 600" pathLength="1" d="M52 86l17 17 32-34" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1"/></svg></div>
     </div>
-    <div class="s5-st k down" style="--in: 300; --i: 3; left: 1395px">
-      <i class="post" style="left: 158px; top: 190px; height: 390px"></i>
+    <div class="s5-st k down" style="--in: 300; --i: 3; left: 1420px">
+      <i class="post"></i>
       <div class="station">
-        <span class="st-on k fade" style="--in: 8620; --dur: 500"></span>
+        <span class="st-on k fade" style="--in: var(--w-decisao); --dur: 400"></span>
         <span class="st-n">4</span>
-        <span class="st-ic k s5-lit" style="--in: 8620"><svg viewBox="0 0 64 64"><circle class="k pop" style="--in: 8620; --dur: 500" cx="32" cy="32" r="12" fill="currentColor"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: 8620">Valor<small class="mono">que fica</small></span>
+        <span class="st-ic k s5-lit" style="--in: var(--w-decisao)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h11l-2.5 4L17 12H6"/></svg></span>
+        <span class="st-t k s5-lit" style="--in: var(--w-decisao)">Decidir</span>
       </div>
+      <div class="s5-prop s5-dashed kx x-shrink" style="--out: calc(var(--w-decisao) - 300); --xdur: 300; top: 560px"></div>
+      <div class="s5-prop s5-btn k pop" style="--in: calc(var(--w-decisao) - 200); top: 640px"><i class="dome k s5-press" style="--in: calc(var(--w-decisao) + 250); --dur: 500"><svg><use href="#i-check"/></svg></i><i class="base"></i></div>
     </div>
   </div>
-  <!-- estalos de luz a cada estação -->
-  <i class="s5-ring k" style="--in: 1420; --dur: 900; left: 240px; top: 390px"></i>
-  <i class="s5-ring k" style="--in: 3500; --dur: 900; left: 680px; top: 390px"></i>
-  <i class="s5-ring k" style="--in: 5660; --dur: 900; left: 1120px; top: 390px"></i>
-  <i class="s5-ring k" style="--in: 8620; --dur: 900; left: 1560px; top: 390px"></i>
+  <!-- estalos em cada estação -->
+  <i class="ring k ring-x" style="--in: var(--w-impressionar); --dur: 900; left: 220px; top: 260px"></i>
+  <i class="ring k ring-x" style="--in: var(--w-clareza); --dur: 900; left: 680px; top: 260px"></i>
+  <i class="ring k ring-x" style="--in: var(--w-confianca); --dur: 900; left: 1140px; top: 260px"></i>
+  <i class="ring k ring-x" style="--in: var(--w-decisao); --dur: 900; left: 1600px; top: 260px"></i>
 
-  <!-- o slide feliz viaja pelo trilho -->
-  <div class="k s5-ride" style="--in: 400; --dur: 10000; left: 0; top: 590px">
-    <div class="slide live s5-slide" style="left: 0; top: 0; width: 300px">
-      <span class="sl-glow"></span>
-      <p class="sl-k">Kickoff</p>
-      <div class="sl-bars" style="height: 60px"><i style="--v:.5"></i><i style="--v:.7"></i><i class="hot" style="--v:.95"></i></div>
-      <svg class="sl-face" style="width: 64px; height: 42px; right: 16px; top: 14px" viewBox="0 0 92 60" aria-hidden="true">
+  <!-- o cartão da proposta viaja na esteira -->
+  <div class="k s5-ride" style="--in: 300; --dur: calc(var(--w-decisao) + 900); --dx: 2200px; left: -340px; top: 655px">
+    <div class="slide live s5-card" style="left: 0; top: 0">
+      <span class="sl-glow"></span><p class="sl-k">Proposta</p>
+      <div class="sl-bars" style="height: 36px"><i style="--v:.5"></i><i style="--v:.7"></i><i class="hot" style="--v:.95"></i></div>
+      <svg class="sl-face" style="width: 50px; height: 34px; right: 12px; top: 10px" viewBox="0 0 92 60" aria-hidden="true">
         <ellipse cx="26" cy="22" rx="14" ry="16" fill="#fff"/><ellipse cx="66" cy="22" rx="14" ry="16" fill="#fff"/>
         <circle cx="29" cy="24" r="6.5" fill="#2a1f4d"/><circle cx="69" cy="24" r="6.5" fill="#2a1f4d"/>
         <path d="M32 46q14 14 28 0" fill="none" stroke="#f4eeff" stroke-width="4" stroke-linecap="round"/>
       </svg>
-      <span class="s3-check k pop" style="--in: 10000; --dur: 420; right: 14px; bottom: 14px"><svg><use href="#i-check"/></svg></span>
     </div>
   </div>
 
-  <!-- o símbolo completo nasce acima do trilho, com o vão aberto -->
-  <div class="s5-mark k pop" style="--in: 9000; --dur: 700; left: 860px; top: 40px">
-    <svg viewBox="0 0 64 64" class="l pulse"><use href="#hl-mark"/></svg>
-  </div>
-  <div class="s5-confetti" style="left: 960px; top: 150px; --stag: 30">
-    <i class="k s3-fly" style="--in: 9000; --i: 0; --dx: -260px; --dy: -90px"></i><i class="k s3-fly" style="--in: 9000; --i: 1; --dx: 280px; --dy: -70px"></i>
-    <i class="k s3-fly" style="--in: 9000; --i: 2; --dx: -180px; --dy: 180px"></i><i class="k s3-fly" style="--in: 9000; --i: 3; --dx: 220px; --dy: 160px"></i>
-    <i class="k s3-fly" style="--in: 9000; --i: 4; --dx: -340px; --dy: 40px"></i><i class="k s3-fly" style="--in: 9000; --i: 5; --dx: 360px; --dy: 60px"></i>
-    <i class="k s3-fly" style="--in: 9000; --i: 6; --dx: -80px; --dy: 240px"></i><i class="k s3-fly" style="--in: 9000; --i: 7; --dx: 100px; --dy: -140px"></i>
-    <i class="k s3-fly" style="--in: 9000; --i: 8; --dx: -420px; --dy: 120px"></i><i class="k s3-fly" style="--in: 9000; --i: 9; --dx: 440px; --dy: -20px"></i>
+  <!-- confete na decisão -->
+  <div class="confetti" style="left: 1600px; top: 560px; --stag: 30">
+    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 0; --dx: -260px; --dy: -190px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 1; --dx: 240px; --dy: -170px"></i>
+    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 2; --dx: -180px; --dy: -320px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 3; --dx: 200px; --dy: -300px"></i>
+    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 4; --dx: -340px; --dy: -60px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 5; --dx: 300px; --dy: -40px"></i>
+    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 6; --dx: -80px; --dy: -380px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 7; --dx: 100px; --dy: -360px"></i>
+    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 8; --dx: -420px; --dy: -240px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 9; --dx: 380px; --dy: -220px"></i>
+    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 10; --dx: -140px; --dy: -120px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 11; --dx: 160px; --dy: -100px"></i>
   </div>
 
-  <!-- a Bia acompanha o slide e carimba no fim -->
-  <div class="bia" data-pose="walk" data-face="happy" data-props="stamp" data-keys="0:x=180,dur=1;400:x=1480,dur=10000,ease=linear,pose=walk;1420:face=wow,dur=200;2800:face=happy;5700:face=proud;8620:face=wow;9600:pose=stamp,face=proud;10000:pose=stamp-down,dur=140;10500:pose=cheer,face=proud" style="--x: 180px; --y: 965px; --s: .9"></div>
+  <!-- a Bia caminha ao lado da esteira com o clicker e reage a cada estação -->
+  <div class="k sway-x" style="--in: 300; --dur: calc(var(--w-decisao) + 500); --dx: 1120px; left: 380px; top: 960px">
+    <div class="bia" data-pose="walk" data-face="happy" data-props="clicker" data-keys="@impressionar:face=wow;@impressionar+700:face=happy;@clareza:face=focus;@entendimento:face=proud;@interatividade:face=wow;@envolvimento:face=happy;@confianca:face=laugh;@chegar:face=focus;@decisao:pose=jump,face=laugh;@decisao+600:pose=celebrate,face=proud;@decisao+1500:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .9"></div>
+  </div>
 </section>
