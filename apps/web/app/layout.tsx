@@ -15,7 +15,6 @@ export const metadata: Metadata = {
     icon: [{ url: '/brand/favicon.svg', type: 'image/svg+xml' }, { url: '/brand/favicon-32.png', sizes: '32x32', type: 'image/png' }],
     apple: [{ url: '/brand/apple-touch-icon.png', sizes: '180x180' }],
   },
-  manifest: '/manifest.webmanifest',
   openGraph: {
     type: 'website', locale: 'pt_BR', siteName: 'Halor', title: 'Halor · Faça cada olhar render.',
     description: 'Apresentações vivas, que prendem o olhar do começo ao fim. Sem código.',

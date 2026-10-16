@@ -1,60 +1,78 @@
 # Halor · Faça cada olhar render.
 
-Nova marca, design system e protótipo navegável da plataforma de apresentações que antes se chamava **Canteiro**.
-Abra `index.html` direto no navegador: um único arquivo, sem build obrigatório, com todas as telas.
+Programa de apresentações lúdicas em HTML: apresentações vivas, que prendem o olhar do começo ao fim. Sem código.
 
-## A ideia
+Este repositório reúne **a marca, o design system e o front end** do Halor (antes chamado Canteiro).
 
-**Halo + valor = Halor.** O nome junta o *efeito halo* (Thorndike, 1920: a primeira impressão contamina todo o julgamento)
-com o valor que ele gera: uma proposta aceita, uma parceria firmada, um projeto aprovado, uma aula que fica. A marca organiza esse caminho em uma cadeia:
+```
+halor/
+├─ apps/web/            Front end em Next.js 16 (App Router, React 19, TypeScript, exportação estática)
+├─ packages/brand/      Marca: logos, símbolo, ícones, imagem social e tokens de design (fonte única)
+├─ packages/ui/         Componentes React do design system (Icon, Mark, Logo, Button, Chip, Eyebrow, sprite)
+├─ prototype/           Protótipo original em arquivo único (referência visual e de comportamento)
+└─ tools/               Conversor HTML → TSX e harness de comparação visual com o protótipo
+```
 
-> Atenção → Interesse → Curiosidade → Aproximação → Confiança → Parceria → Valor
+## Começar
 
-No site, o efeito Halor aparece em três ideias da ciência (efeito halo, 50 ms, imagem fica e texto passa), e o produto mostra o ganho principal: apresentações em HTML, vivas e interativas, sem código. O logo é um halo aberto:
-um anel aberto (atenção), um anel interno (confiança), um núcleo aceso (valor) e uma faísca (o primeiro olhar).
+Requer Node 20.9 ou mais novo.
 
-## Telas do protótipo
+```bash
+npm install
+npm run dev          # http://localhost:3000
+npm run build        # gera o site estático em apps/web/out
+npm run typecheck
+npm run brand:assets # regenera tokens (JSON/TS), favicons, ícones e imagem social a partir de packages/brand
+```
 
-A barra flutuante "Protótipo" leva a todas. Cada uma também abre por endereço (`index.html#painel`, por exemplo).
+O build gera HTML estático por rota (`apps/web/out`), pronto para qualquer hospedagem estática (Vercel, Netlify, Cloudflare Pages, S3). Variáveis opcionais:
 
-| Endereço | Tela | Mundo |
+| Variável | Para quê |
+|---|---|
+| `NEXT_PUBLIC_SITE_URL` | URL pública, usada em metadados, sitemap e robots (padrão `https://halor.app`) |
+| `NEXT_PUBLIC_HIDE_PROTO=1` | esconde a barra "Protótipo" de navegação entre telas |
+
+## Rotas
+
+| Rota | Tela | Mundo |
 |---|---|---|
-| `#site` | Site: hero com o símbolo Halor em neon, **filme Conheça o Halor** (gravação do Estúdio, passo a passo), O efeito Halor, Produto com gravação em loop e modelos, Linha do tempo de 10 anos, **Vitrine de efeitos** (demos ao vivo e catálogo de 40 efeitos), planos, perguntas | Noite + Lavanda |
-| `#entrar` | Entrar · criar conta · esqueci a senha · definir senha (o halo da esquerda "olha" o e-mail e fecha o olho na senha) | Noite + Papel |
-| `#assinar` | Checkout: plano, ciclo, pessoas, Pix / cartão (cartão ao vivo) / boleto, cupom `PRIMEIROOLHAR`, confirmação | Papel |
-| `#estudio` | Início (a nova capa): saudação, Índice Halor da semana, atalhos, acervo, modelos, sinais da cadeia | Papel |
-| `#editor` | Editor: menus, faixa de inserção, trilho de slides, **Raio Halor** (mapa de atenção previsto), inspetor Design / Animação / Halor | Papel |
-| `#painel` | Painel Halor: índice, KPIs, linha mensal, cadeia antes × com Halor, mapa de atenção por slide, tabelas | Papel |
-| `#apresentar` | Palco: slide atual, próximo, notas, cronômetro e pulso da audiência | Noite |
-| `#admin` | Administração: pessoas, papéis, convites, espaço | Papel |
-| `#marca` | Manual da marca: conceito, logo, cores, tipografia, componentes, movimento, voz, aplicações, Canteiro → Halor, próximas ondas, tokens | Papel + Noite |
+| `/` | Site: capa com o Campo Halor, filme "Conheça o Halor" (1 min 28 s), O efeito Halor, Produto, Linha do tempo (viagem no tempo), Vitrine de efeitos, Planos (inclui empresariais de 20 e de 50 a 100 usuários), Perguntas | Noite + Lavanda |
+| `/entrar` | Entrar, criar conta, esqueci a senha, definir senha | Noite + Papel |
+| `/assinar` | Checkout: plano, ciclo, pessoas, Pix, cartão ou boleto, cupom, confirmação | Papel |
+| `/estudio` | Início do estúdio: Índice Halor, atalhos, acervo, modelos, sinais | Papel |
+| `/editor` | Editor: faixa de inserção, trilho de slides, Raio Halor, inspetor | Papel |
+| `/painel` | Painel Halor: atenção da plateia por apresentação e por slide | Papel |
+| `/apresentar` | Palco do apresentador | Noite |
+| `/admin` | Pessoas, papéis, convites | Papel |
+| `/marca` | Manual da marca interativo | Papel + Noite |
 
-Todos os números do painel são **ilustrativos** (carteira de exemplo). Formulários e pagamento são simulação: nada é enviado.
+Os números do painel são ilustrativos e formulários e pagamento são simulação: nada é enviado.
 
-## Design system
+## Arquitetura do front end
 
-- **Tokens:** `design-system/halor-tokens.css`. Os componentes usam só papéis (`--bg`, `--text`, `--accent`…);
-  trocar de mundo é trocar a classe `.theme-night` ou `.theme-paper`.
-- **Cores-núcleo:** Vazio `#07040F` · Violeta Halor `#8B3DFF` · Neon `#A970FF` · Brilho `#C9A6FF` · Lúmen `#F4EEFF`.
-  Estúdio: Papel `#FFFFFF` · Névoa `#F8F6FE` · Lilás `#F3EEFF` · Tinta `#17112B`.
-- **Escala da Cadeia Halor:** rampa ordinal de 7 tons validada (luminosidade monotônica, passos visíveis) para Papel e Noite.
-- **Tipografia:** Sora (display e logo) · Instrument Sans (interface e texto) · JetBrains Mono (dados e rótulos).
-- **Logo:** `brand/halor-logo-{night,paper,mono}.svg`, `brand/halor-mark-*.svg`, `brand/halor-app-icon.svg`
-  (palavra convertida em contornos, não depende de fonte instalada).
+- **Marcação fiel.** Cada tela nasceu da conversão automática do HTML do protótipo para TSX (`tools/html-to-tsx.mjs`), então o visual aprovado é preservado pixel a pixel.
+- **Motores por tela.** O comportamento (filme, partículas, carrossel, editor, checkout…) vive em módulos TypeScript em `apps/web/lib/engines/<área>`. Cada tela liga os seus com o hook `useEngine(view, boot)`, que chama o motor ao montar e executa a limpeza ao sair. Os motores nunca tocam em `window` no carregamento do módulo (as páginas são pré-renderizadas no build) e removem todos os ouvintes, timers e observadores ao desmontar.
+- **Núcleo compartilhado.** `lib/core.ts` (utilitários de DOM, toast, cópia, modais, ciclo das telas), `lib/slides.ts` (renderizador de slides usado no editor, palco, filme e site), `lib/engines/particles.ts` (Campo Halor), `lib/engines/halo.ts` (arcos neon), `lib/data/chain.ts` (Cadeia Halor).
+- **Estilos.** `apps/web/styles/*.css` na mesma ordem do protótipo, importados por `app/globals.css`. Os tokens de `packages/brand/tokens/halor-tokens.css` são a fonte única; trocar de mundo é trocar a classe `.theme-night`, `.theme-paper` ou `.theme-lilac`.
+- **Fontes.** Sora, Instrument Sans e JetBrains Mono auto-hospedadas com `next/font` (sem chamada externa).
+- **Metadados.** Título, descrição, Open Graph, ícones, manifest PWA, robots e sitemap gerados pelo próprio Next.
 
-## Como editar
+## Qualidade
 
-```
-src/
-  css/   00-tokens · 10-base · 20-site · 27-vitrine · 28-produto · 30-film · 40-auth · 50-studio · 60-dash · 70-brand
-  html/  00-sprite (logo e ícones) · 05-proto · 10-site-a (hero) · 11-site-film · 12-site-efeito · 13-site-produto · 14-site-vitrine · 15-site-c · 20-auth · 30-studio · 40-brand
-  js/    00-core (roteador) · 10-halo (canvas e símbolo neon) · 20-film · 30-site · 36-produto · 37-vitrine · 40-dash · 50-studio · 60-auth · 70-brand · 99-boot
-  build.py
+`tools/visual-diff.mjs` compara cada rota do app com a mesma tela do protótipo e imprime a diferença de pixels:
+
+```bash
+node tools/visual-diff.mjs --base http://127.0.0.1:3000 --routes site,entrar,estudio --widths 1440,390 --out /tmp/vd
 ```
 
-```
-python3 src/build.py                  # gera index.html e copia os tokens para design-system/
-python3 src/build.py --out teste.html # grava o documento em outro lugar, para testar sem mexer no index.html
+## Protótipo
+
+O protótipo de arquivo único continua em `prototype/` e gera o `prototype/index.html` publicado como artifact:
+
+```bash
+npm run prototype    # ou: python3 prototype/src/build.py
 ```
 
-O build junta os arquivos de cada pasta em ordem alfabética. Todo o JS vira um só script.
+## Marca
+
+Conceito, cores, tipografia, voz e usos do logo: [`packages/brand/README.md`](packages/brand/README.md) e a rota `/marca`.
