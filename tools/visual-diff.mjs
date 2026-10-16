@@ -45,7 +45,7 @@ a=Image.open(sys.argv[1]).convert('RGB'); b=Image.open(sys.argv[2]).convert('RGB
 W=max(a.width,b.width); H=max(a.height,b.height)
 A=Image.new('RGB',(W,H),(255,0,255)); A.paste(a,(0,0)); B=Image.new('RGB',(W,H),(255,0,255)); B.paste(b,(0,0))
 d=ImageChops.difference(A,B).convert('L').point(lambda v: 255 if v>24 else 0)
-n=sum(1 for v in d.getdata() if v); print(round(100*n/(W*H),2))
+n=d.histogram()[255]; print(round(100*n/(W*H),2))
 m=Image.blend(A,B,.5); m.paste((255,0,80),(0,0),d); m.save(sys.argv[3])
 `, f('proto'), f('next'), f('diff')]).toString().trim(); } catch (e) { pct = 'erro ' + e.message; }
   console.log(`${r} @${w}: diff ${pct}% | proto h=${a.h} next h=${b.h} | ovf next=${b.ovf} | erros next: ${b.errs.length ? JSON.stringify(b.errs.slice(0, 4)) : 'nenhum'}`);

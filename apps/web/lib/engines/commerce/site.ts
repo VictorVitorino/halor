@@ -138,6 +138,8 @@ export function bootPlanos(go?: (href: string) => void): () => void {
   const toCheckout = (e: Event) => {
     const a = (e.target as Element | null)?.closest?.<HTMLAnchorElement>('a[href]');
     if (!a || !isCheckoutLink(a)) return;
+    /* links que sobrevivem à tela (barra do protótipo, no layout) só mudam no clique de verdade */
+    if (e.type !== 'click' && !a.closest('#v-site')) return;
     const id = a.dataset.plan || (/grátis/i.test(a.textContent || '') ? 'faisca' : null);
     const p = planById(id);
     if (e.type === 'click' && p && p.m != null) HALOR.plan = p.id;
