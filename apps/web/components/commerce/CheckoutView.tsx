@@ -1,16 +1,19 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines.
+   Links internos usam next/link (navegação sem recarregar, como a troca de tela do protótipo). */
+import Link from 'next/link';
+
 export default function CheckoutView() {
   return (
     <>
     <header className="co-top">
       <div className="wrap co-top-in">
-        <a className="logo" href="/">
+        <Link className="logo" href="/">
           <svg aria-hidden="true">
             <use href="#hl-mark-paper" />
           </svg>
           <span className="wordmark">halor</span>
-        </a>
+        </Link>
         <ol className="steps" aria-label="Etapas da assinatura">
           <li className="done">
             <i>1</i>
@@ -369,18 +372,18 @@ export default function CheckoutView() {
         <h1 className="display" id="done-title" tabIndex={-1}>Bem-vindo à órbita.</h1>
         <p className="lede" id="done-msg">Seu plano Halo está ativo. Mandamos o recibo para o seu e-mail.</p>
         <div className="s-cta">
-          <a className="btn btn-primary btn-lg" href="/estudio">
+          <Link className="btn btn-primary btn-lg" href="/estudio">
             Abrir o Estúdio{' '}
             <svg aria-hidden="true">
               <use href="#i-arrow" />
             </svg>
-          </a>
-          <a className="btn btn-ghost btn-lg" href="/admin" id="co-invite" hidden>
+          </Link>
+          <Link className="btn btn-ghost btn-lg" href="/admin" id="co-invite" hidden>
             <svg aria-hidden="true">
               <use href="#i-users" />
             </svg>
             {' '}Convidar o time
-          </a>
+          </Link>
           <button className="btn btn-ghost btn-lg" type="button" id="co-again">Ver o checkout de novo</button>
         </div>
       </section>

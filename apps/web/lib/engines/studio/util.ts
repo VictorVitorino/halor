@@ -2,12 +2,12 @@
    Estúdio · utilitários compartilhados pelas sub-telas.
    Porte de prototype/src/js/50-studio.js ("Utilitários do Estúdio").
    Nada aqui toca em window, document ou navigator no carregamento do módulo:
-   plataforma, toque e movimento reduzido são lidos na hora do uso.
+   plataforma e toque são lidos na hora do uso.
    ========================================================================== */
-import { $$, REDUCED, currentSub, currentView } from '@/lib/core';
+import { $$, currentSub, currentView } from '@/lib/core';
 
 export const plainText = (h: string) => { const d = document.createElement('div'); d.innerHTML = h; return d.textContent || ''; };
-export const fold = (t: unknown) => String(t).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+export const fold = (t: unknown) => String(t).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 export const slugify = (t: string) => fold(t).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'apresentacao';
 export const clampN = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 export const clone = <T>(v: T): T => JSON.parse(JSON.stringify(v)) as T;
@@ -18,8 +18,6 @@ export const isMac = () => (mac ??= /Mac|iPhone|iPad/.test(navigator.platform ||
 export const modKey = (e: KeyboardEvent | MouseEvent) => (isMac() ? e.metaKey : e.ctrlKey);
 export const MOD = () => (isMac() ? '⌘' : 'Ctrl+');
 export const touch = () => matchMedia('(hover: none) and (pointer: coarse)').matches;
-/** Movimento reduzido lido na hora: o núcleo só preenche REDUCED depois que as telas já ligaram. */
-export const reduced = () => REDUCED || matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export const typingIn = (t: EventTarget | null) =>
   t instanceof Element && (!!t.closest('input, textarea, select') || (t as HTMLElement).isContentEditable === true);

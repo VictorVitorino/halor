@@ -19,8 +19,10 @@ const shot = async (browser, url, w, file) => {
   const p = await ctx.newPage(); const errs = [];
   p.on('pageerror', e => errs.push('pageerror: ' + e.message)); p.on('console', m => { if (m.type() === 'error') errs.push('console: ' + m.text()); });
   await p.goto(url, { waitUntil: 'networkidle' });
-  /* espera a hidratação antes de esconder a barra do protótipo e os canvas (sem mexer em nós do React) */
-  await p.waitForTimeout(1200);
+  /* espera a hidratação (o app marca html[data-hydrated]) e os motores ligarem, antes de esconder
+     a barra do protótipo e os canvas (sem mexer em nós do React) */
+  if (!url.startsWith('file:')) await p.waitForSelector('html[data-hydrated]', { timeout: 30000 }).catch(() => {});
+  await p.waitForTimeout(900);
   await p.addStyleTag({ content: '.proto{display:none!important}canvas{visibility:hidden!important}' });
   await p.evaluate(() => document.fonts && document.fonts.ready);
   if (scrollSel) await p.evaluate(s => document.querySelector(s)?.scrollIntoView({ block: 'start' }), scrollSel);

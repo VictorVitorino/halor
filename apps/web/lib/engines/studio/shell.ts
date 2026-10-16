@@ -4,7 +4,7 @@
    salvar como e compartilhar. Ligada uma vez pelo layout do Estúdio.
    Porte de prototype/src/js/50-studio.js (bindEditor, bindHome, bindExport, bindShare, bindImport).
    ========================================================================== */
-import { $, $$, closeModal, copyText, currentView, el, openModal, toast } from '@/lib/core';
+import { $, $$, closeModal, copyText, currentView, el, openModal, REDUCED, toast } from '@/lib/core';
 import { openDeck } from './editor';
 import { exportHTML } from './export';
 import { clearSearch, renderHome, searchScroll } from './home';
@@ -12,7 +12,7 @@ import { onStudioKey } from './keys';
 import { go, setPending } from './nav';
 import { closePop, installPop, openPop, popOpen } from './pop';
 import { ACERVO, SESSION, SIGNALS, SIG_FILL, SIG_INK, STUDIO, type ImportItem, type ShareInvite } from './store';
-import { EMAIL_RE, applyMod, invalid, makeScope, modKey, modalOpen, reduced, slugify, studioOpen, typingIn, type Scope } from './util';
+import { EMAIL_RE, applyMod, invalid, makeScope, modKey, modalOpen, slugify, studioOpen, typingIn, type Scope } from './util';
 
 /** Fecha o menu lateral móvel (ao trocar de sub-tela, como o showSub do protótipo). */
 export function closeSide() {
@@ -96,7 +96,7 @@ function bindImport(S: Scope) {
     li.append(d, chip); q.prepend(li);
     if (!it.ok || it.p >= 100) return;
     const step = () => {
-      it.p = Math.min(100, it.p + (reduced() ? 100 : 12 + Math.random() * 18)); i.style.width = it.p + '%';
+      it.p = Math.min(100, it.p + (REDUCED ? 100 : 12 + Math.random() * 18)); i.style.width = it.p + '%';
       chip.textContent = it.p < 100 ? Math.round(it.p) + '%' : 'Pronto · ' + it.pages + ' slides';
       if (it.p >= 100) { i.classList.remove('run'); chip.className = 'chip chip-ok'; } else S.later(step, 260);
     };

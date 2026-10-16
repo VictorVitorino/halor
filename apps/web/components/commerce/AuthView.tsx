@@ -1,17 +1,20 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines.
+   Links internos usam next/link (navegação sem recarregar, como a troca de tela do protótipo). */
+import Link from 'next/link';
+
 export default function AuthView() {
   return (
     <div className="auth">
       <aside className="auth-scene theme-night" aria-hidden="true">
         <canvas className="halo-field halor-field" data-field="auth" />
         {' '}
-        <a className="logo logo-night auth-logo" href="/" tabIndex={-1}>
+        <Link className="logo logo-night auth-logo" href="/" tabIndex={-1}>
           <svg className="mk-glow">
             <use href="#hl-mark" />
           </svg>
           <span className="wordmark">halor</span>
-        </a>
+        </Link>
         <div className="eye-wrap">
           <svg className="eye" id="eye" viewBox="0 0 240 240">
             <defs>
@@ -67,12 +70,12 @@ export default function AuthView() {
       </aside>
       <section className="auth-panel">
         <div className="auth-top">
-          <a className="btn btn-quiet btn-sm" href="/">
+          <Link className="btn btn-quiet btn-sm" href="/">
             <svg aria-hidden="true">
               <use href="#i-back" />
             </svg>
             {' '}Voltar ao site
-          </a>
+          </Link>
           {' '}
           <span className="chip chip-line">
             <svg aria-hidden="true">
@@ -82,12 +85,12 @@ export default function AuthView() {
           </span>
         </div>
         <div className="auth-card">
-          <a className="logo auth-mobile-logo" href="/" aria-label="Halor, voltar ao site">
+          <Link className="logo auth-mobile-logo" href="/" aria-label="Halor, voltar ao site">
             <svg aria-hidden="true">
               <use href="#hl-mark-paper" />
             </svg>
             <span className="wordmark">halor</span>
-          </a>
+          </Link>
           {/* ENTRAR / CRIAR */}
           <div data-auth="entrar">
             <h1 className="auth-h" id="auth-title" tabIndex={-1}>Entrar no Halor</h1>

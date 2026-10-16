@@ -3,7 +3,7 @@
    Porte de prototype/src/js/50-studio.js; bootHome() é o subHooks.inicio do
    protótipo mais a parte de bindHome() que vive na capa.
    ========================================================================== */
-import { $, $$, el, toast } from '@/lib/core';
+import { $, $$, el, REDUCED, toast } from '@/lib/core';
 import { CHAIN_STEPS } from '@/lib/data/chain';
 import { bootFields } from '@/lib/engines/particles';
 import { slideHTML } from '@/lib/slides';
@@ -12,7 +12,7 @@ import { go, hasPending, setPending, takePending } from './nav';
 import { closePop, rovingTabs } from './pop';
 import { deckTag } from './render';
 import { ACERVO, SIGNALS, SIG_FILL, SIG_INK, STUDIO, TPLS, type AcvFilter, type AcvSort } from './store';
-import { fold, makeScope, reduced } from './util';
+import { fold, makeScope } from './util';
 
 export function renderHome() {
   const box = $('#acv'); if (!box) return;
@@ -70,7 +70,7 @@ export function clearSearch() {
 /** Começo de uma busca com o acervo fora da tela (celular): o resultado sobe até o olhar. */
 export function searchScroll() {
   const h = $('.home-main > .sec-h');
-  if (h && h.getBoundingClientRect().top > innerHeight * .7) h.scrollIntoView({ block: 'start', behavior: reduced() ? 'auto' : 'smooth' });
+  if (h && h.getBoundingClientRect().top > innerHeight * .7) h.scrollIntoView({ block: 'start', behavior: REDUCED ? 'auto' : 'smooth' });
 }
 
 function homeGreeting() {
@@ -97,7 +97,7 @@ export function bootHome(): () => void {
   sort.addEventListener('change', () => { STUDIO.sort = sort.value as AcvSort; renderHome(); }, o);
   $$('[data-scroll]', sub).forEach(b => b.addEventListener('click', () => {
     const t = $(b.dataset.scroll!); if (!t) return;
-    t.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'start' }); t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
+    t.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'start' }); t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash');
   }, o));
   $$('[data-deck]', sub).forEach(a => a.addEventListener('click', e => {
     e.preventDefault(); const k = a.dataset.deck === 'new' ? 'new' : 'kickoff';

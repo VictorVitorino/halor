@@ -4,7 +4,7 @@
    Porte de prototype/src/js/50-studio.js; bootEditor() é o subHooks.editor
    do protótipo mais o bindEditor(), ligado e desligado com a rota /editor.
    ========================================================================== */
-import { $, $$, el, fmtNum, openModal, toast } from '@/lib/core';
+import { $, $$, el, fmtNum, openModal, REDUCED, toast } from '@/lib/core';
 import { bootFields } from '@/lib/engines/particles';
 import { escHTML, type Align, type FontKey, type FxKind, type Layer, type LayerKind, type Slide } from '@/lib/slides';
 import { onStudioKey } from './keys';
@@ -16,7 +16,7 @@ import {
   KICKOFF, LAYER_KINDS, LAYOUTS, PT_BASE, STUDIO, SUGGEST, TPLS, curSlide, isLayerKind, isLayoutKey, selLayer,
   type AcvItem, type InspTab, type LayoutKey, type Template,
 } from './store';
-import { MOD, applyMod, clampN, clone, hhmm, makeScope, modKey, modalOpen, plainText, reduced, studioOpen, touch, typingIn } from './util';
+import { MOD, applyMod, clampN, clone, hhmm, makeScope, modKey, modalOpen, plainText, studioOpen, touch, typingIn } from './util';
 
 /* ==========================================================================
    Histórico (desfazer / refazer) e salvamento
@@ -240,7 +240,7 @@ function playFx(fx: FxKind) {
   n.classList.remove('fx-revelar', 'fx-brilho', 'fx-subir', 'fx-halo');
   void n.offsetWidth;
   n.style.setProperty('--fxd', d + 'ms'); n.classList.add('fx-' + fx);
-  if (reduced()) toast('Com “reduzir movimento” ligado, a entrada vira um corte seco');
+  if (REDUCED) toast('Com “reduzir movimento” ligado, a entrada vira um corte seco');
   n.addEventListener('animationend', () => n.classList.remove('fx-' + fx), { once: true });
 }
 
@@ -332,7 +332,7 @@ function startEdit(node: HTMLElement, onCommit: (html: string) => void) {
 /* ==========================================================================
    Menus do editor
    ========================================================================== */
-export function layoutItems(): MenuItem[] {
+function layoutItems(): MenuItem[] {
   return (Object.keys(LAYOUTS) as LayoutKey[]).map(k => ({ t: LAYOUTS[k].n, ic: LAYOUTS[k].ic, act: () => insertSlide(k) }));
 }
 type MenuName = 'arquivo' | 'editar' | 'inserir' | 'slide' | 'organizar' | 'apresentar' | 'ajuda';

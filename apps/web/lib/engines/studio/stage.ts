@@ -4,7 +4,7 @@
    Porte de prototype/src/js/50-studio.js; bootStage() é o subHooks.apresentar
    (startStage) mais o bindStage() do protótipo, ligado com a rota /apresentar.
    ========================================================================== */
-import { $, $$, el, toast } from '@/lib/core';
+import { $, $$, el, REDUCED, toast } from '@/lib/core';
 import { bootFields } from '@/lib/engines/particles';
 import { votesLabel, type Slide } from '@/lib/slides';
 import { onStudioKey } from './keys';
@@ -12,13 +12,13 @@ import { go } from './nav';
 import { closePop, popOpen } from './pop';
 import { mountSlide, titleNode } from './render';
 import { STUDIO } from './store';
-import { clampN, makeScope, modalOpen, plainText, reduced, studioOpen, typingIn } from './util';
+import { clampN, makeScope, modalOpen, plainText, studioOpen, typingIn } from './util';
 
 let clockT = 0, pulseT = 0, pollT = 0;
 const ENTER_Q = ['.sl-sub', '.sl-body', '.sl-img', '.sl-big', '.sl-chart', '.sl-row', '.sl-opts', '.sl-vote', '.sl-line', '.sl-tbl', '.sl-list', '.sl-cta', '.ly'];
 
 function entrance(sl: HTMLElement | null, s: Slide) {
-  if (reduced() || !sl) return;
+  if (REDUCED || !sl) return;
   const h = titleNode(sl);
   if (h) { h.style.setProperty('--fxd', (s.fxd || 900) + 'ms'); h.classList.add('fx-' + (s.fx || 'subir')); }
   let k = 0;
@@ -55,7 +55,7 @@ function renderStage() {
   clearInterval(pollT);
   if (s.type === 'poll') {
     const sl = now.firstElementChild!;
-    if (!reduced()) pollT = window.setInterval(() => {
+    if (!REDUCED) pollT = window.setInterval(() => {
       if (!studioOpen('apresentar')) return clearInterval(pollT);
       const opts = s.opts!, w = opts.map((o, k) => 1 + (k === 0 ? 2.2 : 0) + o[1] / 20), sum = w.reduce((a, b) => a + b, 0);
       let r = Math.random() * sum, k = 0; while (r > w[k]) { r -= w[k]; k++; }
@@ -76,7 +76,7 @@ function startStage() {
   const path = $('#pulse-path')!, val = $('#pulse-val')!;
   const draw = () => { path.setAttribute('d', 'M' + pts.map((v, i) => (i / 29 * 240).toFixed(1) + ' ' + (56 - (v - 50) / 50 * 52).toFixed(1)).join(' L')); val.textContent = Math.round(pts[29]) + '%'; };
   draw();
-  if (!reduced()) pulseT = window.setInterval(() => { if (!studioOpen('apresentar')) return; pts.shift(); const last = pts[pts.length - 1]; pts.push(Math.max(62, Math.min(97, last + (Math.random() - .45) * 7))); draw(); }, 900);
+  if (!REDUCED) pulseT = window.setInterval(() => { if (!studioOpen('apresentar')) return; pts.shift(); const last = pts[pts.length - 1]; pts.push(Math.max(62, Math.min(97, last + (Math.random() - .45) * 7))); draw(); }, 900);
 }
 
 /** Liga o palco (ao montar /apresentar) e devolve a limpeza. */
