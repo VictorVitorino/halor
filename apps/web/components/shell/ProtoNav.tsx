@@ -1,5 +1,7 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
-   A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
+   Links do Next: navegar pela barra não recarrega a página e mantém a sessão do estúdio. */
+import Link from 'next/link';
+
 export default function ProtoNav() {
   return (
     <nav className="proto" aria-label="Telas do protótipo">
@@ -10,23 +12,23 @@ export default function ProtoNav() {
         <span>Protótipo</span>
       </span>
       {' '}
-      <a href="/" data-route="site">Site</a>
+      <Link href="/" data-route="site">Site</Link>
       {' '}
-      <a href="/entrar" data-route="entrar">Entrar</a>
+      <Link href="/entrar" data-route="entrar">Entrar</Link>
       {' '}
-      <a href="/assinar" data-route="assinar">Assinar</a>
+      <Link href="/assinar" data-route="assinar">Assinar</Link>
       {' '}
-      <a href="/estudio" data-route="estudio">Estúdio</a>
+      <Link href="/estudio" data-route="estudio">Estúdio</Link>
       {' '}
-      <a href="/editor" data-route="editor">Editor</a>
+      <Link href="/editor" data-route="editor">Editor</Link>
       {' '}
-      <a href="/apresentar" data-route="apresentar">Palco</a>
+      <Link href="/apresentar" data-route="apresentar">Palco</Link>
       {' '}
-      <a href="/painel" data-route="painel">Painel</a>
+      <Link href="/painel" data-route="painel">Painel</Link>
       {' '}
-      <a href="/admin" data-route="admin">Admin</a>
+      <Link href="/admin" data-route="admin">Admin</Link>
       {' '}
-      <a href="/marca" data-route="marca">Marca</a>
+      <Link href="/marca" data-route="marca">Marca</Link>
     </nav>
   );
 }
