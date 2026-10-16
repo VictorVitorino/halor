@@ -86,16 +86,18 @@ export function setSeatsFor(p: Plan, n: number) {
 
 /* Caminho entre o site e o checkout: a URL leva plano, pessoas e ciclo -------- */
 export const CHECKOUT_PATH = '/assinar/';
-/** Monta /assinar/?plano=…&pessoas=…&ciclo=… a partir do estado (e do plano pedido, se houver). */
-export function checkoutHref(p: Plan | undefined = planById(HALOR.plan)): string {
+/** ?plano=…&pessoas=…&ciclo=… a partir do estado (e do plano pedido, se houver). */
+export function checkoutQuery(p: Plan | undefined = planById(HALOR.plan)): string {
   const q = new URLSearchParams();
   if (p && p.m != null) {
     q.set('plano', p.id);
     if (p.seat === 'stepper' || p.seat === 'range') q.set('pessoas', String(seatsOf(p)));
   }
   q.set('ciclo', HALOR.cycle);
-  return CHECKOUT_PATH + '?' + q.toString();
+  return '?' + q.toString();
 }
+/** Monta /assinar/?plano=…&pessoas=…&ciclo=… */
+export const checkoutHref = (p?: Plan) => CHECKOUT_PATH + checkoutQuery(p);
 /** Lê a URL do checkout e aplica ao estado. Parâmetros inválidos são ignorados. */
 export function applyCheckoutQuery(search: string) {
   const q = new URLSearchParams(search);

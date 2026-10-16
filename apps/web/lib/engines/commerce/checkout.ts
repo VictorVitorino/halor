@@ -6,7 +6,7 @@
    ========================================================================== */
 import { $, $$, el, fmtBRL, toast, REDUCED } from '../../core';
 import {
-  EMAIL_RE, EMPRESA20, EMPRESA50, HALOR, ORBITA, SALES_MSG, applyCheckoutQuery, arrowIndex, icon, invalid,
+  EMAIL_RE, EMPRESA20, EMPRESA50, HALOR, ORBITA, SALES_MSG, applyCheckoutQuery, arrowIndex, checkoutQuery, icon, invalid,
   money, monthly, paintRange, planById, seatRange, seatsOf, tabKeys, timers, toTop,
   type Cycle, type Pay, type Plan, type PlanId,
 } from './plans';
@@ -128,6 +128,15 @@ function renderCheckout() {
   parc.textContent = '';
   (anual ? [1, 3, 6, 12] : [1]).forEach(n => { const o = el('option', null, n + 'x de ' + fmtBRL(total / n)); o.value = String(n); parc.appendChild(o); });
   parc.selectedIndex = Math.min(Math.max(keep, 0), parc.options.length - 1);
+  syncUrl(p);
+}
+
+/* A URL acompanha a escolha (plano, pessoas e ciclo): recarregar ou compartilhar o link mantém o plano.
+   history.replaceState com estado nulo é o caminho que o roteador do Next acompanha. */
+function syncUrl(p: Plan) {
+  const q = checkoutQuery(p);
+  if (location.search === q) return;
+  try { window.history.replaceState(null, '', location.pathname + q + location.hash); } catch { /* limite de chamadas do navegador */ }
 }
 
 function buildPixQR() {

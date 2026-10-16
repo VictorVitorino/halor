@@ -25,7 +25,7 @@ export default function Cover() {
         </p>
         <p className="lede s-lede s-in" style={{ "--d": "1.3s" } as CSSProperties}>Apresentações vivas, que prendem o olhar do começo ao fim.</p>
         <div className="s-cta s-in" style={{ "--d": "1.5s" } as CSSProperties}>
-          <Link className="btn btn-primary btn-lg" href="/assinar" data-plan="faisca" data-attract="">
+          <Link className="btn btn-primary btn-lg" href="/assinar/?plano=faisca" data-plan="faisca" data-attract="">
             Começar grátis{' '}
             <svg aria-hidden="true">
               <use href="#i-arrow" />

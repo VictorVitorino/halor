@@ -14,7 +14,7 @@ export default function Final() {
           <span className="lux">Seja escolhido.</span>
         </h2>
         <div className="s-cta">
-          <Link className="btn btn-lumen btn-lg" href="/assinar" data-plan="faisca" data-attract="">Começar grátis</Link>
+          <Link className="btn btn-lumen btn-lg" href="/assinar/?plano=faisca" data-plan="faisca" data-attract="">Começar grátis</Link>
           {' '}
           <Link className="btn btn-ghost btn-lg" href="/entrar" data-attract="">Já tenho conta</Link>
         </div>

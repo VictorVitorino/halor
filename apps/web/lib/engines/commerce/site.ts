@@ -104,8 +104,11 @@ const isCheckoutLink = (a: HTMLAnchorElement) => {
   } catch { return false; }
 };
 
-/** Liga os planos do site. Idempotente; devolve a limpeza. */
-export function bootPlanos(): () => void {
+/**
+ * Liga os planos do site. `go` navega sem recarregar (o roteador do Next), usado pelos
+ * botões dos cartões de plano num clique simples. Idempotente; devolve a limpeza.
+ */
+export function bootPlanos(go?: (href: string) => void): () => void {
   if (!$('#plans')) return () => {};
   const ac = new AbortController(), o = { signal: ac.signal };
 
@@ -129,7 +132,9 @@ export function bootPlanos(): () => void {
 
   /* Navegação para o checkout: o link diz qual plano chega pré-selecionado, com o ciclo
      e as pessoas escolhidos aqui. Botões "Começar grátis" sem plano explícito levam ao Faísca.
-     O href é reescrito antes da navegação, inclusive para abrir em outra aba. */
+     O estado fica na memória (vale para links do next/link, que navegam sem recarregar, e o
+     checkout então escreve o plano na URL) e o href é reescrito antes da navegação, para
+     links comuns e para abrir em outra aba. */
   const toCheckout = (e: Event) => {
     const a = (e.target as Element | null)?.closest?.<HTMLAnchorElement>('a[href]');
     if (!a || !isCheckoutLink(a)) return;
@@ -137,6 +142,13 @@ export function bootPlanos(): () => void {
     const p = planById(id);
     if (e.type === 'click' && p && p.m != null) HALOR.plan = p.id;
     a.href = checkoutHref(p);
+    /* os botões dos cartões (criados aqui) navegam como o next/link num clique simples */
+    const me = e as MouseEvent;
+    if (go && e.type === 'click' && !e.defaultPrevented && me.button === 0 && !me.metaKey && !me.ctrlKey && !me.shiftKey && !me.altKey
+      && a.closest('#plans, #ent-plans') && (!a.target || a.target === '_self')) {
+      e.preventDefault();
+      go(a.pathname + a.search);
+    }
   };
   for (const t of ['pointerdown', 'click', 'auxclick', 'contextmenu']) document.addEventListener(t, toCheckout, { capture: true, signal: ac.signal });
 

@@ -25,7 +25,7 @@ export default function SiteNav() {
         <div className="s-nav-cta">
           <Link className="btn btn-quiet btn-sm" href="/entrar">Entrar</Link>
           {' '}
-          <Link className="btn btn-primary btn-sm" href="/assinar" data-plan="faisca">Começar grátis</Link>
+          <Link className="btn btn-primary btn-sm" href="/assinar/?plano=faisca" data-plan="faisca">Começar grátis</Link>
         </div>
       </div>
     </header>
