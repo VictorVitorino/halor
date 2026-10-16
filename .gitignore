@@ -7,3 +7,8 @@ __pycache__/
 .DS_Store
 .env*.local
 next-env.d.ts
+
+# Pitch: o vídeo final fica no repositório; só o fragmento de publicação e os segmentos do render ficam de fora
+!pitch/out/
+pitch/out/.*.segs/
+pitch/dist/

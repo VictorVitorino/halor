@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bia · prova</title>
+<link rel="stylesheet" href="../src/css/00-tokens.css">
+<link rel="stylesheet" href="../src/css/10-engine.css">
+<link rel="stylesheet" href="../src/css/20-bia.css">
+<style>
+  /* a prova NÃO usa o palco: só o relógio --t e os dois mundos */
+  html, body { height: auto; overflow: auto; }
+  body { background: var(--halor-void); color: var(--halor-lumen); font-family: var(--f-ui); padding: 28px 32px 60px; margin: 0; user-select: auto; }
+  body.paper { background: var(--mist); color: var(--ink); }
+  h1 { font-family: var(--f-display); font-weight: 600; letter-spacing: -.03em; font-size: 28px; margin: 0 0 6px; }
+  h2 { font-family: var(--f-mono); font-size: 12px; letter-spacing: .18em; text-transform: uppercase; color: var(--halor-ash); margin: 34px 0 12px; }
+  body.paper h2 { color: var(--mute); }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: center; font-size: 14px; margin: 10px 0 8px; }
+  .toolbar label { display: inline-flex; gap: 8px; align-items: center; }
+  .toolbar select, .toolbar input[type=range] { accent-color: var(--halor-violet); }
+  .toolbar button { border: 1px solid rgba(201,166,255,.4); background: rgba(139,61,255,.18); color: inherit; border-radius: 999px; padding: 6px 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 14px; }
+  .card { position: relative; height: 262px; border-radius: 14px; background: rgba(255,255,255,.035); border: 1px solid rgba(201,166,255,.14); }
+  body.paper .card { background: #fff; border-color: var(--line); box-shadow: var(--sh-paper-1); }
+  .card .lab { position: absolute; left: 10px; top: 8px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; color: var(--halor-ash); }
+  body.paper .card .lab { color: var(--mute); }
+  .card .bia { left: 50%; top: 100%; --s: .72; }
+  .big { height: 420px; }
+  .big .bia { --s: 1.15; }
+  .mix { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .mix .card { height: 440px; }
+  .mix .bia { --s: 1.2; }
+  code { font-family: var(--f-mono); font-size: 12px; }
+</style>
+</head>
+<body style="--t:0">
+<h1>Bia · a berinjela IA do Halor</h1>
+<div class="toolbar">
+  <label>Mundo <select id="world"><option value="night">night</option><option value="paper">paper</option></select></label>
+  <label>Relógio <button id="clock">pausar</button> <code id="tv">--t: 0</code></label>
+  <label>Props em tudo <input id="allprops" type="text" value="stamp clipboard" size="16"></label>
+</div>
+
+<!-- Defs + template -->
+<div id="tpl-host"></div>
+
+<h2>Interpolação (pose A → B, rosto A → B)</h2>
+<div class="toolbar">
+  <label>Pose A <select id="pa"></select></label><label>Pose B <select id="pb"></select></label>
+  <label>Rosto A <select id="fa"></select></label><label>Rosto B <select id="fb"></select></label>
+  <label>k <input id="k" type="range" min="0" max="1" step=".01" value="0"> <code id="kv">0.00</code></label>
+  <label>Props <input id="mixprops" type="text" value="stamp clipboard" size="16"></label>
+  <button id="go">animar A→B (350 ms)</button>
+</div>
+<div class="mix">
+  <div class="card"><span class="lab">mix</span><div class="bia night" id="mix" style="--lph: 0"></div></div>
+  <div class="card"><span class="lab">stamp-down · carimbando (press em loop)</span><div class="bia night" id="press" style="--lph: 900"></div></div>
+</div>
+
+<h2>Rostos (pose idle · stamp + clipboard)</h2>
+<div class="grid" id="faces"></div>
+
+<h2>Poses × rostos</h2>
+<div class="grid" id="poses"></div>
+
+<h2>Props isolados</h2>
+<div class="grid" id="props"></div>
+
+<script src="../src/js/20-bia.js"></script>
+<script>
+(async function () {
+  const host = document.getElementById('tpl-host');
+  host.innerHTML = await (await fetch('../src/html/01-bia.html')).text();
+
+  const POSES = Object.keys(BIA.poses), FACES = Object.keys(BIA.faces);
+  const sel = (id, list, v) => { const s = document.getElementById(id); list.forEach(n => s.add(new Option(n, n))); s.value = v; return s; };
+  const pa = sel('pa', POSES, 'idle'), pb = sel('pb', POSES, 'cheer'), fa = sel('fa', FACES, 'happy'), fb = sel('fb', FACES, 'wow');
+
+  function make(parent, label, pose, face, props, lph) {
+    const card = document.createElement('div'); card.className = 'card';
+    card.innerHTML = `<span class="lab">${label}</span>`;
+    const b = document.createElement('div'); b.className = 'bia'; b.dataset.pose = pose; b.dataset.face = face; b.dataset.props = props;
+    b.style.setProperty('--lph', lph);
+    BIA.mount(b); BIA.apply(b, Object.assign({}, BIA.poses[pose], BIA.faces[face], BIA.propsOf(props)));
+    card.appendChild(b); parent.appendChild(card); return b;
+  }
+  const all = () => document.getElementById('allprops').value;
+  let i = 0;
+  FACES.forEach(f => make(document.getElementById('faces'), `idle · ${f}`, 'idle', f, all(), (i++ * 377) % 3400));
+  const FACE_SAMPLE = ['happy', 'wow', 'proud'];
+  POSES.forEach(p => FACE_SAMPLE.forEach(f => {
+    const props = p === 'hold-ring' ? 'ring' : p === 'think' ? '' : p === 'point-left' || p === 'point-right' ? '' : p === 'wave' ? 'stamp' : all();
+    make(document.getElementById('poses'), `${p} · ${f}`, p, f, props, (i++ * 377) % 3400);
+  }));
+  [['stamp', 'idle'], ['clipboard', 'idle'], ['ring', 'hold-ring'], ['wand', 'point-right'], ['stamp clipboard', 'present'], ['', 'cheer']]
+    .forEach(([pr, po]) => make(document.getElementById('props'), `${po} · [${pr || 'nenhum'}]`, po, 'happy', pr, (i++ * 377) % 3400));
+
+  // mix card
+  const mix = BIA.mount(document.getElementById('mix'));
+  const kr = document.getElementById('k'), kv = document.getElementById('kv');
+  function drawMix() {
+    const k = +kr.value; kv.textContent = k.toFixed(2);
+    const a = Object.assign({}, BIA.poses[pa.value], BIA.faces[fa.value]), b = Object.assign({}, BIA.poses[pb.value], BIA.faces[fb.value]);
+    BIA.apply(mix, Object.assign(BIA.lerp(a, b, k), BIA.propsOf(document.getElementById('mixprops').value)));
+  }
+  [pa, pb, fa, fb, kr, document.getElementById('mixprops')].forEach(e => e.addEventListener('input', drawMix)); drawMix();
+  const ease = t => { const [x1, y1, x2, y2] = [.22, .61, .36, 1]; // aproximação da --ease-halo por amostragem
+    let lo = 0, hi = 1; for (let n = 0; n < 24; n++) { const m = (lo + hi) / 2; const x = 3 * (1 - m) * (1 - m) * m * x1 + 3 * (1 - m) * m * m * x2 + m * m * m; (x < t ? lo = m : hi = m); }
+    const m = (lo + hi) / 2; return 3 * (1 - m) * (1 - m) * m * y1 + 3 * (1 - m) * m * m * y2 + m * m * m; };
+  document.getElementById('go').addEventListener('click', () => {
+    const t0 = performance.now(); const from = +kr.value, to = from < .5 ? 1 : 0;
+    (function step() { const u = Math.min(1, (performance.now() - t0) / 350); kr.value = from + (to - from) * ease(u); drawMix(); if (u < 1) requestAnimationFrame(step); })();
+  });
+
+  // press card: carimbada em loop (stamp → stamp-down → stamp)
+  const press = BIA.mount(document.getElementById('press'));
+  BIA.apply(press, Object.assign({}, BIA.poses.stamp, BIA.faces.focus, BIA.propsOf('stamp clipboard')));
+
+  // relógio ao vivo (na prova, pode)
+  let running = true, T = 0, last = performance.now();
+  const tv = document.getElementById('tv');
+  function tick(now) {
+    if (running) T += now - last; last = now;
+    document.body.style.setProperty('--t', Math.round(T));
+    tv.textContent = '--t: ' + Math.round(T);
+    const ph = (T % 2400) / 2400; // carimbada: 0..0.35 desce, 0.35..0.5 press, 0.5..1 volta
+    let k, pr = 0;
+    if (ph < .3) k = ease(ph / .3); else if (ph < .45) { k = 1; pr = (ph - .3) / .15; } else k = 1 - ease((ph - .45) / .55);
+    BIA.apply(press, Object.assign(BIA.lerp(BIA.poses.stamp, BIA.poses['stamp-down'], k), BIA.lerp(BIA.faces.focus, BIA.faces.proud, k), BIA.propsOf('stamp clipboard'), { '--stamp-press': k >= 1 ? pr : 0 }));
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+  document.getElementById('clock').addEventListener('click', e => { running = !running; e.target.textContent = running ? 'pausar' : 'rodar'; });
+  window.__setT = v => { T = +v; };   // para a captura: fixa o relógio num instante
+  document.getElementById('world').addEventListener('change', e => {
+    document.body.classList.toggle('paper', e.target.value === 'paper');
+    document.querySelectorAll('.bia').forEach(b => b.classList.toggle('night', e.target.value !== 'paper'));
+  });
+  document.querySelectorAll('.bia').forEach(b => b.classList.add('night'));
+  window.__ready = true;
+})();
+</script>
+</body>
+</html>

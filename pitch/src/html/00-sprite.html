@@ -1,0 +1,64 @@
+<!-- Sprite: gradientes, marca Halor e ícones da interface do pitch (traço 1.75, grade 24) -->
+<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="hl-g-ring" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#5a35a8"/>
+      <stop offset=".45" stop-color="#8b3dff"/>
+      <stop offset=".8" stop-color="#c9a6ff"/>
+      <stop offset="1" stop-color="#ffffff"/>
+    </linearGradient>
+    <radialGradient id="hl-g-core" cx=".38" cy=".36" r=".7">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".35" stop-color="#e9deff"/>
+      <stop offset=".75" stop-color="#a970ff"/>
+      <stop offset="1" stop-color="#8b3dff"/>
+    </radialGradient>
+    <linearGradient id="hl-g-ring-paper" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a11a0"/>
+      <stop offset=".55" stop-color="#7a2ef0"/>
+      <stop offset="1" stop-color="#a970ff"/>
+    </linearGradient>
+    <radialGradient id="hl-g-core-paper" cx=".38" cy=".36" r=".7">
+      <stop offset="0" stop-color="#c9a6ff"/>
+      <stop offset=".55" stop-color="#8b3dff"/>
+      <stop offset="1" stop-color="#6421d1"/>
+    </radialGradient>
+  </defs>
+
+  <!-- MARCA · halo aberto (atenção) + anel interno (confiança) + núcleo (valor) + faísca (o primeiro olhar) -->
+  <symbol id="hl-mark" viewBox="0 0 64 64">
+    <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6" opacity=".6"/>
+    <circle cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
+    <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#ffffff"/>
+  </symbol>
+  <symbol id="hl-mark-paper" viewBox="0 0 64 64">
+    <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring-paper)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="16.5" fill="none" stroke="#8b3dff" stroke-width="1.6" opacity=".45"/>
+    <circle cx="32" cy="32" r="8.5" fill="url(#hl-g-core-paper)"/>
+    <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#8b3dff"/>
+  </symbol>
+  <symbol id="hl-mark-mono" viewBox="0 0 64 64">
+    <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="16.5" fill="none" stroke="currentColor" stroke-width="1.6" opacity=".5"/>
+    <circle cx="32" cy="32" r="8.5" fill="currentColor"/>
+    <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="currentColor"/>
+  </symbol>
+
+  <!-- ÍCONES -->
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></symbol>
+  <symbol id="i-replay" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4v4.5h4.5"/></symbol>
+  <symbol id="i-sound" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M6 11.5a6 6 0 0 0 12 0M12 17.5v3M9 20.5h6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.5Q12 12 21.5 12Q12 12 12 21.5Q12 12 2.5 12Q12 12 12 2.5Z" fill="currentColor"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M6 3.5h8l4.5 4.5v12.5H6z"/><path d="M14 3.5V8h4.5"/></symbol>
+  <symbol id="i-wand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M13.5 7.5l3 3"/><path d="M17 3v3M15.5 4.5h3M20 8v2M19 9h2M9 3.5v2M8 4.5h2"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+</svg>

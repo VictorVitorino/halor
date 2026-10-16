@@ -1,0 +1,702 @@
+<!-- ==========================================================================
+     PITCH HALOR · props das cenas (biblioteca SVG)
+     Estilo: flat lúdico, gradientes suaves, cantos redondos, sem contorno pesado (mesma família da Bia).
+     Uso: <svg class="prop" style="width:…;height:…"><use href="#p-…"/></svg>
+     Cores adaptáveis: currentColor · --p-paper (fundo claro) · --p-ink (traço escuro) · --p-accent (violeta).
+     Ids: gradientes pg-* · filtros pf-* · símbolos p-* · ícones de estação p-ic-*.
+     Partes animáveis em separado: ver pitch/preview/frags.html (templates frag-*).
+     ========================================================================== -->
+<svg class="defs" xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+<defs>
+  <!-- · Gradientes · -->
+  <linearGradient id="pg-violet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a970ff"/><stop offset=".55" stop-color="#8b3dff"/><stop offset="1" stop-color="#6421d1"/></linearGradient>
+  <linearGradient id="pg-violet-d" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#a970ff"/><stop offset=".5" stop-color="#8b3dff"/><stop offset="1" stop-color="#5a1fd1"/></linearGradient>
+  <linearGradient id="pg-neon" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e9deff"/><stop offset=".45" stop-color="#c9a6ff"/><stop offset="1" stop-color="#8b3dff"/></linearGradient>
+  <linearGradient id="pg-lumen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e9dfff"/></linearGradient>
+  <linearGradient id="pg-paper" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#f3eeff"/></linearGradient>
+  <linearGradient id="pg-dark" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#241a44"/><stop offset="1" stop-color="#120b26"/></linearGradient>
+  <linearGradient id="pg-night" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1d1538"/><stop offset="1" stop-color="#0e0820"/></linearGradient>
+  <linearGradient id="pg-rim" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a1f4d"/><stop offset="1" stop-color="#171030"/></linearGradient>
+  <linearGradient id="pg-grey" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2dfea"/><stop offset="1" stop-color="#cfcad9"/></linearGradient>
+  <linearGradient id="pg-grey-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b5afc6"/><stop offset="1" stop-color="#9a94b0"/></linearGradient>
+  <linearGradient id="pg-ash" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#a69cc4"/><stop offset="1" stop-color="#7d73a3"/></linearGradient>
+  <linearGradient id="pg-door" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".3" stop-color="#f4eeff"/><stop offset=".75" stop-color="#a970ff"/><stop offset="1" stop-color="#8b3dff"/></linearGradient>
+  <linearGradient id="pg-beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4eeff" stop-opacity=".85"/><stop offset=".6" stop-color="#c9a6ff" stop-opacity=".25"/><stop offset="1" stop-color="#8b3dff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="pg-sweep" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset=".5" stop-color="#ffffff" stop-opacity=".85"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="pg-ok" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4fd69a"/><stop offset="1" stop-color="#17845a"/></linearGradient>
+  <linearGradient id="pg-danger" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff7a92"/><stop offset="1" stop-color="#c22f4b"/></linearGradient>
+  <linearGradient id="pg-warn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd27a"/><stop offset="1" stop-color="#f7bd55"/></linearGradient>
+  <linearGradient id="pg-ring" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#5a35a8"/><stop offset=".45" stop-color="#8b3dff"/><stop offset=".8" stop-color="#c9a6ff"/><stop offset="1" stop-color="#ffffff"/></linearGradient>
+  <linearGradient id="pg-ring-paper" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#4a11a0"/><stop offset=".55" stop-color="#7a2ef0"/><stop offset="1" stop-color="#a970ff"/></linearGradient>
+  <radialGradient id="pg-core" cx=".38" cy=".36" r=".7"><stop offset="0" stop-color="#ffffff"/><stop offset=".35" stop-color="#e9deff"/><stop offset=".75" stop-color="#a970ff"/><stop offset="1" stop-color="#8b3dff"/></radialGradient>
+  <radialGradient id="pg-core-paper" cx=".38" cy=".36" r=".7"><stop offset="0" stop-color="#c9a6ff"/><stop offset=".55" stop-color="#8b3dff"/><stop offset="1" stop-color="#6421d1"/></radialGradient>
+  <radialGradient id="pg-halo" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#c9a6ff" stop-opacity=".9"/><stop offset=".45" stop-color="#8b3dff" stop-opacity=".35"/><stop offset="1" stop-color="#8b3dff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="pg-heat" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff" stop-opacity=".95"/><stop offset=".3" stop-color="#c9a6ff" stop-opacity=".75"/><stop offset=".7" stop-color="#8b3dff" stop-opacity=".3"/><stop offset="1" stop-color="#8b3dff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="pg-lumen-r" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#f4eeff"/><stop offset="1" stop-color="#e9dfff"/></radialGradient>
+  <radialGradient id="pg-floor" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#8b3dff" stop-opacity=".55"/><stop offset="1" stop-color="#8b3dff" stop-opacity="0"/></radialGradient>
+  <radialGradient id="pg-iris" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#8b3dff"/><stop offset=".6" stop-color="#5a35a8"/><stop offset="1" stop-color="#2a1f4d"/></radialGradient>
+  <radialGradient id="pg-shade" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#17112b" stop-opacity=".28"/><stop offset="1" stop-color="#17112b" stop-opacity="0"/></radialGradient>
+
+  <!-- · Filtros · -->
+  <filter id="pf-glow" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+    <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#8b3dff" flood-opacity=".85"/>
+    <feDropShadow dx="0" dy="0" stdDeviation="2" flood-color="#c9a6ff" flood-opacity=".6"/>
+  </filter>
+  <filter id="pf-glow-soft" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
+    <feDropShadow dx="0" dy="0" stdDeviation="16" flood-color="#8b3dff" flood-opacity=".6"/>
+  </filter>
+  <filter id="pf-shadow" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB">
+    <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#17112b" flood-opacity=".16"/>
+  </filter>
+  <filter id="pf-shadow-night" x="-30%" y="-30%" width="160%" height="180%" color-interpolation-filters="sRGB">
+    <feDropShadow dx="0" dy="18" stdDeviation="16" flood-color="#000000" flood-opacity=".55"/>
+  </filter>
+  <filter id="pf-blur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+  <filter id="pf-blur-lg" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="28"/></filter>
+  <linearGradient id="pg-beam-up" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#f4eeff" stop-opacity=".9"/><stop offset=".5" stop-color="#c9a6ff" stop-opacity=".3"/><stop offset="1" stop-color="#8b3dff" stop-opacity="0"/></linearGradient>
+  <linearGradient id="pg-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".22"/><stop offset=".5" stop-color="#ffffff" stop-opacity="0"/></linearGradient>
+
+  <!-- ======================= CENA 1 · O primeiro olhar ======================= -->
+  <!-- slide com carinha (16:9 · 320×180) · variantes: -worried, -happy -->
+  <symbol id="p-slide-face" viewBox="0 0 320 180">
+    <rect width="320" height="180" rx="14" fill="var(--p-paper, #ffffff)"/>
+    <rect width="320" height="180" rx="14" fill="url(#pg-paper)" opacity=".7"/>
+    <rect x="26" y="24" width="126" height="14" rx="7" fill="#4a4366"/>
+    <rect x="26" y="50" width="176" height="8" rx="4" fill="#d7d3e3"/>
+    <rect x="26" y="66" width="128" height="8" rx="4" fill="#d7d3e3"/>
+    <g>
+      <rect x="222" y="118" width="14" height="36" rx="4" fill="#d9c7ff"/>
+      <rect x="242" y="98" width="14" height="56" rx="4" fill="#c4a6ff"/>
+      <rect x="262" y="128" width="14" height="26" rx="4" fill="#d9c7ff"/>
+      <rect x="282" y="84" width="14" height="70" rx="4" fill="url(#pg-violet)"/>
+      <rect x="216" y="156" width="86" height="3" rx="1.5" fill="#d7d3e3"/>
+    </g>
+    <g>
+      <ellipse cx="108" cy="118" rx="15" ry="16" fill="#ffffff" stroke="#d9c7ff" stroke-width="2"/>
+      <ellipse cx="150" cy="118" rx="15" ry="16" fill="#ffffff" stroke="#d9c7ff" stroke-width="2"/>
+      <circle cx="110" cy="120" r="7" fill="url(#pg-iris)"/><circle cx="152" cy="120" r="7" fill="url(#pg-iris)"/>
+      <circle cx="112.5" cy="117" r="2.4" fill="#fff"/><circle cx="154.5" cy="117" r="2.4" fill="#fff"/>
+      <path d="M96 97q10 -6 20 2" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M142 99q10 -8 20 -2" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M118 146q11 7 22 0" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </symbol>
+  <symbol id="p-slide-face-worried" viewBox="0 0 320 180">
+    <rect width="320" height="180" rx="14" fill="var(--p-paper, #ffffff)"/>
+    <rect width="320" height="180" rx="14" fill="url(#pg-paper)" opacity=".7"/>
+    <rect x="26" y="24" width="126" height="14" rx="7" fill="#4a4366"/>
+    <rect x="26" y="50" width="176" height="8" rx="4" fill="#d7d3e3"/>
+    <rect x="26" y="66" width="128" height="8" rx="4" fill="#d7d3e3"/>
+    <g>
+      <rect x="222" y="118" width="14" height="36" rx="4" fill="#d9c7ff"/>
+      <rect x="242" y="98" width="14" height="56" rx="4" fill="#c4a6ff"/>
+      <rect x="262" y="128" width="14" height="26" rx="4" fill="#d9c7ff"/>
+      <rect x="282" y="84" width="14" height="70" rx="4" fill="url(#pg-violet)"/>
+      <rect x="216" y="156" width="86" height="3" rx="1.5" fill="#d7d3e3"/>
+    </g>
+    <g>
+      <ellipse cx="108" cy="118" rx="15" ry="16" fill="#ffffff" stroke="#d9c7ff" stroke-width="2"/>
+      <ellipse cx="150" cy="118" rx="15" ry="16" fill="#ffffff" stroke="#d9c7ff" stroke-width="2"/>
+      <circle cx="109" cy="122" r="7" fill="url(#pg-iris)"/><circle cx="149" cy="122" r="7" fill="url(#pg-iris)"/>
+      <circle cx="111.5" cy="119" r="2.4" fill="#fff"/><circle cx="151.5" cy="119" r="2.4" fill="#fff"/>
+      <path d="M94 104q12 -12 24 -4" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M140 100q12 -8 24 4" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M116 146q6 -7 12 0t12 0" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/>
+      <path d="M170 104q-1 10 6 10q5 0 5 -6q0 -5 -4 -10z" fill="#c4a6ff" opacity=".9"/>
+    </g>
+  </symbol>
+  <symbol id="p-slide-face-happy" viewBox="0 0 320 180">
+    <rect width="320" height="180" rx="14" fill="var(--p-paper, #ffffff)"/>
+    <rect width="320" height="180" rx="14" fill="url(#pg-paper)" opacity=".7"/>
+    <rect x="26" y="24" width="126" height="14" rx="7" fill="url(#pg-violet-d)"/>
+    <rect x="26" y="50" width="176" height="8" rx="4" fill="#d9c7ff"/>
+    <rect x="26" y="66" width="128" height="8" rx="4" fill="#d9c7ff"/>
+    <g>
+      <rect x="222" y="118" width="14" height="36" rx="4" fill="#c4a6ff"/>
+      <rect x="242" y="98" width="14" height="56" rx="4" fill="#a970ff"/>
+      <rect x="262" y="128" width="14" height="26" rx="4" fill="#c4a6ff"/>
+      <rect x="282" y="72" width="14" height="82" rx="4" fill="url(#pg-violet)"/>
+      <rect x="216" y="156" width="86" height="3" rx="1.5" fill="#d9c7ff"/>
+    </g>
+    <g>
+      <ellipse cx="108" cy="118" rx="15" ry="16" fill="#ffffff" stroke="#d9c7ff" stroke-width="2"/>
+      <ellipse cx="150" cy="118" rx="15" ry="16" fill="#ffffff" stroke="#d9c7ff" stroke-width="2"/>
+      <circle cx="110" cy="118" r="7.5" fill="url(#pg-iris)"/><circle cx="152" cy="118" r="7.5" fill="url(#pg-iris)"/>
+      <circle cx="113" cy="114.5" r="2.8" fill="#fff"/><circle cx="155" cy="114.5" r="2.8" fill="#fff"/>
+      <path d="M94 96q12 -9 24 -2" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M140 94q12 -7 24 2" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M108 140q21 22 42 0" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/>
+      <ellipse cx="86" cy="138" rx="9" ry="5" fill="#ff9ad5" opacity=".4"/><ellipse cx="172" cy="138" rx="9" ry="5" fill="#ff9ad5" opacity=".4"/>
+    </g>
+  </symbol>
+
+  <!-- medidor vertical ATENÇÃO (estático a 70 %; parte .fill animável no frag "meter") · label em currentColor -->
+  <symbol id="p-meter-attention" viewBox="0 0 120 320">
+    <rect x="36" y="10" width="48" height="246" rx="24" fill="url(#pg-rim)"/>
+    <rect x="36" y="10" width="48" height="246" rx="24" fill="none" stroke="#c9a6ff" stroke-opacity=".28" stroke-width="2"/>
+    <rect x="43" y="88" width="34" height="161" rx="17" fill="url(#pg-door)" filter="url(#pf-glow)"/>
+    <rect x="47" y="17" width="10" height="100" rx="5" fill="url(#pg-glass)"/>
+    <g fill="currentColor" opacity=".55"><rect x="22" y="30" width="8" height="3" rx="1.5"/><rect x="22" y="84" width="8" height="3" rx="1.5"/><rect x="22" y="138" width="8" height="3" rx="1.5"/><rect x="22" y="192" width="8" height="3" rx="1.5"/><rect x="22" y="236" width="8" height="3" rx="1.5"/></g>
+    <text x="60" y="296" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="14" letter-spacing="2.4" fill="currentColor">ATENÇÃO</text>
+  </symbol>
+
+  <!-- porta de luz com placa VALOR -->
+  <symbol id="p-door-value" viewBox="0 0 260 400">
+    <ellipse cx="130" cy="384" rx="124" ry="18" fill="url(#pg-floor)"/>
+    <rect x="40" y="70" width="180" height="312" rx="18" fill="url(#pg-rim)"/>
+    <rect x="40" y="70" width="180" height="312" rx="18" fill="none" stroke="#c9a6ff" stroke-opacity=".25" stroke-width="2"/>
+    <rect x="56" y="86" width="148" height="296" rx="8" fill="url(#pg-door)" filter="url(#pf-glow-soft)"/>
+    <path d="M60 382L200 382L236 400L24 400Z" fill="#c9a6ff" opacity=".22"/>
+    <path d="M204 88L250 112L250 364L204 382Z" fill="#171030"/>
+    <path d="M204 88L250 112L250 364L204 382Z" fill="url(#pg-glass)"/>
+    <circle cx="240" cy="236" r="4.5" fill="#c9a6ff"/>
+    <rect x="70" y="14" width="120" height="42" rx="12" fill="#f4eeff"/>
+    <path d="M100 56v14M160 56v14" stroke="#4a4366" stroke-width="3" stroke-linecap="round"/>
+    <text x="130" y="42" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="18" letter-spacing="3.5" fill="#4a11a0">VALOR</text>
+  </symbol>
+
+  <!-- trilha de pontos de luz com "?" (frag "path" tem os pontos separados) -->
+  <symbol id="p-path-dots" viewBox="0 0 600 130">
+    <path d="M14 104C120 104 160 30 300 56S470 110 586 36" fill="none" stroke="#c9a6ff" stroke-width="9" stroke-linecap="round" stroke-dasharray="0 30" opacity=".9" filter="url(#pf-glow)"/>
+    <circle cx="300" cy="56" r="26" fill="url(#pg-rim)" stroke="#c9a6ff" stroke-opacity=".5" stroke-width="2"/>
+    <path d="M292 48q0 -9 9 -9q8 0 8 8q0 6 -8 9v6" fill="none" stroke="#f4eeff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="301" cy="70" r="2.6" fill="#f4eeff"/>
+  </symbol>
+
+  <!-- ======================= CENA 2 · Halor e a Bia ======================= -->
+  <symbol id="p-halor-mark" viewBox="0 0 64 64">
+    <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#pg-ring)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="16.5" fill="none" stroke="url(#pg-ring)" stroke-width="1.6" opacity=".6"/>
+    <circle cx="32" cy="32" r="8.5" fill="url(#pg-core)"/>
+    <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#ffffff"/>
+  </symbol>
+  <symbol id="p-halor-mark-paper" viewBox="0 0 64 64">
+    <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#pg-ring-paper)" stroke-width="5.5" stroke-linecap="round"/>
+    <circle cx="32" cy="32" r="16.5" fill="none" stroke="#8b3dff" stroke-width="1.6" opacity=".45"/>
+    <circle cx="32" cy="32" r="8.5" fill="url(#pg-core-paper)"/>
+    <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#8b3dff"/>
+  </symbol>
+  <!-- pílula-rótulo com rabicho para baixo (texto em HTML por cima) · currentColor -->
+  <symbol id="p-label-pill" viewBox="0 0 300 100">
+    <rect x="0" y="0" width="300" height="72" rx="36" fill="currentColor"/>
+    <path d="M134 70h32l-16 24z" fill="currentColor"/>
+  </symbol>
+
+  <!-- ======================= CENA 3 · Slide vivo ======================= -->
+  <symbol id="p-slide-grey" viewBox="0 0 320 180">
+    <rect width="320" height="180" rx="14" fill="url(#pg-grey)"/>
+    <rect x="26" y="26" width="140" height="14" rx="7" fill="#9a94b0"/>
+    <rect x="26" y="56" width="200" height="8" rx="4" fill="#b5afc6"/>
+    <rect x="26" y="74" width="168" height="8" rx="4" fill="#b5afc6"/>
+    <rect x="26" y="92" width="184" height="8" rx="4" fill="#b5afc6"/>
+    <rect x="26" y="110" width="130" height="8" rx="4" fill="#b5afc6"/>
+    <rect x="232" y="104" width="62" height="50" rx="6" fill="#bdb8cb"/>
+  </symbol>
+  <!-- kit de marca: caixa luminosa aberta com o símbolo na tampa -->
+  <symbol id="p-kit-box" viewBox="0 0 300 270">
+    <path d="M64 136L236 136L286 10L14 10Z" fill="url(#pg-beam-up)" opacity=".9"/>
+    <ellipse cx="150" cy="138" rx="100" ry="14" fill="url(#pg-lumen-r)" filter="url(#pf-glow)"/>
+    <g transform="rotate(-6 150 92)">
+      <rect x="52" y="48" width="196" height="84" rx="16" fill="url(#pg-dark)"/>
+      <rect x="52" y="48" width="196" height="84" rx="16" fill="none" stroke="#c9a6ff" stroke-opacity=".35" stroke-width="2"/>
+      <rect x="52" y="48" width="196" height="84" rx="16" fill="url(#pg-glass)"/>
+      <g transform="translate(124 64) scale(.8)">
+        <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#pg-ring)" stroke-width="5.5" stroke-linecap="round"/>
+        <circle cx="32" cy="32" r="16.5" fill="none" stroke="url(#pg-ring)" stroke-width="1.6" opacity=".6"/>
+        <circle cx="32" cy="32" r="8.5" fill="url(#pg-core)"/>
+        <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#ffffff"/>
+      </g>
+    </g>
+    <rect x="40" y="134" width="220" height="118" rx="20" fill="url(#pg-rim)"/>
+    <rect x="40" y="134" width="220" height="118" rx="20" fill="none" stroke="#c9a6ff" stroke-opacity=".3" stroke-width="2"/>
+    <rect x="40" y="134" width="220" height="30" rx="14" fill="#c9a6ff" opacity=".18"/>
+    <rect x="126" y="186" width="48" height="12" rx="6" fill="#8b3dff"/>
+    <ellipse cx="150" cy="258" rx="120" ry="10" fill="url(#pg-floor)"/>
+    <path d="M38 28Q38 40 50 40Q38 40 38 52Q38 40 26 40Q38 40 38 28Z" fill="#f4eeff"/>
+    <path d="M262 52Q262 60 270 60Q262 60 262 68Q262 60 254 60Q262 60 262 52Z" fill="#c9a6ff"/>
+    <circle cx="80" cy="76" r="3" fill="#f4eeff"/><circle cx="232" cy="26" r="2.5" fill="#f4eeff"/>
+  </symbol>
+  <!-- fichas: disco lúmen com ícone violeta (96×96) -->
+  <symbol id="p-chip-idea" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M38 52a14 14 0 1 1 20 0q-4 4 -4 9h-12q0 -5 -4 -9z" fill="#c9a6ff" stroke="#6421d1" stroke-width="4" stroke-linejoin="round"/>
+    <path d="M42 67h12M44 73h8" stroke="#6421d1" stroke-width="4" stroke-linecap="round"/>
+    <path d="M48 18v5M66 26l-3.5 3.5M30 26l3.5 3.5" stroke="#8b3dff" stroke-width="4" stroke-linecap="round"/>
+  </symbol>
+  <symbol id="p-chip-text" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <text x="48" y="60" text-anchor="middle" font-family="'Sora', 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="34" letter-spacing="-1" fill="#6421d1">Aa</text>
+  </symbol>
+  <symbol id="p-chip-image" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <rect x="27" y="30" width="42" height="36" rx="7" fill="#e9dfff" stroke="#6421d1" stroke-width="4"/>
+    <path d="M31 62l12 -14l9 10l6 -6l7 10z" fill="#8b3dff"/>
+    <circle cx="58" cy="41" r="4.5" fill="#f7bd55"/>
+  </symbol>
+  <symbol id="p-chip-motion" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M39 31v34l28 -17z" fill="url(#pg-violet-d)" stroke="#6421d1" stroke-width="3" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="p-chip-vote" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <rect x="28" y="30" width="40" height="9" rx="4.5" fill="#d9c7ff"/><rect x="28" y="30" width="22" height="9" rx="4.5" fill="#8b3dff"/>
+    <rect x="28" y="44" width="40" height="9" rx="4.5" fill="#d9c7ff"/><rect x="28" y="44" width="34" height="9" rx="4.5" fill="#6421d1"/>
+    <rect x="28" y="58" width="40" height="9" rx="4.5" fill="#d9c7ff"/><rect x="28" y="58" width="14" height="9" rx="4.5" fill="#a970ff"/>
+  </symbol>
+  <symbol id="p-chip-card" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <rect x="27" y="28" width="42" height="40" rx="8" fill="#ffffff" stroke="#6421d1" stroke-width="4"/>
+    <rect x="34" y="37" width="18" height="6" rx="3" fill="#8b3dff"/><rect x="34" y="48" width="28" height="4" rx="2" fill="#c4a6ff"/><rect x="34" y="56" width="20" height="4" rx="2" fill="#c4a6ff"/>
+  </symbol>
+  <symbol id="p-chip-timer" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <circle cx="48" cy="52" r="17" fill="#e9dfff" stroke="#6421d1" stroke-width="4"/>
+    <path d="M42 26h12M48 26v9M62 36l4 -4" stroke="#6421d1" stroke-width="4" stroke-linecap="round"/>
+    <path d="M48 52l8 -7" stroke="#8b3dff" stroke-width="4" stroke-linecap="round"/><circle cx="48" cy="52" r="3" fill="#6421d1"/>
+  </symbol>
+  <symbol id="p-chip-postit" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <g transform="rotate(-6 48 48)">
+      <path d="M30 30h36v26l-10 10H30z" fill="url(#pg-warn)"/>
+      <path d="M66 56l-10 10v-10z" fill="#e2a43a"/>
+      <rect x="36" y="38" width="22" height="4" rx="2" fill="#8f5a00" opacity=".55"/><rect x="36" y="46" width="16" height="4" rx="2" fill="#8f5a00" opacity=".55"/>
+    </g>
+  </symbol>
+  <symbol id="p-chip-chart" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <rect x="28" y="46" width="10" height="22" rx="3" fill="#c4a6ff"/><rect x="43" y="34" width="10" height="34" rx="3" fill="#a970ff"/><rect x="58" y="26" width="10" height="42" rx="3" fill="url(#pg-violet)"/>
+    <rect x="26" y="70" width="44" height="3" rx="1.5" fill="#6421d1"/>
+  </symbol>
+  <symbol id="p-chip-fx" viewBox="0 0 96 96">
+    <circle cx="48" cy="54" r="40" fill="#8b3dff" opacity=".4" filter="url(#pf-blur)"/><circle cx="48" cy="48" r="42" fill="url(#pg-lumen-r)"/><circle cx="48" cy="48" r="42" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2"/>
+    <path d="M30 68L54 44" stroke="#6421d1" stroke-width="6" stroke-linecap="round"/>
+    <path d="M60 24Q60 38 74 38Q60 38 60 52Q60 38 46 38Q60 38 60 24Z" fill="#8b3dff"/>
+    <path d="M36 32Q36 37 41 37Q36 37 36 42Q36 37 31 37Q36 37 36 32Z" fill="#a970ff"/>
+    <path d="M70 56Q70 60 74 60Q70 60 70 64Q70 60 66 60Q70 60 70 56Z" fill="#a970ff"/>
+  </symbol>
+
+  <!-- cavalete / palco (640×440) · noite e papel -->
+  <symbol id="p-stage-easel" viewBox="0 0 640 440">
+    <rect x="80" y="352" width="12" height="88" rx="6" fill="#2a1f4d" transform="rotate(9 86 352)"/>
+    <rect x="548" y="352" width="12" height="88" rx="6" fill="#2a1f4d" transform="rotate(-9 554 352)"/>
+    <rect x="314" y="352" width="12" height="70" rx="6" fill="#2a1f4d"/>
+    <rect x="10" y="0" width="620" height="360" rx="26" fill="url(#pg-dark)" filter="url(#pf-shadow-night)"/>
+    <rect x="10" y="0" width="620" height="360" rx="26" fill="none" stroke="#c9a6ff" stroke-opacity=".4" stroke-width="2.5"/>
+    <rect x="26" y="16" width="588" height="328" rx="18" fill="#120b26"/>
+    <rect x="26" y="16" width="588" height="328" rx="18" fill="none" stroke="#c9a6ff" stroke-opacity=".12" stroke-width="1.5"/>
+    <rect x="10" y="0" width="620" height="360" rx="26" fill="url(#pg-glass)" opacity=".6"/>
+    <rect x="40" y="346" width="560" height="14" rx="7" fill="#2a1f4d"/>
+  </symbol>
+  <symbol id="p-stage-easel-paper" viewBox="0 0 640 440">
+    <rect x="80" y="352" width="12" height="88" rx="6" fill="#b9b0d4" transform="rotate(9 86 352)"/>
+    <rect x="548" y="352" width="12" height="88" rx="6" fill="#b9b0d4" transform="rotate(-9 554 352)"/>
+    <rect x="314" y="352" width="12" height="70" rx="6" fill="#b9b0d4"/>
+    <rect x="10" y="0" width="620" height="360" rx="26" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <rect x="10" y="0" width="620" height="360" rx="26" fill="none" stroke="#d3cbe8" stroke-width="2"/>
+    <rect x="26" y="16" width="588" height="328" rx="18" fill="#f8f6fe"/>
+    <rect x="40" y="346" width="560" height="14" rx="7" fill="#e9dfff"/>
+  </symbol>
+
+  <!-- faísca de 4 pontas · currentColor -->
+  <symbol id="p-spark4" viewBox="0 0 64 64"><path d="M32 4Q32 32 60 32Q32 32 32 60Q32 32 4 32Q32 32 32 4Z" fill="currentColor"/></symbol>
+  <!-- carimbo ✓ redondo com "halor" em volta -->
+  <symbol id="p-stamp-check" viewBox="0 0 120 120">
+    <circle cx="60" cy="60" r="56" fill="url(#pg-violet-d)" filter="url(#pf-glow)"/>
+    <circle cx="60" cy="60" r="56" fill="none" stroke="#c9a6ff" stroke-opacity=".6" stroke-width="2"/>
+    <circle cx="60" cy="60" r="47" fill="none" stroke="#f4eeff" stroke-opacity=".8" stroke-width="2.5" stroke-dasharray="4 6" stroke-linecap="round"/>
+    <circle cx="60" cy="60" r="39" fill="none" stroke="#f4eeff" stroke-opacity=".9" stroke-width="2"/>
+    <path d="M42 56l12 12l24 -26" fill="none" stroke="#ffffff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="60" y="90" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="12" letter-spacing="2" fill="#f4eeff">halor</text>
+  </symbol>
+  <!-- anel de onda (3 anéis, pathLength=1) -->
+  <symbol id="p-ring-wave" viewBox="0 0 200 200">
+    <circle cx="100" cy="100" r="40" pathLength="1" fill="none" stroke="#c9a6ff" stroke-width="6" filter="url(#pf-glow)"/>
+    <circle cx="100" cy="100" r="66" pathLength="1" fill="none" stroke="#a970ff" stroke-width="3.5" opacity=".7"/>
+    <circle cx="100" cy="100" r="92" pathLength="1" fill="none" stroke="#8b3dff" stroke-width="2" opacity=".45"/>
+  </symbol>
+
+  <!-- ======================= CENA 4 · A primeira impressão ======================= -->
+  <!-- placa de título chanfrada (texto em HTML por cima) -->
+  <symbol id="p-title-plate" viewBox="0 0 520 120">
+    <path d="M24 0H520L496 120H0Z" fill="url(#pg-violet-d)" filter="url(#pf-glow)"/>
+    <path d="M24 0H520L496 120H0Z" fill="none" stroke="#c9a6ff" stroke-opacity=".55" stroke-width="2.5"/>
+    <path d="M28 6H510L498 60H16Z" fill="url(#pg-glass)"/>
+    <path d="M36 12H180" stroke="#ffffff" stroke-opacity=".45" stroke-width="3" stroke-linecap="round"/>
+  </symbol>
+  <!-- slide COMUM (cinza, tópicos) -->
+  <symbol id="p-slide-dull" viewBox="0 0 320 180">
+    <rect width="320" height="180" rx="14" fill="url(#pg-grey)"/>
+    <rect x="28" y="28" width="150" height="14" rx="7" fill="#8f8aa5"/>
+    <rect x="28" y="50" width="70" height="6" rx="3" fill="#b5afc6"/>
+    <g fill="#9a94b0"><circle cx="34" cy="86" r="4"/><circle cx="34" cy="112" r="4"/><circle cx="34" cy="138" r="4"/></g>
+    <g fill="#b5afc6"><rect x="46" y="82" width="190" height="8" rx="4"/><rect x="46" y="108" width="160" height="8" rx="4"/><rect x="46" y="134" width="210" height="8" rx="4"/></g>
+  </symbol>
+  <!-- slide VIVO (dark, título forte, gráfico, halo em volta) · 400×260 com margem de brilho; slide em (40,40)-(360,220) -->
+  <symbol id="p-slide-vivid" viewBox="0 0 400 260">
+    <ellipse cx="200" cy="130" rx="200" ry="130" fill="url(#pg-halo)"/>
+    <rect x="40" y="40" width="320" height="180" rx="14" fill="url(#pg-night)" filter="url(#pf-glow)"/>
+    <rect x="40" y="40" width="320" height="180" rx="14" fill="none" stroke="#c9a6ff" stroke-opacity=".6" stroke-width="2"/>
+    <rect x="64" y="62" width="26" height="5" rx="2.5" fill="#a970ff"/>
+    <rect x="64" y="76" width="150" height="18" rx="6" fill="#f4eeff"/>
+    <rect x="64" y="102" width="90" height="12" rx="6" fill="#a970ff"/>
+    <g fill="#c9a6ff" opacity=".7"><rect x="64" y="130" width="130" height="7" rx="3.5"/><rect x="64" y="146" width="100" height="7" rx="3.5"/><rect x="64" y="162" width="118" height="7" rx="3.5"/></g>
+    <g>
+      <rect x="248" y="150" width="18" height="46" rx="5" fill="#8b3dff"/>
+      <rect x="272" y="128" width="18" height="68" rx="5" fill="#a970ff"/>
+      <rect x="296" y="160" width="18" height="36" rx="5" fill="#8b3dff"/>
+      <rect x="320" y="104" width="18" height="92" rx="5" fill="url(#pg-neon)" filter="url(#pf-glow)"/>
+      <rect x="244" y="200" width="98" height="3" rx="1.5" fill="#c9a6ff" opacity=".5"/>
+    </g>
+    <path d="M334 52Q334 62 344 62Q334 62 334 72Q334 62 324 62Q334 62 334 52Z" fill="#ffffff"/>
+  </symbol>
+  <!-- sinal ≠ em disco -->
+  <symbol id="p-neq" viewBox="0 0 80 80">
+    <circle cx="40" cy="40" r="36" fill="url(#pg-rim)"/><circle cx="40" cy="40" r="36" fill="none" stroke="#c9a6ff" stroke-opacity=".5" stroke-width="2"/>
+    <path d="M24 32h32M24 48h32M48 20L32 60" stroke="#f4eeff" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
+  <!-- selo (fundo lúmen + disco violeta com faísca; texto em HTML a partir de x≈72) -->
+  <symbol id="p-badge" viewBox="0 0 260 72">
+    <rect x="0" y="0" width="260" height="72" rx="36" fill="url(#pg-lumen)" filter="url(#pf-shadow-night)"/>
+    <rect x="0" y="0" width="260" height="72" rx="36" fill="none" stroke="#8b3dff" stroke-opacity=".3" stroke-width="2"/>
+    <circle cx="36" cy="36" r="24" fill="url(#pg-violet-d)"/>
+    <path d="M36 22Q36 36 50 36Q36 36 36 50Q36 36 22 36Q36 36 36 22Z" fill="#ffffff"/>
+  </symbol>
+  <!-- três pares de olhos da plateia (estático; frag "audience" tem .eye separados) -->
+  <symbol id="p-eyes-trio" viewBox="0 0 420 90">
+    <g filter="url(#pf-glow-soft)">
+      <ellipse cx="46" cy="45" rx="22" ry="27" fill="#ffffff"/><ellipse cx="96" cy="45" rx="22" ry="27" fill="#ffffff"/>
+      <ellipse cx="186" cy="45" rx="22" ry="27" fill="#ffffff"/><ellipse cx="236" cy="45" rx="22" ry="27" fill="#ffffff"/>
+      <ellipse cx="326" cy="45" rx="22" ry="27" fill="#ffffff"/><ellipse cx="376" cy="45" rx="22" ry="27" fill="#ffffff"/>
+    </g>
+    <g fill="url(#pg-iris)"><circle cx="50" cy="48" r="11"/><circle cx="100" cy="48" r="11"/><circle cx="184" cy="46" r="11"/><circle cx="234" cy="46" r="11"/><circle cx="320" cy="50" r="11"/><circle cx="370" cy="50" r="11"/></g>
+    <g fill="#ffffff"><circle cx="54" cy="44" r="3.5"/><circle cx="104" cy="44" r="3.5"/><circle cx="188" cy="42" r="3.5"/><circle cx="238" cy="42" r="3.5"/><circle cx="324" cy="46" r="3.5"/><circle cx="374" cy="46" r="3.5"/></g>
+  </symbol>
+
+  <!-- ======================= CENA 5 · Da faísca ao valor ======================= -->
+  <!-- placa pendurada (340×220): disco do número em (46,62) r19 · área de ícone em (170,106) r44 · título em HTML em y≈176 -->
+  <symbol id="p-station-off" viewBox="0 0 340 220">
+    <path d="M80 0v26M260 0v26" stroke="#2a1f4d" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="80" cy="4" r="5" fill="#a69cc4"/><circle cx="260" cy="4" r="5" fill="#a69cc4"/>
+    <rect x="10" y="24" width="320" height="188" rx="26" fill="url(#pg-night)" filter="url(#pf-shadow-night)"/>
+    <rect x="10" y="24" width="320" height="188" rx="26" fill="none" stroke="#c9a6ff" stroke-opacity=".22" stroke-width="2"/>
+    <circle cx="46" cy="62" r="19" fill="#2a1f4d"/>
+    <circle cx="170" cy="106" r="44" fill="#c9a6ff" fill-opacity=".08"/>
+    <circle cx="170" cy="106" r="44" fill="none" stroke="#c9a6ff" stroke-opacity=".18" stroke-width="2"/>
+  </symbol>
+  <symbol id="p-station-on" viewBox="0 0 340 220">
+    <path d="M80 0v26M260 0v26" stroke="#2a1f4d" stroke-width="5" stroke-linecap="round"/>
+    <circle cx="80" cy="4" r="5" fill="#c9a6ff"/><circle cx="260" cy="4" r="5" fill="#c9a6ff"/>
+    <rect x="10" y="24" width="320" height="188" rx="26" fill="url(#pg-violet-d)" filter="url(#pf-glow)"/>
+    <rect x="10" y="24" width="320" height="188" rx="26" fill="none" stroke="#c9a6ff" stroke-opacity=".7" stroke-width="2.5"/>
+    <rect x="16" y="30" width="308" height="90" rx="22" fill="url(#pg-glass)"/>
+    <circle cx="46" cy="62" r="19" fill="#ffffff"/>
+    <circle cx="170" cy="106" r="44" fill="#ffffff" fill-opacity=".16"/>
+    <circle cx="170" cy="106" r="44" fill="none" stroke="#ffffff" stroke-opacity=".4" stroke-width="2"/>
+  </symbol>
+  <!-- ícones das estações (partes do símbolo) · currentColor -->
+  <symbol id="p-ic-spark" viewBox="0 0 64 64"><path d="M32 6Q32 32 58 32Q32 32 32 58Q32 32 6 32Q32 32 32 6Z" fill="currentColor"/></symbol>
+  <symbol id="p-ic-ring-open" viewBox="0 0 64 64"><path pathLength="1" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round"/></symbol>
+  <symbol id="p-ic-ring-inner" viewBox="0 0 64 64"><circle pathLength="1" cx="32" cy="32" r="16.5" fill="none" stroke="currentColor" stroke-width="3.5"/></symbol>
+  <symbol id="p-ic-core" viewBox="0 0 64 64"><circle cx="32" cy="32" r="12" fill="currentColor"/></symbol>
+  <!-- confete estático (frag "confetti" tem as 24 partículas .cf) -->
+  <symbol id="p-confetti" viewBox="0 0 240 200">
+    <g fill="#f4eeff"><rect x="20" y="30" width="12" height="12" rx="3" transform="rotate(20 26 36)"/><rect x="150" y="18" width="10" height="10" rx="2" transform="rotate(-30 155 23)"/><rect x="200" y="120" width="12" height="12" rx="3" transform="rotate(40 206 126)"/><rect x="60" y="150" width="9" height="9" rx="2" transform="rotate(10 64 154)"/></g>
+    <g fill="#a970ff"><rect x="90" y="60" width="12" height="12" rx="3" transform="rotate(-20 96 66)"/><rect x="180" y="60" width="10" height="10" rx="2"/><rect x="30" y="110" width="11" height="11" rx="3" transform="rotate(35 35 115)"/><rect x="120" y="160" width="12" height="12" rx="3" transform="rotate(-15 126 166)"/></g>
+    <g fill="#8b3dff"><path d="M60 20Q60 30 70 30Q60 30 60 40Q60 30 50 30Q60 30 60 20Z"/><path d="M210 30Q210 40 220 40Q210 40 210 50Q210 40 200 40Q210 40 210 30Z"/><path d="M140 110Q140 120 150 120Q140 120 140 130Q140 120 130 120Q140 120 140 110Z"/></g>
+    <g fill="#c9a6ff"><path d="M110 24Q110 34 120 34Q110 34 110 44Q110 34 100 34Q110 34 110 24Z"/><path d="M80 110Q80 118 88 118Q80 118 80 126Q80 118 72 118Q80 118 80 110Z"/><path d="M190 170Q190 178 198 178Q190 178 190 186Q190 178 182 178Q190 178 190 170Z"/></g>
+    <g fill="none" stroke-width="3"><circle cx="40" cy="70" r="6" stroke="#c9a6ff"/><circle cx="170" cy="140" r="7" stroke="#f4eeff"/><circle cx="120" cy="90" r="5" stroke="#a970ff"/><circle cx="220" cy="90" r="5" stroke="#c9a6ff"/><circle cx="20" cy="170" r="6" stroke="#8b3dff"/></g>
+  </symbol>
+
+  <!-- ======================= CENA 6 · A atenção continua ======================= -->
+  <!-- notebook (640×420) · tela em (90,28)-(550,322) · frag "laptop" tem .lid e .screen -->
+  <symbol id="p-laptop" viewBox="0 0 640 420">
+    <ellipse cx="320" cy="400" rx="300" ry="14" fill="#000" opacity=".45" filter="url(#pf-blur)"/>
+    <rect x="70" y="8" width="500" height="340" rx="22" fill="url(#pg-rim)"/>
+    <rect x="70" y="8" width="500" height="340" rx="22" fill="none" stroke="#c9a6ff" stroke-opacity=".3" stroke-width="2"/>
+    <rect x="90" y="28" width="460" height="294" rx="10" fill="#0e0820"/>
+    <circle cx="320" cy="18" r="3" fill="#a69cc4"/>
+    <path d="M20 348h600a0 0 0 0 1 0 0v10a14 14 0 0 1 -14 14H34a14 14 0 0 1 -14 -14z" fill="#2a1f4d"/>
+    <rect x="20" y="348" width="600" height="8" rx="4" fill="#3b2d66"/>
+    <rect x="270" y="348" width="100" height="8" rx="4" fill="#171030"/>
+  </symbol>
+  <!-- celular (120×240) · tela em (8,14)-(112,226) -->
+  <symbol id="p-phone" viewBox="0 0 120 240">
+    <rect x="0" y="0" width="120" height="240" rx="22" fill="url(#pg-rim)"/>
+    <rect x="0" y="0" width="120" height="240" rx="22" fill="none" stroke="#c9a6ff" stroke-opacity=".3" stroke-width="2"/>
+    <rect x="8" y="14" width="104" height="212" rx="16" fill="#0e0820"/>
+    <rect x="44" y="20" width="32" height="6" rx="3" fill="#2a1f4d"/>
+    <rect x="118" y="70" width="3" height="30" rx="1.5" fill="#a69cc4"/>
+  </symbol>
+  <!-- tablet (320×240) · tela em (14,14)-(306,226) -->
+  <symbol id="p-tablet" viewBox="0 0 320 240">
+    <rect x="0" y="0" width="320" height="240" rx="20" fill="url(#pg-rim)"/>
+    <rect x="0" y="0" width="320" height="240" rx="20" fill="none" stroke="#c9a6ff" stroke-opacity=".3" stroke-width="2"/>
+    <rect x="14" y="14" width="292" height="212" rx="10" fill="#0e0820"/>
+    <circle cx="160" cy="8" r="2.5" fill="#a69cc4"/>
+  </symbol>
+  <!-- pílula de link com a URL -->
+  <symbol id="p-link-pill" viewBox="0 0 420 64">
+    <rect x="0" y="0" width="420" height="64" rx="32" fill="url(#pg-rim)" filter="url(#pf-glow-soft)"/>
+    <rect x="0" y="0" width="420" height="64" rx="32" fill="none" stroke="#c9a6ff" stroke-opacity=".45" stroke-width="2"/>
+    <circle cx="34" cy="32" r="20" fill="#8b3dff"/>
+    <g transform="translate(22 20)" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></g>
+    <text x="68" y="39" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="500" font-size="20" letter-spacing=".5" fill="#f4eeff">halor.app/kickoff-2027</text>
+  </symbol>
+
+  <!-- ======================= CENA 7 · Dez anos ======================= -->
+  <symbol id="p-slides-locked" viewBox="0 0 260 210">
+    <rect x="40" y="10" width="200" height="112" rx="12" fill="#cfcad9"/>
+    <rect x="24" y="32" width="200" height="112" rx="12" fill="#e2dfea"/>
+    <rect x="8" y="54" width="200" height="112" rx="12" fill="url(#pg-grey)" filter="url(#pf-shadow-night)"/>
+    <rect x="26" y="74" width="90" height="10" rx="5" fill="#9a94b0"/><rect x="26" y="96" width="140" height="7" rx="3.5" fill="#b5afc6"/><rect x="26" y="112" width="110" height="7" rx="3.5" fill="#b5afc6"/><rect x="26" y="128" width="124" height="7" rx="3.5" fill="#b5afc6"/>
+    <path d="M196 138v-18a22 22 0 0 1 44 0v18" fill="none" stroke="#4a4366" stroke-width="9" stroke-linecap="round"/>
+    <rect x="182" y="134" width="72" height="60" rx="14" fill="#4a4366"/>
+    <rect x="182" y="134" width="72" height="60" rx="14" fill="url(#pg-glass)"/>
+    <circle cx="218" cy="160" r="7" fill="#d7d3e3"/><rect x="215" y="162" width="6" height="14" rx="3" fill="#d7d3e3"/>
+  </symbol>
+  <!-- envelope com clipe e etiqueta PDF -->
+  <symbol id="p-mail" viewBox="0 0 200 160">
+    <rect x="10" y="30" width="180" height="120" rx="16" fill="url(#pg-lumen)" filter="url(#pf-shadow-night)"/>
+    <path d="M10 46L100 108L190 46" fill="none" stroke="#c4a6ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10 46V40a10 10 0 0 1 10 -10h160a10 10 0 0 1 10 10v6L100 108z" fill="#e9dfff"/>
+    <path d="M10 46L100 108L190 46" fill="none" stroke="#c4a6ff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M150 8v44a12 12 0 0 1 -24 0V20a7 7 0 0 1 14 0v30" fill="none" stroke="#4a4366" stroke-width="4" stroke-linecap="round"/>
+    <rect x="118" y="112" width="60" height="28" rx="14" fill="url(#pg-danger)"/>
+    <text x="148" y="131" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="14" letter-spacing="2" fill="#ffffff">PDF</text>
+  </symbol>
+  <!-- nuvem com seta de upload -->
+  <symbol id="p-cloud-sync" viewBox="0 0 160 120">
+    <path d="M44 100a26 26 0 0 1 -4 -52a34 34 0 0 1 66 -8a26 26 0 0 1 12 60z" fill="url(#pg-lumen)" filter="url(#pf-shadow-night)"/>
+    <path d="M80 92V52M62 68l18 -18l18 18" fill="none" stroke="#8b3dff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <!-- cursor de colaboração com etiqueta (nome em HTML por cima, a partir de x≈46) · currentColor -->
+  <symbol id="p-cursor" viewBox="0 0 160 64">
+    <path d="M6 4L36 26L22 29L30 46L22 50L14 33L4 42Z" fill="currentColor" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/>
+    <rect x="34" y="30" width="120" height="30" rx="15" fill="currentColor"/>
+  </symbol>
+  <!-- caixa de prompt com varinha e botão Gerar (texto do prompt em HTML, de x≈74 a x≈300) -->
+  <symbol id="p-prompt-box" viewBox="0 0 420 110">
+    <rect x="2" y="2" width="416" height="106" rx="26" fill="#ffffff" filter="url(#pf-shadow-night)"/>
+    <rect x="2" y="2" width="416" height="106" rx="26" fill="none" stroke="#d9c7ff" stroke-width="2.5"/>
+    <circle cx="44" cy="55" r="22" fill="#f3eeff"/>
+    <g transform="translate(31 42)" fill="none" stroke="#8b3dff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M13.5 7.5l3 3"/><path d="M17 3v3M15.5 4.5h3M20 8v2M19 9h2M9 3.5v2M8 4.5h2"/></g>
+    <rect x="312" y="32" width="90" height="46" rx="23" fill="url(#pg-violet-d)"/>
+    <text x="357" y="62" text-anchor="middle" font-family="'Instrument Sans', 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="20" fill="#ffffff">Gerar</text>
+  </symbol>
+  <symbol id="p-slides-grey-row" viewBox="0 0 520 100">
+    <g fill="url(#pg-grey)"><rect x="2" y="16" width="118" height="68" rx="9"/><rect x="134" y="16" width="118" height="68" rx="9"/><rect x="266" y="16" width="118" height="68" rx="9"/><rect x="398" y="16" width="118" height="68" rx="9"/></g>
+    <g fill="#9a94b0"><rect x="16" y="30" width="54" height="7" rx="3.5"/><rect x="148" y="30" width="54" height="7" rx="3.5"/><rect x="280" y="30" width="54" height="7" rx="3.5"/><rect x="412" y="30" width="54" height="7" rx="3.5"/></g>
+    <g fill="#b5afc6"><rect x="16" y="46" width="86" height="5" rx="2.5"/><rect x="16" y="58" width="70" height="5" rx="2.5"/><rect x="148" y="46" width="86" height="5" rx="2.5"/><rect x="148" y="58" width="70" height="5" rx="2.5"/><rect x="280" y="46" width="86" height="5" rx="2.5"/><rect x="280" y="58" width="70" height="5" rx="2.5"/><rect x="412" y="46" width="86" height="5" rx="2.5"/><rect x="412" y="58" width="70" height="5" rx="2.5"/></g>
+  </symbol>
+  <!-- balão de fala da Bia com o símbolo (texto em HTML por cima, de x≈80) -->
+  <symbol id="p-chat-bubble" viewBox="0 0 300 130">
+    <path d="M26 0h248a26 26 0 0 1 26 26v60a26 26 0 0 1 -26 26H60l-30 18l6 -18h-10a26 26 0 0 1 -26 -26V26A26 26 0 0 1 26 0z" fill="url(#pg-lumen)" filter="url(#pf-shadow-night)"/>
+    <path d="M26 0h248a26 26 0 0 1 26 26v60a26 26 0 0 1 -26 26H60l-30 18l6 -18h-10a26 26 0 0 1 -26 -26V26A26 26 0 0 1 26 0z" fill="none" stroke="#8b3dff" stroke-opacity=".35" stroke-width="2"/>
+    <g transform="translate(22 30) scale(.8)">
+      <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#pg-ring-paper)" stroke-width="5.5" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="16.5" fill="none" stroke="#8b3dff" stroke-width="1.6" opacity=".45"/>
+      <circle cx="32" cy="32" r="8.5" fill="url(#pg-core-paper)"/>
+      <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#8b3dff"/>
+    </g>
+  </symbol>
+  <!-- chip "Atenção ao vivo" (texto em HTML de x≈56 a x≈220; mini linha à direita) -->
+  <symbol id="p-live-chip" viewBox="0 0 300 70">
+    <rect x="0" y="0" width="300" height="70" rx="35" fill="url(#pg-rim)" filter="url(#pf-glow-soft)"/>
+    <rect x="0" y="0" width="300" height="70" rx="35" fill="none" stroke="#c9a6ff" stroke-opacity=".45" stroke-width="2"/>
+    <circle cx="34" cy="35" r="12" fill="#4fd69a" opacity=".3"/><circle cx="34" cy="35" r="7" fill="#4fd69a"/>
+    <path d="M228 46l12 -8l10 4l12 -14l10 6l10 -16" fill="none" stroke="#c9a6ff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#pf-glow)"/>
+  </symbol>
+
+  <!-- ======================= CENAS 8 a 11 · Estúdio (mundo Papel) ======================= -->
+  <!-- balão de legenda com rabicho embaixo (texto em HTML por cima) · currentColor -->
+  <symbol id="p-callout" viewBox="0 0 240 84">
+    <rect x="0" y="0" width="240" height="60" rx="16" fill="currentColor"/>
+    <path d="M106 58h28l-14 22z" fill="currentColor"/>
+  </symbol>
+  <!-- cursor de mouse clássico com sombra -->
+  <symbol id="p-cursor-arrow" viewBox="0 0 34 44">
+    <path d="M4 3L28 22L17 24L23 38L17 41L11 27L4 34Z" fill="#ffffff" stroke="#17112b" stroke-width="2.2" stroke-linejoin="round" filter="url(#pf-shadow)"/>
+  </symbol>
+  <!-- card de efeito arrastável ("Surgir" em HTML a partir de x≈74) -->
+  <symbol id="p-fx-card" viewBox="0 0 200 90">
+    <rect x="2" y="2" width="196" height="86" rx="20" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <rect x="2" y="2" width="196" height="86" rx="20" fill="none" stroke="#d9c7ff" stroke-width="2"/>
+    <circle cx="42" cy="45" r="24" fill="url(#pg-violet-d)"/>
+    <path d="M42 29Q42 45 58 45Q42 45 42 61Q42 45 26 45Q42 45 42 29Z" fill="#ffffff"/>
+    <g fill="#d3cbe8"><circle cx="176" cy="37" r="2.5"/><circle cx="183" cy="37" r="2.5"/><circle cx="176" cy="45" r="2.5"/><circle cx="183" cy="45" r="2.5"/><circle cx="176" cy="53" r="2.5"/><circle cx="183" cy="53" r="2.5"/></g>
+  </symbol>
+  <!-- cartão "Nova apresentação" (texto em HTML em y≈170) -->
+  <symbol id="p-card-new" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <rect x="10" y="10" width="280" height="180" rx="16" fill="none" stroke="#c4a6ff" stroke-width="2.5" stroke-dasharray="8 8"/>
+    <circle cx="150" cy="82" r="36" fill="url(#pg-violet-d)"/>
+    <path d="M150 64v36M132 82h36" stroke="#ffffff" stroke-width="7" stroke-linecap="round"/>
+    <rect x="100" y="150" width="100" height="10" rx="5" fill="#e9dfff"/>
+  </symbol>
+  <!-- cartão de modelo genérico + 5 capas (300×200) · nome do modelo em HTML em y≈170 -->
+  <symbol id="p-model-card" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="url(#pg-paper)"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="none" stroke="#e9dfff" stroke-width="2"/>
+    <rect x="34" y="40" width="110" height="14" rx="7" fill="#17112b"/><rect x="34" y="64" width="150" height="7" rx="3.5" fill="#c4a6ff"/>
+    <rect x="34" y="92" width="90" height="26" rx="8" fill="#8b3dff"/><rect x="134" y="92" width="130" height="26" rx="8" fill="#e9dfff"/>
+    <rect x="16" y="156" width="120" height="10" rx="5" fill="#d9c7ff"/>
+  </symbol>
+  <symbol id="p-model-1" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/><rect x="2" y="2" width="296" height="196" rx="22" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="url(#pg-night)"/>
+    <rect x="34" y="38" width="140" height="16" rx="8" fill="#f4eeff"/><rect x="34" y="64" width="90" height="8" rx="4" fill="#a970ff"/>
+    <rect x="200" y="92" width="14" height="30" rx="4" fill="#8b3dff"/><rect x="220" y="76" width="14" height="46" rx="4" fill="#a970ff"/><rect x="240" y="60" width="14" height="62" rx="4" fill="url(#pg-neon)"/>
+    <path d="M250 30Q250 38 258 38Q250 38 250 46Q250 38 242 38Q250 38 250 30Z" fill="#ffffff"/>
+    <rect x="16" y="156" width="120" height="10" rx="5" fill="#d9c7ff"/>
+  </symbol>
+  <symbol id="p-model-2" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/><rect x="2" y="2" width="296" height="196" rx="22" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="url(#pg-paper)"/><rect x="16" y="16" width="268" height="124" rx="14" fill="none" stroke="#e9dfff" stroke-width="2"/>
+    <rect x="34" y="34" width="90" height="12" rx="6" fill="#17112b"/>
+    <g><rect x="34" y="62" width="70" height="58" rx="10" fill="#8b3dff"/><rect x="44" y="74" width="34" height="14" rx="5" fill="#ffffff"/><rect x="44" y="96" width="50" height="6" rx="3" fill="#ffffff" opacity=".6"/></g>
+    <g><rect x="114" y="62" width="70" height="58" rx="10" fill="#e9dfff"/><rect x="124" y="74" width="34" height="14" rx="5" fill="#6421d1"/><rect x="124" y="96" width="50" height="6" rx="3" fill="#c4a6ff"/></g>
+    <g><rect x="194" y="62" width="70" height="58" rx="10" fill="#e9dfff"/><rect x="204" y="74" width="34" height="14" rx="5" fill="#6421d1"/><rect x="204" y="96" width="50" height="6" rx="3" fill="#c4a6ff"/></g>
+    <rect x="16" y="156" width="120" height="10" rx="5" fill="#d9c7ff"/>
+  </symbol>
+  <symbol id="p-model-3" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/><rect x="2" y="2" width="296" height="196" rx="22" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="url(#pg-paper)"/><rect x="16" y="16" width="268" height="124" rx="14" fill="none" stroke="#e9dfff" stroke-width="2"/>
+    <rect x="34" y="34" width="120" height="12" rx="6" fill="#17112b"/>
+    <path d="M44 92H256" stroke="#d9c7ff" stroke-width="5" stroke-linecap="round"/>
+    <g fill="#8b3dff"><circle cx="60" cy="92" r="10"/><circle cx="124" cy="92" r="10"/><circle cx="188" cy="92" r="10" fill="#c4a6ff"/><circle cx="250" cy="92" r="10" fill="#e9dfff"/></g>
+    <g fill="#c4a6ff"><rect x="44" y="110" width="32" height="6" rx="3"/><rect x="108" y="110" width="32" height="6" rx="3"/><rect x="172" y="110" width="32" height="6" rx="3"/><rect x="234" y="110" width="32" height="6" rx="3"/></g>
+    <rect x="16" y="156" width="120" height="10" rx="5" fill="#d9c7ff"/>
+  </symbol>
+  <symbol id="p-model-4" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/><rect x="2" y="2" width="296" height="196" rx="22" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="url(#pg-paper)"/><rect x="16" y="16" width="268" height="124" rx="14" fill="none" stroke="#e9dfff" stroke-width="2"/>
+    <rect x="34" y="34" width="110" height="88" rx="10" fill="#d9c7ff"/>
+    <path d="M44 112l30 -34l22 24l14 -14l24 24z" fill="#8b3dff"/><circle cx="118" cy="56" r="8" fill="#f7bd55"/>
+    <rect x="160" y="40" width="100" height="12" rx="6" fill="#17112b"/>
+    <g fill="#c4a6ff"><rect x="160" y="66" width="104" height="6" rx="3"/><rect x="160" y="82" width="84" height="6" rx="3"/><rect x="160" y="98" width="96" height="6" rx="3"/><rect x="160" y="114" width="60" height="6" rx="3"/></g>
+    <rect x="16" y="156" width="120" height="10" rx="5" fill="#d9c7ff"/>
+  </symbol>
+  <symbol id="p-model-5" viewBox="0 0 300 200">
+    <rect x="2" y="2" width="296" height="196" rx="22" fill="#ffffff" filter="url(#pf-shadow)"/><rect x="2" y="2" width="296" height="196" rx="22" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="16" y="16" width="268" height="124" rx="14" fill="url(#pg-violet-d)"/>
+    <circle cx="150" cy="66" r="30" fill="#ffffff" opacity=".18"/><circle cx="150" cy="66" r="18" fill="url(#pg-core)"/>
+    <path d="M176 36Q176 44 184 44Q176 44 176 52Q176 44 168 44Q176 44 176 36Z" fill="#ffffff"/>
+    <rect x="90" y="106" width="120" height="12" rx="6" fill="#ffffff"/>
+    <rect x="16" y="156" width="120" height="10" rx="5" fill="#d9c7ff"/>
+  </symbol>
+  <!-- chip do kit de marca -->
+  <symbol id="p-chip-brand" viewBox="0 0 160 64">
+    <rect x="2" y="2" width="156" height="60" rx="30" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <rect x="2" y="2" width="156" height="60" rx="30" fill="none" stroke="#d9c7ff" stroke-width="2"/>
+    <circle cx="30" cy="32" r="11" fill="#8b3dff"/><circle cx="52" cy="32" r="11" fill="#c9a6ff"/><circle cx="74" cy="32" r="11" fill="#17112b"/>
+    <text x="118" y="42" text-anchor="middle" font-family="'Sora', 'Helvetica Neue', Arial, sans-serif" font-weight="700" font-size="26" letter-spacing="-1" fill="#17112b">Aa</text>
+  </symbol>
+  <!-- arquivos com carinha (170×230): PPTX e PDF sonolentos, HTML feliz e brilhando -->
+  <symbol id="p-file-pptx" viewBox="0 0 170 230">
+    <path d="M2 20A18 18 0 0 1 20 2H118L168 52V210A18 18 0 0 1 150 228H20A18 18 0 0 1 2 210Z" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <path d="M118 2V38A14 14 0 0 0 132 52H168Z" fill="#e9dfff"/>
+    <g>
+      <ellipse cx="60" cy="100" rx="16" ry="17" fill="#f3eeff"/><ellipse cx="110" cy="100" rx="16" ry="17" fill="#f3eeff"/>
+      <circle cx="60" cy="104" r="7" fill="url(#pg-iris)"/><circle cx="110" cy="104" r="7" fill="url(#pg-iris)"/>
+      <path d="M44 100a16 17 0 0 1 32 0z" fill="#d7d3e3"/><path d="M94 100a16 17 0 0 1 32 0z" fill="#d7d3e3"/>
+      <path d="M44 100h32M94 100h32" stroke="#9a94b0" stroke-width="3" stroke-linecap="round"/>
+      <path d="M78 132q7 3 14 0" fill="none" stroke="#9a94b0" stroke-width="4" stroke-linecap="round"/>
+      <path d="M132 70h10l-10 10h10" fill="none" stroke="#a69cc4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M144 56h7l-7 7h7" fill="none" stroke="#a69cc4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <rect x="40" y="170" width="90" height="34" rx="17" fill="#17112b"/>
+    <text x="85" y="193" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="16" letter-spacing="2.5" fill="#ffffff">PPTX</text>
+  </symbol>
+  <symbol id="p-file-pdf" viewBox="0 0 170 230">
+    <path d="M2 20A18 18 0 0 1 20 2H118L168 52V210A18 18 0 0 1 150 228H20A18 18 0 0 1 2 210Z" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <path d="M118 2V38A14 14 0 0 0 132 52H168Z" fill="#e9dfff"/>
+    <g>
+      <ellipse cx="60" cy="100" rx="16" ry="17" fill="#f3eeff"/><ellipse cx="110" cy="100" rx="16" ry="17" fill="#f3eeff"/>
+      <circle cx="58" cy="106" r="7" fill="url(#pg-iris)"/><circle cx="108" cy="106" r="7" fill="url(#pg-iris)"/>
+      <path d="M44 100a16 17 0 0 1 32 0l0 4a16 17 0 0 1 -32 0z" fill="#d7d3e3"/><path d="M94 100a16 17 0 0 1 32 0l0 4a16 17 0 0 1 -32 0z" fill="#d7d3e3"/>
+      <path d="M44 104h32M94 104h32" stroke="#9a94b0" stroke-width="3" stroke-linecap="round"/>
+      <ellipse cx="85" cy="134" rx="6" ry="7" fill="#9a94b0"/>
+      <path d="M132 70h10l-10 10h10" fill="none" stroke="#a69cc4" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <rect x="46" y="170" width="78" height="34" rx="17" fill="url(#pg-danger)"/>
+    <text x="85" y="193" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="16" letter-spacing="2.5" fill="#ffffff">PDF</text>
+  </symbol>
+  <symbol id="p-file-html" viewBox="0 0 170 230">
+    <path d="M2 20A18 18 0 0 1 20 2H118L168 52V210A18 18 0 0 1 150 228H20A18 18 0 0 1 2 210Z" fill="#ffffff" filter="url(#pf-glow)"/>
+    <path d="M2 20A18 18 0 0 1 20 2H118L168 52V210A18 18 0 0 1 150 228H20A18 18 0 0 1 2 210Z" fill="none" stroke="#c9a6ff" stroke-width="2.5"/>
+    <path d="M118 2V38A14 14 0 0 0 132 52H168Z" fill="#d9c7ff"/>
+    <g>
+      <ellipse cx="60" cy="100" rx="16" ry="17" fill="#f3eeff"/><ellipse cx="110" cy="100" rx="16" ry="17" fill="#f3eeff"/>
+      <circle cx="62" cy="100" r="8" fill="url(#pg-iris)"/><circle cx="112" cy="100" r="8" fill="url(#pg-iris)"/>
+      <circle cx="65" cy="96" r="3" fill="#fff"/><circle cx="115" cy="96" r="3" fill="#fff"/>
+      <path d="M46 78q14 -10 28 -2M96 76q14 -8 28 2" fill="none" stroke="#4a4366" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M62 128q23 22 46 0" fill="none" stroke="#4a4366" stroke-width="4.5" stroke-linecap="round"/>
+      <ellipse cx="40" cy="124" rx="9" ry="5" fill="#ff9ad5" opacity=".45"/><ellipse cx="130" cy="124" rx="9" ry="5" fill="#ff9ad5" opacity=".45"/>
+      <path d="M140 68Q140 78 150 78Q140 78 140 88Q140 78 130 78Q140 78 140 68Z" fill="#8b3dff"/>
+    </g>
+    <rect x="40" y="170" width="90" height="34" rx="17" fill="url(#pg-violet-d)"/>
+    <text x="85" y="193" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, monospace" font-weight="600" font-size="16" letter-spacing="2.5" fill="#ffffff">HTML</text>
+  </symbol>
+  <!-- portal: anel de luz grande -->
+  <symbol id="p-portal-ring" viewBox="0 0 400 400">
+    <circle cx="200" cy="200" r="150" fill="none" stroke="#8b3dff" stroke-width="40" opacity=".35" filter="url(#pf-blur-lg)"/>
+    <circle cx="200" cy="200" r="150" pathLength="1" fill="none" stroke="url(#pg-ring)" stroke-width="14" filter="url(#pf-glow)"/>
+    <circle cx="200" cy="200" r="124" pathLength="1" fill="none" stroke="#c9a6ff" stroke-width="2" opacity=".5"/>
+    <circle cx="200" cy="200" r="118" fill="url(#pg-halo)" opacity=".7"/>
+  </symbol>
+  <!-- faixa de varredura de luz (vertical) -->
+  <symbol id="p-sweep" viewBox="0 0 200 600" preserveAspectRatio="none">
+    <rect width="200" height="600" fill="url(#pg-sweep)"/>
+    <rect x="96" width="8" height="600" fill="#ffffff" opacity=".9" filter="url(#pf-glow)"/>
+  </symbol>
+  <!-- diálogo "Salvar como" estático (textos no frag "save") -->
+  <symbol id="p-save-dialog" viewBox="0 0 440 340">
+    <rect x="2" y="2" width="436" height="336" rx="24" fill="#ffffff" filter="url(#pf-shadow)"/>
+    <rect x="2" y="2" width="436" height="336" rx="24" fill="none" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="28" y="30" width="160" height="14" rx="7" fill="#17112b"/>
+    <circle cx="408" cy="36" r="10" fill="#f3eeff"/><path d="M404 32l8 8M412 32l-8 8" stroke="#6e6789" stroke-width="2" stroke-linecap="round"/>
+    <rect x="24" y="70" width="392" height="56" rx="14" fill="#f3eeff" stroke="#c4a6ff" stroke-width="2"/>
+    <rect x="24" y="134" width="392" height="56" rx="14" fill="#ffffff" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="24" y="198" width="392" height="56" rx="14" fill="#ffffff" stroke="#e8e3f4" stroke-width="2"/>
+    <rect x="24" y="262" width="392" height="56" rx="14" fill="#ffffff" stroke="#e8e3f4" stroke-width="2"/>
+    <g fill="#8b3dff"><circle cx="52" cy="98" r="14"/><circle cx="52" cy="162" r="14" fill="#c22f4b"/><circle cx="52" cy="226" r="14" fill="#4a4366"/><circle cx="52" cy="290" r="14" fill="#4a4366"/></g>
+    <g fill="#ffffff"><path d="M46 91h8l4 4v10h-12z"/><path d="M46 155h8l4 4v10h-12z"/><path d="M46 219h8l4 4v10h-12z"/><path d="M46 283h8l4 4v10h-12z"/></g>
+    <g fill="#17112b"><rect x="80" y="86" width="150" height="10" rx="5"/><rect x="80" y="150" width="60" height="10" rx="5"/><rect x="80" y="214" width="170" height="10" rx="5"/><rect x="80" y="278" width="170" height="10" rx="5"/></g>
+    <g fill="#c4a6ff"><rect x="80" y="104" width="220" height="7" rx="3.5"/><rect x="80" y="168" width="180" height="7" rx="3.5"/><rect x="80" y="232" width="200" height="7" rx="3.5"/><rect x="80" y="296" width="160" height="7" rx="3.5"/></g>
+  </symbol>
+
+  <!-- ======================= CENA 12 · Raio Halor ======================= -->
+  <!-- feixe / cone de luz translúcido (ápice no topo centro) -->
+  <symbol id="p-beam" viewBox="0 0 600 400">
+    <path d="M300 0L600 400H0Z" fill="url(#pg-beam)" opacity=".5" filter="url(#pf-blur)"/>
+    <path d="M300 0L560 400H40Z" fill="url(#pg-beam)"/>
+    <path d="M300 0L330 400H270Z" fill="#ffffff" opacity=".25"/>
+  </symbol>
+  <!-- medidor circular estático a 84 % (frag "gauge" tem .gg-arc e .gg-n) -->
+  <symbol id="p-gauge" viewBox="0 0 240 240">
+    <path d="M54.95 185.05A92 92 0 1 1 185.05 185.05" fill="none" stroke="#2a1f4d" stroke-width="18" stroke-linecap="round"/>
+    <path d="M54.95 185.05A92 92 0 1 1 185.05 185.05" pathLength="1" fill="none" stroke="url(#pg-neon)" stroke-width="18" stroke-linecap="round" stroke-dasharray="1" stroke-dashoffset=".16" filter="url(#pf-glow)"/>
+    <circle cx="120" cy="120" r="66" fill="url(#pg-night)"/>
+    <circle cx="120" cy="120" r="66" fill="none" stroke="#c9a6ff" stroke-opacity=".3" stroke-width="2"/>
+  </symbol>
+  <!-- chip de sugestão com varinha (texto em HTML a partir de x≈66) -->
+  <symbol id="p-suggest-chip" viewBox="0 0 360 70">
+    <rect x="0" y="0" width="360" height="70" rx="35" fill="url(#pg-lumen)" filter="url(#pf-glow-soft)"/>
+    <rect x="0" y="0" width="360" height="70" rx="35" fill="none" stroke="#8b3dff" stroke-opacity=".35" stroke-width="2"/>
+    <circle cx="35" cy="35" r="22" fill="url(#pg-violet-d)"/>
+    <g transform="translate(22 22)" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20L15 9M13.5 7.5l3 3"/><path d="M17 3v3M15.5 4.5h3M20 8v2M19 9h2M9 3.5v2M8 4.5h2"/></g>
+  </symbol>
+
+  <!-- ======================= CENA 13 · Fecho ======================= -->
+  <symbol id="p-pill-outline" viewBox="0 0 480 90">
+    <rect x="3" y="3" width="474" height="84" rx="42" fill="#f4eeff" fill-opacity=".06" stroke="#f4eeff" stroke-width="3"/>
+  </symbol>
+  <symbol id="p-pill-solid" viewBox="0 0 480 90">
+    <rect x="3" y="3" width="474" height="84" rx="42" fill="url(#pg-violet-d)" filter="url(#pf-glow)"/>
+    <rect x="3" y="3" width="474" height="84" rx="42" fill="none" stroke="#c9a6ff" stroke-opacity=".6" stroke-width="2.5"/>
+    <rect x="10" y="8" width="460" height="36" rx="18" fill="url(#pg-glass)"/>
+  </symbol>
+</defs>
+</svg>

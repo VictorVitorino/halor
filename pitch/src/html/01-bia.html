@@ -1,0 +1,218 @@
+<!-- ==========================================================================
+     BIA · a berinjela IA do Halor (mascote)
+     Defs compartilhados (prefixo bia-) + <template id="bia-tpl"> clonado pelo motor dentro de cada .bia.
+     Toda articulação e expressão vem de variáveis CSS lidas em src/css/20-bia.css (tabelas em src/js/20-bia.js).
+     Convenção de lados: "l" = lado ESQUERDO do espectador (mão do carimbo), "r" = direito (mão da prancheta).
+     Grupos com transform CSS ficam sempre dentro de um <g transform="translate(...)"> fixo: a articulação gira em (0,0).
+     ========================================================================== -->
+<svg class="defs bia-defs" xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="bia-g-body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c9a6ff"/>
+      <stop offset=".22" stop-color="#a970ff"/>
+      <stop offset=".58" stop-color="#8b3dff"/>
+      <stop offset="1" stop-color="#6421d1"/>
+    </linearGradient>
+    <linearGradient id="bia-g-body-side" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4a11a0" stop-opacity="0"/>
+      <stop offset=".62" stop-color="#4a11a0" stop-opacity="0"/>
+      <stop offset="1" stop-color="#4a11a0" stop-opacity=".35"/>
+    </linearGradient>
+    <linearGradient id="bia-g-sheen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="bia-g-hat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2a1f4d"/>
+      <stop offset="1" stop-color="#171030"/>
+    </linearGradient>
+    <linearGradient id="bia-g-arm" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#8236f2"/>
+      <stop offset="1" stop-color="#6e27dc"/>
+    </linearGradient>
+    <linearGradient id="bia-g-stamp" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a970ff"/>
+      <stop offset="1" stop-color="#8b3dff"/>
+    </linearGradient>
+    <radialGradient id="bia-g-shadow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#17112b" stop-opacity=".30"/>
+      <stop offset=".7" stop-color="#17112b" stop-opacity=".12"/>
+      <stop offset="1" stop-color="#17112b" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bia-g-shadow-night" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#a970ff" stop-opacity=".55"/>
+      <stop offset=".6" stop-color="#8b3dff" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#8b3dff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bia-g-eyeglow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#c9a6ff" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#a970ff" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="bia-f-soft" x="-60%" y="-40%" width="220%" height="180%"><feGaussianBlur stdDeviation="11"/></filter>
+    <filter id="bia-f-neon" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="bia-f-blur2" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2"/></filter>
+  </defs>
+</svg>
+
+<template id="bia-tpl">
+  <svg class="bia-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320" role="img" aria-label="Bia, a berinjela IA do Halor" overflow="visible">
+    <!-- sombra no chão (fica fora do rig: não pula com a Bia, encolhe quando ela sobe) -->
+    <ellipse class="shadow" cx="120" cy="300" rx="58" ry="10"/>
+
+    <g class="rig">
+      <!-- anel de luz (portal), atrás do corpo; posição vertical em --ring-y -->
+      <g class="ring-pos"><g class="ring">
+        <circle class="ring-in" cx="0" cy="0" r="58"/>
+        <path class="ring-arc" d="M60.62 -35A70 70 0 1 1 35 -60.62"/>
+        <path class="ring-spark l twinkle" d="M52 -68Q52 -58 62 -58Q52 -58 52 -48Q52 -58 42 -58Q52 -58 52 -68Z"/>
+      </g></g>
+
+      <!-- brilho neon em volta (--glow) -->
+      <ellipse class="glow" cx="120" cy="170" rx="66" ry="112"/>
+
+      <g class="torso">
+        <!-- corpo cápsula -->
+        <rect class="body" x="66" y="64" width="108" height="206" rx="54"/>
+        <rect class="body-side" x="66" y="64" width="108" height="206" rx="54"/>
+        <path class="sheen" d="M84 118C80 98 86 82 100 76" />
+        <circle class="sheen-dot" cx="94" cy="82" r="3"/>
+
+        <!-- selo Halor no corpo -->
+        <g class="seal">
+          <circle cx="121" cy="208" r="19"/>
+          <g class="seal-mark" transform="translate(110 197) scale(.344)">
+            <path d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="#f4eeff" stroke-width="7" stroke-linecap="round"/>
+            <circle cx="32" cy="32" r="9.5" fill="#f4eeff"/>
+            <path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#f4eeff"/>
+          </g>
+        </g>
+
+        <!-- rosto -->
+        <g class="face">
+          <ellipse class="cheek cheek-l" cx="82" cy="150" rx="10" ry="6.5"/>
+          <ellipse class="cheek cheek-r" cx="158" cy="150" rx="10" ry="6.5"/>
+
+          <!-- olhos (ESQ do espectador = eye-l) -->
+          <g class="eye eye-l">
+            <circle class="eye-glow" cx="99" cy="126" r="20"/>
+            <ellipse class="white" cx="99" cy="126" rx="15" ry="17"/>
+            <g class="iris">
+              <circle class="iris-ring" cx="99" cy="127" r="8.6"/>
+              <circle class="iris-core" cx="99" cy="127" r="7.2"/>
+              <circle class="pupil" cx="99" cy="127" r="3.4"/>
+              <circle class="hi hi-big" cx="95.6" cy="123" r="3.2"/>
+              <circle class="hi hi-small" cx="102.6" cy="130.4" r="1.5"/>
+            </g>
+            <ellipse class="lid lid-open" cx="99" cy="126" rx="15.6" ry="17.6"/>
+            <ellipse class="lid lid-blink l blink" cx="99" cy="126" rx="15.6" ry="17.6"/>
+            <path class="happy-arc" d="M86 131Q99 115 112 131"/>
+          </g>
+          <g class="eye eye-r">
+            <circle class="eye-glow" cx="141" cy="126" r="20"/>
+            <ellipse class="white" cx="141" cy="126" rx="15" ry="17"/>
+            <g class="iris">
+              <circle class="iris-ring" cx="141" cy="127" r="8.6"/>
+              <circle class="iris-core" cx="141" cy="127" r="7.2"/>
+              <circle class="pupil" cx="141" cy="127" r="3.4"/>
+              <circle class="hi hi-big" cx="137.6" cy="123" r="3.2"/>
+              <circle class="hi hi-small" cx="144.6" cy="130.4" r="1.5"/>
+            </g>
+            <ellipse class="lid lid-open" cx="141" cy="126" rx="15.6" ry="17.6"/>
+            <ellipse class="lid lid-blink l blink" cx="141" cy="126" rx="15.6" ry="17.6"/>
+            <path class="happy-arc" d="M128 131Q141 115 154 131"/>
+            <path class="wink-arc" d="M129 128Q141 137 153 128"/>
+          </g>
+
+          <!-- sobrancelhas -->
+          <path class="brow brow-l" d="M85 104Q98 95 112 101"/>
+          <path class="brow brow-r" d="M128 101Q142 95 155 104"/>
+
+          <!-- bocas (uma opacidade por variável) -->
+          <g class="mouth">
+            <path class="m m-smile" d="M101 157Q120 177 139 157"/>
+            <path class="m m-sad" d="M104 170Q120 154 136 170"/>
+            <path class="m m-flat" d="M106 163H134"/>
+            <g class="m m-o">
+              <ellipse cx="120" cy="165" rx="10.5" ry="12.5" fill="#2a1f4d"/>
+              <ellipse cx="120" cy="171" rx="6" ry="4" fill="#ff7a92"/>
+            </g>
+            <g class="m m-open">
+              <path d="M99 157Q120 163 141 157Q139 186 120 188Q101 186 99 157Z" fill="#2a1f4d"/>
+              <path d="M103 159Q120 164 137 159L136 166Q120 170 104 166Z" fill="#f4eeff"/>
+              <path d="M107 178Q120 170 133 178Q131 186 120 187Q109 186 107 178Z" fill="#ff7a92"/>
+            </g>
+          </g>
+        </g>
+
+        <!-- boina (copa grande caída para a esquerda, aro fino, aba curta à esquerda) -->
+        <g class="hat">
+          <path class="hat-crown" d="M52 84C42 60 84 40 126 42C166 44 186 60 178 84Z"/>
+          <path class="hat-hi" d="M74 60Q98 48 126 48"/>
+          <path class="hat-rim" d="M62 80H178Q186 80 186 86Q186 92 178 92H62Q54 92 54 86Q54 80 62 80Z"/>
+          <path class="hat-visor" d="M40 92Q36 81 48 81H76L74 93Z"/>
+          <circle class="hat-button" cx="124" cy="43" r="5"/>
+        </g>
+      </g>
+
+      <!-- braço ESQUERDO do espectador (carimbo) · ombro em (70,186) -->
+      <g transform="translate(70 186)"><g class="arm arm-l">
+        <path class="limb" d="M0 0V30"/>
+        <g transform="translate(0 30)"><g class="fore fore-l">
+          <path class="limb limb-fore" d="M0 0V28"/>
+          <g transform="translate(0 28)"><g class="hand hand-l">
+            <g class="up up-l">
+              <!-- carimbo -->
+              <g class="prop prop-stamp">
+                <g class="stamp-press">
+                  <rect class="stamp-neck" x="-5" y="-26" width="10" height="34" rx="4"/>
+                  <ellipse class="stamp-knob" cx="0" cy="-27" rx="10" ry="7.5"/>
+                  <rect class="stamp-base" x="-20" y="6" width="40" height="13" rx="3.5"/>
+                  <rect class="stamp-pad" x="-20" y="15" width="40" height="4.5" rx="1.5"/>
+                  <path class="stamp-check" d="M-5 11.5l3.2 3.2 6.4-6.4" />
+                </g>
+                <ellipse class="stamp-ring" cx="0" cy="19.5" rx="22" ry="6"/>
+              </g>
+            </g>
+            <circle class="glove" r="11.5"/>
+            <circle class="glove-hi" cx="-4" cy="-4" r="3"/>
+            <path class="finger finger-l" d="M0 6V24"/>
+          </g></g>
+        </g></g>
+      </g></g>
+
+      <!-- braço DIREITO do espectador (prancheta / varinha) · ombro em (170,186) -->
+      <g transform="translate(170 186)"><g class="arm arm-r">
+        <path class="limb" d="M0 0V30"/>
+        <g transform="translate(0 30)"><g class="fore fore-r">
+          <path class="limb limb-fore" d="M0 0V28"/>
+          <g transform="translate(0 28)"><g class="hand hand-r">
+            <g class="up up-r">
+              <!-- prancheta -->
+              <g class="prop prop-clip">
+                <rect class="clip-board" x="-4" y="-10" width="54" height="68" rx="6"/>
+                <rect class="clip-clip" x="10" y="-17" width="26" height="13" rx="4.5"/>
+                <rect class="clip-clip2" x="15" y="-14" width="16" height="4" rx="2"/>
+                <path class="clip-line" d="M6 12H42"/>
+                <path class="clip-line" d="M6 24H30"/>
+                <path class="clip-line" d="M6 36H38"/>
+                <path class="clip-check" d="M9 49l6 6 14-14"/>
+              </g>
+              <!-- varinha de luz -->
+              <g class="prop prop-wand">
+                <path class="wand-stick" d="M-2 6L20 -30"/>
+                <circle class="wand-glow" cx="22" cy="-33" r="14"/>
+                <path class="wand-spark l twinkle" d="M22 -47Q22 -33 36 -33Q22 -33 22 -19Q22 -33 8 -33Q22 -33 22 -47Z"/>
+              </g>
+            </g>
+            <circle class="glove" r="11.5"/>
+            <circle class="glove-hi" cx="-4" cy="-4" r="3"/>
+            <path class="finger finger-r" d="M0 6V24"/>
+          </g></g>
+        </g></g>
+      </g></g>
+    </g>
+  </svg>
+</template>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>stub · Pitch Halor render</title>
+<!--
+  Página mínima que implementa a API do motor (window.HALOR_PITCH) para testar o harness
+  pitch/render/render.mjs de ponta a ponta, sem o pitch real:
+
+    /opt/node22/bin/node pitch/render/render.mjs --in pitch/render/stub.html --out pitch/out/stub.mp4 --workers 2 --fps 30
+    /opt/node22/bin/node pitch/render/render.mjs --in pitch/render/stub.html --sheet pitch/out/stub-sheet.png --every 500
+
+  Desenha um relógio/contador e um retângulo que anda com t (sem rAF). Também simula o campo de
+  partículas "com estado": o contador `passos` só avança a cada seek, então um harness que pulasse
+  ou reordenasse quadros mostraria `passos` ≠ `quadro`, e um seek para trás dispara console.error.
+-->
+<style>
+  :root { --void: #07040f; --lumen: #f4eeff; --neon: #a970ff; --violet: #7c4dff; --mono: ui-monospace, "JetBrains Mono", "DejaVu Sans Mono", monospace; }
+  html, body { margin: 0; height: 100%; background: #000; color: var(--lumen); font-family: "Instrument Sans", "Inter", system-ui, sans-serif; overflow: hidden; }
+  .pitch { position: fixed; inset: 0; display: grid; place-items: center; }
+  .stage { position: relative; width: 1920px; height: 1080px; background: var(--void); transform-origin: center; overflow: hidden; }
+  .grid { position: absolute; inset: 0; background-image: linear-gradient(#ffffff0d 1px, transparent 1px), linear-gradient(90deg, #ffffff0d 1px, transparent 1px); background-size: 120px 120px; }
+  .kicker { position: absolute; left: 96px; top: 84px; font: 500 22px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--neon); }
+  .clock { position: absolute; left: 96px; top: 150px; font: 700 180px/1 var(--mono); letter-spacing: -.04em; }
+  .ms { position: absolute; left: 100px; top: 360px; font: 500 36px/1 var(--mono); color: #b9aee0; }
+  .meta { position: absolute; left: 100px; top: 430px; font: 500 28px/1.6 var(--mono); color: #8f82b8; }
+  .meta b { color: var(--lumen); font-weight: 600; }
+  .track { position: absolute; left: 96px; right: 96px; top: 760px; height: 160px; border: 2px dashed #3a2d5c; border-radius: 24px; }
+  .box { position: absolute; left: 0; top: 0; width: 200px; height: 156px; border-radius: 22px; background: linear-gradient(135deg, var(--neon), var(--violet)); box-shadow: 0 0 60px #a970ff80; display: grid; place-items: center; font: 700 44px/1 var(--mono); color: var(--void); }
+  .dial { position: absolute; right: 120px; top: 110px; width: 520px; height: 520px; }
+  .dial circle { fill: none; stroke: #2a2140; stroke-width: 6; }
+  .dial .hand { stroke: var(--neon); stroke-width: 14; stroke-linecap: round; }
+  .dial .dot { fill: var(--lumen); stroke: none; }
+  .tick { position: absolute; right: 120px; top: 650px; width: 520px; text-align: center; font: 500 26px/1 var(--mono); color: #8f82b8; }
+  .err { position: absolute; left: 96px; bottom: 60px; font: 600 28px/1 var(--mono); color: #ff5c7a; display: none; }
+  .err.on { display: block; }
+</style>
+</head>
+<body>
+<div class="pitch" id="pitch">
+  <div class="stage" id="stage">
+    <div class="grid"></div>
+    <div class="kicker">stub · render harness · halor</div>
+    <div class="clock" id="clock">00:00.00</div>
+    <div class="ms" id="ms">t = 0 ms</div>
+    <div class="meta" id="meta"></div>
+    <svg class="dial" viewBox="0 0 520 520" aria-hidden="true">
+      <circle cx="260" cy="260" r="240"/>
+      <line id="hand" class="hand" x1="260" y1="260" x2="260" y2="40"/>
+      <circle class="dot" cx="260" cy="260" r="16"/>
+    </svg>
+    <div class="tick">1 volta = 1 s</div>
+    <div class="track"><div class="box" id="box">0</div></div>
+    <div class="err" id="err"></div>
+  </div>
+</div>
+<script>
+(() => {
+  const Q = new URLSearchParams(location.search);
+  const RENDER = Q.get('render') === '1';
+  const FPS = +Q.get('fps') || 30;
+  const DURATION = 4000;
+  const $ = s => document.querySelector(s);
+  const stage = $('#stage'), pitch = $('#pitch');
+
+  // escala o palco 1920×1080 para caber na janela (como o motor real)
+  const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transform = `scale(${k})`; };
+  addEventListener('resize', fit); fit();
+
+  // estado "de campo": só avança a cada seek (como o campo de partículas em modo render)
+  let T = 0, steps = 0, lastT = -Infinity, errors = 0;
+  const pad = (n, w = 2) => String(n).padStart(w, '0');
+
+  function seek(t) {
+    t = Math.max(0, Math.min(DURATION, +t || 0));
+    if (t < lastT - 1e-6) { errors++; console.error(`stub: seek fora de ordem (${lastT} → ${t})`); $('#err').textContent = `seek fora de ordem ×${errors}`; $('#err').classList.add('on'); }
+    lastT = t; T = t; steps++;
+    const s = Math.floor(t / 1000), cs = Math.floor((t % 1000) / 10);
+    const frame = Math.round(t * FPS / 1000);
+    $('#clock').textContent = `${pad(Math.floor(s / 60))}:${pad(s % 60)}.${pad(cs)}`;
+    $('#ms').textContent = `t = ${t.toFixed(1)} ms`;
+    $('#meta').innerHTML = `quadro <b>${frame}</b> · fps <b>${FPS}</b> · passos nesta página <b>${steps}</b> · início <b>${Q.get('t') || 0}</b> · render <b>${RENDER ? 'sim' : 'não'}</b>`;
+    const box = $('#box'); const span = 1920 - 192 - 200;
+    box.style.transform = `translateX(${(t / DURATION) * span}px)`;
+    box.textContent = frame;
+    const a = (t / 1000) * 2 * Math.PI; // uma volta por segundo
+    $('#hand').setAttribute('x2', (260 + 220 * Math.sin(a)).toFixed(2));
+    $('#hand').setAttribute('y2', (260 - 220 * Math.cos(a)).toFixed(2));
+    pitch.style.setProperty('--t', t);
+  }
+
+  const start = Q.has('t') ? +Q.get('t') : 0;
+  // ao carregar em ?t=X o motor real avança o campo até X; aqui emulamos: passos = quadro inicial
+  steps = Math.round(start * FPS / 1000);
+  const ready = (async () => { try { await document.fonts.ready; } catch (e) {} seek(start); steps = Math.round(start * FPS / 1000); return true; })();
+
+  window.HALOR_PITCH = {
+    get t() { return T; }, duration: DURATION, ready, seek,
+    play() {}, pause() {}, toggle() {}, replay() { seek(0); }, next() {}, prev() {}, setMuted() {},
+  };
+})();
+</script>
+</body>
+</html>

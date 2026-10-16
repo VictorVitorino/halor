@@ -1,0 +1,171 @@
+/* ==========================================================================
+   BIA · aparência e articulação da mascote (lê só variáveis numéricas; nada de transition)
+   Host: <div class="bia" data-pose="idle" data-face="happy" style="--x:…; --y:…; --s:1"> (template clonado dentro).
+   Convenções (contract.md · Mascote):
+   · --arm-l/--arm-r, --fore-l/--fore-r em graus: 0 = braço caído, negativo = levanta PARA FORA, positivo = cruza para dentro.
+   · --lean graus (positivo = topo inclina para a direita do espectador), --hop px (0..-40), --squash 0..1.
+   · rosto: --brow-l/--brow-r (-1 franzida … 1 erguida), --brow-ang (graus; positivo = pontas internas descem, decidida;
+     negativo = pontas internas sobem, preocupada), --eye-x/--eye-y (-1..1), --eye-open, --eye-happy, --wink (olho direito fecha),
+     --eye-glow (íris neon), --mouth-smile/--mouth-open/--mouth-flat/--mouth-o/--mouth-sad, --cheek, --glow (0..1).
+   · props: --p-stamp, --p-clip, --p-ring, --p-wand (0..1), --stamp-press (0..1), --ring-y (px, centro do anel no viewBox),
+     --point-l/--point-r (dedo apontando), --wave (balanço do antebraço direito), --sway (gingado de caminhar).
+   · relógio: loops (piscar, respirar, acenar, gingar) andam por --t herdado; --lph desloca a fase por instância.
+   ========================================================================== */
+@property --wv { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --sw { syntax: '<number>'; inherits: true; initial-value: 0; }
+@property --bb { syntax: '<number>'; inherits: true; initial-value: 0; }
+
+.bia {
+  position: absolute; left: var(--x, 0px); top: var(--y, 0px);
+  width: calc(240px * var(--s, 1)); transform: translate(-50%, -100%);
+  pointer-events: none; user-select: none;
+  /* · defaults = pose idle + rosto happy + sem props · */
+  --arm-l: -18; --arm-r: -10; --fore-l: 80; --fore-r: 100; --lean: 0; --hop: 0; --squash: 0;
+  --wave: 0; --sway: 0; --point-l: 0; --point-r: 0; --stamp-press: 0; --ring-y: 90;
+  --brow-l: 0; --brow-r: 0; --brow-ang: 4; --eye-x: 0; --eye-y: 0; --eye-open: 1; --eye-happy: 0; --wink: 0; --eye-glow: 0;
+  --mouth-smile: 1; --mouth-open: 0; --mouth-flat: 0; --mouth-o: 0; --mouth-sad: 0; --cheek: .6; --glow: 0;
+  --p-stamp: 0; --p-clip: 0; --p-ring: 0; --p-wand: 0;
+}
+.bia-svg {
+  display: block; width: 100%; height: auto; overflow: visible;
+  /* loops auxiliares (acenar / gingar): valores -1..1 que as poses multiplicam por --wave / --sway */
+  animation: bia-loop 900ms ease-in-out infinite; animation-play-state: paused;
+  animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
+}
+@keyframes bia-loop {
+  0%   { --wv: -1; --sw: -1; --bb: 0; }
+  25%  { --bb: 1; }
+  50%  { --wv: 1;  --sw: 1;  --bb: 0; }
+  75%  { --bb: 1; }
+  100% { --wv: -1; --sw: -1; --bb: 0; }
+}
+
+/* · corpo inteiro: pulo, inclinação, squash (origem no centro da base, 120,270) · */
+.bia .rig {
+  transform-box: view-box; transform-origin: 120px 270px;
+  transform:
+    translateY(calc((var(--hop) + var(--sway) * var(--bb) * -5) * 1px))
+    rotate(calc((var(--lean) + var(--sway) * var(--sw) * 3) * 1deg))
+    scale(calc(1 + var(--squash) * .16), calc(1 - var(--squash) * .2));
+}
+/* · respiração (2,6 s) no tronco, origem na base · */
+.bia .torso {
+  transform-box: view-box; transform-origin: 120px 270px;
+  animation: bia-breathe 2600ms ease-in-out infinite; animation-play-state: paused;
+  animation-delay: calc((var(--lph, 0) - var(--t, 0)) * 1ms);
+}
+@keyframes bia-breathe { 0%, 100% { transform: scale(1, 1); } 50% { transform: scale(.992, 1.022); } }
+
+/* · sombra: encolhe e clareia quando ela sobe · */
+.bia .shadow {
+  fill: url(#bia-g-shadow);
+  transform-box: view-box; transform-origin: 120px 300px;
+  transform: scale(calc(1 + var(--hop) / 130));
+  opacity: calc(1 + var(--hop) / 80);
+}
+.pitch[data-world="night"] .bia .shadow, .bia.night .shadow { fill: url(#bia-g-shadow-night); }
+
+/* · brilho neon em volta · */
+.bia .glow { fill: #8b3dff; filter: url(#bia-f-soft); opacity: calc(var(--glow) * .85); }
+
+/* · corpo · */
+.bia .body { fill: url(#bia-g-body); }
+.bia .body-side { fill: url(#bia-g-body-side); }
+.bia .sheen { fill: none; stroke: url(#bia-g-sheen); stroke-width: 9; stroke-linecap: round; opacity: .9; }
+.bia .sheen-dot { fill: #fff; opacity: .5; }
+
+/* · selo Halor · */
+.bia .seal circle { fill: #6421d1; stroke: rgba(244, 238, 255, .28); stroke-width: 1.5; }
+
+/* · rosto · */
+.bia .cheek { fill: #ff9ad5; opacity: calc(var(--cheek) * .42); }
+.bia .eye .white { fill: #f4eeff; }
+.bia .eye .eye-glow { fill: url(#bia-g-eyeglow); opacity: var(--eye-glow); }
+.bia .eye .iris { transform: translate(calc(var(--eye-x) * 5px), calc(var(--eye-y) * 4px)); }
+.bia .iris-ring { fill: #8b3dff; }
+.bia .iris-core { fill: color-mix(in srgb, #5a35a8 calc(100% - var(--eye-glow) * 100%), #c9a6ff); }
+.bia .pupil { fill: color-mix(in srgb, #2a1f4d calc(100% - var(--eye-glow) * 100%), #ffffff); }
+.bia .hi { fill: #ffffff; }
+.bia .lid { fill: #8b3dff; transform-box: fill-box; transform-origin: 50% 0; }
+.bia .lid-open { transform: scaleY(calc(1 - var(--eye-open))); }
+.bia .eye-r .lid-open { transform: scaleY(calc(1 - var(--eye-open) * (1 - var(--wink)))); }
+.bia .lid-blink { --ldur: 3400; transform: scaleY(0); animation-fill-mode: both; }   /* usa .l.blink do motor (scaleY 0→1 por ~100 ms a cada 3,4 s); fora do loop fica recolhida */
+.bia .eye .white, .bia .eye .iris, .bia .eye .lid, .bia .eye .eye-glow { opacity: calc(1 - var(--eye-happy)); }
+.bia .eye .eye-glow { opacity: calc(var(--eye-glow) * (1 - var(--eye-happy))); }
+.bia .happy-arc { fill: none; stroke: #171030; stroke-width: 5.5; stroke-linecap: round; opacity: var(--eye-happy); }
+.bia .wink-arc { fill: none; stroke: #171030; stroke-width: 5; stroke-linecap: round; opacity: calc(var(--wink) * (1 - var(--eye-happy))); }
+
+.bia .brow { fill: none; stroke: #171030; stroke-width: 6.5; stroke-linecap: round; transform-box: fill-box; transform-origin: 50% 50%; }
+.bia .brow-l { transform: translateY(calc(var(--brow-l) * -7px)) rotate(calc(var(--brow-ang) * 1deg)); }
+.bia .brow-r { transform: translateY(calc(var(--brow-r) * -7px)) rotate(calc(var(--brow-ang) * -1deg)); }
+
+.bia .m { transform-box: fill-box; transform-origin: 50% 50%; }
+.bia .m-smile, .bia .m-sad, .bia .m-flat { fill: none; stroke: #f4eeff; stroke-width: 5.5; stroke-linecap: round; }
+.bia .m-smile { opacity: var(--mouth-smile); transform: scale(calc(.55 + .45 * var(--mouth-smile))); }
+.bia .m-sad   { opacity: var(--mouth-sad);   transform: scale(calc(.55 + .45 * var(--mouth-sad))); }
+.bia .m-flat  { opacity: var(--mouth-flat);  transform: scale(calc(.55 + .45 * var(--mouth-flat))); }
+.bia .m-o     { opacity: var(--mouth-o);     transform: scale(calc(.45 + .55 * var(--mouth-o))); }
+.bia .m-open  { opacity: var(--mouth-open);  transform: scale(calc(.5 + .5 * var(--mouth-open))); }
+
+/* · boina · */
+.bia .hat-crown { fill: url(#bia-g-hat); }
+.bia .hat-rim { fill: #1b1238; }
+.bia .hat-visor { fill: #130c28; }
+.bia .hat-hi { fill: none; stroke: #c9a6ff; stroke-width: 2.4; stroke-linecap: round; opacity: .35; }
+.bia .hat-button { fill: #a970ff; }
+
+/* · braços (ombro em 0,0 de cada grupo; cotovelo em 0,0 do .fore; mão em 0,0 do .hand) · */
+.bia .limb { fill: none; stroke: #7a2ef0; stroke-width: 17; stroke-linecap: round; }
+.bia .limb-fore { stroke: #7430e6; }
+.bia .arm, .bia .fore, .bia .hand, .bia .up { transform-box: view-box; transform-origin: 0px 0px; }
+.bia .arm-l  { transform: rotate(calc((var(--arm-l) + var(--sway) * var(--sw) * -9) * -1deg)); }
+.bia .arm-r  { transform: rotate(calc((var(--arm-r) + var(--sway) * var(--sw) *  9) *  1deg)); }
+.bia .fore-l { transform: rotate(calc(var(--fore-l) * -1deg)); }
+.bia .fore-r { transform: rotate(calc((var(--fore-r) + var(--wave) * var(--wv) * 18) * 1deg)); }
+/* os props ficam sempre "em pé": desfaz a rotação acumulada do braço */
+.bia .up-l { transform: rotate(calc((var(--arm-l) + var(--fore-l)) * 1deg)); }
+.bia .up-r { transform: rotate(calc((var(--arm-r) + var(--fore-r) + var(--wave) * var(--wv) * 18) * -1deg)); }
+.bia .glove { fill: #c9a6ff; }
+.bia .glove-hi { fill: #fff; opacity: .55; }
+.bia .finger { fill: none; stroke: #c9a6ff; stroke-width: 9.5; stroke-linecap: round; }
+.bia .finger-l { opacity: var(--point-l); transform: scaleY(calc(.3 + .7 * var(--point-l))); transform-box: view-box; transform-origin: 0px 0px; }
+.bia .finger-r { opacity: var(--point-r); transform: scaleY(calc(.3 + .7 * var(--point-r))); transform-box: view-box; transform-origin: 0px 0px; }
+
+/* · props na mão · */
+.bia .prop { transform-box: view-box; transform-origin: 0px 0px; }
+.bia .prop-stamp { opacity: var(--p-stamp); transform: scale(calc(.75 + .5 * var(--p-stamp))); }
+.bia .prop-clip  { opacity: var(--p-clip);  transform: scale(calc(.6 + .4 * var(--p-clip))); }
+.bia .prop-wand  { opacity: var(--p-wand);  transform: scale(calc(.6 + .4 * var(--p-wand))); }
+
+.bia .stamp-press { transform: translateY(calc(var(--stamp-press) * 7px)); }
+.bia .stamp-neck { fill: #171030; }
+.bia .stamp-knob { fill: #2a1f4d; }
+.bia .stamp-base { fill: url(#bia-g-stamp); }
+.bia .stamp-pad { fill: #6421d1; }
+.bia .stamp-check { fill: none; stroke: #f4eeff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+.bia .stamp-ring {
+  fill: none; stroke: #a970ff; stroke-width: 3; filter: url(#bia-f-neon);
+  transform-box: fill-box; transform-origin: 50% 50%;
+  transform: scale(calc(.25 + var(--stamp-press) * 1.6));
+  opacity: calc(var(--stamp-press) * (1 - var(--stamp-press)) * 4);
+}
+
+.bia .clip-board { fill: #f4eeff; stroke: #d9c7ff; stroke-width: 1.5; }
+.bia .clip-clip { fill: #2a1f4d; }
+.bia .clip-clip2 { fill: #5a35a8; }
+.bia .clip-line { fill: none; stroke: #a69cc4; stroke-width: 4; stroke-linecap: round; }
+.bia .clip-check { fill: none; stroke: #8b3dff; stroke-width: 4.5; stroke-linecap: round; stroke-linejoin: round; }
+
+.bia .wand-stick { fill: none; stroke: #2a1f4d; stroke-width: 5.5; stroke-linecap: round; }
+.bia .wand-glow { fill: url(#bia-g-eyeglow); }
+.bia .wand-spark { fill: #8b3dff; stroke: #f4eeff; stroke-width: 1.5; stroke-linejoin: round; filter: url(#bia-f-neon); transform-box: fill-box; transform-origin: 50% 50%; }
+
+/* · anel de luz (portal) · */
+.bia .ring-pos { transform: translate(120px, calc(var(--ring-y) * 1px)); opacity: var(--p-ring); }
+.bia .ring { transform-box: fill-box; transform-origin: 50% 50%; transform: scale(calc(.5 + .5 * var(--p-ring))); }
+.bia .ring-arc { fill: none; stroke: #a970ff; stroke-width: 6; stroke-linecap: round; filter: url(#bia-f-neon); }
+.bia .ring-in { fill: none; stroke: #c9a6ff; stroke-width: 1.5; opacity: .35; }
+.bia .ring-spark { fill: #f4eeff; filter: url(#bia-f-neon); transform-box: fill-box; transform-origin: 50% 50%; }
+
+/* · loop twinkle (faíscas) · se o motor não estiver carregado, fica parado · */
+.bia .twinkle { animation-play-state: paused; }

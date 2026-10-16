@@ -78,7 +78,7 @@
   --sh-paper-2: 0 10px 30px -12px rgba(23, 17, 43, .18), 0 2px 6px rgba(23, 17, 43, .05);
   --sh-paper-3: 0 30px 70px -20px rgba(58, 20, 120, .28), 0 4px 12px rgba(23, 17, 43, .06);
 
-  /* · Movimento · herda a curva do Canteiro, agora com nome · */
+  /* · Movimento · a curva da marca, com nome · */
   --ease-halo: cubic-bezier(.22, .61, .36, 1);
   --ease-spark: cubic-bezier(.34, 1.56, .64, 1);
   --t-fast: 120ms; --t-base: 240ms; --t-slow: 480ms; --t-cine: 900ms;

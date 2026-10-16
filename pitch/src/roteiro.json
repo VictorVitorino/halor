@@ -1,0 +1,543 @@
+{
+  "title": "Pitch Halor",
+  "subtitle": "Faça cada olhar render.",
+  "version": 2,
+  "mascot": {
+    "name": "Bia",
+    "role": "a inteligência do Halor",
+    "label": "BIA · IA DO HALOR"
+  },
+  "voice": "Narração em português do Brasil, calorosa, frases curtas. Terceira pessoa (a narradora apresenta o Halor e a Bia). O produto é o sujeito; a Bia é as mãos da cena.",
+  "notes": [
+    "Regra da marca: o Halor fala de capturar e manter a atenção da plateia, não de vendas ou propostas.",
+    "Nunca usar travessão nem meia-risca. Vírgula, ponto, dois-pontos ou 'a'.",
+    "Nada do produto anterior nem da metáfora da obra: tudo nasce da luz e do olhar.",
+    "O anel do símbolo nunca fecha: a abertura é o significado. Vale para o portal da cena 10 e para a cadeia da cena 5.",
+    "Carimbo da Bia, três tempos: preparo (ergue), batida (squash), onda de luz. Só quando um slide ganha vida ou uma etapa termina (cenas 2, 3, 5, 9, 10, 12, 13).",
+    "Sincronia: fichas, selos e pílulas pipocam na palavra destacada (hl) da legenda, nunca antes.",
+    "Tempos em ms: ajustados ao áudio da narração (pitch/audio/narration.mp3)."
+  ],
+  "scenes": [
+    {
+      "id": "s1",
+      "n": 1,
+      "kicker": "cena 1 · o começo",
+      "chip": "O primeiro olhar",
+      "world": "night",
+      "field": true,
+      "from": 0,
+      "to": 7660,
+      "visual": [
+        "0 a 3 s: só o Campo Halor: um ponto de luz nasce no centro, o halo da marca pulsa e as partículas se espalham e se ligam.",
+        "3 s (em 'olhar'): no escuro acendem pares de olhos, em semicírculo, todos olhando para o centro.",
+        "3,5 s: desce o slide com carinha (slide-face). À direita, o medidor 'ATENÇÃO', cheio.",
+        "5,5 s: os olhos vagam, um por vez: um desce para um celular, um fecha com 'z', um vira para o lado. O medidor cai até 30 %. O slide-face fica preocupado.",
+        "8 s (gag): o slide-face dá dois pulinhos para chamar os olhos. Um par volta, olha por meio segundo e fecha de novo."
+      ],
+      "lines": [
+        {
+          "id": "A",
+          "at": 1600,
+          "text": "Toda apresentação começa com um olhar.",
+          "hl": [
+            "olhar"
+          ]
+        },
+        {
+          "id": "B",
+          "at": 4160,
+          "text": "O difícil é fazer esse olhar ficar.",
+          "hl": [
+            "ficar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s2",
+      "n": 2,
+      "kicker": "cena 2 · a chegada",
+      "chip": "Halor e a Bia",
+      "world": "night",
+      "field": true,
+      "from": 7660,
+      "to": 14760,
+      "visual": [
+        "0 a 1,5 s: o símbolo se forma das partículas: faísca, anel aberto, anel interno, núcleo. Onda de luz da marca.",
+        "2,3 s (em 'Halor!'): o wordmark 'halor' entra grande, com o sobretítulo em mono 'APRESENTAÇÕES VIVAS EM HTML' e a linha neon.",
+        "4 s: a Bia sobe do chão num quique com squash e stretch, acena.",
+        "5,5 s (em 'inteligência'): ela carimba o ar e a pílula 'BIA · IA DO HALOR' aparece carimbada, com onda de luz.",
+        "7 s: faísca no olho; pose orgulhosa."
+      ],
+      "lines": [
+        {
+          "id": "C",
+          "at": 7960,
+          "text": "Por isso, apresento a vocês... o Halor!",
+          "hl": [
+            "Halor"
+          ]
+        },
+        {
+          "id": "D",
+          "at": 10920,
+          "text": "E esta é a Bia, a inteligência do Halor.",
+          "hl": [
+            "Bia",
+            "inteligência"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s3",
+      "n": 3,
+      "kicker": "cena 3 · o que ele faz",
+      "chip": "Slide vivo",
+      "world": "night",
+      "field": false,
+      "from": 14760,
+      "to": 25860,
+      "visual": [
+        "0 a 2 s: três slides cinzas caem e empilham à esquerda. A Bia olha de lado, sobrancelha franzida.",
+        "3 s (gag): ela sopra: a pilha vira partículas de luz que voam.",
+        "4 s: aos pés dela acende a faixa de inserção em miniatura (caixa de luz com o símbolo). Saem quatro fichas, uma por palavra: Ideia, Imagem, Movimento, Interação. Voam em curva até um slide escuro à direita.",
+        "8 s (em 'experiências'): o slide acende por partes: título, barras, votação. Halo em volta.",
+        "10 s: a Bia carimba o canto: ✓ e onda de luz. Etiqueta '87 % da sala votou'."
+      ],
+      "lines": [
+        {
+          "id": "E",
+          "at": 15060,
+          "text": "O Halor não empilha slides. Ele faz muito mais!",
+          "hl": [
+            "empilha",
+            "muito mais"
+          ]
+        },
+        {
+          "id": "F",
+          "at": 18420,
+          "text": "Ele conecta ideia, imagem, movimento e interação,",
+          "hl": [
+            "ideia",
+            "imagem",
+            "movimento",
+            "interação"
+          ]
+        },
+        {
+          "id": "G",
+          "at": 22180,
+          "text": "para transformar slides em experiências.",
+          "hl": [
+            "experiências"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s4",
+      "n": 4,
+      "kicker": "cena 4 · por que funciona",
+      "chip": "A primeira impressão",
+      "world": "night",
+      "field": false,
+      "from": 25860,
+      "to": 32700,
+      "visual": [
+        "0 s: placa 'EFEITO HALO' no alto, com 'Thorndike · 1920'.",
+        "0,8 s: dois slides flutuam sobre pedestais de luz: COMUM (cinza, só tópicos) e VIVO (título forte, gráfico, brilho). Entre eles, ≠ em neon.",
+        "2 s: três pares de olhos acendem embaixo; olham primeiro para o COMUM, depois viram para o VIVO.",
+        "4,5 s (em 'colore'): o halo do VIVO se expande e lava a cena. A placa ganha o R: 'EFEITO HALOR'. Selos: Capricho, Clareza, Confiança, Lembrança.",
+        "6,5 s: nota mono '50 ms · o primeiro olhar decide'. A Bia pisca."
+      ],
+      "lines": [
+        {
+          "id": "H",
+          "at": 26160,
+          "text": "Por que isso importa? Pelo efeito halo:",
+          "hl": [
+            "efeito halo"
+          ]
+        },
+        {
+          "id": "I",
+          "at": 28880,
+          "text": "a primeira impressão colore tudo o que vem depois.",
+          "hl": [
+            "primeira impressão",
+            "tudo"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s5",
+      "n": 5,
+      "kicker": "cena 5 · a cadeia",
+      "chip": "Da faísca ao valor que fica",
+      "world": "night",
+      "field": false,
+      "from": 32700,
+      "to": 43440,
+      "visual": [
+        "0 s: trilho de luz com quatro placas: 1 FAÍSCA, 2 ATENÇÃO, 3 CONFIANÇA, 4 VALOR (que fica). Cada placa com a sua parte do símbolo apagada.",
+        "0,5 s: o slide-face feliz entra no trilho e desliza de estação em estação. A Bia flutua ao lado.",
+        "1 s: FAÍSCA acende. 3 s: ATENÇÃO acende, o anel aberto se desenha e para antes de fechar. 5,5 s: CONFIANÇA, o anel interno.",
+        "7,5 s: VALOR acende, o núcleo. As quatro partes se juntam acima do trilho: o símbolo completo, com o vão aberto. Chuva de partículas.",
+        "9 s: a Bia carimba o ✓ no slide. Onda de luz. O slide sai pela direita com o halo."
+      ],
+      "lines": [
+        {
+          "id": "J",
+          "at": 33000,
+          "text": "O primeiro olhar é a faísca.",
+          "hl": [
+            "faísca"
+          ]
+        },
+        {
+          "id": "K",
+          "at": 35000,
+          "text": "O visual prende a atenção. A participação forma a confiança.",
+          "hl": [
+            "atenção",
+            "confiança"
+          ]
+        },
+        {
+          "id": "L",
+          "at": 39400,
+          "text": "E a confiança vira lembrança: o valor que fica.",
+          "hl": [
+            "lembrança",
+            "valor que fica"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s6",
+      "n": 6,
+      "kicker": "cena 6 · depois da sala",
+      "chip": "Onde o olhar ficou",
+      "world": "night",
+      "field": false,
+      "from": 43440,
+      "to": 52160,
+      "visual": [
+        "0 a 1,5 s: um notebook no centro mostra o último slide; a tampa fecha devagar. A Bia boceja.",
+        "1,5 s (em 'continua'): um celular acende à direita e vibra; o link 'halor.app/kickoff-2027' abre com o slide em movimento. Os olhos da Bia abrem com faísca.",
+        "3,5 s (em 'qualquer tela'): entra o cartão do Painel Halor: 'Onde o olhar ficou', barras de tempo por slide (slide 3 mais quente, 41 s), 'Índice Halor 84', rótulo 'LINK HALOR MEDIDO'.",
+        "5,5 s (em 'olhar ficou'): notificação 'Lia abriu seu link · 41 s no slide 3'. A Bia risca a prancheta e olha com orgulho."
+      ],
+      "lines": [
+        {
+          "id": "M",
+          "at": 43740,
+          "text": "A apresentação termina. A atenção continua.",
+          "hl": [
+            "termina",
+            "continua"
+          ]
+        },
+        {
+          "id": "N",
+          "at": 46780,
+          "text": "O link abre em qualquer tela. E o Painel Halor mostra onde o olhar ficou.",
+          "hl": [
+            "qualquer tela",
+            "Painel Halor",
+            "olhar ficou"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s7",
+      "n": 7,
+      "kicker": "cena 7 · dez anos",
+      "chip": "2016 → hoje",
+      "world": "night",
+      "field": false,
+      "from": 52160,
+      "to": 64500,
+      "visual": [
+        "0 s: '10 ANOS' grande no centro. Trilho de tempo com 2016 · 2020 · 2024 · 2026. A Bia à esquerda puxa a fita de luz.",
+        "2 s: 2016 · Slides estáticos: pilha com cadeado e 'PDF em anexo'. A Bia com tédio.",
+        "4 s: 2020 · Tela compartilhada: slide com cursores (Ana, Rui) e 'Link copiado'.",
+        "6,5 s: 2024 · Gerado por IA: prompt, 'Pronto em 8 s · 12 slides parados'. A Bia faz 'hmm'.",
+        "8,5 s: 2026 · Halor, HTML vivo e lúdico: o slide vivo com votação e o símbolo acima. A Bia abre o sorriso.",
+        "10,5 s (em 'próximo passo'): 'PRÓXIMO PASSO · a apresentação que conversa': balão da Bia dentro do slide: 'O T3 prendeu a sala. Quer ver?' e 'Atenção ao vivo 92 %'."
+      ],
+      "lines": [
+        {
+          "id": "O",
+          "at": 52460,
+          "text": "Nos últimos dez anos,",
+          "hl": [
+            "dez anos"
+          ]
+        },
+        {
+          "id": "P",
+          "at": 53980,
+          "text": "dos slides estáticos à tela compartilhada.",
+          "hl": [
+            "estáticos",
+            "tela compartilhada"
+          ]
+        },
+        {
+          "id": "Q",
+          "at": 57180,
+          "text": "Da inteligência artificial ao HTML vivo.",
+          "hl": [
+            "inteligência artificial",
+            "HTML vivo"
+          ]
+        },
+        {
+          "id": "R",
+          "at": 60460,
+          "text": "E o próximo passo: uma apresentação que conversa com você.",
+          "hl": [
+            "próximo passo",
+            "conversa"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s8",
+      "n": 8,
+      "kicker": "cena 8 · o estúdio",
+      "chip": "Familiar como PowerPoint",
+      "world": "paper",
+      "field": false,
+      "from": 64500,
+      "to": 72500,
+      "visual": [
+        "0 s (transição): a Bia puxa um cordão de luz no canto direito. Clique: a tela acende em branco a partir do cordão (varredura radial). Mundo Papel.",
+        "0,6 s: entra a janela do Estúdio Halor: barra do topo, faixa de inserção (Texto · Formas · Imagem · Gráficos · Cards · Efeitos · Votação), miniaturas, canvas, inspetor.",
+        "1,5 s: balões: 'Miniaturas', 'Faixa de inserção', 'Canvas'.",
+        "4 s (em 'animação'): o cursor arrasta o efeito 'Brilho' da faixa para o título; o título entra com varredura de luz e faísca. Chip 'Efeito aplicado'.",
+        "5,5 s (em 'sem programar'): chip 'sem código'. A cabeça da Bia sobe pela borda da janela como periscópio e desce."
+      ],
+      "lines": [
+        {
+          "id": "S",
+          "at": 65300,
+          "text": "Agora, conheça o Estúdio Halor: familiar como PowerPoint,",
+          "hl": [
+            "Estúdio Halor",
+            "familiar"
+          ]
+        },
+        {
+          "id": "T",
+          "at": 69300,
+          "text": "com animação e interação, sem programar.",
+          "hl": [
+            "animação",
+            "interação",
+            "sem programar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s9",
+      "n": 9,
+      "kicker": "cena 9 · para quem apresenta",
+      "chip": "Do zero ou de um modelo",
+      "world": "paper",
+      "field": false,
+      "from": 72500,
+      "to": 84540,
+      "visual": [
+        "0 s: dois cartões: 'Nova apresentação' (+) e 'Modelos prontos'.",
+        "1,8 s (em 'modelo'): 'Modelos prontos' abre em leque de quatro miniaturas: Kickoff, Resultados, Aula, Lançamento, uma por palavra. O cartão 'Nova' sai pela esquerda.",
+        "3,5 s: o leque recua para o fundo. Fichas pipocam, uma por palavra: kit de marca, gráficos, votação, post-its, 40 efeitos.",
+        "5 s: um slide sobe no centro e se monta: título no kit de marca, gráfico cresce, votação preenche, post-it cai torto.",
+        "7 s (gag): a Bia endireita o post-it com um peteleco. Carimba o ✓ com onda de luz."
+      ],
+      "lines": [
+        {
+          "id": "U",
+          "at": 72800,
+          "text": "Comece do zero ou escolha um modelo: kickoff, resultados, aula, lançamento.",
+          "hl": [
+            "do zero",
+            "modelo",
+            "kickoff",
+            "resultados",
+            "aula",
+            "lançamento"
+          ]
+        },
+        {
+          "id": "V",
+          "at": 78320,
+          "text": "Combine kit de marca, gráficos, votação, post-its e 40 efeitos.",
+          "hl": [
+            "kit de marca",
+            "gráficos",
+            "votação",
+            "post-its",
+            "40 efeitos"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s10",
+      "n": 10,
+      "kicker": "cena 10 · importar",
+      "chip": "PPTX e PDF viram HTML",
+      "world": "paper",
+      "field": false,
+      "from": 84540,
+      "to": 91780,
+      "visual": [
+        "0 s: um PPTX e um PDF (carinhas sonolentas, 'z') entram pela esquerda, flutuando.",
+        "1 s: a Bia ergue acima da cabeça o anel ABERTO do símbolo, com o vão no mesmo ângulo do logo. Os braços tremem com o esforço.",
+        "3 s (em 'Importe'): os arquivos atravessam o plano do anel, se espreguiçam e saem do outro lado como um slide vivo: 'Plano 2027'. Varredura de luz antes → depois.",
+        "6 s: a Bia solta o anel, que se dissolve em partículas, e carimba o selo 'HTML · editável'."
+      ],
+      "lines": [
+        {
+          "id": "W",
+          "at": 84840,
+          "text": "Já tem um PowerPoint ou PDF?",
+          "hl": [
+            "PowerPoint",
+            "PDF"
+          ]
+        },
+        {
+          "id": "X",
+          "at": 87080,
+          "text": "Importe, e ele vira HTML vivo e editável.",
+          "hl": [
+            "HTML vivo",
+            "editável"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s11",
+      "n": 11,
+      "kicker": "cena 11 · exportar",
+      "chip": "HTML · PDF · PPTX",
+      "world": "paper",
+      "field": false,
+      "from": 91780,
+      "to": 96540,
+      "visual": [
+        "0 s: só a barra do topo do Estúdio, no alto, como a fenda de uma torradeira.",
+        "0,8 s (gag): três arquivos pulam da fenda como torradas, um por palavra: HTML (brilhando), PDF, PPTX.",
+        "2,5 s: PDF e PPTX caem nos braços da Bia; o HTML flutua acima dela com halo. Ela olha para cima, admirada."
+      ],
+      "lines": [
+        {
+          "id": "Y",
+          "at": 92080,
+          "text": "Exporte em HTML vivo, PDF ou PowerPoint.",
+          "hl": [
+            "HTML vivo",
+            "PDF",
+            "PowerPoint"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s12",
+      "n": 12,
+      "kicker": "cena 12 · antes de apresentar",
+      "chip": "Raio Halor",
+      "world": "night",
+      "field": false,
+      "from": 96540,
+      "to": 105620,
+      "visual": [
+        "0 s (transição): a Bia puxa o cordão de novo: as luzes apagam, volta o mundo Noite. Só os olhos dela acendem.",
+        "1 s: um slide grande sobe no centro ('Resultados do T3'). Rótulo mono 'MAPA DE ATENÇÃO PREVISTO'. Os olhos da Bia viram o feixe do Raio Halor, que varre o slide.",
+        "2 s: a trilha do olhar se desenha: paradas 1, 2, 3 ligadas por uma linha de luz (título, barra mais alta, chamada final).",
+        "3,5 s (em 'Ajuste'): medidor 'Índice Halor 84 · quanto o slide prende o olhar' e o chip 'Aumente o contraste do título'. O título fica mais forte; o índice sobe a 91.",
+        "5,5 s: os feixes apagam; a Bia carimba o ✓ no canto do slide. Onda de luz."
+      ],
+      "lines": [
+        {
+          "id": "Z",
+          "at": 97440,
+          "text": "E antes de apresentar, o Raio Halor mostra por onde o olhar vai passar.",
+          "hl": [
+            "Raio Halor",
+            "olhar"
+          ]
+        },
+        {
+          "id": "AA",
+          "at": 102080,
+          "text": "Ajuste na hora, antes do primeiro olhar.",
+          "hl": [
+            "Ajuste",
+            "primeiro olhar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s13",
+      "n": 13,
+      "kicker": "cena 13 · fecho",
+      "chip": "",
+      "world": "night",
+      "field": true,
+      "from": 105620,
+      "to": 117400,
+      "visual": [
+        "0 s: o Campo Halor volta com uma onda da marca. Símbolo grande e wordmark 'halor' no centro.",
+        "0,5 s (em 'Menos slide parado'): a pílula 'MENOS SLIDE PARADO' entra pela esquerda; em 'Mais olhar que fica', a pílula 'MAIS OLHAR QUE FICA' entra pela direita, em neon.",
+        "3,5 s (em 'Grátis'): 'halor.app · Plano Faísca grátis para sempre' em mono grande.",
+        "6 s (em 'Halor.'): a Bia entra pelo canto inferior direito e dá a carimbada final no ar: o ✓ de luz sobe e encaixa no núcleo do símbolo, que pulsa.",
+        "7 s: callback: os pares de olhos da cena 1 reacendem em volta do wordmark, todos olhando para o símbolo. O que dormia abre devagar.",
+        "8 s (em 'olhar render'): a tagline 'Faça cada olhar render.' entra embaixo do wordmark. As partículas respiram."
+      ],
+      "lines": [
+        {
+          "id": "AC",
+          "at": 105920,
+          "text": "Menos slide parado. Mais olhar que fica.",
+          "hl": [
+            "Menos slide parado",
+            "Mais olhar que fica"
+          ]
+        },
+        {
+          "id": "AD",
+          "at": 109040,
+          "text": "Grátis para sempre no plano Faísca, em halor.app.",
+          "hl": [
+            "Grátis para sempre",
+            "plano Faísca",
+            "halor.app"
+          ]
+        },
+        {
+          "id": "AB",
+          "at": 113040,
+          "text": "Halor. Faça cada olhar render.",
+          "hl": [
+            "Halor",
+            "olhar render"
+          ]
+        }
+      ]
+    }
+  ]
+}

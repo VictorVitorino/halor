@@ -1,0 +1,46 @@
+<!-- CENA 9 · Do zero ou de um modelo · papel -->
+<section class="scene s9" id="s9" data-world="paper">
+  <!-- cartões de início -->
+  <div class="kx x-left" style="--out: 1900; --xdur: 400; left: 0; top: 0">
+    <div class="s9-card k up" style="--in: 100; left: 430px; top: 250px">
+      <span class="s9-plus">+</span><b>Nova apresentação</b><small>Do zero, já no seu kit de marca</small>
+    </div>
+  </div>
+  <div class="kx s9-fan-x" style="--out: 5700; --xdur: 500; left: 0; top: 0">
+    <div class="s9-card s9-card-models k up" style="--in: 300; left: 1050px; top: 250px">
+      <span class="s9-grid"><i></i><i></i><i></i><i></i></span><b>Modelos prontos</b><small>Cada um com os efeitos certos</small>
+    </div>
+    <!-- leque de modelos, um por palavra: kickoff, resultados, aula, lançamento -->
+    <div class="s9-fan" style="left: 960px; top: 300px; --stag: 770">
+      <div class="s9-model k s9-deal" style="--in: 2460; --i: 0; --rx: -540px; --rr: -8deg"><i class="s9-cover"></i><b>Kickoff</b><em class="mono">time</em></div>
+      <div class="s9-model k s9-deal" style="--in: 2460; --i: 1; --rx: -180px; --rr: -3deg"><i class="s9-cover c2"></i><b>Resultados</b><em class="mono">diretoria</em></div>
+      <div class="s9-model k s9-deal" style="--in: 2460; --i: 2; --rx: 180px; --rr: 3deg"><i class="s9-cover c4"></i><b>Aula</b><em class="mono">sala de aula</em></div>
+      <div class="s9-model k s9-deal" style="--in: 2460; --i: 3; --rx: 540px; --rr: 8deg"><i class="s9-cover c5"></i><b>Lançamento</b><em class="mono">evento</em></div>
+    </div>
+  </div>
+
+  <!-- fichas de componentes, uma por palavra: kit de marca, gráficos, votação, post-its, 40 efeitos -->
+  <div class="s9-fichas" style="left: 160px; top: 150px; --stag: 920">
+    <div class="fich paper k pop" style="--in: 6300; --i: 0; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="8" r="2.5"/><circle cx="14" cy="7" r="2.5"/><circle cx="17.5" cy="13" r="2.5"/><path d="M5 18h14"/></svg></i>kit de marca</div>
+    <div class="fich paper k pop" style="--in: 6300; --i: 1; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i>gráficos</div>
+    <div class="fich paper k pop" style="--in: 6300; --i: 2; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></i>votação</div>
+    <div class="fich paper k pop" style="--in: 6300; --i: 3; position: static"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 4.5h14v9.5l-5 5H5z"/><path d="M14 19v-5h5"/></svg></i>post-its</div>
+    <div class="fich paper k pop" style="--in: 6300; --i: 4; position: static"><i><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></i>40 efeitos</div>
+  </div>
+
+  <!-- o slide sobe e se monta, peça por palavra -->
+  <div class="slide paper live s9-build k s9-rise" style="--in: 6000; --dur: 700; left: 560px; top: 300px; width: 800px; padding: 44px 50px">
+    <p class="sl-k k fade" style="--in: 6300">Resultados do trimestre</p>
+    <p class="sl-t k up" style="--in: 6500; font-size: 48px">Crescemos <em>2×</em> em leitura completa</p>
+    <div class="s9-cols">
+      <div class="sl-bars" style="height: 150px; --stag: 120"><i class="k grow-y" style="--v:.34; --in: 7340; --i: 0"></i><i class="k grow-y" style="--v:.45; --in: 7340; --i: 1"></i><i class="k grow-y" style="--v:.57; --in: 7340; --i: 2"></i><i class="hot k grow-y" style="--v:.9; --in: 7340; --i: 3"></i></div>
+      <div class="sl-vote k fade" style="--in: 8220; align-self: end"><div><span>Produto</span><i><b class="k grow-x" style="--v:.62; --in: 8300; --dur: 700"></b></i><b>62 %</b></div><div><span>Design</span><i><b class="k grow-x" style="--v:.28; --in: 8450; --dur: 700"></b></i><b>28 %</b></div></div>
+    </div>
+    <div class="s9-postit k s9-fall" style="--in: 9100; --dur: 700"><span class="k s9-flick" style="--in: 10300; --dur: 500; display: block">Falar do T3 primeiro!</span></div>
+    <svg class="s8-spark k pop" style="--in: 9980; left: 560px; top: 60px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+    <span class="s3-check k pop" style="--in: 11300; --dur: 420"><svg><use href="#i-check"/></svg></span>
+    <i class="s3-wave k s3-ring" style="--in: 11300; --dur: 900"></i>
+  </div>
+
+  <div class="bia" data-pose="present" data-face="happy" data-props="stamp" data-keys="1980:pose=point-right,face=wow;6300:pose=point-left,face=happy;7000:face=happy,pose=idle;9400:face=oops;10100:pose=point-left,face=think,dur=200;10900:pose=stamp,face=proud,dur=250;11300:pose=stamp-down,dur=140;11800:pose=idle" style="--x: 1560px; --y: 960px; --s: .95"></div>
+</section>
