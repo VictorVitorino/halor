@@ -13,7 +13,7 @@ function boot() {
   bindAuth();
   bindCheckout();
   renderBrand();
-  Film.init();
+  Pitch.init();
   subHooks.apresentar = startStage;
   subHooks.admin = renderAdmin;
   subHooks.editor = renderEditor;

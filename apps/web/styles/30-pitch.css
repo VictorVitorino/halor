@@ -1,0 +1,32 @@
+/* ==========================================================================
+   VÍDEO · Conheça o Halor (pitch narrado, 1 min 46 s)
+   Pôster com o anel e o Campo Halor do próprio vídeo; o play mora dentro do anel.
+   Ao tocar, ficam os controles nativos do navegador (teclado, legenda, tela cheia).
+   ========================================================================== */
+.pitch {
+  position: relative; margin: 0; aspect-ratio: 16 / 9; border-radius: var(--r-xl); overflow: hidden; isolation: isolate;
+  background: var(--halor-void); container-type: inline-size;
+  border: 1px solid rgba(201, 166, 255, .22);
+  box-shadow: 0 60px 140px -60px rgba(139, 61, 255, .75), 0 0 0 1px rgba(0, 0, 0, .5);
+}
+.pitch-video { display: block; width: 100%; height: 100%; object-fit: cover; background: var(--halor-void); }
+.pitch-poster {
+  position: absolute; inset: 0; z-index: 1; display: grid; place-items: center;
+  background: radial-gradient(70% 80% at 50% 47%, transparent 35%, rgba(7, 4, 15, .5));
+  transition: opacity .5s var(--ease-halo), visibility 0s linear .5s;
+}
+.pitch-play { transform: translateY(-3%); }
+.pitch-play:hover { transform: translateY(-3%) scale(1.06); }
+.pitch[data-state="playing"] .pitch-poster, .pitch[data-state="paused"] .pitch-poster { opacity: 0; visibility: hidden; pointer-events: none; }
+.pitch-cap { position: absolute; left: clamp(14px, 3cqw, 32px); bottom: clamp(14px, 3cqw, 32px); display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 12px; border-radius: var(--r-pill); background: rgba(14, 8, 32, .72); border: 1px solid rgba(201, 166, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.pitch-k { font-family: var(--f-display); font-weight: 600; font-size: 14px; color: var(--halor-lumen); letter-spacing: -.01em; }
+.pitch-k::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 8px; vertical-align: 2px; background: var(--halor-neon); box-shadow: 0 0 10px var(--halor-neon); }
+.pitch-d { font-size: 11.5px; color: var(--halor-ash); letter-spacing: .04em; }
+.pitch[data-state="ended"] .pitch-d::before { content: "Assistir de novo · "; }
+@media (max-width: 560px) { .pitch { border-radius: var(--r-lg); } .pitch-cap { left: 10px; bottom: 10px; gap: 6px; padding: 4px 9px 4px 8px; } .pitch-k { font-size: 11px; } .pitch-k::before { width: 5px; height: 5px; margin-right: 6px; } .pitch-d { display: none; } }
+/* o botão de play reaproveita o estilo do filme anterior */
+.film-bigplay { width: 10cqw; height: 10cqw; min-width: 56px; min-height: 56px; border-radius: 50%; border: 0; background: var(--halor-violet); color: #fff; display: grid; place-items: center; cursor: pointer; box-shadow: 0 0 0 1.2cqw rgba(139, 61, 255, .22), 0 0 0 2.6cqw rgba(139, 61, 255, .1), 0 0 6cqw rgba(169, 112, 255, .9); transition: transform var(--t-base) var(--ease-spark), box-shadow var(--t-base); animation: pitchBreathe 3.2s ease-in-out infinite; }
+.film-bigplay svg { width: 40%; height: 40%; margin-left: 8%; }
+.film-bigplay:focus-visible { outline: 3px solid var(--halor-lumen); outline-offset: 4px; }
+@keyframes pitchBreathe { 50% { box-shadow: 0 0 0 1.8cqw rgba(139, 61, 255, .18), 0 0 0 3.6cqw rgba(139, 61, 255, .06), 0 0 8cqw rgba(169, 112, 255, 1); } }
+@media (prefers-reduced-motion: reduce) { .film-bigplay { animation: none; } }

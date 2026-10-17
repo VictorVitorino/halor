@@ -1,5 +1,5 @@
-import Film from '@/components/film/Film';
 import Planos from '@/components/commerce/Planos';
+import PitchVideo from '@/components/pitch/PitchVideo';
 import Cover from '@/components/site/Cover';
 import Efeito from '@/components/site/Efeito';
 import Faq from '@/components/site/Faq';
@@ -18,7 +18,7 @@ export default function SitePage() {
       <main id="conteudo">
         <section className="s-hero" id="topo">
           <Cover />
-          <Film />
+          <PitchVideo />
         </section>
         <Efeito />
         <Produto />

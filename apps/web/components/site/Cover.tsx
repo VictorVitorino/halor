@@ -37,7 +37,7 @@ export default function Cover() {
               <use href="#i-play" />
             </svg>
             {' '}Conheça o Halor{' '}
-            <span className="s-dur">(1 min 28 s)</span>
+            <span className="s-dur">(1 min 46 s)</span>
           </button>
         </div>
       </div>
