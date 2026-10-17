@@ -1,0 +1,16 @@
+/* ---------- CENA 9 · 50 milissegundos ---------- */
+.dial { width: 460px; height: 460px; }
+.dial svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.dial .num { position: absolute; left: 0; right: 0; top: 150px; text-align: center; font-family: var(--f-display); font-weight: 700; font-size: 150px; letter-spacing: -.05em; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+.dial .num small { font-size: 52px; color: var(--halor-violet-700); margin-left: 6px; letter-spacing: -.02em; }
+.dial .cap { position: absolute; left: 0; right: 0; top: 320px; text-align: center; font-family: var(--f-mono); font-size: 16px; letter-spacing: .2em; text-transform: uppercase; color: var(--mute); }
+.cite { font-family: var(--f-mono); font-size: 15px; letter-spacing: .12em; color: var(--mute); }
+.cite b { color: var(--ink); font-weight: 600; }
+.mini-easel { width: 640px; height: 470px; }
+.mini-easel .ea-board { width: 600px; height: 340px; }
+.mini-easel .leg { position: absolute; bottom: 0; width: 10px; height: 160px; border-radius: 5px; background: var(--lilac-300); transform-origin: top; }
+.mini-easel .leg.l { left: 120px; transform: rotate(14deg); } .mini-easel .leg.r { right: 120px; transform: rotate(-14deg); }
+.flashw { position: absolute; left: 20px; top: 0; width: 600px; height: 340px; border-radius: 20px; background: #fff; pointer-events: none; }
+.k.flash { animation-name: k-flash; }
+.eyes.paper i { box-shadow: 0 0 0 3px var(--ink), 0 10px 20px -8px rgba(23, 17, 43, .3); }
+.eyes.paper i::after { background: var(--lilac-200); }

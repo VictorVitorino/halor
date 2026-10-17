@@ -10,6 +10,7 @@ e atualiza pitch/src/roteiro.json: `from`/`to` de cada cena e `at` de cada fala.
 
     python3 pitch/render/align.py
 """
+import difflib
 import json
 import pathlib
 import subprocess
@@ -21,8 +22,8 @@ AUDIO = PITCH / "audio"
 ROTEIRO = PITCH / "src" / "roteiro.json"
 
 # respiro antes da primeira palavra (lead) e depois da última (tail) de cada cena, em segundos
-LEAD = {"s1": 1.9, "s2": .5, "s3": .4, "s4": .4, "s5": .4, "s6": .4, "s7": .4, "s8": .9, "s9": .4, "s10": .4, "s11": .5, "s12": .5, "s13": .6}
-TAIL = {"s1": 1.4, "s2": 1.1, "s3": 1.3, "s4": 1.3, "s5": 1.2, "s6": 1.3, "s7": 1.2, "s8": .9, "s9": .9, "s10": 1.1, "s11": .7, "s12": 1.0, "s13": 2.4}
+LEAD = {"s1": 2.6, "s2": .5, "s3": .4, "s4": .4, "s5": .4, "s6": .4, "s7": .4, "s8": 1.1, "s9": .4, "s10": .4, "s11": .4, "s12": .4, "s13": .9}
+TAIL = {"s1": 1.2, "s2": 1.4, "s3": 1.3, "s4": 1.3, "s5": 1.8, "s6": 1.2, "s7": 1.4, "s8": 1.3, "s9": 1.2, "s10": 1.4, "s11": 1.5, "s12": 1.4, "s13": 2.8}
 
 
 def norm(w):
@@ -39,21 +40,36 @@ def main():
     words = [w for w in words if w.get("type", "word") == "word"]
     rot = json.loads(ROTEIRO.read_text(encoding="utf-8"))
 
-    # casa as falas com as palavras, em sequência
-    wi = 0
+    # casa as falas com as palavras da transcrição por alinhamento de sequência (difflib):
+    # tolera número escrito em algarismos, palavra composta separada, pontuação diferente.
+    toks = []                                   # (cena, fala, índice da fala) de cada palavra do roteiro
+    for si, sc in enumerate(rot["scenes"]):
+        for li, ln in enumerate(sc["lines"]):
+            for t in ln["text"].split():
+                if norm(t): toks.append((si, li, akey(t)))
+    tw = [akey(w["text"]) for w in words]
+    sm = difflib.SequenceMatcher(None, [k for _, _, k in toks], tw, autojunk=False)
+    t_of = [None] * len(toks)
+    for blk in sm.get_matching_blocks():
+        for k in range(blk.size):
+            t_of[blk.a + k] = (words[blk.b + k]["start"], words[blk.b + k]["end"])
+    matched = sum(1 for x in t_of if x)
+    print(f"alinhamento: {matched}/{len(toks)} palavras do roteiro casadas com a transcrição")
+    assert matched >= .85 * len(toks), "transcrição muito diferente do roteiro"
+    # palavras sem par: interpola entre os vizinhos casados
+    for i in range(len(toks)):
+        if t_of[i]: continue
+        a = next((t_of[j] for j in range(i - 1, -1, -1) if t_of[j]), (0.0, 0.0))
+        b = next((t_of[j] for j in range(i + 1, len(toks)) if t_of[j]), (a[1] + .4, a[1] + .4))
+        gap = [j for j in range(len(toks)) if not t_of[j]]
+        t_of[i] = (a[1] + .02, max(a[1] + .05, min(b[0] - .02, a[1] + .35)))
     scenes = []
-    for sc in rot["scenes"]:
+    for si, sc in enumerate(rot["scenes"]):
         lines = []
-        for ln in sc["lines"]:
-            toks = [t for t in ln["text"].split() if norm(t)]
-            first = words[wi]
-            for t in toks:
-                assert norm(words[wi]["text"]) == norm(t), (ln["id"], words[wi]["text"], t)
-                wi += 1
-            last = words[wi - 1]
-            lines.append({"id": ln["id"], "start": first["start"], "end": last["end"]})
+        for li, ln in enumerate(sc["lines"]):
+            idx = [i for i, (a, b, _) in enumerate(toks) if a == si and b == li]
+            lines.append({"id": ln["id"], "start": t_of[idx[0]][0], "end": t_of[idx[-1]][1]})
         scenes.append({"id": sc["id"], "speech_start": lines[0]["start"], "speech_end": lines[-1]["end"], "lines": lines})
-    assert wi == len(words), (wi, len(words))
 
     # cortes entre parágrafos: ponto médio do silêncio natural
     cuts = []
@@ -89,7 +105,7 @@ def main():
 
     # grava roteiro e tabela
     by_id = {s["id"]: s for s in timeline}
-    wi = 0
+    ti = 0
     for sc, scn in zip(rot["scenes"], scenes):
         s = by_id[sc["id"]]
         sc["from"] = int(round(s["from"] * 1000)); sc["to"] = int(round(s["to"] * 1000))
@@ -100,12 +116,11 @@ def main():
         for ln in sc["lines"]:
             for t in ln["text"].split():
                 if not norm(t): continue
-                k = akey(t)
-                wd = words[wi]; wi += 1
+                k = akey(t); st, en = t_of[ti]; ti += 1
                 key = k; n = 2
                 while key in w: key = f"{k}{n}"; n += 1
-                w[key] = int(round((wd["start"] + s["offset"] - s["from"]) * 1000))
-                w[key + "-end"] = int(round((wd["end"] + s["offset"] - s["from"]) * 1000))
+                w[key] = int(round((st + s["offset"] - s["from"]) * 1000))
+                w[key + "-end"] = int(round((en + s["offset"] - s["from"]) * 1000))
         sc["w"] = w
     ROTEIRO.write_text(json.dumps(rot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (AUDIO / "timing.json").write_text(json.dumps(timeline, indent=1), encoding="utf-8")

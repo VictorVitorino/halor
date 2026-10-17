@@ -1,38 +1,66 @@
-<!-- CENA 1 · Da proposta ao negócio · abre no escuro com o Campo Halor; a luz abre em círculo e revela o mundo lavanda -->
-<section class="scene s1" id="s1" data-world="paper" data-world-from="night" data-world-at="2600" data-world-cx="960" data-world-cy="560" data-field="1" data-field-until="2800" data-field-entrance="1">
-  <!-- a estrela da oportunidade -->
-  <div class="s1-star k pop" style="--in: var(--w-oportunidade); --dur: 500; left: 230px; top: 290px">
-    <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"><g class="l twinkle"><path d="M60 4v20M60 96v20M4 60h20M96 60h20M20 20l14 14M86 86l14 14M100 20L86 34M34 86L20 100"/></g></svg>
-    <b>O</b>
+<!-- CENA 1 · Este é o Halor · noite: o Campo Halor forma o símbolo; depois a ferramenta já editando, sem código e sem IA -->
+<section class="scene s1" id="s1" data-world="night" data-field="1" data-field-until="6500" data-field-entrance="1">
+  <div class="s1-hero kx" style="--out: calc(var(--w-voce) - 150); --xdur: 450">
+    <svg class="s1-mark" viewBox="0 0 64 64" style="left: 850px; top: 110px; width: 220px; height: 220px; --stag: 260" aria-hidden="true">
+      <path class="k spin-in" style="--in: 700; --i: 0; --dur: 500" d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#ffffff"/>
+      <path class="k draw" style="--in: 700; --i: 1; --dur: 900" pathLength="1" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
+      <circle class="k draw" style="--in: 700; --i: 2; --dur: 800" pathLength="1" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6" opacity=".6"/>
+      <circle class="k pop" style="--in: 700; --i: 3; --dur: 500" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
+    </svg>
+    <h1 class="s1-word k up" style="--in: calc(var(--w-halor) - 250); --dur: 700; top: 355px">halor</h1>
+    <p class="s1-eyebrow k up" style="--in: var(--w-programa); --dur: 500; top: 610px"><span>Programa de apresentações <em>lúdicas</em><i class="s1-band k grow-l" style="--in: var(--w-ludicas); --dur: 700"></i></span></p>
   </div>
-  
-  <!-- trilha, moeda "?", muro e a porta NEGÓCIO -->
-  <div class="s1-path k grow-x" style="--in: var(--w-o); --dur: 900; left: 600px; top: 850px; width: 1000px"></div>
-  <div class="s1-coin k pop" style="--in: var(--w-dificil); --dur: 400; left: 900px; top: 842px">?</div>
-  <div class="s1-wall k up" style="--in: calc(var(--w-dificil) + 350); --dur: 400; left: 1130px; top: 790px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-  <div class="s1-door k up" style="--in: var(--w-transformala); --dur: 600; left: 1500px; top: 470px">
-    <span class="s1-door-sign">Negócio</span>
-    <span class="s1-door-sign lit k fade" style="--in: var(--w-negocio); --dur: 300">Negócio</span>
-    <i class="s1-door-frame"><b class="s1-door-light k fade" style="--in: calc(var(--w-negocio) - 200); --dur: 500"></b></i>
-    <i class="s1-door-halo k fade" style="--in: var(--w-negocio); --dur: 600"></i>
-  </div>
+  <i class="ring k ring-x" style="--in: var(--w-halor); --dur: 1000; left: 960px; top: 450px"></i>
 
-  <!-- a Proposta: nasce em "oportunidade", ganha carinha e pezinhos em "O difícil" e caminha até a porta -->
-  <div class="kx x-shrink" style="--out: calc(var(--w-negocio) + 700); --xdur: 450; left: 0; top: 0">
-    <div class="s1-walker k s1-walk" style="--in: var(--w-o); --dur: calc(var(--w-negocio) - var(--w-o) + 600); left: 660px; top: 520px">
-      <div class="s1-doc k pop" style="--in: calc(var(--w-apresentacao) - 100); --dur: 600">
-        <p class="dt">Proposta</p><i class="dl"></i><i class="dl s"></i>
-        <div class="db"><i style="--v:.45"></i><i style="--v:.7"></i><i class="hot" style="--v:1"></i></div>
-        <svg class="df k fade" style="--in: var(--w-o); --dur: 300" viewBox="0 0 120 70" aria-hidden="true">
-          <ellipse cx="34" cy="26" rx="13" ry="15" fill="#fff" stroke="#17112b" stroke-width="3"/><ellipse cx="86" cy="26" rx="13" ry="15" fill="#fff" stroke="#17112b" stroke-width="3"/>
-          <circle cx="37" cy="29" r="6" fill="#17112b"/><circle cx="89" cy="29" r="6" fill="#17112b"/>
-          <circle cx="39" cy="27" r="2" fill="#fff"/><circle cx="91" cy="27" r="2" fill="#fff"/>
-          <path d="M42 54q18 14 36 0" fill="none" stroke="#17112b" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="16" cy="48" r="7" fill="#ff9ad5" opacity=".6"/><circle cx="104" cy="48" r="7" fill="#ff9ad5" opacity=".6"/>
-        </svg>
-        <div class="legs k fade" style="--in: var(--w-o); --dur: 300"><i class="fl"></i><i class="fr"></i></div>
+  <!-- a ferramenta já em ação -->
+  <div class="s1-win k up" style="--in: var(--w-voce); --dur: 700; left: 600px; top: 200px">
+    <div class="s1-scale">
+      <div class="studio dark-frame" style="left: 0; top: 0">
+        <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Kickoff 2027</span><span class="su-saved">Salvo</span><span class="su-go">Apresentar</span></div>
+        <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span>Gráficos</span><span>Cards</span><span>Personagens</span><span class="k rib-on" style="--in: var(--w-precisar)"><svg><use href="#i-wand"/></svg>Efeitos</span></div>
+        <div class="su-body">
+          <div class="su-rail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
+          <div class="su-canvas">
+            <div class="slide paper">
+              <p class="sl-k">Kickoff 2027</p>
+              <p class="sl-t s1-title"><span class="k type" style="--in: var(--w-constroi); --dur: 700">Plano em <em>12 semanas</em></span><span class="glowt k fade" style="--in: var(--w-precisar); --dur: 400">Plano em <em>12 semanas</em></span></p>
+              <ul><li>Objetivos do trimestre</li><li>Responsáveis por frente</li></ul>
+              <div class="sl-bars" style="height: 90px; --stag: 110"><i class="k grow-y" style="--v:.42; --in: var(--w-tudo); --i: 0"></i><i class="k grow-y" style="--v:.58; --in: var(--w-tudo); --i: 1"></i><i class="k grow-y" style="--v:.74; --in: var(--w-tudo); --i: 2"></i><i class="hot k grow-y" style="--v:.94; --in: var(--w-tudo); --i: 3"></i></div>
+            </div>
+          </div>
+          <div class="su-insp">
+            <p class="in-h">Slide 2 · título</p>
+            <div class="in-row"><span>Fonte</span><b>Sora 600</b></div>
+            <div class="in-row"><span>Cor</span><b>Violeta</b></div>
+            <div class="in-fx k pop" style="--in: var(--w-precisar)"><svg><use href="#i-spark"/></svg>Efeito · Brilho</div>
+            <div class="in-fx ok k pop" style="--in: var(--w-artificial)"><svg><use href="#i-check"/></svg>Feito à mão</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-  <i class="ring k ring-x" style="--in: var(--w-oportunidade); --dur: 900; left: 800px; top: 640px"></i>
+  <!-- cursor: título, gráfico, efeito -->
+  <div class="kx" style="--out: calc(var(--w-artificial) + 900); left: 1100px; top: 700px">
+    <div class="k fade" style="--in: calc(var(--w-voce) + 200); --dur: 200">
+      <div class="k move-xy" style="--in: calc(var(--w-constroi) - 350); --dur: 450; --dx: -200px; --dy: -230px">
+        <div class="k move-xy" style="--in: calc(var(--w-tudo) - 350); --dur: 400; --dx: 180px; --dy: 170px">
+          <div class="k move-xy" style="--in: calc(var(--w-precisar) - 450); --dur: 450; --dx: 420px; --dy: -175px">
+            <svg class="cursor" style="position: absolute; left: 0; top: 0" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <i class="pingc k ping" style="--in: var(--w-constroi); --dur: 600; left: 902px; top: 472px"></i>
+  <i class="pingc k ping" style="--in: var(--w-tudo); --dur: 600; left: 1082px; top: 642px"></i>
+  <i class="pingc k ping" style="--in: var(--w-precisar); --dur: 600; left: 1502px; top: 467px"></i>
+
+  <!-- sem código, sem precisar de IA -->
+  <div class="s1-yes k left" style="--in: var(--w-codigo); left: 100px; top: 330px"><i><svg><use href="#i-check"/></svg></i>Sem código</div>
+  <div class="s1-yes k left" style="--in: var(--w-precisar); left: 100px; top: 430px"><i><svg><use href="#i-check"/></svg></i>Sem precisar de IA</div>
+  <div class="s1-ai k pop" style="--in: var(--w-sem2); left: 100px; top: 560px"><svg><use href="#i-wand"/></svg><span>Descreva sua apresentação para a IA…</span><b>Gerar</b><i class="strike k grow-l" style="--in: var(--w-inteligencia); --dur: 400"></i><em class="nope k pop" style="--in: var(--w-artificial)">não precisa</em></div>
+
+  <div class="k walk-in-l" style="--in: calc(var(--w-voce) - 200); --dur: 800; left: 300px; top: 968px">
+    <div class="bia" data-pose="walk" data-face="happy" data-props="clicker" data-keys="@voce+600:pose=present,face=happy;@codigo:pose=point-right,face=wink;@sem2:pose=think,face=think;@inteligencia:pose=hands-hips,face=proud;@artificial+300:pose=celebrate,face=laugh;@artificial+1200:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .85"></div>
+  </div>
 </section>

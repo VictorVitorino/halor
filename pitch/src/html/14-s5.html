@@ -1,84 +1,75 @@
-<!-- CENA 5 · Impressionar → decidir · esteira com quatro estações; o cartão viaja; a Bia acompanha com o clicker -->
-<section class="scene s5" id="s5" data-world="paper">
-  <div class="rail paper k grow-x" style="--in: 0; --dur: 900; top: 770px; left: 0; right: 0"></div>
-  <i class="s5-wheel k pop" style="--in: 600; left: 140px; top: 760px"></i>
-  <i class="s5-wheel k pop" style="--in: 700; left: 925px; top: 760px"></i>
-  <i class="s5-wheel k pop" style="--in: 800; left: 1710px; top: 760px"></i>
-
-  <div class="s5-stations" style="--stag: 180">
-    <div class="s5-st k down" style="--in: 300; --i: 0; left: 40px">
-      <i class="post"></i>
-      <div class="station">
-        <span class="st-on k fade" style="--in: var(--w-impressionar); --dur: 400"></span>
-        <span class="st-n">1</span>
-        <span class="st-ic k s5-lit" style="--in: var(--w-impressionar)"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: var(--w-impressionar)">Impressionar</span>
-      </div>
-      <div class="s5-prop s5-door k pop" style="--in: calc(var(--w-impressionar) + 150); top: 540px"><i class="k fade" style="--in: calc(var(--w-impressionar) + 400); --dur: 500"></i></div>
+<!-- CENA 5 · PDF e PPT viram frames lúdicos · upload, o Halor identifica cada frame e transforma -->
+<section class="scene s5" id="s5" data-world="night">
+  <!-- upload -->
+  <div class="kx x-shrink" style="--out: calc(var(--w-identifica) - 250); --xdur: 400; left: 0; top: 0">
+    <div class="up-zone k pop" style="--in: 150; --dur: 600; left: 560px; top: 210px">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+      <b>Solte seu PDF ou PowerPoint</b><small>.pdf · .pptx · .html</small>
+      <div class="up-bar"><i class="k grow-l" style="--in: calc(var(--w-upload) + 150); --dur: 1000"></i></div>
+      <p class="up-file k fade" style="--in: var(--w-upload)">apresentacao-antiga.pptx · enviando</p>
     </div>
-    <div class="s5-st k down" style="--in: 300; --i: 1; left: 500px">
-      <i class="post"></i>
-      <div class="station">
-        <span class="st-on k fade" style="--in: var(--w-clareza); --dur: 400"></span>
-        <span class="st-n">2</span>
-        <span class="st-ic k s5-lit" style="--in: var(--w-clareza)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.6 10.8c.6.5 1.1 1.3 1.1 2.2h5c0-.9.5-1.7 1.1-2.2A6 6 0 0 0 12 3z"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: var(--w-clareza)">Entender</span>
-      </div>
-      <div class="s5-prop s5-monitor k pop" style="--in: calc(var(--w-clareza) + 150); top: 540px; --stag: 100"><i class="k grow-y" style="--v:.45; --in: calc(var(--w-entendimento) - 200); --i: 0"></i><i class="k grow-y" style="--v:.7; --in: calc(var(--w-entendimento) - 200); --i: 1"></i><i class="k grow-y" style="--v:.55; --in: calc(var(--w-entendimento) - 200); --i: 2"></i><i class="hot k grow-y" style="--v:1; --in: calc(var(--w-entendimento) - 200); --i: 3"></i></div>
+    <div class="kx x-into" style="--out: var(--w-upload); --xdur: 600; --ix: 170px; left: 690px; top: 300px">
+      <div class="file pdf k fly-in" style="--in: var(--w-pdf); --dur: 700; --fx: -560px; --fy: 60px; --fr: -40deg; --rr: -8deg; position: relative"><i class="fl-prev"></i><span class="fl-tag">PDF</span></div>
     </div>
-    <div class="s5-st k down" style="--in: 300; --i: 2; left: 960px">
-      <i class="post"></i>
-      <div class="station">
-        <span class="st-on k fade" style="--in: var(--w-confianca); --dur: 400"></span>
-        <span class="st-n">3</span>
-        <span class="st-ic k s5-lit" style="--in: var(--w-confianca)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: var(--w-confianca)">Confiar</span>
-      </div>
-      <div class="s5-prop s5-shield k pop" style="--in: calc(var(--w-confianca) + 150); top: 545px"><svg viewBox="0 0 150 170" fill="none"><path d="M75 8l62 24v44c0 44-30 74-62 86-32-12-62-42-62-86V32z" fill="#2a1f4d" stroke="currentColor" stroke-width="8" stroke-linejoin="round"/><path d="M75 30l44 17v31c0 32-22 54-44 64-22-10-44-32-44-64V47z" fill="#5a35a8"/><path class="k draw" style="--in: calc(var(--w-confianca) + 500); --dur: 600" pathLength="1" d="M52 86l17 17 32-34" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1"/></svg></div>
-    </div>
-    <div class="s5-st k down" style="--in: 300; --i: 3; left: 1420px">
-      <i class="post"></i>
-      <div class="station">
-        <span class="st-on k fade" style="--in: var(--w-decisao); --dur: 400"></span>
-        <span class="st-n">4</span>
-        <span class="st-ic k s5-lit" style="--in: var(--w-decisao)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 21V4"/><path d="M6 4h11l-2.5 4L17 12H6"/></svg></span>
-        <span class="st-t k s5-lit" style="--in: var(--w-decisao)">Decidir</span>
-      </div>
-      <div class="s5-prop s5-dashed kx x-shrink" style="--out: calc(var(--w-decisao) - 300); --xdur: 300; top: 560px"></div>
-      <div class="s5-prop s5-btn k pop" style="--in: calc(var(--w-decisao) - 200); top: 640px"><i class="dome k s5-press" style="--in: calc(var(--w-decisao) + 250); --dur: 500"><svg><use href="#i-check"/></svg></i><i class="base"></i></div>
-    </div>
-  </div>
-  <!-- estalos em cada estação -->
-  <i class="ring k ring-x" style="--in: var(--w-impressionar); --dur: 900; left: 220px; top: 260px"></i>
-  <i class="ring k ring-x" style="--in: var(--w-clareza); --dur: 900; left: 680px; top: 260px"></i>
-  <i class="ring k ring-x" style="--in: var(--w-confianca); --dur: 900; left: 1140px; top: 260px"></i>
-  <i class="ring k ring-x" style="--in: var(--w-decisao); --dur: 900; left: 1600px; top: 260px"></i>
-
-  <!-- o cartão da proposta viaja na esteira -->
-  <div class="k s5-ride" style="--in: 300; --dur: calc(var(--w-decisao) + 900); --dx: 2200px; left: -340px; top: 655px">
-    <div class="slide live s5-card" style="left: 0; top: 0">
-      <span class="sl-glow"></span><p class="sl-k">Proposta</p>
-      <div class="sl-bars" style="height: 36px"><i style="--v:.5"></i><i style="--v:.7"></i><i class="hot" style="--v:.95"></i></div>
-      <svg class="sl-face" style="width: 50px; height: 34px; right: 12px; top: 10px" viewBox="0 0 92 60" aria-hidden="true">
-        <ellipse cx="26" cy="22" rx="14" ry="16" fill="#fff"/><ellipse cx="66" cy="22" rx="14" ry="16" fill="#fff"/>
-        <circle cx="29" cy="24" r="6.5" fill="#2a1f4d"/><circle cx="69" cy="24" r="6.5" fill="#2a1f4d"/>
-        <path d="M32 46q14 14 28 0" fill="none" stroke="#f4eeff" stroke-width="4" stroke-linecap="round"/>
-      </svg>
+    <div class="kx x-into" style="--out: calc(var(--w-upload) + 80); --xdur: 600; --ix: -180px; left: 1060px; top: 300px">
+      <div class="file k fly-in" style="--in: var(--w-powerpoint); --dur: 700; --fx: 560px; --fy: 60px; --fr: 40deg; --rr: 8deg; position: relative"><i class="fl-prev"></i><span class="fl-tag">PPTX</span></div>
     </div>
   </div>
 
-  <!-- confete na decisão -->
-  <div class="confetti" style="left: 1600px; top: 560px; --stag: 30">
-    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 0; --dx: -260px; --dy: -190px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 1; --dx: 240px; --dy: -170px"></i>
-    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 2; --dx: -180px; --dy: -320px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 3; --dx: 200px; --dy: -300px"></i>
-    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 4; --dx: -340px; --dy: -60px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 5; --dx: 300px; --dy: -40px"></i>
-    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 6; --dx: -80px; --dy: -380px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 7; --dx: 100px; --dy: -360px"></i>
-    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 8; --dx: -420px; --dy: -240px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 9; --dx: 380px; --dy: -220px"></i>
-    <i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 10; --dx: -140px; --dy: -120px"></i><i class="k fly" style="--in: calc(var(--w-decisao) + 350); --i: 11; --dx: 160px; --dy: -100px"></i>
+  <!-- os frames da apresentação -->
+  <div class="fr-head k fade" style="--in: calc(var(--w-identifica) - 200)">
+    <span class="up-file">apresentacao-antiga.pptx · 4 frames</span>
+    <span style="position: relative">
+      <span class="pill kx" style="--out: var(--w-apresentacao); --xdur: 200">Identificando frames…</span>
+      <span class="pill kx" style="position: absolute; right: 0; top: 0; white-space: nowrap; --out: var(--w-transforma); --xdur: 200"><span class="k fade" style="--in: var(--w-apresentacao); --dur: 200">4 frames identificados ✓</span></span>
+      <span class="pill solid k pop" style="--in: var(--w-envolventes); position: absolute; right: 0; top: 0; white-space: nowrap">4 frames lúdicos ✓</span>
+    </span>
   </div>
+  <div class="frs" style="left: 0; top: 0; --stag: 120">
+    <!-- capa -->
+    <div class="fr k pop" style="--in: calc(var(--w-identifica) - 200); --i: 0; left: 124px; top: 300px">
+      <div class="flip-in k flip-y" style="--in: var(--w-transforma); --dur: 800">
+        <div class="flip-a"><p class="t" style="font-size: 30px; margin-top: 40px">Plano 2027</p><p style="font-size: 15px; margin-top: 8px">Apresentação para a diretoria</p><i style="position: absolute; right: 26px; top: 22px; width: 60px; height: 34px; background: #d7d3e3"></i></div>
+        <div class="flip-b cov"><p class="k1">Kickoff</p><p class="t" style="font-size: 38px; margin-top: 30px">Plano <em>2027</em></p><i class="uline k grow-l" style="--in: var(--w-envolventes); --dur: 700"></i><svg class="mk" viewBox="0 0 64 64"><use class="l pulse" href="#hl-mark"/></svg><span class="dots"><i class="l twinkle" style="left: 300px; top: 150px"></i><i class="l twinkle" style="left: 250px; top: 190px; --lph: 600"></i><i class="l twinkle" style="left: 350px; top: 120px; --lph: 1100"></i></span></div>
+      </div>
+      <i class="det k pop kx" style="--in: calc(var(--w-identifica) + 200); --out: calc(var(--w-transforma) - 100); --xdur: 200"><b>Capa</b></i>
+    </div>
+    <!-- tópicos -->
+    <div class="fr k pop" style="--in: calc(var(--w-identifica) - 200); --i: 1; left: 548px; top: 300px">
+      <div class="flip-in k flip-y" style="--in: calc(var(--w-transforma) + 300); --dur: 800">
+        <div class="flip-a"><p class="t">Objetivos</p><ul><li>Revisar o escopo do projeto</li><li>Definir as fases e as metas</li><li>Combinar os próximos passos</li></ul></div>
+        <div class="flip-b tp"><p class="k1">Objetivos</p><p class="t">Três passos</p><div class="cards"><div><b>1</b><span>Escopo</span></div><div><b>2</b><span>Fases</span></div><div><b>3</b><span>Metas</span></div></div></div>
+      </div>
+      <i class="det k pop kx" style="--in: calc(var(--w-identifica) + 580); --out: calc(var(--w-transforma) + 200); --xdur: 200"><b>Tópicos</b></i>
+    </div>
+    <!-- gráfico -->
+    <div class="fr k pop" style="--in: calc(var(--w-identifica) - 200); --i: 2; left: 972px; top: 300px">
+      <div class="flip-in k flip-y" style="--in: calc(var(--w-transforma) + 600); --dur: 800">
+        <div class="flip-a"><p class="t">Receita por trimestre</p><div class="gb"><i style="--v:.4"></i><i style="--v:.55"></i><i style="--v:.5"></i><i style="--v:.8"></i></div></div>
+        <div class="flip-b gr"><p class="k1">Resultados</p><p class="t">Receita <em>por trimestre</em></p><div class="bars" style="--stag: 100"><i class="k grow-y" style="--v:.4; --in: var(--w-envolventes); --i: 0"></i><i class="k grow-y" style="--v:.55; --in: var(--w-envolventes); --i: 1"></i><i class="k grow-y" style="--v:.5; --in: var(--w-envolventes); --i: 2"></i><i class="hot k grow-y" style="--v:.95; --in: var(--w-envolventes); --i: 3"></i></div><b class="big k pop" style="--in: calc(var(--w-envolventes) + 400)">+32%</b></div>
+      </div>
+      <i class="det k pop kx" style="--in: calc(var(--w-identifica) + 960); --out: calc(var(--w-transforma) + 500); --xdur: 200"><b>Gráfico</b></i>
+    </div>
+    <!-- tabela -->
+    <div class="fr k pop" style="--in: calc(var(--w-identifica) - 200); --i: 3; left: 1396px; top: 300px">
+      <div class="flip-in k flip-y" style="--in: calc(var(--w-transforma) + 900); --dur: 800">
+        <div class="flip-a"><p class="t">Prioridades</p><table><tr><td>Projeto A</td><td>Alto</td><td>Baixo</td></tr><tr><td>Projeto B</td><td>Médio</td><td>Alto</td></tr><tr><td>Projeto C</td><td>Baixo</td><td>Baixo</td></tr></table></div>
+        <div class="flip-b mx"><p class="k1">Prioridades</p><p class="t">Impacto × <em>esforço</em></p><div class="grid"><i class="on"></i><i></i><i></i><i></i></div><i class="bub k pop" style="--in: calc(var(--w-envolventes) + 200); left: 90px; top: 110px"></i><i class="bub k pop" style="--in: calc(var(--w-envolventes) + 350); left: 280px; top: 120px"></i><i class="bub k pop" style="--in: calc(var(--w-envolventes) + 500); left: 140px; top: 180px"></i></div>
+      </div>
+      <i class="det k pop kx" style="--in: calc(var(--w-identifica) + 1340); --out: calc(var(--w-transforma) + 800); --xdur: 200"><b>Tabela</b></i>
+    </div>
+  </div>
+  <div class="beam k beam-x" style="--in: var(--w-identifica); --dur: 1700; left: 40px; top: 262px; height: 300px"></div>
+  <div class="frl" style="left: 0; top: 0; --stag: 120">
+    <p class="fr-lab k up" style="--in: var(--w-ludicos); --i: 0; left: 124px; top: 560px"><b>Capa</b> com luz</p>
+    <p class="fr-lab k up" style="--in: var(--w-ludicos); --i: 1; left: 548px; top: 560px"><b>Tópicos</b> em cards</p>
+    <p class="fr-lab k up" style="--in: var(--w-ludicos); --i: 2; left: 972px; top: 560px"><b>Gráfico</b> animado</p>
+    <p class="fr-lab k up" style="--in: var(--w-ludicos); --i: 3; left: 1396px; top: 560px"><b>Tabela</b> vira matriz</p>
+  </div>
+  <svg class="spark k pop" style="--in: var(--w-ludicos); left: 500px; top: 270px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: calc(var(--w-ludicos) + 150); left: 1360px; top: 520px; width: 30px; height: 30px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: calc(var(--w-ludicos) + 300); left: 940px; top: 260px; width: 34px; height: 34px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
 
-  <!-- a Bia caminha ao lado da esteira com o clicker e reage a cada estação -->
-  <div class="k sway-x" style="--in: 300; --dur: calc(var(--w-decisao) + 500); --dx: 1120px; left: 380px; top: 960px">
-    <div class="bia" data-pose="walk" data-face="happy" data-props="clicker" data-keys="@impressionar:face=wow;@impressionar+700:face=happy;@clareza:face=focus;@entendimento:face=proud;@interatividade:face=wow;@envolvimento:face=happy;@confianca:face=laugh;@chegar:face=focus;@decisao:pose=jump,face=laugh;@decisao+600:pose=celebrate,face=proud;@decisao+1500:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .9"></div>
-  </div>
+  <div class="bia" data-pose="idle" data-face="happy" data-props="lens" data-keys="@pdf:pose=point-right,face=happy;@upload:pose=celebrate,face=laugh;@identifica:pose=lens-look,face=focus,dur=600;@apresentacao+200:pose=idle,face=happy;@transforma:pose=present,face=wow;@ludicos:pose=cheer,face=proud;@envolventes:pose=celebrate,face=laugh;@envolventes+1300:pose=idle,face=happy" style="--x: 150px; --y: 968px; --s: .85"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@powerpoint:pose=think,face=think;@upload:face=wow;@identifica:pose=look-up,face=surprised;@transforma:face=surprised;@envolventes:pose=jump,face=laugh;@envolventes+700:pose=celebrate,face=laugh;@envolventes+1500:pose=idle,face=happy" style="--x: 1770px; --y: 968px; --s: .8"></div>
 </section>

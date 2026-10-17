@@ -3,6 +3,7 @@
 
     python3 pitch/build.py            -> pitch/index.html
     python3 pitch/build.py --out X    -> grava em outro caminho
+    python3 pitch/build.py --only s5 --no-audio --out X  -> só a cena 5 (mais as partes comuns), para trabalhar nela isolada
 
 Ordem: css/*.css, html/*.html e js/*.js em ordem alfabética (o prefixo numérico manda).
 O roteiro (src/roteiro.json) vira `const ROTEIRO = {...}` antes dos scripts.
@@ -12,6 +13,7 @@ Se existir pitch/audio/narration.mp3, a narração também é embutida (data URI
 import base64
 import json
 import pathlib
+import re
 import sys
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -39,8 +41,20 @@ FONT_FACES = [
 ]
 
 
+SCENE_FILE = re.compile(r"^\d\d-(s\d+)\.(html|css)$")
+
+
 def read_all(folder, ext):
-    return "\n".join(p.read_text(encoding="utf-8") for p in sorted((SRC / folder).glob("*" + ext)))
+    """Lê os arquivos em ordem. Com --only s5 (ou --only s5,s6) entram só as cenas pedidas e as partes comuns:
+    cada pessoa trabalha numa cena sem depender do estado das outras."""
+    only = set(sys.argv[sys.argv.index("--only") + 1].split(",")) if "--only" in sys.argv else None
+    files = []
+    for f in sorted((SRC / folder).glob("*" + ext)):
+        m = SCENE_FILE.match(f.name)
+        if only is not None and m and m.group(1) not in only:
+            continue
+        files.append(f.read_text(encoding="utf-8"))
+    return "\n".join(files)
 
 
 def font_css():

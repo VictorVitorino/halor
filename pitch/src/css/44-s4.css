@@ -1,0 +1,16 @@
+/* ---------- CENA 4 · Personagens ---------- */
+.ch-slide { position: relative; width: 680px; height: 383px; border-radius: 10px; background: #fff; box-shadow: var(--sh-paper-3), 0 0 0 1px var(--line); padding: 30px 36px; color: var(--ink); }
+.ch-slide .t { font-family: var(--f-display); font-weight: 600; font-size: 30px; letter-spacing: -.02em; }
+.ch-slide .bars { position: absolute; left: 230px; right: 230px; bottom: 34px; height: 170px; display: flex; align-items: flex-end; gap: 16px; }
+.ch-slide .bars i { flex: 1; height: calc(var(--v) * 100%); border-radius: 6px 6px 2px 2px; background: var(--lilac-300); }
+.ch-slide .bars i.hot { background: linear-gradient(180deg, var(--halor-neon), var(--halor-violet)); }
+.ch-panel { display: grid; gap: 12px; align-content: start; }
+.ch-panel .in-h { margin-bottom: 4px; }
+.ch-card { position: relative; height: 150px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--mist); overflow: hidden; }
+.ch-card span { position: absolute; left: 12px; bottom: 10px; font-weight: 700; font-size: 15px; color: var(--ink); }
+.ch-card small { position: absolute; right: 12px; bottom: 11px; font-family: var(--f-mono); font-size: 11px; letter-spacing: .12em; color: var(--mute); text-transform: uppercase; }
+.ch-card .on { position: absolute; inset: 0; border-radius: 14px; box-shadow: inset 0 0 0 3px var(--halor-violet), 0 0 24px rgba(139, 61, 255, .35); }
+.ch-poses { display: flex; flex-wrap: wrap; gap: 6px; }
+.ch-poses i { font-style: normal; font-size: 12px; font-weight: 700; padding: 5px 10px; border-radius: 999px; background: var(--lilac-50); color: var(--halor-violet-700); }
+.k.s4-fly { animation-name: s4-fly; animation-timing-function: cubic-bezier(.4, 0, .2, 1); }
+@keyframes s4-fly { 0% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.6); } 15% { opacity: 1; } 70% { transform: translate(calc(var(--dx) * .3), calc(var(--dy) * .3 - 120px)) scale(.9); } 100% { opacity: 1; transform: translate(0, 0) scale(1); } }

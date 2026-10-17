@@ -1,0 +1,49 @@
+/* ---------- CENA 5 · PDF e PPT viram frames lúdicos ---------- */
+.up-zone { width: 800px; height: 440px; border-radius: 28px; border: 3px dashed rgba(201, 166, 255, .5); background: rgba(14, 8, 32, .65); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: #fff; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .9); }
+.up-zone > svg { width: 84px; height: 84px; color: var(--halor-neon); }
+.up-zone b { font-family: var(--f-display); font-weight: 600; font-size: 38px; }
+.up-zone small { font-family: var(--f-mono); font-size: 16px; letter-spacing: .2em; text-transform: uppercase; color: var(--halor-ash); }
+.up-bar { position: relative; width: 460px; height: 14px; border-radius: 7px; background: rgba(201, 166, 255, .15); overflow: hidden; margin-top: 18px; }
+.up-bar i { position: absolute; inset: 0; border-radius: 7px; background: linear-gradient(90deg, var(--halor-violet), var(--halor-glow)); transform-origin: left; }
+.up-file { font-family: var(--f-mono); font-size: 15px; letter-spacing: .08em; color: var(--halor-glow); }
+.k.fly-in { animation-name: fly-in; animation-timing-function: cubic-bezier(.2, .8, .3, 1.1); }
+@keyframes fly-in { from { opacity: 0; transform: translate(var(--fx), var(--fy)) rotate(var(--fr)); } to { opacity: 1; transform: translate(0, 0) rotate(var(--rr, 0deg)); } }
+.kx.x-into { animation-name: x-into; animation-timing-function: cubic-bezier(.5, 0, .9, .5); }
+@keyframes x-into { from { opacity: 1; transform: translate(0, 0) scale(1); } to { opacity: 0; transform: translate(var(--ix, 0px), 140px) scale(.25); } }
+.fr-head { left: 124px; right: 124px; top: 200px; display: flex; justify-content: space-between; align-items: center; }
+.fr-head .up-file { font-size: 18px; }
+.fr { position: absolute; width: 400px; height: 225px; perspective: 1300px; }
+.fr .flip-a, .fr .flip-b { border-radius: 14px; overflow: hidden; }
+.fr .flip-a { background: #f2f1f5; color: #6b6680; padding: 22px 26px; font-family: Arial, Helvetica, sans-serif; box-shadow: 0 20px 40px -20px rgba(0, 0, 0, .8); }
+.fr .flip-a .t { font-size: 24px; font-weight: 700; color: #57526b; }
+.fr .flip-a ul { margin: 10px 0 0; padding: 0 0 0 18px; font-size: 15px; line-height: 1.6; }
+.fr .flip-a .gb { position: absolute; left: 26px; right: 26px; bottom: 22px; height: 110px; display: flex; align-items: flex-end; gap: 12px; border-bottom: 2px solid #c7c2d6; }
+.fr .flip-a .gb i { flex: 1; height: calc(var(--v) * 100%); background: #c7c2d6; }
+.fr .flip-a table { margin-top: 10px; width: 100%; border-collapse: collapse; font-size: 13px; }
+.fr .flip-a td { border: 1px solid #c7c2d6; padding: 6px 8px; }
+.fr .flip-b { background: linear-gradient(160deg, #1d1538, #0e0820); color: #fff; padding: 22px 26px; box-shadow: 0 0 0 1.5px rgba(201, 166, 255, .45), 0 0 50px rgba(139, 61, 255, .45); }
+.fr .flip-b .k1 { font-family: var(--f-mono); font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--halor-neon); }
+.fr .flip-b .t { font-family: var(--f-display); font-weight: 600; font-size: 28px; letter-spacing: -.02em; }
+.fr .flip-b .t em { font-style: normal; color: var(--halor-neon); }
+.fr .cov .mk { position: absolute; right: 22px; top: 22px; width: 70px; height: 70px; overflow: visible; filter: drop-shadow(0 0 16px rgba(169, 112, 255, .9)); }
+.fr .cov .uline { width: 150px; height: 5px; border-radius: 3px; margin-top: 10px; background: linear-gradient(90deg, var(--halor-neon), transparent); }
+.fr .cov .dots i { position: absolute; width: 5px; height: 5px; border-radius: 50%; background: var(--halor-glow); box-shadow: 0 0 8px #fff; }
+.fr .tp .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+.fr .tp .cards div { border-radius: 12px; background: rgba(244, 238, 255, .07); border: 1.5px solid rgba(201, 166, 255, .25); padding: 10px; display: grid; gap: 6px; }
+.fr .tp .cards b { width: 30px; height: 30px; border-radius: 50%; background: var(--halor-violet); display: grid; place-items: center; font-family: var(--f-display); font-size: 15px; }
+.fr .tp .cards span { font-weight: 700; font-size: 15px; }
+.fr .gr .bars { position: absolute; left: 26px; right: 120px; bottom: 22px; height: 110px; display: flex; align-items: flex-end; gap: 12px; }
+.fr .gr .bars i { flex: 1; height: calc(var(--v) * 100%); border-radius: 5px 5px 2px 2px; background: linear-gradient(180deg, var(--halor-glow), var(--halor-violet)); transform-origin: bottom; }
+.fr .gr .bars i.hot { background: linear-gradient(180deg, #fff, var(--halor-neon)); box-shadow: 0 0 16px rgba(169, 112, 255, .8); }
+.fr .gr .big { position: absolute; right: 22px; bottom: 30px; font-family: var(--f-display); font-weight: 700; font-size: 34px; color: var(--halor-neon); }
+.fr .mx .grid { position: absolute; left: 26px; right: 26px; top: 70px; bottom: 20px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 6px; }
+.fr .mx .grid i { border-radius: 8px; background: rgba(244, 238, 255, .06); border: 1px solid rgba(201, 166, 255, .2); }
+.fr .mx .grid i.on { background: rgba(139, 61, 255, .4); border-color: var(--halor-neon); }
+.fr .mx .bub { position: absolute; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 0 14px var(--halor-neon); }
+.det { position: absolute; inset: -10px; border-radius: 20px; border: 3px dashed var(--halor-neon); pointer-events: none; }
+.det b { position: absolute; left: 16px; top: -18px; padding: 4px 12px; border-radius: 999px; background: var(--halor-violet); color: #fff; font-family: var(--f-mono); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; white-space: nowrap; }
+.beam { position: absolute; width: 140px; height: 300px; background: linear-gradient(90deg, transparent, rgba(201, 166, 255, .65), rgba(255, 255, 255, .9), rgba(201, 166, 255, .65), transparent); filter: blur(6px); mix-blend-mode: screen; pointer-events: none; }
+.k.beam-x { animation-name: beam-x; animation-timing-function: linear; }
+@keyframes beam-x { 0% { opacity: 0; transform: translateX(0); } 8% { opacity: 1; } 92% { opacity: 1; } 100% { opacity: 0; transform: translateX(1720px); } }
+.fr-lab { position: absolute; width: 400px; text-align: center; font-family: var(--f-mono); font-size: 15px; letter-spacing: .14em; text-transform: uppercase; color: var(--halor-glow); }
+.fr-lab b { color: #fff; font-weight: 600; }

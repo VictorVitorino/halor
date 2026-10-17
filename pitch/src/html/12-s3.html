@@ -1,57 +1,65 @@
-<!-- CENA 3 · Peça por peça · slides cinza caem; a caixa de peças abre e as peças voam até o quadro -->
-<section class="scene s3" id="s3" data-world="paper">
-  <!-- a Bia à esquerda: diz "não" com o dedo, depois apresenta e comemora -->
-  <div class="bia" data-pose="hands-hips" data-face="focus" data-props="tablet" data-keys="@nao:pose=point-right,face=focus;@nao+260:pose=hands-hips;@empilha:pose=point-right;@empilha+260:pose=hands-hips;@slides:pose=point-right;@slides+300:pose=hands-hips;@faz:pose=present,face=happy;@muito:pose=celebrate,face=laugh;@ele3:pose=idle,face=happy;@conecta:pose=point-right,face=wow;@imagens:face=happy;@movimento:face=wow;@para:pose=present,face=proud;@experiencias:pose=jump,face=laugh;@experiencias+700:pose=idle,face=proud" style="--x: 300px; --y: 960px; --s: 1.05"></div>
+<!-- CENA 3 · Mais de 40 efeitos · seis efeitos ao vivo, um por família, acendendo na palavra -->
+<section class="scene s3" id="s3" data-world="night">
+  <div class="s3-head k up" style="--in: var(--w-sao)"><b><span class="num-n k counter" style="--n0: 0; --n1: 40; --in: var(--w-quarenta); --dur: 700"></span></b><span>efeitos e animações</span></div>
 
-  <!-- slides cinza empilhados caem à direita; somem em "faz muito mais" -->
-  <div class="kx x-right s3-pile" style="--out: var(--w-faz); --xdur: 500; left: 0; top: 0; --stag: 260">
-    <div class="slide dull k drop" style="--in: var(--w-empilha); --i: 0; --dur: 700; left: 1060px; top: 230px; rotate: -4deg"><i class="sl-clock"></i><p class="sl-t">Agenda</p><ul><li>Item um</li><li>Item dois</li><li>Item três</li></ul></div>
-    <div class="slide dull k drop" style="--in: var(--w-empilha); --i: 1; --dur: 700; left: 1050px; top: 650px; rotate: 3deg"><i class="sl-clock"></i><p class="sl-t">Resumo</p><ul><li>Ponto</li><li>Ponto</li><li>Ponto</li></ul></div>
-    <div class="slide dull k drop" style="--in: var(--w-empilha); --i: 2; --dur: 700; left: 1030px; top: 630px"><i class="sl-clock"></i><p class="sl-t">Agenda</p><ul><li>Tópico</li><li>Tópico</li><li>Tópico</li></ul></div>
-    <div class="slide dull k drop" style="--in: var(--w-slides); --i: 0; --dur: 700; left: 1010px; top: 610px; rotate: -2deg"><i class="sl-clock"></i><p class="sl-t">Resultados</p><ul><li>Tópico</li><li>Tópico</li><li>Tópico</li></ul></div>
-  </div>
-
-  <!-- caixa de peças (abre em "muito mais") -->
-  <div class="s3-kit k pop" style="--in: calc(var(--w-faz) + 300); --dur: 600; left: 470px; top: 640px">
-    <i class="s3-kit-glow l pulse"></i>
-    <svg viewBox="0 0 300 270" aria-hidden="true"><use href="#p-kit-box"/></svg>
-  </div>
-
-  <!-- quadro no cavalete, à direita (sobe em "conecta") -->
-  <div class="s3-easel k up" style="--in: calc(var(--w-conecta) - 200); --dur: 700; left: 800px; top: 250px">
-    <i class="leg l"></i><i class="leg r"></i><i class="leg c"></i><i class="tray"></i>
-    <div class="s3-board">
-      <p class="bt k type" style="--in: calc(var(--w-ideias) + 900); --dur: 700">Plano de transformação do <em>PMO</em></p>
-      <p class="bk k fade" style="--in: calc(var(--w-ideias) + 1300)">Três fases · 12 semanas</p>
-      <div class="phases" style="--stag: 220">
-        <div class="ph k pop" style="--in: calc(var(--w-imagens) + 900); --i: 0"><i>1</i><span><b>Diagnóstico</b><small>3 semanas</small></span></div>
-        <div class="ph on k pop" style="--in: calc(var(--w-imagens) + 900); --i: 1"><i>2</i><span><b>Desenho do modelo</b><small>5 semanas · agora</small></span></div>
-        <div class="ph k pop" style="--in: calc(var(--w-imagens) + 900); --i: 2"><i>3</i><span><b>Implantação</b><small>4 semanas</small></span></div>
-      </div>
-      <div class="chart k up" style="--in: calc(var(--w-movimento) + 900); --dur: 600">
-        <p class="ch">Maturidade por dimensão (exemplo)</p>
-        <div class="bars" style="--stag: 110"><i class="k grow-y" style="--v:.38; --in: calc(var(--w-ferramentas) + 900); --i: 0"></i><i class="hot k grow-y" style="--v:.55; --in: calc(var(--w-ferramentas) + 900); --i: 1"></i><i class="k grow-y" style="--v:.46; --in: calc(var(--w-ferramentas) + 900); --i: 2"></i><i class="hot k grow-y" style="--v:.72; --in: calc(var(--w-ferramentas) + 900); --i: 3"></i><i class="k grow-y" style="--v:.6; --in: calc(var(--w-ferramentas) + 900); --i: 4"></i><i class="hot k grow-y" style="--v:.9; --in: calc(var(--w-ferramentas) + 900); --i: 5"></i></div>
-      </div>
-      <div class="b12 k pop" style="--in: var(--w-para)"><span>12</span></div>
-      <i class="s3-glow k fade" style="--in: var(--w-experiencias); --dur: 700"></i>
+  <div class="fx-grid" style="left: 0; top: 0; --stag: 90">
+    <!-- Glow / Light Sweep -->
+    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 0; left: 274px; top: 240px">
+      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-movimento); display: grid; place-items: center"><div class="fx-sw sweep">Receita <em>+32%</em><i class="l sweep-x" style="--lph: 0"></i></div></div></div>
+      <div class="fx-cap"><b>Glow · Light Sweep</b><em>movimento</em></div>
+      <i class="fx-on k fade" style="--in: var(--w-movimento)"></i>
     </div>
-    <svg class="cursor k s3-cursor" style="--in: var(--w-transformar); --dur: 1600; left: 640px; top: 330px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+    <!-- Animated Typography -->
+    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 1; left: 740px; top: 240px">
+      <div class="fx-st"><div class="fx-live k fade" style="--in: calc(var(--w-movimento) + 250); display: grid; place-items: center"><div class="fx-ty"><span class="l rise" style="--lph: 0">Prenda</span><span class="l rise" style="--lph: 260">o</span><span class="hl l rise" style="--lph: 520">olhar</span></div></div></div>
+      <div class="fx-cap"><b>Animated Typography</b><em>movimento</em></div>
+      <i class="fx-on k fade" style="--in: calc(var(--w-movimento) + 250)"></i>
+    </div>
+    <!-- Hologram 3D Card -->
+    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 2; left: 1206px; top: 240px">
+      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-profundidade); display: grid; place-items: center; perspective: 700px"><div class="fx-holo l tilt"><div class="card"><small>CARTÃO</small><b>3D</b><small style="margin-top: 26px">holograma</small></div></div></div></div>
+      <div class="fx-cap"><b>Hologram 3D Card</b><em>profundidade</em></div>
+      <i class="fx-on k fade" style="--in: var(--w-profundidade)"></i>
+    </div>
+    <!-- Counter -->
+    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 3; left: 274px; top: 516px">
+      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-dados); display: grid; place-items: center"><div class="fx-cnt">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="48" fill="none" stroke="rgba(201,166,255,.18)" stroke-width="12"/><circle class="k draw" style="--in: var(--w-dados); --dur: 1000" pathLength="1" cx="60" cy="60" r="48" fill="none" stroke="url(#hl-g-ring)" stroke-width="12" stroke-linecap="round" stroke-dasharray="1" transform="rotate(-90 60 60)"/></svg>
+        <b><span class="num-n k counter" style="--n0: 0; --n1: 87; --in: var(--w-dados); --dur: 1000"></span>%</b></div></div></div>
+      <div class="fx-cap"><b>Counter</b><em>dados</em></div>
+      <i class="fx-on k fade" style="--in: var(--w-dados)"></i>
+    </div>
+    <!-- Chart Build -->
+    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 4; left: 740px; top: 516px">
+      <div class="fx-st"><div class="fx-live k fade" style="--in: calc(var(--w-dados) + 250); display: grid; place-items: center"><div class="fx-chart">
+        <div class="bars" style="--stag: 120"><i class="k grow-y" style="--v:.35; --in: calc(var(--w-dados) + 250); --i: 0"></i><i class="k grow-y" style="--v:.55; --in: calc(var(--w-dados) + 250); --i: 1"></i><i class="k grow-y" style="--v:.45; --in: calc(var(--w-dados) + 250); --i: 2"></i><i class="k grow-y" style="--v:.8; --in: calc(var(--w-dados) + 250); --i: 3"></i><i class="k grow-y" style="--v:.95; --in: calc(var(--w-dados) + 250); --i: 4"></i></div>
+        <svg viewBox="0 0 320 140" aria-hidden="true"><path class="k draw" style="--in: calc(var(--w-dados) + 800); --dur: 900" pathLength="1" d="M30 100 L94 72 L158 84 L222 40 L290 18" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1"/></svg>
+      </div></div></div>
+      <div class="fx-cap"><b>Chart Build</b><em>dados</em></div>
+      <i class="fx-on k fade" style="--in: calc(var(--w-dados) + 250)"></i>
+    </div>
+    <!-- Connector / Flow Line -->
+    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 5; left: 1206px; top: 516px">
+      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-narrativa); display: grid; place-items: center"><div class="fx-flow">
+        <svg viewBox="0 0 360 140" aria-hidden="true">
+          <path class="k draw" style="--in: var(--w-narrativa); --dur: 800" pathLength="1" d="M40 100 C 110 100, 110 40, 180 40 S 250 100, 320 100" fill="none" stroke="rgba(201,166,255,.35)" stroke-width="4" stroke-dasharray="1"/>
+          <g class="k fade" style="--in: calc(var(--w-narrativa) + 700)"><path class="l dash" d="M40 100 C 110 100, 110 40, 180 40 S 250 100, 320 100" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="10 8" stroke-linecap="round"/></g>
+        </svg>
+        <span class="nd k pop" style="--in: var(--w-narrativa); left: 40px; top: 100px">1</span><span class="nd k pop" style="--in: calc(var(--w-narrativa) + 250); left: 180px; top: 40px">2</span><span class="nd k pop" style="--in: calc(var(--w-narrativa) + 500); left: 320px; top: 100px">3</span>
+      </div></div></div>
+      <div class="fx-cap"><b>Connector · Flow Line</b><em>narrativa</em></div>
+      <i class="fx-on k fade" style="--in: var(--w-narrativa)"></i>
+    </div>
   </div>
 
-  <!-- rastro e peças que voam da caixa ao quadro, uma por palavra -->
-  <svg class="s3-trail" viewBox="0 0 800 600" style="left: 620px; top: 700px; width: 800px; height: 600px" aria-hidden="true">
-    <path class="k draw" style="--in: var(--w-conecta); --dur: 1400" pathLength="1" d="M0 0 C 120 -420, 420 -560, 760 -400" fill="none" stroke="#8b3dff" stroke-width="4" stroke-dasharray="1" stroke-linecap="round" opacity=".55"/>
-  </svg>
-  <div class="s3-chips" style="left: 560px; top: 640px">
-    <div class="chip k s3-arc" style="--in: var(--w-ideias); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-idea"/></svg></div>
-    <div class="chip k s3-arc" style="--in: calc(var(--w-ideias) + 420); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-text"/></svg></div>
-    <div class="chip k s3-arc" style="--in: var(--w-imagens); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-image"/></svg></div>
-    <div class="chip k s3-arc" style="--in: var(--w-movimento); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-motion"/></svg></div>
-    <div class="chip k s3-arc" style="--in: calc(var(--w-movimento) + 420); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-card"/></svg></div>
-    <div class="chip k s3-arc" style="--in: var(--w-ferramentas); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-fx"/></svg></div>
-    <div class="chip k s3-arc" style="--in: calc(var(--w-ferramentas) + 420); --dur: 1400"><svg viewBox="0 0 96 96"><use href="#p-chip-chart"/></svg></div>
+  <div class="s3-cats k up" style="--in: var(--w-animacoes)">
+    <span class="pw"><span class="pill">Movimento</span><span class="pill on k fade" style="--in: var(--w-movimento); --dur: 250">Movimento</span></span>
+    <span class="pw"><span class="pill">Profundidade</span><span class="pill on k fade" style="--in: var(--w-profundidade); --dur: 250">Profundidade</span></span>
+    <span class="pw"><span class="pill">Dados</span><span class="pill on k fade" style="--in: var(--w-dados); --dur: 250">Dados</span></span>
+    <span class="pw"><span class="pill">Narrativa</span><span class="pill on k fade" style="--in: var(--w-narrativa); --dur: 250">Narrativa</span></span>
+    <span class="pw"><span class="pill">Interatividade</span><span class="pill on k fade" style="--in: var(--w-prontos); --dur: 250">Interatividade</span></span>
   </div>
-  <svg class="spark k pop" style="--in: var(--w-experiencias); left: 1700px; top: 220px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
-  <svg class="spark k pop" style="--in: calc(var(--w-experiencias) + 200); left: 790px; top: 230px; width: 30px; height: 30px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
-  <i class="ring k ring-x" style="--in: var(--w-experiencias); --dur: 900; left: 1280px; top: 500px"></i>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="wand" data-keys="@quarenta:pose=present,face=wow;@movimento:pose=point-right,face=happy;@profundidade:pose=look-up,face=wow;@dados:pose=point-right,face=focus;@narrativa:pose=present,face=proud;@usar:pose=celebrate,face=laugh;@usar+900:pose=idle,face=happy" style="--x: 140px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@quarenta:face=surprised;@profundidade:pose=look-up,face=wow;@dados:pose=hands-hips,face=happy;@usar:pose=jump,face=laugh;@usar+700:pose=idle,face=happy" style="--x: 1780px; --y: 968px; --s: .78"></div>
 </section>

@@ -1,42 +1,47 @@
-<!-- CENA 4 · A primeira impressão · placa EFEITO HALO; dois cavaletes: COMUM e CLARA E ENVOLVENTE; selos -->
-<section class="scene s4" id="s4" data-world="paper">
-  <div class="plate s4-plate k drop" style="--in: 100; --dur: 700; left: 550px; top: 56px">Efeito Halo</div>
-  <i class="ring k ring-x" style="--in: var(--w-efeito); --dur: 900; left: 960px; top: 150px"></i>
-
-  <!-- cavalete COMUM -->
-  <div class="s4-easel k up" style="--in: var(--w-por); --dur: 700; left: 60px; top: 270px">
-    <i class="leg l"></i><i class="leg r"></i><i class="leg c"></i><i class="bar"></i>
-    <div class="s4-board dull">
-      <p class="t">Proposta comercial</p><i class="clock"></i><p class="kk">Diretoria · Q3</p>
-      <ul><li>Contexto e objetivos</li><li>Escopo e cronograma</li><li>Investimento e próximos passos</li></ul>
+<!-- CENA 4 · Personagens · a Bia pula para dentro do slide; ela e o cliente apontam, comemoram e conduzem -->
+<section class="scene s4" id="s4" data-world="night">
+  <div class="studio dark-frame k zoom" style="--in: 0; --dur: 600; left: 300px; top: 160px">
+    <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Resultados do T3</span><span class="su-saved">Salvo</span><span class="su-go">Apresentar</span></div>
+    <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span>Gráficos</span><span>Cards</span><span class="k rib-on" style="--in: var(--w-personagens)">Personagens</span><span><svg><use href="#i-wand"/></svg>Efeitos</span></div>
+    <div class="su-body">
+      <div class="su-rail"><i></i><i></i><i class="on"></i><i></i><i></i></div>
+      <div class="su-canvas">
+        <div class="ch-slide">
+          <p class="ed-k">Resultados</p>
+          <p class="t">O T3 em um gráfico</p>
+          <div class="bars"><i style="--v:.42"></i><i style="--v:.6"></i><i class="hot" style="--v:.95"></i><i style="--v:.7"></i></div>
+        </div>
+      </div>
+      <div class="su-insp ch-panel">
+        <p class="in-h">Personagens</p>
+        <div class="ch-card k pop" style="--in: var(--w-personagens)">
+          <div class="bia" data-pose="wave" data-face="happy" data-props="" style="--x: 120px; --y: 138px; --s: .38"></div>
+          <span>Bia</span><small>guia</small>
+          <i class="on k fade" style="--in: var(--w-bia); --dur: 250"></i>
+        </div>
+        <div class="ch-card k pop" style="--in: calc(var(--w-personagens) + 150)">
+          <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" style="--x: 120px; --y: 138px; --s: .36"></div>
+          <span>Cliente</span><small>plateia</small>
+          <i class="on k fade" style="--in: var(--w-eles); --dur: 250"></i>
+        </div>
+        <div class="ch-poses k fade" style="--in: var(--w-vivem)"><i>apontar</i><i>comemorar</i><i>conduzir</i><i>acenar</i><i>pensar</i></div>
+      </div>
     </div>
-    <span class="label ghost k pop" style="--in: calc(var(--w-por) + 400); left: 30px; top: -54px">Comum</span>
   </div>
 
-  <!-- cavalete CLARA E ENVOLVENTE -->
-  <div class="s4-easel k up" style="--in: var(--w-importa); --dur: 700; left: 860px; top: 270px">
-    <i class="leg l"></i><i class="leg r"></i><i class="leg c"></i><i class="bar"></i>
-    <div class="s4-board live">
-      <p class="t">Proposta comercial</p><p class="kk">Diretoria · Q3</p>
-      <ul style="--stag: 160"><li class="k left" style="--in: calc(var(--w-importa) + 500); --i: 0"><i>1</i>Contexto e objetivos</li><li class="k left" style="--in: calc(var(--w-importa) + 500); --i: 1"><i>2</i>Escopo e cronograma</li><li class="k left" style="--in: calc(var(--w-importa) + 500); --i: 2"><i>3</i>Investimento e próximos passos</li></ul>
-      <div class="mini k pop" style="--in: calc(var(--w-importa) + 900)"><i class="ring"></i><div class="bars"><i style="--v:.4"></i><i style="--v:.55"></i><i class="hot" style="--v:.75"></i><i class="hot" style="--v:1"></i></div></div>
+  <!-- a Bia voa do painel para dentro do slide -->
+  <div class="k s4-fly" style="--in: calc(var(--w-bia) + 100); --dur: 900; --dx: 770px; --dy: -300px; left: 690px; top: 772px">
+    <div class="k sway-x" style="--in: var(--w-conduzem); --dur: 1000; --dx: 70px">
+      <div class="bia" data-pose="wave" data-face="laugh" data-props="" data-keys="@apontam:pose=point-right,face=wow;@comemoram:pose=celebrate,face=laugh;@conduzem:pose=walk,face=happy;@plateia:pose=wave,face=happy;@voce:pose=bow,face=proud" style="--x: 0px; --y: 0px; --s: .5"></div>
     </div>
-    <svg class="s4-haloring" viewBox="0 0 720 440" style="left: -10px; top: -22px; width: 720px; height: 440px" aria-hidden="true">
-      <rect class="k draw" style="--in: var(--w-primeira); --dur: 1200" pathLength="1" x="10" y="10" width="700" height="420" rx="34" fill="none" stroke="url(#hl-g-ring-paper)" stroke-width="6" stroke-linecap="round"/>
-    </svg>
-    <span class="label white k pop" style="--in: calc(var(--w-importa) + 400); left: 30px; top: -54px">Clara e envolvente</span>
   </div>
-  <div class="s4-eq k pop" style="--in: var(--w-pelo); left: 775px; top: 420px">=</div>
-
-  <!-- selos, em "percepção do todo" -->
-  <div class="s4-badges" style="--stag: 240">
-    <div class="badge paper k pop" style="--in: var(--w-percepcao); --i: 0; left: 1470px; top: 190px"><i><svg><use href="#i-spark"/></svg></i>Competência</div>
-    <div class="badge paper k pop" style="--in: var(--w-percepcao); --i: 1; left: 1560px; top: 320px"><i><svg><use href="#i-check"/></svg></i>Confiança</div>
-    <div class="badge paper k pop" style="--in: var(--w-percepcao); --i: 2; left: 1560px; top: 450px"><i><svg><use href="#i-wand"/></svg></i>Inovação</div>
-    <div class="badge paper k pop" style="--in: var(--w-percepcao); --i: 3; left: 1470px; top: 580px"><i><svg><use href="#i-check"/></svg></i>Entrega</div>
+  <div class="k pop" style="--in: var(--w-eles); --dur: 500; left: 1150px; top: 772px">
+    <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@apontam:pose=look-up,face=wow;@comemoram:pose=jump,face=laugh;@conduzem:pose=hands-hips,face=happy;@voce:pose=celebrate,face=laugh" style="--x: 0px; --y: 0px; --s: .46"></div>
   </div>
+  <i class="ring k ring-x" style="--in: calc(var(--w-bia) + 950); --dur: 800; left: 690px; top: 700px"></i>
+  <svg class="spark k pop" style="--in: var(--w-comemoram); left: 640px; top: 560px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: calc(var(--w-comemoram) + 200); left: 1190px; top: 580px; width: 30px; height: 30px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
 
-  <!-- a Bia e o cliente -->
-  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@efeito:pose=look-up,face=wow;@halo:pose=present,face=proud;@uma:pose=point-right,face=focus;@marcante:pose=celebrate,face=laugh;@influencia:pose=present,face=happy;@todo:pose=idle,face=proud" style="--x: 120px; --y: 960px; --s: .9"></div>
-  <div class="bia" data-skin="cliente" data-pose="idle" data-face="wow" data-props="" data-keys="@importa:pose=think,face=think;@pelo:face=wow;@primeira:pose=look-up,face=surprised;@marcante:pose=hands-hips,face=laugh;@percepcao:pose=bow,face=proud;@todo+600:pose=idle,face=happy" style="--x: 790px; --y: 960px; --s: .85"></div>
+  <div class="tag-pill paper k pop-c" style="--in: var(--w-bia); left: 150px; top: 610px"><i><svg><use href="#i-spark"/></svg></i>Bia · guia do Halor</div>
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@personagens:pose=present,face=happy;@bia:pose=jump,face=laugh;@bia+700:pose=point-right,face=happy;@comemoram:pose=celebrate,face=laugh;@voce:pose=idle,face=proud" style="--x: 150px; --y: 968px; --s: .8"></div>
 </section>
