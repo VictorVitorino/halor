@@ -12,7 +12,7 @@
  *
  *   /opt/node22/bin/node pitch/render/render.mjs --in pitch/index.html --out pitch/out/halor-pitch.mp4 \
  *       [--fps 30] [--w 1920] [--h 1080] [--from 0] [--to 127000] \
- *       [--audio pitch/audio/narration.mp3] [--workers 3] [--crf 19] [--jpeg 92] [--preset medium]
+ *       [--audio pitch/audio/narration.mp3] [--workers 3] [--crf 19] [--jpeg 92] [--preset medium] [--scale 2]
  *
  *   Folha de contato (em vez do vídeo; um quadro a cada --every ms, grade de 4 colunas × 480 px):
  *
@@ -24,6 +24,7 @@
  *   --out <mp4>        vídeo de saída (obrigatório no modo vídeo)
  *   --fps <n>          quadros por segundo (padrão 30)
  *   --w, --h           tamanho da janela/vídeo em px (padrão 1920 × 1080; o palco escala para caber)
+ *   --scale <n>        fator de escala da captura (padrão 1; 2 renderiza o palco 1920×1080 em 4K, 3840×2160)
  *   --from, --to <ms>  intervalo do filme a renderizar (padrão 0 … HALOR_PITCH.duration)
  *   --audio <mp3|wav>  narração; é cortada/ajustada ao intervalo (--from) e muxada em AAC 192 kb/s
  *   --workers <n>      fatias contíguas renderizadas em paralelo, um navegador por fatia (padrão 1)
@@ -224,9 +225,9 @@ const BROWSER_ARGS = [
 ];
 
 /** Abre uma página do pitch já posicionada em `t0` e espera o motor ficar pronto. */
-async function openPitch(chromium, { inUrl, w, h, fps, t0, timeout, tag, onPageError }) {
+async function openPitch(chromium, { inUrl, w, h, scale = 1, fps, t0, timeout, tag, onPageError }) {
   const browser = await chromium.launch({ headless: true, args: BROWSER_ARGS });
-  const context = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, reducedMotion: 'no-preference', colorScheme: 'dark' });
+  const context = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: scale, reducedMotion: 'no-preference', colorScheme: 'dark' });
   const page = await context.newPage();
   page.on('pageerror', e => onPageError(`[página ${tag}] erro: ${e && e.stack || e}`));
   page.on('console', msg => {
@@ -251,9 +252,9 @@ async function openPitch(chromium, { inUrl, w, h, fps, t0, timeout, tag, onPageE
  * `capture(i, t)` nos quadros escolhidos (todos, no vídeo; só os amostrados, na folha).
  */
 async function walkSlice(chromium, opts, i0, i1, { tag, shouldCapture, onFrame, onProgress, onPageError }) {
-  const { inUrl, w, h, fps, from, jpeg, timeout } = opts;
+  const { inUrl, w, h, scale, fps, from, jpeg, timeout } = opts;
   const t0 = frameTime(from, i0, fps);
-  const { browser, page } = await openPitch(chromium, { inUrl, w, h, fps, t0, timeout, tag, onPageError });
+  const { browser, page } = await openPitch(chromium, { inUrl, w, h, scale, fps, t0, timeout, tag, onPageError });
   try {
     for (let i = i0; i < i1; i++) {
       const t = frameTime(from, i, fps);
@@ -348,6 +349,7 @@ async function main() {
     fps: num(o, 'fps', 30, { min: 1, max: 240 }),
     w: num(o, 'w', 1920, { min: 16, max: 7680, int: true }),
     h: num(o, 'h', 1080, { min: 16, max: 4320, int: true }),
+    scale: num(o, 'scale', 1, { min: 1, max: 4 }),
     from: num(o, 'from', 0, { min: 0 }),
     to: num(o, 'to', NaN, { min: 0 }),
     workers: num(o, 'workers', 1, { min: 1, max: 16, int: true }),
@@ -378,7 +380,7 @@ async function main() {
 
   const N = frameCount(opts.from, opts.to, opts.fps);
   const parts = slices(N, opts.workers);
-  log(`Pitch Halor · render\n  entrada   ${inPath}\n  modo      ${sheet ? 'folha de contato' : 'vídeo'} → ${sheet || out}\n  tamanho   ${opts.w}×${opts.h} @ ${opts.fps} fps\n  intervalo ${fmtT(opts.from)} → ${fmtT(opts.to)} (${opts.to - opts.from} ms, ${N} quadros)\n  fatias    ${parts.map(([a, b]) => `${a}–${b - 1}`).join(' | ')}`);
+  log(`Pitch Halor · render\n  entrada   ${inPath}\n  modo      ${sheet ? 'folha de contato' : 'vídeo'} → ${sheet || out}\n  tamanho   ${opts.w * opts.scale}×${opts.h * opts.scale} (escala ${opts.scale}) @ ${opts.fps} fps\n  intervalo ${fmtT(opts.from)} → ${fmtT(opts.to)} (${opts.to - opts.from} ms, ${N} quadros)\n  fatias    ${parts.map(([a, b]) => `${a}–${b - 1}`).join(' | ')}`);
 
   const t0 = Date.now();
   if (sheet) {

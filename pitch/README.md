@@ -39,7 +39,8 @@ pitch/
 │  ├─ shot.mjs           Captura quadros isolados para revisão
 │  └─ sheet.py           Monta uma folha de contato com quadros capturados
 ├─ preview/              Provas visuais da Bia e dos props
-└─ out/halor-pitch.mp4   O vídeo (1080p, 30 fps, com narração)
+├─ out/halor-pitch.mp4   O vídeo em 1080p (30 fps, com narração), reduzido do master 4K
+└─ out/halor-pitch-4k.mp4  O master em 4K (3840×2160), quando couber no repositório
 ```
 
 ## Como funciona
@@ -64,9 +65,16 @@ python3 pitch/build.py --only s5 --no-audio --out /tmp/s5.html   # uma cena isol
 python3 pitch/render/align.py                            # realinha os tempos à narração (depois de trocar o áudio)
 node pitch/render/shot.mjs file:///tmp/s5.html /tmp/f 39000 41000 44000   # quadros nos tempos absolutos
 python3 pitch/render/sheet.py /tmp/f /tmp/folha.jpg      # folha de contato
-/opt/node22/bin/node pitch/render/render.mjs --in pitch/index.html --out pitch/out/halor-pitch.mp4 \
-  --workers 3 --audio pitch/audio/narration.mp3          # renderiza o vídeo
+/opt/node22/bin/node pitch/render/render.mjs --in pitch/index.html --out pitch/out/halor-pitch-4k.mp4 \
+  --workers 4 --scale 2 --crf 18 --jpeg 95 --audio pitch/audio/narration.mp3   # o master em 4K (3840×2160)
+ffmpeg -i pitch/out/halor-pitch-4k.mp4 -vf scale=1920:1080:flags=lanczos -c:v libx264 -preset slow -crf 18 \
+  -pix_fmt yuv420p -movflags +faststart -c:a copy pitch/out/halor-pitch.mp4   # o 1080p, reduzido do 4K
 ```
+
+O palco é vetorial (HTML, CSS e SVG), então `--scale 2` captura cada quadro em 4K de verdade, sem
+ampliação. O 1080p sai do 4K por redução (supersampling), o que deixa bordas e textos mais limpos do que a
+captura direta em 1080p. Em 4K cada quadro leva alguns segundos para rasterizar (os brilhos e desfoques
+custam caro); com quatro trabalhadores o filme inteiro leva perto de uma hora.
 
 Para trocar a narração: grave o texto de `roteiro.json` (um parágrafo por cena), salve em `audio/take1-raw.mp3`,
 salve as palavras com tempo em `audio/words.json` e rode `align.py`; os respiros por cena ficam na tabela
