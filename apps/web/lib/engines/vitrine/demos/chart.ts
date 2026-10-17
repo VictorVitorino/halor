@@ -1,12 +1,13 @@
 /* 16 · Chart Build Animation + 15 · Data Highlight · barras, meta, pontos e rótulos entram em etapas;
    a régua percorre a construção. Clicar numa barra acende só ela (as outras esmaecem) com o detalhe.
-   Editável: cor, duração da montagem, linha da meta e rótulos. */
+   Editável: receita do 4T26 (refaz barra, rótulo, vs. meta e descrição), cor, duração da montagem e linha da meta. */
 import { svgEl } from '../../../core';
 import { q, vtAccent, vtClamp, vtEase, vtFmt, type VtCtx, type VtDemo } from '../ctx';
 
 const Q = ['1T25', '2T25', '3T25', '4T25', '1T26', '2T26', '3T26', '4T26'];
-const R = [42, 48, 51, 57, 63, 70, 76, 84], M = [45, 48, 52, 55, 58, 62, 66, 70];
-const vs = (i: number) => { const d = Math.round((R[i] - M[i]) / M[i] * 100); return `${d >= 0 ? '+' : '−'}${Math.abs(d)}% vs. meta`; };
+const R0: readonly number[] = [42, 48, 51, 57, 63, 70, 76, 84], M = [45, 48, 52, 55, 58, 62, 66, 70];
+const LAST = R0.length - 1;
+const NUM = ['', '', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito'];
 
 interface Built {
   bars: SVGRectElement[]; hits: SVGRectElement[]; vals: SVGTextElement[]; mPath: SVGPathElement; len: number; dots: SVGCircleElement[];
@@ -15,6 +16,16 @@ interface Built {
 
 export function chartDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
   const plot = q('.vt-ch-plot', card), svg = q<SVGSVGElement>('.vt-ch-svg', card), tip = q('.vt-ch-tip', card), range = q<HTMLInputElement>('.vt-range', card);
+  const desc = svg.querySelector('title');
+  /* a receita do 4T26 é editável: cada card guarda a sua cópia */
+  const R = R0.slice();
+  const vs = (i: number) => { const d = Math.round((R[i] - M[i]) / M[i] * 100); return `${d >= 0 ? '+' : '−'}${Math.abs(d)}% vs. meta`; };
+  /* a descrição do gráfico acompanha o valor editado */
+  const describe = () => {
+    let n = 0; for (let i = LAST; i >= 0 && R[i] >= M[i]; i--) n++;
+    const qt = n === 1 ? 'no último trimestre' : `nos últimos ${NUM[n]} trimestres`;
+    if (desc) desc.textContent = `Receita trimestral vai de ${R[0]} a ${vtFmt(R[LAST])} milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, ${n ? 'acima' : 'abaixo'} da meta ${n ? qt : 'no último trimestre'}. Clique numa barra para destacá-la.`;
+  };
   let g: Built | null = null, prog = ctx.reduced ? 1 : 0, stop: (() => void) | null = null, dur = 2800, sel = -1, hov = -1, replayT = 0;
 
   const ns = <K extends keyof SVGElementTagNameMap>(t: K, a: Record<string, string | number> = {}, parent: Element = svg) => {
@@ -25,7 +36,7 @@ export function chartDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     if (!g || i < 0) { tip.hidden = true; return; }
     tip.hidden = false;
     tip.classList.toggle('is-pin', pin);
-    tip.textContent = pin ? `${Q[i]} · Receita ${R[i]} · Meta ${M[i]} · ${vs(i)}` : `${Q[i]} · Receita ${R[i]} · Meta ${M[i]}`;
+    tip.textContent = pin ? `${Q[i]} · Receita ${vtFmt(R[i])} · Meta ${M[i]} · ${vs(i)}` : `${Q[i]} · Receita ${vtFmt(R[i])} · Meta ${M[i]}`;
     tip.style.left = vtClamp(g.xc(i), pin ? 130 : 90, g.W - (pin ? 130 : 90)) + 'px';
     tip.style.top = g.y(Math.max(R[i], M[i])) - (pin ? 18 : 0) + 'px';
   };
@@ -37,7 +48,11 @@ export function chartDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     g.hits.forEach((h, i) => h.setAttribute('aria-pressed', String(i === sel)));
     tipAt(hov >= 0 ? hov : sel, hov < 0 || hov === sel);
   };
-  const pick = (i: number) => { sel = sel === i ? -1 : i; hov = -1; paintSel(); if (sel >= 0 && g) ctx.kick(g.bars[sel], 'is-kick', 700); };
+  const pick = (i: number) => {
+    sel = sel === i ? -1 : i; hov = -1; paintSel();
+    if (sel >= 0 && g) ctx.kick(g.bars[sel], 'is-kick', 700);
+    ctx.say(sel >= 0 ? `${Q[sel]} em destaque: receita ${vtFmt(R[sel])}, meta ${M[sel]}, ${vs(sel)}. As outras barras esmaeceram.` : 'Destaque desfeito: todas as barras à mostra.');
+  };
 
   const build = () => {
     const W = plot.clientWidth, H = plot.clientHeight; if (!W || !H) return;
@@ -62,7 +77,7 @@ export function chartDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     const barsG = ns('g', { 'clip-path': `url(#${uid})` });
     const hits: SVGRectElement[] = [], vals: SVGTextElement[] = [];
     const bars = R.map((v, i) => {
-      const hit = ns('rect', { x: xc(i) - band / 2, y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'button', 'aria-pressed': 'false', 'aria-label': `${Q[i]}: receita ${v}, meta ${M[i]}. Destacar.` });
+      const hit = ns('rect', { x: xc(i) - band / 2, y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'button', 'aria-pressed': 'false', 'aria-label': `${Q[i]}: receita ${vtFmt(v)}, meta ${M[i]}. Destacar.` });
       const r = ns('rect', { x: xc(i) - bw / 2, width: bw, rx: 4, y: B, height: 0, class: 'vt-ch-bar' + (i === R.length - 1 ? ' is-hi' : '') }, barsG);
       ctx.on(hit, 'pointerenter', () => { hov = i; r.classList.add('is-hov'); tipAt(i, i === sel); });
       ctx.on(hit, 'pointerleave', () => { hov = -1; r.classList.remove('is-hov'); tipAt(sel, true); });
@@ -81,8 +96,10 @@ export function chartDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     mPath.setAttribute('stroke-dasharray', String(len));
     const dots = M.map((v, i) => ns('circle', { cx: xc(i), cy: y(v), r: 4.5, class: 'vt-ch-dot' }));
     const labs = ns('g');
-    R.forEach((v, i) => { const t = ns('text', { x: xc(i), y: y(v) - 8, 'text-anchor': 'middle', class: 'vt-ch-sv' }, labs); t.textContent = String(v); vals.push(t); });
-    const v0 = ns('text', { x: xc(R.length - 1), y: y(R[R.length - 1]) - 8, 'text-anchor': 'middle', class: 'vt-ch-val' }, labs); v0.textContent = String(R[R.length - 1]);
+    R.forEach((v, i) => { const t = ns('text', { x: xc(i), y: y(v) - 8, 'text-anchor': 'middle', class: 'vt-ch-sv' }, labs); t.textContent = vtFmt(v); vals.push(t); });
+    /* o rótulo do último trimestre sobe acima da barra; se a barra encosta na meta, ele entra na barra para não cobrir o ponto */
+    const inBar = R[LAST] <= M[LAST] + 4 && B - y(R[LAST]) > 26;
+    const v0 = ns('text', { x: xc(LAST), y: inBar ? y(R[LAST]) + 18 : y(R[LAST]) - 8, 'text-anchor': 'middle', class: 'vt-ch-val' + (inBar ? ' is-in' : '') }, labs); v0.textContent = vtFmt(R[LAST]);
     const v2 = ns('text', { x: xc(M.length - 1) + bw / 2 + 8, y: y(M[M.length - 1]) + 4, 'text-anchor': 'start', class: 'vt-ch-lbl vt-ch-ml' }, labs); v2.textContent = 'Meta ' + M[M.length - 1];
     g = { bars, hits, vals, mPath, len, dots, labs, xl, yl, y, xc, B, W };
     render(prog);
@@ -114,13 +131,19 @@ export function chartDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
   return {
     start: play, replay: play, still: () => render(1),
     fields: [
+      { k: 'val', t: 'number', l: 'Receita 4T26', v: R0[LAST], min: 0, max: 100, unit: 'R$ mi' },
       { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
       { k: 'dur', t: 'range', l: 'Montagem', v: 2.8, min: 1, max: 6, step: .2, fmt: v => vtFmt(v, 1) + ' s' },
-      { k: 'meta', t: 'toggle', l: 'Meta', v: true },
-      { k: 'labels', t: 'toggle', l: 'Rótulos', v: true }
+      { k: 'meta', t: 'toggle', l: 'Meta', v: true }
     ],
     set(k, v) {
-      if (k === 'acc') vtAccent(card, String(v));
+      /* o último trimestre refaz a barra, o rótulo, o vs. meta e a descrição */
+      if (k === 'val') {
+        const n = Number(v); if (R[LAST] === n) return;
+        R[LAST] = n; describe(); build();
+        if (g && prog >= 1 && !ctx.reduced) ctx.kick(g.bars[LAST], 'is-kick', 700);
+      }
+      else if (k === 'acc') vtAccent(card, String(v));
       else if (k === 'meta') card.classList.toggle('no-meta', !v);
       else if (k === 'labels') card.classList.toggle('no-lbl', !v);
       else if (k === 'dur') {

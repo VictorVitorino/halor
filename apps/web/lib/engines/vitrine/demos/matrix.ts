@@ -1,7 +1,8 @@
 /* 35 · Interactive Matrix · bolhas arrastáveis (ponteiro e setas) entre os quadrantes de impacto x esforço.
-   Clicar num quadrante (ou na legenda) o destaca. Editável: nova iniciativa, cor, nomes dos quadrantes e eixos. */
+   Clicar num quadrante (ou na legenda) o destaca. Editável: nova iniciativa (nasce no centro e voa até um
+   ponto livre; no máximo 9), cor, rótulos dos quadrantes e eixos. */
 import { el } from '../../../core';
-import { q, qa, vtAccent, vtClamp, vtSync, type VtCtx, type VtDemo } from '../ctx';
+import { q, qa, reflow, vtAccent, vtClamp, vtSync, type VtCtx, type VtDemo } from '../ctx';
 
 const QN = ['Ganhos rápidos', 'Grandes apostas', 'Ajustes finos', 'Evitar'];
 const START: readonly (readonly [string, number, number])[] = [['Painel', 22, 26], ['Capa nova', 36, 40], ['Treino', 72, 30], ['Migração', 78, 76], ['Relatório', 30, 74]];
@@ -67,6 +68,34 @@ export function matrixDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     plot.append(b); bind(b); return b;
   };
   let bs = START.map(([name, x, y], i) => mk(name, x, y, i));
+  /* ponto livre para uma bolha nova: num quadrante sorteado (depois nos outros), o ponto com mais folga
+     em relação às outras bolhas e aos nomes dos quadrantes. Folga = distância livre no eixo mais
+     afastado, já com uma margem de respiro; se nenhum quadrante tem folga, vale o de maior folga geral */
+  const spot = (b: HTMLButtonElement): [number, number] => {
+    const r = plot.getBoundingClientRect(), W = r.width, H = r.height;
+    if (!W || !H) return [25 + Math.random() * 50, 25 + Math.random() * 50];
+    const bw = b.offsetWidth + 12, bh = b.offsetHeight + 8;
+    const boxes: [number, number, number, number][] = bs.filter(o => o !== b).map(o => [+(o.dataset.x || 0) / 100 * W, +(o.dataset.y || 0) / 100 * H, o.offsetWidth + 12, o.offsetHeight + 8]);
+    if (!card.classList.contains('no-names')) qs.forEach(d => {
+      const sp = d.querySelector('span'); if (!sp) return;
+      const a = sp.getBoundingClientRect(); boxes.push([a.left - r.left + a.width / 2, a.top - r.top + a.height / 2, a.width + 10, a.height + 8]);
+    });
+    const room = (x: number, y: number) => boxes.reduce((m, [ox, oy, ow, oh]) => Math.min(m, Math.max(Math.abs(x - ox) - (bw + ow) / 2, Math.abs(y - oy) - (bh + oh) / 2)), Infinity);
+    const q0 = Math.floor(Math.random() * 4);
+    let best: [number, number, number] = [W / 2, H / 2, -Infinity];
+    for (let t = 0; t < 4; t++) {
+      const k = (q0 + t) % 4, qx = k % 2, qy = k >> 1;
+      const x0 = qx * W / 2 + bw / 2, x1 = Math.max(x0, (qx + 1) * W / 2 - bw / 2), y0 = qy * H / 2 + bh / 2, y1 = Math.max(y0, (qy + 1) * H / 2 - bh / 2);
+      let top: [number, number, number] = [x0, y0, -Infinity];
+      for (let i = 0; i <= 8; i++) for (let j = 0; j <= 6; j++) {
+        const x = x0 + (x1 - x0) * i / 8, y = y0 + (y1 - y0) * j / 6, f = room(x, y);
+        if (f > top[2]) top = [x, y, f];
+      }
+      if (top[2] > best[2]) best = top;
+      if (top[2] >= 0) break;
+    }
+    return [vtClamp(best[0] / W * 100, 6, 94), vtClamp(best[1] / H * 100, 8, 92)];
+  };
   lbs.forEach((l, i) => ctx.on(l, 'click', () => focus(i)));
   /* clicar num quadrante vazio também destaca */
   ctx.on(plot, 'click', e => {
@@ -83,17 +112,22 @@ export function matrixDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
   return {
     replay: reset, still: reset,
     fields: [
-      { k: 'add', t: 'add', l: 'Iniciativa', ph: 'Ex.: Portal', max: 14 },
+      { k: 'add', t: 'add', l: 'Iniciativa', ph: 'Ex.: Portal', max: 14, full: `Máximo de ${MAXB} iniciativas` },
       { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
-      { k: 'names', t: 'toggle', l: 'Quadrantes', v: true },
+      { k: 'names', t: 'toggle', l: 'Rótulos', v: true },
       { k: 'axes', t: 'toggle', l: 'Eixos', v: true }
     ],
     set(k, v) {
       if (k === 'add') {
         if (bs.length >= MAXB) { ctx.say(`A matriz já tem ${MAXB} iniciativas.`); return false; }
         const name = String(v);
-        const b = mk(name, (38 + Math.random() * 24).toFixed(1), (38 + Math.random() * 24).toFixed(1), 0);
-        bs.push(b); place(b); tally(); ctx.kick(b, 'is-new', 700);
+        /* nasce no centro e voa até um ponto livre */
+        const b = mk(name, 50, 50, 0);
+        bs.push(b); place(b);
+        const [x, y] = spot(b);
+        reflow(b);
+        b.dataset.x = x.toFixed(1); b.dataset.y = y.toFixed(1);
+        place(b); tally(); ctx.kick(b, 'is-new', 700);
         ctx.say(`${name} entrou em ${QN[pos(b)]}. Arraste para mudar de quadrante.`);
         if (bs.length >= MAXB) vtSync(card, 'add', 'full');
         return true;

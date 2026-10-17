@@ -27,8 +27,11 @@ export function typeDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
       h.append(b); return b;
     });
     h.style.setProperty('--n', String(i));
-    const same = ws.findIndex(w => w.textContent === prev);
-    pick(same >= 0 ? same : Math.min(key, ws.length - 1));
+    /* a palavra-chave continua a mesma; se ela sumiu, vai para o primeiro número ou, sem número, para a palavra mais longa */
+    let k = ws.findIndex(w => w.textContent === prev);
+    if (k < 0) k = ws.findIndex(w => w.classList.contains('vt-ty-n'));
+    if (k < 0) k = ws.reduce((a, w, j) => (w.textContent || '').length > (ws[a].textContent || '').length ? j : a, 0);
+    pick(k);
     sr.textContent = words.join(' ');
   };
 

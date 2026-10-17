@@ -294,15 +294,15 @@ export default function Vitrine() {
           {/* 06 · Glow / Light Sweep */}
           <article className="vt-card vt-w2" id="vt-d-glow" data-demo="glow" data-fx="6" data-intents="foco abertura" aria-labelledby="vt-t-glow">
             <div className="vt-demo vt-gl">
-              <div className="vt-gl-main" tabIndex={0} role="img" aria-label="Indicador em destaque: margem bruta de 41%, mais 6 pontos no ano.">
-                <div className="vt-gl-in" aria-hidden="true">
+              <button className="vt-gl-main" type="button" aria-label="Indicador em destaque: Margem bruta, 41%, +6 p.p. no ano. Clique para a luz passar de novo.">
+                <span className="vt-gl-in" aria-hidden="true">
                   <span className="vt-gl-k">Margem bruta</span>
                   {' '}
                   <b className="vt-gl-v">41%</b>
                   {' '}
                   <span className="vt-gl-d">+6 p.p. no ano</span>
-                </div>
-              </div>
+                </span>
+              </button>
               <div className="vt-gl-side" role="group" aria-label="Indicadores secundários. Clique para pôr em destaque.">
                 <button className="vt-gl-s" type="button" data-i="1">
                   <span>Custo</span>
@@ -492,10 +492,10 @@ export default function Vitrine() {
               <div className="vt-ch-plot">
                 <svg className="vt-ch-svg" viewBox="0 0 640 220" role="group" aria-labelledby="vt-ch-desc">
                   <title id="vt-ch-desc">
-                    Receita trimestral sobe de 42 para 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima da meta nos últimos cinco trimestres. Clique numa barra para destacá-la.
+                    Receita trimestral vai de 42 a 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima da meta nos últimos cinco trimestres. Clique numa barra para destacá-la.
                   </title>
                 </svg>
-                <div className="vt-ch-tip" role="status" hidden />
+                <div className="vt-ch-tip" aria-hidden="true" hidden />
               </div>
               <div className="vt-ch-scrub">
                 <label className="sr-only" htmlFor="vt-ch-range">Etapa da construção do gráfico</label>
@@ -798,7 +798,7 @@ export default function Vitrine() {
               <div className="vt-fw-box">
                 <svg className="vt-fw-svg" viewBox="0 0 400 240" aria-hidden="true" focusable="false" />
               </div>
-              <p className="vt-fw-cap mono" aria-live="polite">Clique num nó para ver as ligações</p>
+              <p className="vt-fw-cap mono">Clique num nó para ver as ligações</p>
             </div>
             <div className="vt-meta">
               <div className="vt-meta-row">
@@ -840,7 +840,7 @@ export default function Vitrine() {
           <div>
             <p className="eyebrow">Catálogo completo</p>
             <h3 className="vt-cat-h">Os 40 efeitos, por número</h3>
-            <p className="vt-cat-sub">Passe o cursor numa prévia para ela rodar. Clique para mexer no efeito.</p>
+            <p className="vt-cat-sub">Passe o cursor numa prévia para ela rodar e clique para mexer nela. Em Editar efeito você muda cor, ritmo, intensidade e o detalhe de cada um.</p>
           </div>
           <p className="vt-count mono" id="vt-count">8 de 40</p>
         </div>
@@ -851,7 +851,7 @@ export default function Vitrine() {
             <b>32 efeitos</b>
           </button>
           {' '}
-          <a className="vt-cat-plan" href="/assinar">
+          <a className="vt-cat-plan" href="#planos">
             Liberar todos num plano{' '}
             <svg aria-hidden="true">
               <use href="#i-arrow" />
@@ -861,15 +861,15 @@ export default function Vitrine() {
         {/* VALOR · o que entra na apresentação */}
         <div className="vt-value">
           <ul className="vt-stats">
-            <li>
+            <li data-rv="up" style={{ '--rv-i': 0 } as CSSProperties}>
               <b className="display">40</b>
               <span>efeitos prontos para entrar no slide</span>
             </li>
-            <li>
+            <li data-rv="up" style={{ '--rv-i': 1 } as CSSProperties}>
               <b className="display">7</b>
               <span>famílias: movimento, dados, 3D, interface, interatividade, processos e narrativa</span>
             </li>
-            <li>
+            <li data-rv="up" style={{ '--rv-i': 2 } as CSSProperties}>
               <b className="display">1</b>
               <span>arquivo HTML que abre em qualquer navegador, sem instalar nada</span>
             </li>

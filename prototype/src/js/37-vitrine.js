@@ -59,6 +59,9 @@ const VT_FX = [
 ];
 
 /* · Prévias do catálogo ·
+   O app usa uma cópia gerada destas prévias (apps/web/lib/engines/vitrine/vt-minis.ts): depois de
+   mudar VT_MINI, rode na raiz do repositório node apps/web/lib/engines/vitrine/vt-gen-minis.mjs.
+   Só elementos de frase (span, b, i, em, svg): a prévia mora dentro do botão do item.
    Cada prévia é um quadro estático bem resolvido; com o cursor (ou o foco) ela roda
    em laço (.is-play) e o clique faz o efeito acontecer. Modo do clique:
    'cyc N I' alterna N estados a partir de I · 'pick' escolhe o item clicado ·
@@ -68,32 +71,32 @@ const vtI = (c, s, inner = '') => `<i class="${c}" style="${s}">${inner}</i>`;
 const VT_MINI = {
   1: ['', `<svg class="vm-ring" viewBox="0 0 40 40" style="left:6%;top:16px;width:60px;height:60px"><circle class="in" cx="20" cy="20" r="11"/><circle cx="20" cy="20" r="17" pathLength="100" style="--vm-a:vm-draw"/></svg>${vtI('vm-ac', 'left:calc(6% + 50px);top:12px;width:9px;height:9px;border-radius:2px;--vm-a:vm-pop;--vm-d:.5s')}${vtB('vm-ln', 'left:38%;top:22px;width:46%;height:8px;--vm-a:vm-rise;--vm-d:.25s')}${vtB('vm-ln s', 'left:38%;top:36px;width:30%;--vm-a:vm-rise;--vm-d:.4s')}${vtB('vm-ln s', 'left:38%;top:58px;width:13%;height:13px;border-radius:3px;--vm-a:vm-rise;--vm-d:.6s')}${vtB('vm-ln s', 'left:54%;top:58px;width:13%;height:13px;border-radius:3px;--vm-a:vm-rise;--vm-d:.72s')}${vtB('vm-ac', 'left:70%;top:58px;width:16%;height:13px;border-radius:3px;--vm-a:vm-rise;--vm-d:.84s')}`],
   2: ['', [[6, 'M5 19v-6M10 19V8M15 19v-9M20 19v-4', .1], [37, 'M12 3.5a8.5 8.5 0 1 0 .01 0M12 7.5V12l3 2', .25], [68, 'M4 12h15M13.5 6l6 6-6 6', .4]].map(([x, d, dl]) => `${vtB('vm-cd', `left:${x}%;top:14px;width:26%;height:64px`)}<svg class="vm-ic" viewBox="0 0 24 24" style="left:calc(${x + 13}% - 13px);top:22px;--vm-a:vm-hop;--vm-d:${dl}s"><path d="${d}" pathLength="100" style="--vm-a:vm-draw;--vm-d:${dl}s"/></svg>${vtB('vm-ln s', `left:calc(${x + 13}% - 17px);top:58px;width:34px;height:4px`)}`).join('')],
-  3: ['', `<div class="vm-holo vm-abs vm-p vm-hit" style="left:calc(50% - 58px);top:10px;width:116px;height:72px;--vm-a:vm-sway;--vm-h:vm-spinY">${vtI('vm-dt', 'left:10px;top:10px;width:10px;height:10px;background:#fff;box-shadow:0 0 8px #a970ff')}${vtB('vm-ln s', 'right:10px;top:12px;width:20%;height:6px')}${vtB('vm-ln', 'left:10px;top:30px;width:56%;height:10px')}${vtB('vm-ln s', 'left:10px;top:46px;width:38%;height:5px')}${vtB('vm-ac', 'left:10px;bottom:10px;width:30%;height:5px;border-radius:3px')}</div>`],
-  4: ['cyc 2 0', `<div class="vm-stk vm-p" style="left:calc(50% - 52px);top:18px;width:104px;height:58px;--vm-a:vm-tsway"><b class="vm-cd" style="--z:0"></b><b class="vm-cd" style="--z:1"></b><b class="vm-cd vm-top vm-abs" style="--z:2">${vtB('vm-ln', 'left:10px;top:12px;width:50%;height:6px')}${vtB('vm-ln s', 'left:10px;top:24px;width:34%;height:4px')}</b></div>`],
+  3: ['', `<span class="vm-holo vm-abs vm-p vm-hit" style="left:calc(50% - 58px);top:10px;width:116px;height:72px;--vm-a:vm-sway;--vm-h:vm-spinY">${vtI('vm-dt', 'left:10px;top:10px;width:10px;height:10px;background:#fff;box-shadow:0 0 8px #a970ff')}${vtB('vm-ln s', 'right:10px;top:12px;width:20%;height:6px')}${vtB('vm-ln', 'left:10px;top:30px;width:56%;height:10px')}${vtB('vm-ln s', 'left:10px;top:46px;width:38%;height:5px')}${vtB('vm-ac', 'left:10px;bottom:10px;width:30%;height:5px;border-radius:3px')}</span>`],
+  4: ['cyc 2 0', `<span class="vm-stk vm-p" style="left:calc(50% - 52px);top:18px;width:104px;height:58px;--vm-a:vm-tsway"><b class="vm-cd" style="--z:0"></b><b class="vm-cd" style="--z:1"></b><b class="vm-cd vm-top vm-abs" style="--z:2">${vtB('vm-ln', 'left:10px;top:12px;width:50%;height:6px')}${vtB('vm-ln s', 'left:10px;top:24px;width:34%;height:4px')}</b></span>`],
   5: ['pick', [6, 29.5, 53, 76.5].map((x, i) => `<b class="vm-cd vm-el vm-abs${i === 1 ? ' is-pk' : ''}" data-p style="left:${x}%;top:22px;width:17.5%;height:54px;--vm-a:vm-lift;--vm-d:${i * .35}s">${vtI('vm-ac', 'left:8px;top:9px;width:9px;height:9px;border-radius:3px')}${vtI('vm-ln', 'left:8px;top:26px;width:62%;height:5px')}${vtI('vm-ln s', 'left:8px;top:36px;width:40%;height:4px')}</b>`).join('')],
-  6: ['', `<div class="vm-glow vm-abs" style="left:6%;top:12px;width:50%;height:68px;--vm-a:vt-spin;--vm-t:4s;--vm-e:linear">${vtB('vm-ln s', 'left:12px;top:14px;width:42%;height:5px')}<em class="vm-num" style="left:12px;top:30px">41%</em>${vtI('vm-sw2', '--vm-a:vm-sweep;--vm-t:2.6s')}</div>${[12, 49].map(y => `${vtB('vm-cd', `left:60%;top:${y}px;width:34%;height:31px`)}${vtB('vm-ln s', `left:calc(60% + 9px);top:${y + 8}px;width:14%;height:4px`)}${vtB('vm-ln', `left:calc(60% + 9px);top:${y + 17}px;width:11%;height:6px;opacity:.55`)}`).join('')}`],
-  7: ['cyc 2 0', `${vtI('vm-blob', 'left:8%;top:-14px;width:96px;height:96px;--vm-a:vm-drift;--vm-t:6s')}${vtI('vm-blob b2', 'left:56%;top:26px;width:84px;height:84px;--vm-a:vm-drift;--vm-t:6s;--vm-d:-3s')}${vtB('vm-cd', 'left:7%;top:14px;width:22%;height:22px')}${vtB('vm-cd', 'left:72%;top:58px;width:20%;height:20px')}<div class="vm-glass vm-abs vm-p" style="left:calc(50% - 64px);top:15px;width:128px;height:62px">${vtB('vm-ln', 'left:12px;top:14px;width:50%;height:7px')}${vtB('vm-ln s', 'left:12px;top:28px;width:72%;height:4px')}${vtB('vm-ln s', 'left:12px;top:38px;width:44%;height:4px')}${vtI('vm-ac', 'right:12px;top:12px;width:8px;height:8px;border-radius:50%')}</div>`],
+  6: ['', `<span class="vm-glow vm-abs" style="left:6%;top:12px;width:50%;height:68px;--vm-a:vt-spin;--vm-t:4s;--vm-e:linear">${vtB('vm-ln s', 'left:12px;top:14px;width:42%;height:5px')}<em class="vm-num" style="left:12px;top:30px">41%</em>${vtI('vm-sw2', '--vm-a:vm-sweep;--vm-t:2.6s')}</span>${[12, 49].map(y => `${vtB('vm-cd', `left:60%;top:${y}px;width:34%;height:31px`)}${vtB('vm-ln s', `left:calc(60% + 9px);top:${y + 8}px;width:14%;height:4px`)}${vtB('vm-ln', `left:calc(60% + 9px);top:${y + 17}px;width:11%;height:6px;opacity:.55`)}`).join('')}`],
+  7: ['cyc 2 0', `${vtI('vm-blob', 'left:8%;top:-14px;width:96px;height:96px;--vm-a:vm-drift;--vm-t:6s')}${vtI('vm-blob b2', 'left:56%;top:26px;width:84px;height:84px;--vm-a:vm-drift;--vm-t:6s;--vm-d:-3s')}${vtB('vm-cd', 'left:7%;top:14px;width:22%;height:22px')}${vtB('vm-cd', 'left:72%;top:58px;width:20%;height:20px')}<span class="vm-glass vm-abs vm-p" style="left:calc(50% - 64px);top:15px;width:128px;height:62px">${vtB('vm-ln', 'left:12px;top:14px;width:50%;height:7px')}${vtB('vm-ln s', 'left:12px;top:28px;width:72%;height:4px')}${vtB('vm-ln s', 'left:12px;top:38px;width:44%;height:4px')}${vtI('vm-ac', 'right:12px;top:12px;width:8px;height:8px;border-radius:50%')}</span>`],
   8: ['cyc 3 0', `${vtI('vm-grad', 'inset:-30%;--vm-a:vm-drift;--vm-t:7s')}${vtI('vm-ac', 'left:8%;top:30px;width:22px;height:3px;border-radius:2px')}${vtB('vm-ln', 'left:8%;top:42px;width:50%;height:10px')}${vtB('vm-ln s', 'left:8%;top:60px;width:30%;height:5px')}`],
   9: ['', `${vtI('vm-grid vm-p', 'inset:-14px;--k:5px;--vm-a:vm-par')}${vtB('vm-cd vm-p', 'left:12%;top:16px;width:32%;height:28px;--k:12px;--vm-a:vm-par')}<b class="vm-cd vm-hl vm-abs vm-p" style="left:50%;top:38px;width:36%;height:34px;--k:26px;--vm-a:vm-par">${vtB('vm-ln', 'left:10px;top:10px;width:50%;height:6px')}${vtB('vm-ln s', 'left:10px;top:21px;width:32%;height:4px')}</b>${vtB('vm-ln vm-p', 'left:12%;top:56px;width:28%;height:8px;--k:18px;--vm-a:vm-par')}${vtB('vm-ln s vm-p', 'left:12%;top:70px;width:20%;height:4px;--k:18px;--vm-a:vm-par')}`],
   10: ['', [14, 38, 62].map((y, i) => `${vtI('vm-dt vm-ac', `left:8%;top:${y}px;width:9px;height:9px;--vm-a:vm-pop;--vm-d:${.1 + i * .2}s`)}${vtB('vm-ln', `left:calc(8% + 18px);top:${y}px;width:${[44, 36, 40][i]}%;height:7px;--vm-a:vm-wipe;--vm-d:${.15 + i * .2}s`)}${vtB('vm-ln s', `left:calc(8% + 18px);top:${y + 11}px;width:${[30, 26, 22][i]}%;height:4px;--vm-a:vm-wipe;--vm-d:${.25 + i * .2}s`)}`).join('') + [26, 40, 58].map((h, i) => vtB('vm-br' + (i === 2 ? ' vm-hb' : ''), `left:${72 + i * 7}%;width:5%;height:${h}px;--vm-a:vm-gy;--vm-d:${.7 + i * .12}s`)).join('')],
   11: ['', `${vtB('vm-ln', 'left:8%;top:26px;width:22%;height:11px;--vm-a:vm-rise;--vm-d:.1s')}${vtB('vm-ln', 'left:33%;top:26px;width:30%;height:11px;--vm-a:vm-rise;--vm-d:.22s')}${vtI('vm-ac', 'left:33%;top:41px;width:30%;height:2.5px;border-radius:2px;transform-origin:left;--vm-a:vm-gx;--vm-d:.6s')}${vtB('vm-ln', 'left:66%;top:26px;width:22%;height:11px;--vm-a:vm-rise;--vm-d:.34s')}${vtB('vm-ln', 'left:8%;top:52px;width:26%;height:11px;--vm-a:vm-rise;--vm-d:.46s')}<em class="vm-num" style="left:37%;top:47px;--vm-a:vm-pop;--vm-d:.8s">38%</em>`],
   12: ['', [[6, 38, '+', '%'], [36.5, 1240, '', ''], [67, 86, '', '%']].map(([x, n, p, s], i) => `${vtB('vm-cd', `left:${x}%;top:14px;width:27%;height:64px`)}${vtB('vm-ln s', `left:calc(${x}% + 9px);top:23px;width:12%;height:4px`)}<em class="vm-cnt" style="left:calc(${x}% + 9px);top:33px;--to:${n};--vm-n:${n};--pre:'${p}';--suf:'${s}';--vm-a:vm-count;--vm-d:${i * .15}s"></em>${vtI('vm-ac', `left:calc(${x}% + 9px);top:62px;width:calc(27% - 18px);height:3px;border-radius:2px;transform-origin:left;--vm-a:vm-gx;--vm-d:${i * .15}s`)}`).join('')],
   13: ['cyc 3 0', `<svg class="vm-prog" viewBox="0 0 40 40" style="left:6%;top:16px;width:60px;height:60px"><circle class="tr" cx="20" cy="20" r="16"/><circle class="pv" cx="20" cy="20" r="16" pathLength="100" style="--vm-a:vm-prog"/></svg><em class="vm-pct" style="left:6%;top:16px;width:60px;height:60px"></em>` + [[20, 'p1', .8], [42, 'p2', .6], [64, 'p3', .9]].map(([y, p, t], i) => `${vtB('vm-ln s', `left:38%;top:${y}px;width:54%;height:6px`)}${vtB('vm-ac vm-fill', `left:38%;top:${y}px;width:calc(54% * var(--${p}));height:6px;border-radius:99px;transform-origin:left;--vm-a:vm-gx;--vm-d:${.2 + i * .15}s`)}${vtI('vm-tick', `left:calc(38% + 54% * ${t} - 1px);top:${y - 3}px`)}`).join('')],
-  14: ['pick', `<div class="vm-heat" style="left:6%;right:6%;top:12px;bottom:12px">${[.2, .35, .5, .3, .62, .8, .45, .25, .4, .55, .7, .9, .6, .35, .5, .3, .15, .3, .45, .6, .75, 1, .55, .4].map(h => `<i data-p style="--h:${h};--vm-a:vm-heat;--vm-d:${(h * 1.1).toFixed(2)}s"></i>`).join('')}</div>`],
+  14: ['pick', `<span class="vm-heat" style="left:6%;right:6%;top:12px;bottom:12px">${[.2, .35, .5, .3, .62, .8, .45, .25, .4, .55, .7, .9, .6, .35, .5, .3, .15, .3, .45, .6, .75, 1, .55, .4].map(h => `<i data-p style="--h:${h};--vm-a:vm-heat;--vm-d:${(h * 1.1).toFixed(2)}s"></i>`).join('')}</span>`],
   15: ['', [.42, .55, .48, .92, .6, .5, .38].map((h, i) => vtB('vm-br' + (i === 3 ? ' vm-hb' : ' vm-dim2'), `left:${8 + i * 12.4}%;width:8%;height:${Math.round(h * 58)}px;--vm-a:${i === 3 ? 'vm-glowb' : 'vm-dimb'}`)).join('') + `<em class="vm-tag" style="left:calc(${(8 + 3 * 12.4 + 4).toFixed(1)}% - 21px);top:4px">+58%</em>`],
   16: ['', [.35, .45, .5, .62, .72, .9].map((h, i) => vtB('vm-br' + (i === 5 ? ' vm-hb' : ''), `left:${7 + i * 14.5}%;width:9%;height:${Math.round(h * 56)}px;--vm-a:vm-gy;--vm-d:${i * .1}s`)).join('') + `<svg class="vm-line" viewBox="0 0 100 92" preserveAspectRatio="none" style="left:0;top:0;width:100%;height:100%"><path d="M11.5 50 L26 44.8 L40.5 42 L55 35.3 L69.5 29.7 L84 19.6" pathLength="100" style="--vm-a:vm-draw;--vm-d:.7s"/></svg>` + [50, 44.8, 42, 35.3, 29.7, 19.6].map((y, i) => vtI('vm-pt', `left:calc(${11.5 + i * 14.5}% - 3.5px);top:${y - 3.5}px;--vm-a:vm-pop;--vm-d:${1 + i * .08}s`)).join('')],
   17: ['', `<svg class="vm-bpmn" viewBox="0 0 300 88" style="inset:0;width:100%;height:100%"><path class="ln" d="M35 44H62M120 44H136M164 44H186M244 44H265"/><circle class="ev" cx="26" cy="44" r="9"/><rect class="tk" x="62" y="30" width="58" height="28" rx="7"/><rect class="lb" x="71" y="41" width="36" height="5" rx="2.5"/><path class="gw" d="M150 30L164 44L150 58L136 44Z" style="--vm-a:vm-gwf"/><rect class="tk" x="186" y="30" width="58" height="28" rx="7"/><rect class="lb" x="195" y="41" width="40" height="5" rx="2.5"/><circle class="ev end" cx="274" cy="44" r="9"/><circle class="tok" cx="26" cy="44" r="5" style="--vm-a:vm-tok"/></svg>`],
   18: ['', `<svg class="vm-conn" viewBox="0 0 300 88" style="inset:0;width:100%;height:100%">${['M62 24C95 24 95 44 128 44', 'M62 64C95 64 95 44 128 44', 'M172 44C205 44 205 24 238 24', 'M172 44C205 44 205 64 238 64'].map(d => `<path class="bs" d="${d}"/><path class="fl" d="${d}" style="--vm-a:vm-dash;--vm-t:1s;--vm-e:linear"/>`).join('')}${[[18, 14, 44, 20], [18, 54, 44, 20], [128, 32, 44, 24, 1], [238, 14, 44, 20], [238, 54, 44, 20]].map(([x, y, w, h, c]) => `<rect class="nd${c ? ' core' : ''}" x="${x}" y="${y}" width="${w}" height="${h}" rx="${h / 2}"/>`).join('')}</svg>`],
   19: ['spawn', `${vtI('vm-map', 'inset:0')}${[[18, 24], [32, 62], [82, 26], [72, 66]].map(([x, y]) => vtI('vm-dt vm-nd', `left:${x}%;top:${y}px`)).join('')}${vtI('vm-pg', 'left:52%;top:46px;--vm-a:vm-ping;--vm-t:2s')}${vtI('vm-pg', 'left:52%;top:46px;--vm-a:vm-ping;--vm-t:2s;--vm-d:1s')}${vtI('vm-dt vm-bc', 'left:52%;top:46px')}<b class="vm-cd vm-abs" style="left:calc(52% + 16px);top:14px;width:28%;height:22px">${vtI('vm-ln', 'left:8px;top:6px;width:60%;height:4px')}${vtI('vm-ln s', 'left:8px;top:13px;width:40%;height:3px')}</b>`],
   20: ['cyc 2 0', `<b class="vm-cd vm-rc vm-abs" style="left:7%;top:16px;width:56%;height:60px">${vtI('vm-ac', 'left:10px;top:12px;width:14px;height:14px;border-radius:4px')}${vtB('vm-ln', 'left:10px;top:34px;width:62%;height:6px')}${vtB('vm-ln s', 'left:10px;top:46px;width:40%;height:4px')}${vtI('vm-wave', 'left:58%;top:30px;--vm-a:vm-wave')}</b>${vtB('vm-cd', 'left:67%;top:16px;width:26%;height:60px;opacity:.55')}${vtI('vm-cur', 'left:calc(7% + 56% * .58);top:46px;--vm-a:vm-tap')}`],
-  21: ['', [6, 36.5, 67].map((x, i) => `<div class="vm-flip" style="left:${x}%;top:14px;width:27%;height:64px"><i class="vm-fin${i === 1 ? ' on' : ''}" style="--vm-a:vm-flipc;--vm-d:${i * .3}s"><b class="f vm-abs">${vtI('vm-ln s', 'left:9px;top:10px;width:46%;height:4px')}${vtI('vm-ln', 'left:9px;top:24px;width:40%;height:10px;opacity:.6')}</b><b class="b vm-abs">${vtI('vm-ln', 'left:9px;top:10px;width:46%;height:4px;opacity:.8')}${vtI('vm-ln', 'left:9px;top:24px;width:52%;height:10px')}</b></i></div>`).join('')],
-  22: ['cyc 3 0', `<div class="vm-acc" style="left:8%;right:8%;top:8px;bottom:8px">${[0, 1, 2].map(r => `<b class="r vm-abs" style="--vm-a:vm-accx;--vm-d:${[0, -2.4, -1.2][r]}s">${vtI('vm-ln', `left:10px;top:5px;width:${[46, 38, 52][r]}%;height:6px`)}${vtI('chv', '')}${vtI('vm-ln s', 'left:10px;top:18px;width:70%;height:4px')}${vtI('vm-ln s', 'left:10px;top:26px;width:52%;height:4px')}</b>`).join('')}</div>`],
-  23: ['cyc 2 1', `${[[6, 12], [37, 12], [68, 12], [6, 50], [37, 50], [68, 50]].map(([x, y]) => vtB('vm-cd', `left:${x}%;top:${y}px;width:26%;height:30px`)).join('')}${vtI('vm-dim', 'inset:0;--vm-a:vm-dimm')}<div class="vm-modal vm-abs" style="left:calc(50% - 62px);top:12px;width:124px;height:68px;--vm-a:vm-modal">${vtB('vm-ln', 'left:10px;top:10px;width:58%;height:7px')}${vtB('vm-ln s', 'left:10px;top:23px;width:78%;height:4px')}${[[.8, 33], [.55, 41], [.35, 49]].map(([w, y]) => `${vtB('vm-ln s', `left:10px;top:${y}px;width:calc(100% - 20px);height:4px;opacity:.5`)}${vtB('vm-ac', `left:10px;top:${y}px;width:calc((100% - 20px) * ${w});height:4px;border-radius:99px`)}`).join('')}${vtI('vm-x', '')}</div>`],
+  21: ['', [6, 36.5, 67].map((x, i) => `<span class="vm-flip" style="left:${x}%;top:14px;width:27%;height:64px"><i class="vm-fin${i === 1 ? ' on' : ''}" style="--vm-a:vm-flipc;--vm-d:${i * .3}s"><b class="f vm-abs">${vtI('vm-ln s', 'left:9px;top:10px;width:46%;height:4px')}${vtI('vm-ln', 'left:9px;top:24px;width:40%;height:10px;opacity:.6')}</b><b class="b vm-abs">${vtI('vm-ln', 'left:9px;top:10px;width:46%;height:4px;opacity:.8')}${vtI('vm-ln', 'left:9px;top:24px;width:52%;height:10px')}</b></i></span>`).join('')],
+  22: ['cyc 3 0', `<span class="vm-acc" style="left:8%;right:8%;top:8px;bottom:8px">${[0, 1, 2].map(r => `<b class="r vm-abs" style="--vm-a:vm-accx;--vm-d:${[0, -2.4, -1.2][r]}s">${vtI('vm-ln', `left:10px;top:5px;width:${[46, 38, 52][r]}%;height:6px`)}${vtI('chv', '')}${vtI('vm-ln s', 'left:10px;top:18px;width:70%;height:4px')}${vtI('vm-ln s', 'left:10px;top:26px;width:52%;height:4px')}</b>`).join('')}</span>`],
+  23: ['cyc 2 1', `${[[6, 12], [37, 12], [68, 12], [6, 50], [37, 50], [68, 50]].map(([x, y]) => vtB('vm-cd', `left:${x}%;top:${y}px;width:26%;height:30px`)).join('')}${vtI('vm-dim', 'inset:0;--vm-a:vm-dimm')}<span class="vm-modal vm-abs" style="left:calc(50% - 62px);top:12px;width:124px;height:68px;--vm-a:vm-modal">${vtB('vm-ln', 'left:10px;top:10px;width:58%;height:7px')}${vtB('vm-ln s', 'left:10px;top:23px;width:78%;height:4px')}${[[.8, 33], [.55, 41], [.35, 49]].map(([w, y]) => `${vtB('vm-ln s', `left:10px;top:${y}px;width:calc(100% - 20px);height:4px;opacity:.5`)}${vtB('vm-ac', `left:10px;top:${y}px;width:calc((100% - 20px) * ${w});height:4px;border-radius:99px`)}`).join('')}${vtI('vm-x', '')}</span>`],
   24: ['', `${vtB('vm-ln s', 'left:6%;top:14px;width:40%;height:6px')}${[6, 29.5, 53, 76.5].map((x, i) => vtB('vm-cd' + (i === 2 ? ' vm-hot' : ''), `left:${x}%;top:36px;width:17.5%;height:26px`)).join('')}${vtI('vm-spot', 'left:-100%;width:300%;top:0;bottom:0;--vm-a:vm-spotm')}`],
   25: ['', `${vtI('vm-field', 'left:calc(50% - 50px);top:-4px;width:100px;height:100px')}<b class="vm-mag vm-abs vm-p vm-hit" style="left:calc(50% - 46px);top:31px;width:92px;height:30px;--vm-a:vm-magp;--vm-h:vm-press">${vtI('vm-ln', 'left:16px;top:12px;width:42px;height:6px;background:#fff')}${vtI('arr', 'right:14px;top:11px')}</b>`],
   26: ['cyc 4 2', `<b class="vm-sw" style="left:8%;top:17px"><i></i></b>${vtB('vm-ln s', 'left:calc(8% + 46px);top:24px;width:34%;height:5px')}<b class="vm-ck" style="left:8%;top:54px"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7" pathLength="100"/></svg></b>${vtB('vm-ln s', 'left:calc(8% + 46px);top:61px;width:40%;height:5px')}<b class="vm-star" style="right:9%;top:calc(50% - 18px);--vm-a:vm-beat"><svg viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 17l-5.4 3 1.2-6-4.5-4.2 6.1-.7z"/></svg></b>`],
-  27: ['', `${vtI('vm-track', 'right:7px;top:10px;height:72px')}${vtI('vm-thumb', 'right:7px;top:10px;--vm-a:vm-thumb')}${[12, 37, 62].map((y, i) => `<div class="vm-row" style="left:7%;right:12%;top:${y}px;height:20px;--vm-a:vm-rise;--vm-d:${.15 + i * .25}s"><i class="vm-dt vm-ac"></i><b class="vm-ln" style="width:${[42, 34, 48][i]}%"></b><b class="vm-ln s" style="width:${[20, 26, 16][i]}%;margin-left:auto"></b></div>`).join('')}`],
-  28: ['cyc 4 0', `<div class="vm-stv" style="left:6%;top:10px;width:40%;height:72px">${[0, 1, 2, 3].map(i => `<i class="b" style="left:${12 + i * 21}%;height:var(--h${i})"></i>`).join('')}<span class="vm-phd"><i></i><i></i><i></i><i></i></span></div><div class="vm-stt" style="left:52%;right:6%;top:0;bottom:0"><div class="in">${[60, 48, 66, 54].map(w => `<div><b class="vm-ln" style="width:${w}%;height:6px"></b><b class="vm-ln s" style="width:88%;height:4px"></b><b class="vm-ln s" style="width:64%;height:4px"></b></div>`).join('')}</div></div>`],
+  27: ['', `${vtI('vm-track', 'right:7px;top:10px;height:72px')}${vtI('vm-thumb', 'right:7px;top:10px;--vm-a:vm-thumb')}${[12, 37, 62].map((y, i) => `<span class="vm-row" style="left:7%;right:12%;top:${y}px;height:20px;--vm-a:vm-rise;--vm-d:${.15 + i * .25}s"><i class="vm-dt vm-ac"></i><b class="vm-ln" style="width:${[42, 34, 48][i]}%"></b><b class="vm-ln s" style="width:${[20, 26, 16][i]}%;margin-left:auto"></b></span>`).join('')}`],
+  28: ['cyc 4 0', `<span class="vm-stv" style="left:6%;top:10px;width:40%;height:72px">${[0, 1, 2, 3].map(i => `<i class="b" style="left:${12 + i * 21}%;height:var(--h${i})"></i>`).join('')}<span class="vm-phd"><i></i><i></i><i></i><i></i></span></span><span class="vm-stt" style="left:52%;right:6%;top:0;bottom:0"><span class="in">${[60, 48, 66, 54].map(w => `<span><b class="vm-ln" style="width:${w}%;height:6px"></b><b class="vm-ln s" style="width:88%;height:4px"></b><b class="vm-ln s" style="width:64%;height:4px"></b></span>`).join('')}</span></span>`],
   29: ['cyc 3 2', `<svg class="vm-mnet" viewBox="0 0 180 92" style="left:calc(50% - 90px);top:0;width:180px;height:92px"><path d="M90 46L22 20M90 46L22 72M90 46L158 20M90 46L158 72"/><circle cx="22" cy="20" r="6"/><circle cx="22" cy="72" r="6"/><circle cx="158" cy="20" r="6"/><circle cx="158" cy="72" r="6"/></svg>${vtI('vm-morph', 'left:calc(50% - 26px);top:20px;width:52px;height:52px;--vm-a:vm-morph;--vm-t:4.8s')}`],
   30: ['', (() => {
     const P = [[18, 20], [52, 10], [84, 30], [122, 14], [160, 28], [204, 12], [246, 24], [284, 10], [30, 62], [70, 76], [110, 60], [150, 78], [196, 64], [236, 80], [278, 58], [96, 40], [184, 46], [262, 42]];
@@ -102,12 +105,12 @@ const VT_MINI = {
     return `<svg class="vm-pts" viewBox="0 0 300 92" preserveAspectRatio="xMidYMid slice" style="inset:0;width:100%;height:100%"><path d="${ln}"/>${P.map(([x, y], i) => `<circle cx="${x}" cy="${y}" r="${i % 4 ? 1.6 : 2.6}" style="--vm-a:vm-blink;--vm-d:-${(i * .37).toFixed(2)}s"/>`).join('')}</svg>${vtB('vm-ln', 'left:calc(50% - 50px);top:36px;width:100px;height:9px')}${vtB('vm-ln s', 'left:calc(50% - 30px);top:52px;width:60px;height:4px')}`;
   })()],
   31: ['cyc 2 0', `${vtB('vm-sk vm-img', 'left:7%;top:14px;width:22%;height:64px')}${vtB('vm-sk', 'left:35%;top:18px;width:46%;height:9px')}${vtB('vm-sk', 'left:35%;top:34px;width:56%;height:6px')}${vtB('vm-sk', 'left:35%;top:46px;width:38%;height:6px')}${vtB('vm-sk vm-pl', 'left:35%;top:62px;width:22%;height:12px')}${vtI('vm-shim', 'top:0;bottom:0;left:0;width:34%;--vm-a:vm-sweep;--vm-t:1.6s')}`],
-  32: ['cyc 2 0', `${vtI('vm-orbit', '')}${vtI('vm-core', 'left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px')}<div class="vm-orbw" style="left:50%;top:50%"><div class="vm-orb" style="--vm-a:vm-spin;--vm-t:10s;--vm-e:linear">${[0, 72, 144, 216, 288].map(r => `<i style="--r:${r}deg"></i>`).join('')}</div></div>`],
+  32: ['cyc 2 0', `${vtI('vm-orbit', '')}${vtI('vm-core', 'left:calc(50% - 17px);top:calc(50% - 17px);width:34px;height:34px')}<span class="vm-orbw" style="left:50%;top:50%"><span class="vm-orb" style="--vm-a:vm-spin;--vm-t:10s;--vm-e:linear">${[0, 72, 144, 216, 288].map(r => `<i style="--r:${r}deg"></i>`).join('')}</span></span>`],
   33: ['', `${vtB('vm-cd', 'left:calc(50% - 52px);top:28px;width:104px;height:54px;transform:translateY(-14px) scale(.86);opacity:.6')}${vtB('vm-cd', 'left:calc(50% - 52px);top:28px;width:104px;height:54px;transform:translateY(-7px) scale(.93);opacity:.85')}<b class="vm-cd vm-topc vm-abs" style="left:calc(50% - 52px);top:28px;width:104px;height:54px;--vm-a:vm-swipe">${vtI('vm-ln s', 'left:10px;top:9px;width:30%;height:4px')}${vtI('vm-ln', 'left:10px;top:20px;width:58%;height:8px')}${vtI('vm-ln s', 'left:10px;top:34px;width:72%;height:4px')}</b>`],
-  34: ['cyc 4 1', `<div class="vm-car" style="left:50%;top:12px;height:58px">${[0, 1, 2, 3, 4].map(() => `<b class="vm-cd vm-abs">${vtI('vm-ac', 'left:9px;top:9px;width:10px;height:10px;border-radius:3px')}${vtI('vm-ln', 'left:9px;top:26px;width:62%;height:6px')}${vtI('vm-ln s', 'left:9px;top:37px;width:44%;height:4px')}</b>`).join('')}</div><div class="vm-dots" style="left:calc(50% - 25px);bottom:9px"><i></i><i></i><i></i><i></i></div>`],
-  35: ['', `<div class="vm-mx" style="left:10%;right:6%;top:8px;bottom:12px"><i></i><i></i><i></i><i></i></div>${vtI('vm-ln s', 'left:4%;top:calc(50% - 14px);width:3px;height:28px')}${vtI('vm-bub', 'left:28%;top:26px')}${vtI('vm-bub b2', 'left:70%;top:24px')}${vtI('vm-bub b2', 'left:66%;top:58px')}${vtI('vm-bub vm-hb2', 'left:36%;top:58px;--vm-a:vm-mxm')}`],
+  34: ['cyc 4 1', `<span class="vm-car" style="left:50%;top:12px;height:58px">${[0, 1, 2, 3, 4].map(() => `<b class="vm-cd vm-abs">${vtI('vm-ac', 'left:9px;top:9px;width:10px;height:10px;border-radius:3px')}${vtI('vm-ln', 'left:9px;top:26px;width:62%;height:6px')}${vtI('vm-ln s', 'left:9px;top:37px;width:44%;height:4px')}</b>`).join('')}</span><span class="vm-dots" style="left:calc(50% - 25px);bottom:9px"><i></i><i></i><i></i><i></i></span>`],
+  35: ['', `<span class="vm-mx" style="left:10%;right:6%;top:8px;bottom:12px"><i></i><i></i><i></i><i></i></span>${vtI('vm-ln s', 'left:4%;top:calc(50% - 14px);width:3px;height:28px')}${vtI('vm-bub', 'left:28%;top:26px')}${vtI('vm-bub b2', 'left:70%;top:24px')}${vtI('vm-bub b2', 'left:66%;top:58px')}${vtI('vm-bub vm-hb2', 'left:36%;top:58px;--vm-a:vm-mxm')}`],
   36: ['pick', `${vtB('vm-ln s', 'left:14%;right:22%;top:63px;height:2px')}${[14, 46, 78].map((x, i) => `<b class="vm-node${i === 1 ? ' is-pk' : ''}" data-p style="left:calc(${x}% - 8px);top:56px">${vtI('vm-pg2', `--vm-a:vm-ping;--vm-t:2.4s;--vm-d:${i * .8}s`)}<em class="vm-tip">${vtI('vm-ln', 'width:60%;height:5px')}${vtI('vm-ln s', 'width:84%;height:4px')}${vtI('vm-ln s', 'width:46%;height:4px')}</em></b>`).join('')}`],
-  37: ['', `<div class="vm-ba-a vm-abs" style="inset:0">${[.36, .5, .64, 1].map((h, i) => vtB('vm-br' + (i === 3 ? ' vm-hb' : ''), `left:${58 + i * 9}%;width:6%;height:${Math.round(h * 34)}px`)).join('')}<em class="vm-num" style="right:8%;top:12px">+38%</em></div><div class="vm-ba-b vm-abs" style="inset:0;--vm-a:vm-bab">${[16, 28, 40, 52, 64].map((y, i) => vtB('vm-ln', `left:8%;top:${y}px;width:${[40, 34, 38, 30, 36][i]}%;height:4px`)).join('')}</div>${vtI('vm-ba-l', 'top:0;bottom:0;left:50%;--vm-a:vm-bal')}`],
+  37: ['', `<span class="vm-ba-a vm-abs" style="inset:0">${[.36, .5, .64, 1].map((h, i) => vtB('vm-br' + (i === 3 ? ' vm-hb' : ''), `left:${58 + i * 9}%;width:6%;height:${Math.round(h * 34)}px`)).join('')}<em class="vm-num" style="right:8%;top:12px">+38%</em></span><span class="vm-ba-b vm-abs" style="inset:0;--vm-a:vm-bab">${[16, 28, 40, 52, 64].map((y, i) => vtB('vm-ln', `left:8%;top:${y}px;width:${[40, 34, 38, 30, 36][i]}%;height:4px`)).join('')}</span>${vtI('vm-ba-l', 'top:0;bottom:0;left:50%;--vm-a:vm-bal')}`],
   38: ['cyc 4 1', `${vtI('vm-tl', 'left:8%;right:8%;top:52px')}${vtI('vm-tlp', 'left:8%;top:52px;--vm-a:vm-gx')}${[0, 1, 2, 3].map(i => `${vtB('vm-ms', `left:calc(8% + 84% * ${(i / 3).toFixed(4)} - 6px);top:46px;--vm-a:vm-pop;--vm-d:${(.2 + i * .35).toFixed(2)}s`)}${vtI('vm-ln s', `left:calc(8% + 84% * ${(i / 3).toFixed(4)} - ${i === 0 ? 4 : i === 3 ? 28 : 16}px);top:${i % 2 ? 66 : 22}px;width:32px;height:5px`)}${vtI('vm-ln s', `left:calc(8% + 84% * ${(i / 3).toFixed(4)} - ${i === 0 ? 4 : i === 3 ? 18 : 11}px);top:${i % 2 ? 75 : 31}px;width:22px;height:3px;opacity:.6`)}`).join('')}`],
   39: ['net', (() => {
     const N = [[36, 26], [96, 64], [92, 16], [150, 40], [206, 70], [214, 22], [264, 46], [150, 80]];
@@ -123,7 +126,36 @@ function vtMiniHTML(n) {
   const [k, cnt, s0] = mode.split(' ');
   const st = k === 'cyc' ? ` data-n="${cnt}" data-s="${s0}"` : '';
   const pk = (k === 'pick' || k === 'net') && /is-pk/.test(html) ? ' has-pk' : '';
-  return `<div class="vt-mini m${n}${pk}" aria-hidden="true" data-k="${k || ''}"${st}>${html}</div>`;
+  return `<span class="vt-mini m${n}${pk}" aria-hidden="true" data-k="${k || ''}"${st}>${html}</span>`;
+}
+/* O que o clique numa prévia fez, dito ao leitor de tela (a prévia é decorativa).
+   cyc: um texto por estado · pick/net: (índice, aceso?) => texto · os demais: um texto. */
+const vtOrd = i => ['primeiro', 'segundo', 'terceiro', 'quarto'][i] || `${i + 1}º`;
+const VT_MINI_SAY = {
+  4: ['camadas juntas', 'camadas afastadas, com mais profundidade'],
+  5: (i, on) => on ? `${vtOrd(i)} card elevado` : 'todos os cards no chão',
+  7: ['vidro desfocado', 'vidro nítido'],
+  8: ['paleta 1 de 3', 'paleta 2 de 3', 'paleta 3 de 3'],
+  13: ['progresso em 72%', 'progresso em 48%', 'progresso em 94%'],
+  14: (i, on) => on ? `célula ${i + 1} de 24 em destaque` : 'mapa inteiro aceso',
+  19: 'um novo pulso foi solto',
+  20: ['onda solta', 'card tocado e selecionado'],
+  22: ['primeiro card aberto', 'segundo card aberto', 'terceiro card aberto'],
+  23: ['modal fechado', 'modal aberto, fundo escurecido'],
+  26: ['tudo desligado', 'chave ligada', 'item marcado', 'favorito salvo'],
+  28: ['fase 1 de 4', 'fase 2 de 4', 'fase 3 de 4', 'fase 4 de 4'],
+  29: ['círculo', 'losango', 'rede'],
+  31: ['carregando, com brilho', 'conteúdo carregado'],
+  32: ['órbita fechada', 'órbita aberta'],
+  34: ['card 1 de 4 no centro', 'card 2 de 4 no centro', 'card 3 de 4 no centro', 'card 4 de 4 no centro'],
+  36: (i, on) => on ? `${vtOrd(i)} detalhe aberto` : 'detalhes fechados',
+  38: ['marco 1 de 4', 'marco 2 de 4', 'marco 3 de 4', 'marco 4 de 4'],
+  39: (i, on, nb) => on ? `nó ${i + 1} aceso com ${nb} vizinhos` : 'rede em repouso'
+};
+function vtMiniSay(n, name, s, on, nb) {
+  const t = VT_MINI_SAY[n];
+  const what = typeof t === 'function' ? t(s, on, nb) : Array.isArray(t) ? t[s] : t || 'a prévia rodou de novo';
+  return `${name}: ${what}.`;
 }
 
 const VT_DEMO = {};
@@ -192,10 +224,15 @@ function bootVitrine() {
   if (REDUCED) sec.classList.add('vt-reduced');
   const live = {};
   $$('.vt-card', sec).forEach(c => c.dataset.fx.split(' ').forEach(n => { live[n] = c; }));
+  /* aviso para leitor de tela (região viva da seção) */
+  const status = $('#vt-status', sec);
+  let sayT = 0;
+  const say = t => { status.textContent = ''; clearTimeout(sayT); sayT = setTimeout(() => { status.textContent = t; }, 30); };
   vtCatalog(sec, live);
-  vtFilter(sec);
-  vtDemos(sec);
-  vtMinis(sec);
+  vtFilter(sec, say);
+  vtDemos(sec, say);
+  vtMinis(sec, say);
+  vtCatEditor(sec, say, live);
   vtRipples(sec);
 }
 
@@ -217,23 +254,30 @@ function vtRipples(sec) {
   });
 }
 
-/* · Catálogo · */
+/* · Catálogo ·
+   Cada item é um botão só com conteúdo de frase (spans): o nome acessível é o número e o
+   nome do efeito; o resumo, a dose e a instrução vão na descrição. O invólucro .vt-item-rv
+   entra no Scroll Reveal reversível (o li fica livre para o pulo do filtro). */
 function vtCatalog(sec, live) {
   const ul = $('#vt-cat', sec);
-  VT_FX.forEach(([n, name, fam, ints, dose, sum]) => {
+  VT_FX.forEach(([n, name, fam, ints, dose, sum], i) => {
     const li = el('li'); li.dataset.intents = ints;
-    const card = live[n];
+    const rv = el('div', 'vt-item-rv'); rv.dataset.rv = 'card'; rv.style.setProperty('--rv-i', i % 4);
+    const card = live[n], id = 'vt-i' + n;
     const it = el('button', 'vt-item'); it.type = 'button'; it.dataset.n = n;
+    it.setAttribute('aria-labelledby', `${id}-n ${id}-t`); it.setAttribute('aria-describedby', `${id}-s ${id}-h`);
     it.insertAdjacentHTML('beforeend', vtMiniHTML(n));
-    const top = el('div', 'vt-item-top');
-    top.append(el('span', 'vt-item-n', String(n).padStart(2, '0')), el('span', 'vt-item-c', fam));
+    const top = el('span', 'vt-item-top');
+    const num = el('span', 'vt-item-n', String(n).padStart(2, '0')); num.id = id + '-n';
+    top.append(num, el('span', 'vt-item-c', fam));
     if (card) top.append(el('span', 'vt-live', 'Ao vivo'));
-    const d = el('span', 'vt-dose');
-    d.setAttribute('role', 'img'); d.setAttribute('aria-label', `Dose de movimento ${dose} de 3`);
-    for (let i = 1; i <= 3; i++) d.append(el('i', i <= dose ? 'on' : ''));
+    const d = el('span', 'vt-dose'); d.setAttribute('aria-hidden', 'true');
+    for (let k = 1; k <= 3; k++) d.append(el('i', k <= dose ? 'on' : ''));
     top.append(d);
-    it.append(top, el('p', 'vt-item-t', name), el('p', 'vt-item-s', sum));
-    it.append(el('span', 'sr-only', card ? 'Ir para a demonstração ao vivo e editável.' : 'Clique para mexer na prévia.'));
+    const t = el('span', 'vt-item-t', name); t.id = id + '-t';
+    const s = el('span', 'vt-item-s', sum); s.id = id + '-s';
+    const h = el('span', 'sr-only', `Dose de movimento ${dose} de 3. ${card ? 'Ao vivo: leva à demonstração editável no palco.' : 'Clique para mexer na prévia.'}`); h.id = id + '-h';
+    it.append(top, t, s, h);
     if (card) {
       it.dataset.live = '1';
       it.addEventListener('click', () => {
@@ -244,12 +288,80 @@ function vtCatalog(sec, live) {
         clearTimeout(card._ping); card._ping = setTimeout(() => card.classList.remove('is-ping'), 1800);
       });
     }
-    li.append(it); ul.append(li);
+    /* Editar efeito: irmão do botão do item (nunca dentro dele), numa faixa no pé do item.
+       Nos ao vivo leva ao painel do card no palco; nos outros abre o editor da prévia. */
+    const ed = el('button', 'btn btn-ghost btn-xs vt-edit vt-item-ed'); ed.type = 'button'; ed.dataset.n = n;
+    ed.setAttribute('aria-label', `Editar efeito: ${name}`);
+    if (!card) ed.setAttribute('aria-haspopup', 'dialog');
+    ed.innerHTML = '<svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span>';
+    rv.append(it, ed); li.append(rv); ul.append(li);
   });
 }
 
+/* · Estado de uma prévia · cyc: o índice em data-s · pick/net: o item aceso (-1 = nenhum).
+   Os que não têm estado devolvem null. vtMiniState aplica um estado e devolve, na rede, quantos
+   vizinhos acenderam. */
+function vtMiniGet(m) {
+  const k = m.dataset.k;
+  if (k === 'cyc') return +m.dataset.s;
+  if (k === 'pick' || k === 'net') return $$('[data-p]', m).findIndex(x => x.classList.contains('is-pk'));
+  return null;
+}
+function vtMiniState(m, i) {
+  const k = m.dataset.k;
+  if (k === 'cyc') { m.dataset.s = i; return 0; }
+  if (k !== 'pick' && k !== 'net') return 0;
+  const ps = $$('[data-p]', m), on = i >= 0, p = ps[i];
+  ps.forEach(x => x.classList.toggle('is-pk', x === p));
+  m.classList.toggle('has-pk', on);
+  let cnt = 0;
+  if (k === 'net') {
+    const id = on ? p.dataset.p : null, nb = new Set();
+    $$('line', m).forEach(l => { const ends = l.dataset.e.split(' '), hit = on && ends.includes(id); l.classList.toggle('on', hit); if (hit) ends.forEach(x => nb.add(x)); });
+    ps.forEach(x => { const v = nb.has(x.dataset.p) && x !== p; x.classList.toggle('nb', v); if (v) cnt++; });
+  }
+  return cnt;
+}
+/* valor digitado no editor que um estado novo substitui (o progresso do 13 volta ao do estado) */
+const VT_MINI_VALS = ['--p0', '--p1', '--p2', '--p3'];
+/* O clique numa prévia (no catálogo ou ampliada no editor): alterna, escolhe, solta um pulso ou
+   repete, e diz o que fez na região viva. Devolve o estado novo, ou null se a prévia não tem estado.
+   A prévia pode estar ampliada (transform): as contas de posição voltam à escala dela. */
+function vtMiniHit(m, e, kb, n, name, say) {
+  if ($('.vm-hit', m)) vtKick(m, 'is-hit', 1000);
+  const k = m.dataset.k;
+  if (k === 'cyc') {
+    const s = (+m.dataset.s + 1) % +m.dataset.n;
+    VT_MINI_VALS.forEach(v => m.style.removeProperty(v));
+    vtMiniState(m, s); say(vtMiniSay(n, name, s)); return s;
+  }
+  if (k === 'pick' || k === 'net') {
+    const ps = $$('[data-p]', m);
+    let p = kb ? null : e.target.closest('[data-p]');
+    if (p && !m.contains(p)) p = null;
+    if (!p) { const i = ps.findIndex(x => x.classList.contains('is-pk')); p = ps[(i + 1) % ps.length]; }
+    const on = !p.classList.contains('is-pk'), i = on ? ps.indexOf(p) : -1;
+    const cnt = vtMiniState(m, i);
+    say(vtMiniSay(n, name, ps.indexOf(p), on, cnt));
+    return i;
+  }
+  say(vtMiniSay(n, name));
+  if (k === 'spawn') {
+    const r = m.getBoundingClientRect(), sc = r.width / (m.offsetWidth || r.width);
+    const w = r.width / sc, h = r.height / sc;
+    const x = kb ? w * (.2 + Math.random() * .6) : (e.clientX - r.left) / sc, y = kb ? h * (.3 + Math.random() * .4) : (e.clientY - r.top) / sc;
+    if (x < 0 || y < 0 || x > w || y > h) return null;
+    const g = el('i', 'vm-pg vm-sp'); g.style.cssText = `left:${x}px;top:${y}px`;
+    const g2 = el('i', 'vm-pg vm-sp d2'); g2.style.cssText = g.style.cssText;
+    const dt = el('i', 'vm-dt vm-bc vm-sp'); dt.style.cssText = g.style.cssText;
+    m.append(g, g2, dt);
+    setTimeout(() => { g.remove(); g2.remove(); dt.remove(); }, REDUCED ? 900 : 1700);
+  }
+  return null;
+}
+
 /* · Prévias: rodam com o cursor ou o foco, respondem ao clique · */
-function vtMinis(sec) {
+function vtMinis(sec, say) {
   const items = $$('.vt-item', sec);
   const play = (m, on) => m.classList.toggle('is-play', on && !REDUCED);
   const restart = m => { if (REDUCED) return; m.classList.remove('is-play'); void m.offsetWidth; m.classList.add('is-play'); };
@@ -273,36 +385,9 @@ function vtMinis(sec) {
     it.addEventListener('blur', () => { if (!hov) play(m, false); });
     if (it.dataset.live) return;
     it.addEventListener('click', e => {
-      const kb = e.detail === 0;
       restart(m);
       if (!hov) { clearTimeout(tap); tap = setTimeout(() => { if (!hov && document.activeElement !== it) play(m, false); }, 4200); }
-      if ($('.vm-hit', m)) vtKick(m, 'is-hit', 1000);
-      const k = m.dataset.k;
-      if (k === 'cyc') { m.dataset.s = (+m.dataset.s + 1) % +m.dataset.n; return; }
-      if (k === 'pick' || k === 'net') {
-        const ps = $$('[data-p]', m);
-        let p = kb ? null : e.target.closest('[data-p]');
-        if (!p) { const i = ps.findIndex(x => x.classList.contains('is-pk')); p = ps[(i + 1) % ps.length]; }
-        const on = !p.classList.contains('is-pk');
-        ps.forEach(x => x.classList.toggle('is-pk', x === p && on));
-        m.classList.toggle('has-pk', on);
-        if (k === 'net') {
-          const id = p.dataset.p, nb = new Set();
-          $$('line', m).forEach(l => { const ends = l.dataset.e.split(' '), hit = on && ends.includes(id); l.classList.toggle('on', hit); if (hit) ends.forEach(x => nb.add(x)); });
-          ps.forEach(x => x.classList.toggle('nb', nb.has(x.dataset.p) && x !== p));
-        }
-        return;
-      }
-      if (k === 'spawn') {
-        const r = m.getBoundingClientRect();
-        const x = kb ? r.width * (.2 + Math.random() * .6) : e.clientX - r.left, y = kb ? r.height * (.3 + Math.random() * .4) : e.clientY - r.top;
-        if (x < 0 || y < 0 || x > r.width || y > r.height) return;
-        const g = el('i', 'vm-pg vm-sp'); g.style.cssText = `left:${x}px;top:${y}px`;
-        const g2 = el('i', 'vm-pg vm-sp d2'); g2.style.cssText = g.style.cssText;
-        const dt = el('i', 'vm-dt vm-bc vm-sp'); dt.style.cssText = g.style.cssText;
-        m.append(g, g2, dt);
-        setTimeout(() => { g.remove(); g2.remove(); dt.remove(); }, REDUCED ? 900 : 1700);
-      }
+      vtMiniHit(m, e, e.detail === 0, +it.dataset.n, $('.vt-item-t', it).textContent, say);
     });
   });
   /* a primeira vez que o catálogo aparece, cada prévia roda uma vez, em cascata */
@@ -321,10 +406,10 @@ function vtMinis(sec) {
 }
 
 /* · Filtro por intenção (vale para o palco e para o catálogo) · */
-function vtFilter(sec) {
+function vtFilter(sec, say) {
   const chips = $$('.vt-chip', sec), wrap = $('#vt-chips', sec), stage = $('#vt-stage', sec);
-  const cards = $$('.vt-card', sec), items = $$('#vt-cat li', sec);
-  const empty = $('#vt-empty', sec), count = $('#vt-count', sec), status = $('#vt-status', sec);
+  const cards = $$('.vt-card', sec), items = $$('#vt-cat > li', sec), cat = $('#vt-cat', sec);
+  const empty = $('#vt-empty', sec), count = $('#vt-count', sec);
   /* o catálogo abre com 8 itens; o botão + mostra os outros ali mesmo, e o link leva aos planos */
   const SHOW = 8, more = $('#vt-more', sec), moreI = $('span', more), moreT = $('b', more);
   let cur = 'todos', open = false;
@@ -336,6 +421,8 @@ function vtFilter(sec) {
     more.setAttribute('aria-label', open ? 'Mostrar menos efeitos no catálogo' : `Ver mais ${n - SHOW} efeitos no catálogo`);
   };
   const pop = n => { if (REDUCED) return; n.classList.remove('is-in'); void n.offsetWidth; n.classList.add('is-in'); };
+  /* com o Scroll Reveal ligado, quem acaba de aparecer já entra pelo reveal: o pulo fica para quem continua à mostra */
+  const rv = () => !!sec.closest('.rv-on');
   const apply = (k, quiet) => {
     cur = k;
     chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.intent === k)));
@@ -343,39 +430,42 @@ function vtFilter(sec) {
     let nd = 0, ni = 0;
     cards.forEach(c => { const s = ok(c); const was = !c.hidden; c.hidden = !s; if (s) { nd++; if (!quiet || !was) pop(c); } });
     let shown = 0;
-    items.forEach(li => { const s = ok(li); if (s) ni++; const v = s && (open || shown < SHOW); const was = !li.hidden; li.hidden = !v; if (v) { shown++; if (!quiet || !was) pop(li); } });
+    items.forEach(li => { const s = ok(li); if (s) ni++; const v = s && (open || shown < SHOW); const was = !li.hidden; li.hidden = !v; if (v) { shown++; if (was ? !quiet : !rv()) pop(li); } });
     stage.classList.toggle('is-filtered', k !== 'todos');
     stage.hidden = nd === 0;
     empty.hidden = nd !== 0;
     if (!nd) empty.textContent = `Para ${VT_INTENT[k].toLowerCase()}, os efeitos estão no catálogo logo abaixo.`;
     count.textContent = `${shown} de ${ni}`;
     moreSync(ni);
-    status.textContent = k === 'todos' ? `Todos os efeitos: ${ni} no catálogo, ${nd} ao vivo.` : `${VT_INTENT[k]}: ${ni} efeitos no catálogo, ${nd} ao vivo.`;
+    if (!quiet) say(k === 'todos' ? `Todos os efeitos: ${ni} no catálogo, ${nd} ao vivo.` : `${VT_INTENT[k]}: ${ni} efeitos no catálogo, ${nd} ao vivo.`);
   };
   chips.forEach(c => c.addEventListener('click', () => { if (c.getAttribute('aria-pressed') !== 'true') apply(c.dataset.intent); }));
+  /* ao recolher, o catálogo encolhe acima do botão: a página compensa a diferença para o
+     botão ficar no mesmo ponto da tela, logo abaixo dos itens que ficaram */
   more.addEventListener('click', () => {
+    const before = cat.getBoundingClientRect().bottom;
     open = !open; apply(cur, true);
-    status.textContent = open ? `Catálogo aberto: ${count.textContent} efeitos à mostra.` : 'Catálogo recolhido.';
-    if (!open) more.scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' });
+    say(open ? `Catálogo aberto: ${count.textContent} efeitos à mostra.` : `Catálogo recolhido: ${count.textContent} efeitos à mostra.`);
+    if (open) return;
+    const d = cat.getBoundingClientRect().bottom - before;
+    if (d) window.scrollBy({ top: d, behavior: 'instant' });
+    const r = more.getBoundingClientRect();
+    if (r.top < 96 || r.bottom > innerHeight) more.scrollIntoView({ block: 'center', behavior: 'instant' });
   });
   const edge = () => wrap.classList.toggle('at-end', wrap.scrollLeft + wrap.clientWidth >= wrap.scrollWidth - 2);
   wrap.addEventListener('scroll', edge, { passive: true });
   window.addEventListener('resize', edge, { passive: true });
   edge();
-  apply('todos');
+  apply('todos', true);
 }
 
-/* · Painel Editar efeito: monta os controles a partir de demo.fields · */
-function vtEditor(card, d, say) {
-  const btn = $('.vt-edit', card);
-  if (!btn || !d.fields) { if (btn) btn.hidden = true; return; }
-  const meta = $('.vt-meta', card), name = $('h3', card).textContent;
-  const id = btn.getAttribute('aria-controls');
-  const pan = el('div', 'vt-ed'); pan.id = id; pan.hidden = true;
-  pan.setAttribute('role', 'group'); pan.setAttribute('aria-label', `Editar ${name}`);
+/* · Controles do editor: monta a grade a partir de fields; set(k, v) muda o efeito na hora.
+   Serve ao painel dos cards do palco e ao editor das prévias do catálogo. Devolve a grade e,
+   por chave, a função que mostra um valor que mudou por fora. · */
+function vtFieldGrid(id, fields, set) {
   const grid = el('div', 'vt-ed-grid');
   const ctl = {};
-  d.fields.forEach(f => {
+  fields.forEach(f => {
     const row = el('div', 'vt-ed-f vt-ef-' + f.t), fid = `${id}-${f.k}`;
     const lab = el(f.t === 'color' || f.t === 'toggle' ? 'span' : 'label', 'vt-ed-l', f.l);
     lab.id = fid + '-l'; if (lab.tagName === 'LABEL') lab.htmlFor = fid;
@@ -386,10 +476,10 @@ function vtEditor(card, d, say) {
       if (f.t === 'number') { inp.inputMode = f.dec ? 'decimal' : 'numeric'; inp.classList.add('vt-ed-num'); }
       if (f.max && f.t === 'text') inp.maxLength = f.max;
       inp.addEventListener('input', () => {
-        if (f.t === 'text') { d.set(f.k, inp.value); return; }
+        if (f.t === 'text') { set(f.k, inp.value); return; }
         const v = vtNum(inp.value);
         if (!isFinite(v)) return;
-        d.set(f.k, vtClamp(v, f.min, f.max));
+        set(f.k, vtClamp(v, f.min, f.max));
       });
       inp.addEventListener('blur', () => { if (f.t !== 'number') return; const v = vtNum(inp.value); inp.value = vtFmt(isFinite(v) ? vtClamp(v, f.min, f.max) : f.v, f.dec || 0); });
       ctl[f.k] = v => { inp.value = f.t === 'number' ? vtFmt(v, f.dec || 0) : v; };
@@ -401,9 +491,10 @@ function vtEditor(card, d, say) {
       inp.min = f.min; inp.max = f.max; inp.step = f.step; inp.value = f.v;
       const out = el('output', 'vt-ed-out'); out.setAttribute('for', fid); out.setAttribute('aria-hidden', 'true');
       const show = v => { const t = f.fmt ? f.fmt(v) : String(v); out.textContent = t; inp.setAttribute('aria-valuetext', t); inp.style.setProperty('--v', (v - f.min) / (f.max - f.min) * 100 + '%'); };
-      inp.addEventListener('input', () => { const v = +inp.value; show(v); d.set(f.k, v); });
+      inp.addEventListener('input', () => { const v = +inp.value; show(v); set(f.k, v); });
       show(f.v); ctl[f.k] = v => { inp.value = v; show(v); };
-      row.append(inp, out);
+      const box = el('span', 'vt-ed-box'); box.append(inp, out);
+      row.append(box);
     } else if (f.t === 'color') {
       const g = el('div', 'vt-ed-sw'); g.setAttribute('role', 'radiogroup'); g.setAttribute('aria-labelledby', lab.id);
       const bs = VT_SW.map(([nm, hex]) => {
@@ -412,7 +503,7 @@ function vtEditor(card, d, say) {
       });
       const sel = v => bs.forEach(b => { const on = b.dataset.c === v; b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
       bs.forEach((b, i) => {
-        b.addEventListener('click', () => { sel(b.dataset.c); d.set(f.k, b.dataset.c); });
+        b.addEventListener('click', () => { sel(b.dataset.c); set(f.k, b.dataset.c); });
         b.addEventListener('keydown', e => {
           const s = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (!s) return;
           e.preventDefault(); const nb = bs[(i + s + bs.length) % bs.length]; nb.focus(); nb.click();
@@ -423,32 +514,55 @@ function vtEditor(card, d, say) {
       const b = el('button', 'vt-ed-tg'); b.type = 'button'; b.id = fid;
       b.setAttribute('role', 'switch'); b.setAttribute('aria-labelledby', lab.id);
       const sel = v => b.setAttribute('aria-checked', String(!!v));
-      b.addEventListener('click', () => { const v = b.getAttribute('aria-checked') !== 'true'; sel(v); d.set(f.k, v); });
+      b.addEventListener('click', () => { const v = b.getAttribute('aria-checked') !== 'true'; sel(v); set(f.k, v); });
       sel(f.v); ctl[f.k] = sel; row.append(b);
     } else if (f.t === 'add') {
       const inp = el('input', 'vt-ed-in'); inp.id = fid; inp.type = 'text'; inp.placeholder = f.ph || ''; inp.maxLength = f.max || 20;
       inp.autocomplete = 'off'; inp.enterKeyHint = 'done';
       const add = el('button', 'btn btn-ghost btn-xs vt-ed-add'); add.type = 'button';
       add.innerHTML = '<svg aria-hidden="true"><use href="#i-plus"/></svg>Adicionar';
-      const go = () => { const v = inp.value.trim(); if (!v) { inp.focus(); return; } if (d.set(f.k, v) !== false) inp.value = ''; };
+      const go = () => { const v = inp.value.trim(); if (!v) { inp.focus(); return; } if (set(f.k, v) !== false) inp.value = ''; };
       add.addEventListener('click', go);
       inp.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
-      ctl[f.k] = v => { add.disabled = v === 'full'; if (v === '') inp.value = ''; };
+      /* cheia: o campo se apaga e o rótulo diz por quê */
+      ctl[f.k] = v => {
+        const full = v === 'full';
+        add.disabled = inp.disabled = full;
+        if (full || v === '') inp.value = '';
+        lab.textContent = full && f.full ? f.full : f.l;
+        row.classList.toggle('is-full', full);
+      };
       const box = el('span', 'vt-ed-box vt-ed-addbox'); box.append(inp, add);
       row.append(box);
     }
     grid.append(row);
   });
-  const foot = el('div', 'vt-ed-foot');
-  const rst = el('button', 'btn btn-quiet btn-xs vt-ed-reset'); rst.type = 'button';
+  return { grid, ctl };
+}
+
+/* · Painel Editar efeito: monta os controles a partir de demo.fields · */
+function vtEditor(card, d, say) {
+  const btn = $('.vt-edit', card);
+  if (!btn || !d.fields) { if (btn) btn.hidden = true; return; }
+  const meta = $('.vt-meta', card), name = $('h3', card).textContent;
+  const id = btn.getAttribute('aria-controls');
+  const pan = el('div', 'vt-ed'); pan.id = id; pan.hidden = true;
+  pan.setAttribute('role', 'group'); pan.setAttribute('aria-label', `Editar ${name}`);
+  const { grid, ctl } = vtFieldGrid(id, d.fields, (k, v) => d.set(k, v));
+  /* Restaurar fica na linha de ações do card (no lugar de Repetir enquanto o painel está aberto),
+     para o painel caber na área do texto que ele substitui sem mudar a altura do card */
+  const rst = el('button', 'btn btn-ghost btn-xs vt-ed-reset'); rst.type = 'button'; rst.hidden = true;
+  rst.setAttribute('aria-label', `Restaurar o padrão de ${name}`);
   rst.innerHTML = '<svg aria-hidden="true"><use href="#i-restore"/></svg>Restaurar';
   rst.addEventListener('click', () => {
     d.fields.forEach(f => { if (f.t === 'add') { ctl[f.k](''); return; } ctl[f.k](f.v); d.set(f.k, f.v); });
     d.reset?.();
     say(`${name} voltou ao padrão.`);
   });
-  foot.append(el('p', 'vt-ed-note', 'Muda na hora · Esc fecha'), rst);
-  pan.append(grid, foot);
+  btn.after(rst);
+  const note = el('p', 'sr-only', 'Cada controle muda o efeito na hora. Esc fecha o painel.'); note.id = id + '-note';
+  pan.setAttribute('aria-describedby', note.id);
+  pan.append(grid, note);
   meta.append(pan);
   card.addEventListener('vt-sync', e => ctl[e.detail.k]?.(e.detail.v));
 
@@ -456,7 +570,7 @@ function vtEditor(card, d, say) {
   const show = (on, kb) => {
     btn.setAttribute('aria-expanded', String(on));
     card.classList.toggle('is-edit', on);
-    pan.hidden = !on;
+    pan.hidden = !on; rst.hidden = !on;
     txt.textContent = on ? 'Concluir' : 'Editar efeito';
     ico.setAttribute('href', on ? '#i-check' : '#i-sliders');
     if (on) {
@@ -471,10 +585,209 @@ function vtEditor(card, d, say) {
   });
 }
 
-/* · Palco: liga cada demo à tela e ao editor · */
-function vtDemos(sec) {
-  const ctl = new Map(), status = $('#vt-status', sec);
-  const say = t => { status.textContent = ''; setTimeout(() => { status.textContent = t; }, 30); };
+/* · Editor das prévias do catálogo ·
+   Todo item do catálogo tem Editar efeito. Nos ao vivo o botão leva ao card no palco e abre o
+   painel dele; nos outros abre uma janela com a prévia ampliada (que também responde ao clique e
+   ao cursor) e os controles. Cor, Velocidade e Intensidade valem para todas as prévias: filtro de
+   cor e brilho e ritmo do laço (--vm-k) na raiz da prévia. Quando o efeito tem um estado ou uma
+   medida própria, um quarto controle mexe nela (VT_MINI_X). O que se muda fica na prévia do
+   catálogo depois de fechar; Restaurar volta ao quadro original. */
+const VT_MINI_TINT = {
+  '#8b3dff': '', '#a970ff': 'saturate(1.35) brightness(1.1)', '#c9a6ff': 'saturate(.42) brightness(1.24)',
+  '#ff9ad5': 'hue-rotate(58deg) saturate(1.1) brightness(1.06)', '#4fd69a': 'hue-rotate(-118deg) saturate(.9) brightness(1.04)', '#f7bd55': 'hue-rotate(148deg) saturate(1.5) brightness(1.12)'
+};
+const vtOfN = t => v => `${v} de ${t}`;
+/* quarto controle · k 's': estado da prévia que alterna (faixa 1..N ou chave 0/1) ·
+   k 'p': item aceso (0 = nenhum) · k 'pv': valor do progresso · css: variável da prévia */
+const VT_MINI_X = {
+  2: { k: 'x', t: 'range', l: 'Espessura do traço', min: 1, max: 3.2, step: .2, v: 1.8, css: '--vm-sw', fmt: v => vtFmt(v, 1) + ' px' },
+  4: { k: 's', t: 'toggle', l: 'Afastar as camadas' },
+  5: { k: 'p', t: 'range', l: 'Card elevado', min: 0, max: 4, step: 1, fmt: v => v ? `${v} de 4` : 'nenhum' },
+  7: { k: 's', t: 'toggle', l: 'Vidro nítido' },
+  8: { k: 's', t: 'range', l: 'Paleta', min: 1, max: 3, step: 1, fmt: vtOfN(3) },
+  9: { k: 'x', t: 'range', l: 'Profundidade', min: 0, max: 2, step: .1, v: 1, css: '--vm-z', fmt: v => vtFmt(v, 1) + '×' },
+  13: { k: 'pv', t: 'range', l: 'Progresso', min: 5, max: 100, step: 1, fmt: v => v + '%', fromS: s => [72, 48, 94][s] },
+  14: { k: 'p', t: 'range', l: 'Célula em destaque', min: 0, max: 24, step: 1, fmt: v => v ? `${v} de 24` : 'todas' },
+  19: { k: 'x', t: 'range', l: 'Alcance do pulso', min: 1.6, max: 4, step: .1, v: 2.8, css: '--vm-r', fmt: v => vtFmt(v, 1) + '×' },
+  20: { k: 's', t: 'toggle', l: 'Card selecionado' },
+  22: { k: 's', t: 'range', l: 'Card aberto', min: 1, max: 3, step: 1, fmt: vtOfN(3) },
+  23: { k: 's', t: 'toggle', l: 'Modal aberto' },
+  25: { k: 'x', t: 'range', l: 'Força do ímã', min: 0, max: 2, step: .1, v: 1, css: '--vm-z', fmt: v => vtFmt(v, 1) + '×' },
+  26: { k: 's', t: 'range', l: 'Resposta', min: 1, max: 4, step: 1, fmt: v => ['nenhuma', 'chave', 'marca', 'favorito'][v - 1] },
+  28: { k: 's', t: 'range', l: 'Fase', min: 1, max: 4, step: 1, fmt: vtOfN(4) },
+  29: { k: 's', t: 'range', l: 'Forma', min: 1, max: 3, step: 1, fmt: v => ['círculo', 'losango', 'rede'][v - 1] },
+  31: { k: 's', t: 'toggle', l: 'Conteúdo carregado' },
+  32: { k: 's', t: 'toggle', l: 'Órbita aberta' },
+  34: { k: 's', t: 'range', l: 'Card no centro', min: 1, max: 4, step: 1, fmt: vtOfN(4) },
+  36: { k: 'p', t: 'range', l: 'Detalhe aberto', min: 0, max: 3, step: 1, fmt: v => v ? `${v} de 3` : 'nenhum' },
+  38: { k: 's', t: 'range', l: 'Marco', min: 1, max: 4, step: 1, fmt: vtOfN(4) },
+  39: { k: 'p', t: 'range', l: 'Nó aceso', min: 0, max: 8, step: 1, fmt: v => v ? `nó ${v}` : 'nenhum' }
+};
+/* o que o clique na prévia ampliada faz, dito embaixo dela */
+const VT_MINI_HINT = {
+  cyc: 'Clique na prévia para alternar o estado.', pick: 'Clique num item da prévia para destacá-lo.',
+  net: 'Clique num nó para acender os vizinhos.', spawn: 'Clique em qualquer ponto para soltar um pulso.', '': 'Clique na prévia para repetir o efeito.'
+};
+/* valor do quarto controle lido da prévia (a prévia é a fonte da verdade: o clique também a muda) */
+function vtMiniXGet(m, X) {
+  if (X.k === 's') { const s = vtMiniGet(m); return X.t === 'toggle' ? s === 1 : s + 1; }
+  if (X.k === 'p') return vtMiniGet(m) + 1;
+  if (X.k === 'pv') { const v = m.style.getPropertyValue('--p0'); return v ? +v : X.fromS(+m.dataset.s); }
+  const v = m.style.getPropertyValue(X.css); return v ? +v : X.v;
+}
+function vtMiniXSet(m, X, v) {
+  if (X.k === 's') vtMiniState(m, X.t === 'toggle' ? (v ? 1 : 0) : v - 1);
+  else if (X.k === 'p') vtMiniState(m, v - 1);
+  else if (X.k === 'pv') { const p = v / 100; [v, p, p * .64, Math.min(1, p * 1.19)].forEach((x, i) => m.style.setProperty(VT_MINI_VALS[i], i ? x.toFixed(3) : String(x))); }
+  else m.style.setProperty(X.css, String(v));
+}
+/* cor, velocidade e intensidade: filtro e ritmo na raiz da prévia */
+function vtMiniLook(m, st) {
+  const it = st.it / 100;
+  const f = `${VT_MINI_TINT[st.c] || ''}${it !== 1 ? ` brightness(${(.72 + .28 * it).toFixed(2)}) saturate(${it.toFixed(2)})` : ''}`.trim();
+  if (f) m.style.filter = f; else m.style.removeProperty('filter');
+  if (st.sp !== 1) m.style.setProperty('--vm-k', (1 / st.sp).toFixed(3)); else m.style.removeProperty('--vm-k');
+}
+function vtCatEditor(sec, say, live) {
+  const ST = new WeakMap(), S0 = new WeakMap();
+  const look0 = { c: '#8b3dff', sp: 1, it: 100 };
+  /* o estado original de cada prévia, para Restaurar */
+  $$('#vt-cat .vt-mini', sec).forEach(m => S0.set(m, vtMiniGet(m)));
+
+  /* ao vivo: leva ao card no palco e abre o painel Editar efeito dele */
+  $$('#vt-cat .vt-item-ed', sec).forEach(ed => {
+    const n = +ed.dataset.n, card = live[n];
+    if (!card) { ed.addEventListener('click', () => open(n, ed)); return; }
+    ed.addEventListener('click', () => {
+      card.scrollIntoView({ behavior: REDUCED ? 'auto' : 'smooth', block: 'center' });
+      const b = $('.vt-edit', card);
+      if (b && !b.hidden && b.getAttribute('aria-expanded') !== 'true') b.click();
+      const f = $('.vt-ed input, .vt-ed button', card);
+      if (f) f.focus({ preventScroll: true }); else { card.setAttribute('tabindex', '-1'); card.focus({ preventScroll: true }); }
+      card.classList.remove('is-ping'); void card.offsetWidth; card.classList.add('is-ping');
+      clearTimeout(card._ping); card._ping = setTimeout(() => card.classList.remove('is-ping'), 1800);
+    });
+  });
+
+  const dlg = el('dialog', 'vt-dlg'); dlg.id = 'vt-dlg';
+  dlg.setAttribute('aria-labelledby', 'vt-dlg-t'); dlg.setAttribute('aria-describedby', 'vt-dlg-s vt-dlg-note');
+  dlg.innerHTML = `<div class="vt-dlg-in">
+    <header class="vt-dlg-h">
+      <p class="vt-dlg-k"><span class="vt-item-n" id="vt-dlg-n"></span><span class="vt-item-c" id="vt-dlg-c"></span><span class="vt-dose" aria-hidden="true"><i></i><i></i><i></i></span></p>
+      <h3 class="vt-dlg-t" id="vt-dlg-t"></h3>
+      <p class="vt-dlg-s" id="vt-dlg-s"></p>
+      <button class="vt-dlg-x" type="button" aria-label="Fechar o editor"><svg aria-hidden="true"><use href="#i-x"/></svg></button>
+    </header>
+    <button class="vt-dlg-stage" type="button" aria-describedby="vt-dlg-hint"></button>
+    <p class="vt-dlg-hint" id="vt-dlg-hint"><svg aria-hidden="true"><use href="#i-spark"/></svg><span></span></p>
+    <div class="vt-dlg-ed" role="group" aria-label="Controles do efeito"></div>
+    <p class="sr-only" id="vt-dlg-note">Cada controle muda a prévia na hora e o catálogo guarda o resultado. Esc fecha o editor.</p>
+    <footer class="vt-dlg-f">
+      <button class="btn btn-ghost btn-sm vt-ed-reset vt-dlg-rst" type="button"><svg aria-hidden="true"><use href="#i-restore"/></svg>Restaurar</button>
+      <button class="btn btn-primary btn-sm vt-dlg-ok" type="button"><svg aria-hidden="true"><use href="#i-check"/></svg>Concluir</button>
+    </footer>
+  </div>`;
+  sec.append(dlg);
+  const stage = $('.vt-dlg-stage', dlg), hint = $('.vt-dlg-hint span', dlg), box = $('.vt-dlg-ed', dlg);
+  let cur = null;
+
+  function open(n, opener) {
+    const it = $(`#vt-cat .vt-item[data-n="${n}"]`, sec), m0 = $('.vt-mini', it);
+    const [, name, fam, , dose, sum] = VT_FX.find(f => f[0] === n);
+    const X = VT_MINI_X[n], st = ST.get(m0) || { ...look0 };
+    $('#vt-dlg-n', dlg).textContent = String(n).padStart(2, '0');
+    $('#vt-dlg-c', dlg).textContent = fam;
+    $$('.vt-dose i', dlg).forEach((d, i) => d.classList.toggle('on', i < dose));
+    $('#vt-dlg-t', dlg).textContent = name;
+    $('#vt-dlg-s', dlg).textContent = sum;
+    /* a prévia ampliada é uma cópia viva da do catálogo: as duas mudam juntas */
+    const m1 = m0.cloneNode(true);
+    m1.classList.remove('is-play', 'is-ptr', 'is-hit');
+    m1.style.removeProperty('--mx'); m1.style.removeProperty('--my');
+    $$('.vm-sp', m1).forEach(x => x.remove());
+    stage.replaceChildren(m1);
+    stage.setAttribute('aria-label', `Prévia de ${name}`);
+    hint.textContent = VT_MINI_HINT[m1.dataset.k] || VT_MINI_HINT[''];
+    if (!REDUCED) m1.classList.add('is-play');
+    /* os controles: cor, velocidade, intensidade e o do efeito */
+    const fields = [{ k: 'c', t: 'color', l: 'Cor', v: st.c }];
+    if (!REDUCED) fields.push({ k: 'sp', t: 'range', l: 'Velocidade', min: .4, max: 2, step: .1, v: st.sp, fmt: v => vtFmt(v, 1) + '×' });
+    fields.push({ k: 'it', t: 'range', l: 'Intensidade', min: 40, max: 160, step: 5, v: st.it, fmt: v => v + '%' });
+    if (X) fields.push({ ...X, k: 'x', v: vtMiniXGet(m0, X) });
+    const ms = [m0, m1], ed = $(`.vt-item-ed[data-n="${n}"]`, sec);
+    const set = (k, v) => {
+      if (k === 'x') ms.forEach(m => vtMiniXSet(m, X, v));
+      else { st[k] = v; ST.set(m0, st); ms.forEach(m => vtMiniLook(m, st)); }
+      if (k === 'c') vtAccent(dlg, v);
+      ed.classList.add('is-mod');
+    };
+    const { grid, ctl } = vtFieldGrid('vt-dlg-' + n, fields, set);
+    box.replaceChildren(grid);
+    vtAccent(dlg, st.c);
+    cur = { n, name, X, st, m0, m1, ctl, fields, ed, opener };
+    dlg.showModal();
+    /* o foco começa nos controles (a cor escolhida), não no Fechar */
+    $('[aria-checked="true"]', grid)?.focus();
+  }
+  /* clique na prévia ampliada: o mesmo que no catálogo, nas duas cópias */
+  stage.addEventListener('click', e => {
+    if (!cur) return;
+    const { m0, m1, n, name, X, ctl } = cur;
+    if (!REDUCED) { m1.classList.remove('is-play'); void m1.offsetWidth; m1.classList.add('is-play'); }
+    const s = vtMiniHit(m1, e, e.detail === 0, n, name, say);
+    if (s == null) return;
+    VT_MINI_VALS.forEach(v => m0.style.removeProperty(v));
+    vtMiniState(m0, s);
+    if (X) ctl.x?.(vtMiniXGet(m1, X));
+  });
+  stage.addEventListener('pointermove', e => {
+    if (!cur || e.pointerType !== 'mouse') return;
+    const r = cur.m1.getBoundingClientRect();
+    cur.m1.style.setProperty('--mx', vtClamp((e.clientX - r.left) / r.width, -.2, 1.2).toFixed(3));
+    cur.m1.style.setProperty('--my', vtClamp((e.clientY - r.top) / r.height, -.2, 1.2).toFixed(3));
+    cur.m1.classList.add('is-ptr');
+  });
+  stage.addEventListener('pointerleave', () => {
+    if (!cur) return;
+    cur.m1.classList.remove('is-ptr'); cur.m1.style.removeProperty('--mx'); cur.m1.style.removeProperty('--my');
+  });
+  $('.vt-dlg-rst', dlg).addEventListener('click', () => {
+    if (!cur) return;
+    const { m0, m1, X, ctl, ed, name } = cur;
+    Object.assign(cur.st, look0); ST.delete(m0);
+    [m0, m1].forEach(m => {
+      ['filter', '--vm-k', '--vm-sw', '--vm-z', '--vm-r', ...VT_MINI_VALS].forEach(p => m.style.removeProperty(p));
+      const s0 = S0.get(m0); if (s0 != null) vtMiniState(m, s0);
+    });
+    ctl.c?.(look0.c); ctl.sp?.(look0.sp); ctl.it?.(look0.it); if (X) ctl.x?.(vtMiniXGet(m0, X));
+    vtAccent(dlg, look0.c);
+    ed.classList.remove('is-mod');
+    say(`${name} voltou ao padrão.`);
+  });
+  const shut = () => dlg.close();
+  $('.vt-dlg-x', dlg).addEventListener('click', shut);
+  $('.vt-dlg-ok', dlg).addEventListener('click', shut);
+  /* clique no fundo escurecido fecha (o diálogo ocupa só a caixa; fora dela o alvo é o próprio dialog) */
+  dlg.addEventListener('click', e => {
+    if (e.target !== dlg) return;
+    const r = dlg.getBoundingClientRect();
+    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) shut();
+  });
+  dlg.addEventListener('close', () => {
+    if (!cur) return;
+    const { opener, name } = cur;
+    cur.m1.remove(); cur = null;
+    say(`Editor de ${name} fechado. A prévia do catálogo guarda o que você mudou.`);
+    opener?.focus({ preventScroll: true });
+  });
+}
+
+/* · Palco: liga cada demo à tela e ao editor ·
+   Os cards também entram no Scroll Reveal: nascem ao descer e somem ao subir, saindo e
+   voltando pelo mesmo lado (data-vt-out). Um card em que ninguém mexeu volta ao quadro
+   inicial quando sai por baixo e roda de novo quando reaparece. */
+function vtDemos(sec, say) {
+  const ctl = new Map();
   $$('.vt-card', sec).forEach(card => {
     const make = VT_DEMO[card.dataset.demo];
     const d = (make && make(card, say)) || {};
@@ -485,16 +798,41 @@ function vtDemos(sec) {
       vtRestart(card);
       d.replay ? d.replay() : d.start?.();
     });
+    const touch = () => { card.dataset.vtTouched = '1'; };
+    ['pointerdown', 'keydown', 'input'].forEach(t => card.addEventListener(t, touch));
   });
   if (REDUCED) return;
   const io = new IntersectionObserver(es => es.forEach(e => {
     const card = e.target, d = ctl.get(card);
     card.classList.toggle('is-vis', e.isIntersecting);
-    if (e.isIntersecting && e.intersectionRatio >= .3 && !card.classList.contains('is-on')) { card.classList.add('is-on'); d.start?.(); }
-    if (e.isIntersecting) { if (card.classList.contains('is-on')) d.resume?.(); }
-    else d.pause?.();
+    if (e.isIntersecting && e.intersectionRatio >= .3 && !card.classList.contains('is-on')) {
+      card.classList.add('is-on');
+      if (card.dataset.vtRerun) { delete card.dataset.vtRerun; d.replay ? d.replay() : d.start?.(); } else d.start?.();
+    }
+    if (e.isIntersecting) { if (card.classList.contains('is-on')) d.resume?.(); return; }
+    d.pause?.();
+    /* saiu inteiro por baixo sem ter sido tocado: volta ao quadro inicial, sem transição */
+    if (e.boundingClientRect.top > 0 && card.classList.contains('is-on') && !card.dataset.vtTouched && !card.classList.contains('is-edit')) {
+      card.classList.add('vt-reset'); card.classList.remove('is-on');
+      void card.offsetWidth; card.classList.remove('vt-reset');
+      card.dataset.vtRerun = '1';
+    }
   }), { threshold: [0, .3] });
-  ctl.forEach((d, card) => io.observe(card));
+  let wave = 0, waveT = 0;
+  const rv = new IntersectionObserver(es => es.forEach(e => {
+    const card = e.target, d = ctl.get(card);
+    if (!e.isIntersecting) { card.dataset.vtOut = e.boundingClientRect.top < 0 ? 'up' : 'down'; return; }
+    /* os que entram juntos chegam em cascata */
+    card.style.setProperty('--vt-rd', (wave++ % 3) * 90 + 'ms');
+    clearTimeout(waveT); waveT = setTimeout(() => { wave = 0; }, 120);
+    delete card.dataset.vtOut;
+    if (card.dataset.vtRerun) {
+      delete card.dataset.vtRerun;
+      card.classList.add('is-on');
+      d.replay ? d.replay() : d.start?.();
+    }
+  }), { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+  ctl.forEach((d, card) => { io.observe(card); rv.observe(card); });
 }
 
 /* ---------------------------------------------------------------- 30 · Particle System */
@@ -683,22 +1021,27 @@ VT_DEMO.tilt = (card, say) => {
     replay() { turn(false); manual = false; t0 = performance.now(); ry = -38; rx = 10; resume(); },
     still() { rx = 6; ry = -12; mx = 30; my = 30; apply(); },
     fields: [
-      { k: 'num', t: 'text', l: 'Número', v: '+38%', max: 8 },
+      { k: 'num', t: 'text', l: 'Número', v: '+38%', max: 12 },
       { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
       { k: 'tilt', t: 'range', l: 'Inclinação', v: 16, min: 0, max: 30, step: 1, fmt: v => v + '°' },
       { k: 'sheen', t: 'toggle', l: 'Reflexo', v: true }
     ],
     set(k, v) {
       if (k === 'num') {
-        num.textContent = bnum.textContent = v || ' ';
-        /* o verso reparte o número nas três origens, na mesma proporção */
-        const m = String(v).match(/^([^\d−-]*)([−-]?)(\d+(?:[.,]\d+)?)(.*)$/);
+        /* sinal de menos tipográfico na frente e no verso */
+        const s = String(v).replace(/-(?=\s*\d)/g, '−');
+        num.textContent = bnum.textContent = s || ' ';
+        /* o verso reparte o número nas três origens, na mesma proporção e com as mesmas
+           casas decimais, prefixo e unidade da entrada ("R$ 2,5 mi" vira 1,4 + 0,7 + 0,4) */
+        const m = s.match(/^([^\d−]*)(−?)\s*(\d+(?:[.,]\d+)*)(.*)$/);
         if (m) {
-          const n = parseFloat(m[3].replace(',', '.')), neg = !!m[2];
-          let left = Math.round(n);
+          const raw = m[3], n = vtNum(raw);
+          const dec = raw.includes(',') ? raw.split(',').pop().length : /^\d{1,3}(\.\d{3})+$/.test(raw) ? 0 : (raw.split('.')[1] || '').length;
+          const u = Math.pow(10, dec), sign = m[2] ? '−' : m[1].includes('+') ? '+' : '', pre = m[1].replace('+', '');
+          let left = Math.round(n * u);
           parts.forEach((p, i) => {
-            const x = i < 2 ? Math.round(n * W[i]) : left; left -= x;
-            p.querySelector('b').textContent = `${neg ? '−' : (m[1] || '+')}${x}${m[4] || '%'}`;
+            const x = i < 2 ? Math.round(n * u * W[i]) : left; left -= x;
+            p.querySelector('b').textContent = `${sign}${pre}${vtFmt(x / u, dec)}${m[4]}`;
           });
         }
         label();
@@ -733,8 +1076,11 @@ VT_DEMO.type = card => {
       h.append(b); return b;
     });
     h.style.setProperty('--n', i);
-    const same = ws.findIndex(w => w.textContent === prev);
-    pick(same >= 0 ? same : Math.min(key, ws.length - 1));
+    /* a palavra-chave continua a mesma; se ela sumiu, vai para o primeiro número ou, sem número, para a palavra mais longa */
+    let k = ws.findIndex(w => w.textContent === prev);
+    if (k < 0) k = ws.findIndex(w => w.classList.contains('vt-ty-n'));
+    if (k < 0) k = ws.reduce((a, w, j) => w.textContent.length > ws[a].textContent.length ? j : a, 0);
+    pick(k);
     sr.textContent = words.join(' ');
   };
   h.addEventListener('click', e => { const b = e.target.closest('.w'); if (b) pick(ws.indexOf(b), true); });
@@ -789,7 +1135,8 @@ VT_DEMO.count = card => {
     bars[i].style.setProperty('--w', vtClamp(+vals[i].dataset.to / +vals[i].dataset.goal).toFixed(3));
     bars[i].style.setProperty('--p', e.toFixed(3));
   };
-  const label = i => its[i].setAttribute('aria-label', `${KEYS[i]}: ${vals[i].textContent}. ${sel === i ? 'Selecionado.' : 'Clique para ver o detalhe.'}`);
+  /* o rótulo usa sempre o valor final, nunca o número no meio da contagem */
+  const label = i => its[i].setAttribute('aria-label', `${KEYS[i]}: ${text(vals[i], +vals[i].dataset.to)}. ${sel === i ? 'Selecionado.' : 'Clique para ver o detalhe.'}`);
   const pct = i => Math.round(+vals[i].dataset.to / +vals[i].dataset.goal * 100);
   const DET = [
     () => `${pct(0)}% da meta anual de R$ 14,9 mi. O 4º trimestre puxou a alta.`,
@@ -853,6 +1200,7 @@ VT_DEMO.count = card => {
       const i = +k.slice(1);
       if (+vals[i].dataset.to === v) return;
       vals[i].dataset.to = v;
+      label(i);
       recount(i, shown[i]);
       if (sel === i) detail();
     },
@@ -868,7 +1216,7 @@ VT_DEMO.glow = card => {
   const render = () => {
     const m = K[order[0]];
     k.textContent = m.k; v.textContent = m.v; dd.textContent = m.d;
-    main.setAttribute('aria-label', `Indicador em destaque: ${m.k}, ${m.v}, ${m.d}.`);
+    main.setAttribute('aria-label', `Indicador em destaque: ${m.k}, ${m.v}, ${m.d}. Clique para a luz passar de novo.`);
     side.forEach((b, i) => {
       const x = K[order[i + 1]];
       b.querySelector('span').textContent = x.k; b.querySelector('b').textContent = x.v;
@@ -888,6 +1236,8 @@ VT_DEMO.glow = card => {
     }, 220);
   };
   side.forEach((b, i) => b.addEventListener('click', () => promote(i + 1)));
+  /* o principal também responde: a varredura e o anel passam de novo */
+  main.addEventListener('click', () => vtKick(main, 'is-flare', 1300));
   render();
   return {
     replay() { vtKick(main, 'is-flare', 1300); },
@@ -968,9 +1318,9 @@ VT_DEMO.spot = card => {
     still() { go(3); },
     fields: [
       { k: 'title', t: 'text', l: 'Título', v: ttl.textContent, max: 36 },
+      { k: 'acc', t: 'color', l: 'Halo', v: '#c9a6ff' },
       { k: 'size', t: 'range', l: 'Foco', v: 100, min: 60, max: 170, step: 5, fmt: v => v + '%' },
-      { k: 'dark', t: 'range', l: 'Escurecer', v: 84, min: 30, max: 96, step: 2, fmt: v => v + '%' },
-      { k: 'acc', t: 'color', l: 'Halo', v: '#c9a6ff' }
+      { k: 'dark', t: 'range', l: 'Escurecer', v: 84, min: 30, max: 96, step: 2, fmt: v => v + '%' }
     ],
     set(k, v) {
       if (k === 'title') ttl.textContent = v || ' ';
@@ -978,7 +1328,9 @@ VT_DEMO.spot = card => {
       else if (k === 'dark') card.style.setProperty('--vt-dk', (v / 100).toFixed(2));
       else if (k === 'acc') vtAccent(card, v);
       if (box.classList.contains('is-off')) go(3, true);
-    }
+    },
+    /* o padrão é o fim do roteiro: foco no passo 3, sem modo Livre e sem autoplay pendente */
+    reset() { auto = false; clearTimeout(timer); timer = 0; go(3, true); }
   };
 };
 
@@ -1063,10 +1415,17 @@ VT_DEMO.stack = card => {
 };
 
 /* ---------------------------------------------------------------- 16 · Chart Build + 15 · Data Highlight */
-VT_DEMO.chart = card => {
-  const plot = $('.vt-ch-plot', card), svg = $('.vt-ch-svg', card), tip = $('.vt-ch-tip', card), range = $('.vt-range', card);
+VT_DEMO.chart = (card, say) => {
+  const plot = $('.vt-ch-plot', card), svg = $('.vt-ch-svg', card), tip = $('.vt-ch-tip', card), range = $('.vt-range', card), desc = $('title', svg);
   const Q = ['1T25', '2T25', '3T25', '4T25', '1T26', '2T26', '3T26', '4T26'];
-  const R = [42, 48, 51, 57, 63, 70, 76, 84], M = [45, 48, 52, 55, 58, 62, 66, 70];
+  const R = [42, 48, 51, 57, 63, 70, 76, 84], M = [45, 48, 52, 55, 58, 62, 66, 70], LAST = R.length - 1, R0 = R[LAST];
+  /* a descrição do gráfico acompanha o valor editado */
+  const above = () => { let n = 0; for (let i = LAST; i >= 0 && R[i] >= M[i]; i--) n++; return n; };
+  const describe = () => {
+    const n = above();
+    const qt = n === 1 ? 'no último trimestre' : `nos últimos ${['', '', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito'][n]} trimestres`;
+    desc.textContent = `Receita trimestral vai de ${R[0]} a ${vtFmt(R[LAST])} milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, ${n ? 'acima' : 'abaixo'} da meta ${n ? qt : 'no último trimestre'}. Clique numa barra para destacá-la.`;
+  };
   let g = null, prog = REDUCED ? 1 : 0, stop = null, dur = 2800, sel = -1, hov = -1;
   const ns = (t, a, parent) => { const n = svgEl(t, a); (parent || svg).append(n); return n; };
   const vs = i => { const d = Math.round((R[i] - M[i]) / M[i] * 100); return `${d >= 0 ? '+' : '−'}${Math.abs(d)}% vs. meta`; };
@@ -1074,7 +1433,7 @@ VT_DEMO.chart = card => {
     if (!g || i < 0) { tip.hidden = true; return; }
     tip.hidden = false;
     tip.classList.toggle('is-pin', !!pin);
-    tip.textContent = pin ? `${Q[i]} · Receita ${R[i]} · Meta ${M[i]} · ${vs(i)}` : `${Q[i]} · Receita ${R[i]} · Meta ${M[i]}`;
+    tip.textContent = pin ? `${Q[i]} · Receita ${vtFmt(R[i])} · Meta ${M[i]} · ${vs(i)}` : `${Q[i]} · Receita ${vtFmt(R[i])} · Meta ${M[i]}`;
     tip.style.left = vtClamp(g.xc(i), pin ? 130 : 90, g.W - (pin ? 130 : 90)) + 'px';
     tip.style.top = g.y(Math.max(R[i], M[i])) - (pin ? 18 : 0) + 'px';
   };
@@ -1086,7 +1445,11 @@ VT_DEMO.chart = card => {
     g.hits.forEach((h, i) => h.setAttribute('aria-pressed', String(i === sel)));
     tipAt(hov >= 0 ? hov : sel, hov < 0 || hov === sel);
   };
-  const pick = i => { sel = sel === i ? -1 : i; hov = -1; paintSel(); if (sel >= 0 && g) vtKick(g.bars[sel], 'is-kick', 700); };
+  const pick = i => {
+    sel = sel === i ? -1 : i; hov = -1; paintSel();
+    if (sel >= 0 && g) vtKick(g.bars[sel], 'is-kick', 700);
+    say(sel >= 0 ? `${Q[sel]} em destaque: receita ${vtFmt(R[sel])}, meta ${M[sel]}, ${vs(sel)}. As outras barras esmaeceram.` : 'Destaque desfeito: todas as barras à mostra.');
+  };
   const build = () => {
     const W = plot.clientWidth, H = plot.clientHeight; if (!W || !H) return;
     [...svg.querySelectorAll(':scope > :not(title)')].forEach(n => n.remove());
@@ -1110,7 +1473,7 @@ VT_DEMO.chart = card => {
     const barsG = ns('g', { 'clip-path': `url(#${uid})` });
     const hits = [], vals = [];
     const bars = R.map((v, i) => {
-      const hit = ns('rect', { x: xc(i) - band / 2, y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'button', 'aria-pressed': 'false', 'aria-label': `${Q[i]}: receita ${v}, meta ${M[i]}. Destacar.` });
+      const hit = ns('rect', { x: xc(i) - band / 2, y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'button', 'aria-pressed': 'false', 'aria-label': `${Q[i]}: receita ${vtFmt(v)}, meta ${M[i]}. Destacar.` });
       const r = ns('rect', { x: xc(i) - bw / 2, width: bw, rx: 4, y: B, height: 0, class: 'vt-ch-bar' + (i === R.length - 1 ? ' is-hi' : '') }, barsG);
       hit.addEventListener('pointerenter', () => { hov = i; r.classList.add('is-hov'); tipAt(i, i === sel); });
       hit.addEventListener('pointerleave', () => { hov = -1; r.classList.remove('is-hov'); tipAt(sel, true); });
@@ -1129,8 +1492,10 @@ VT_DEMO.chart = card => {
     mPath.setAttribute('stroke-dasharray', len);
     const dots = M.map((v, i) => ns('circle', { cx: xc(i), cy: y(v), r: 4.5, class: 'vt-ch-dot' }));
     const labs = ns('g');
-    R.forEach((v, i) => { const t = ns('text', { x: xc(i), y: y(v) - 8, 'text-anchor': 'middle', class: 'vt-ch-sv' }, labs); t.textContent = v; vals.push(t); });
-    const v0 = ns('text', { x: xc(R.length - 1), y: y(R[R.length - 1]) - 8, 'text-anchor': 'middle', class: 'vt-ch-val' }, labs); v0.textContent = R[R.length - 1];
+    R.forEach((v, i) => { const t = ns('text', { x: xc(i), y: y(v) - 8, 'text-anchor': 'middle', class: 'vt-ch-sv' }, labs); t.textContent = vtFmt(v); vals.push(t); });
+    /* o rótulo do último trimestre sobe acima da barra; se a barra encosta na meta, ele entra na barra para não cobrir o ponto */
+    const inBar = R[LAST] <= M[LAST] + 4 && B - y(R[LAST]) > 26;
+    const v0 = ns('text', { x: xc(LAST), y: inBar ? y(R[LAST]) + 18 : y(R[LAST]) - 8, 'text-anchor': 'middle', class: 'vt-ch-val' + (inBar ? ' is-in' : '') }, labs); v0.textContent = vtFmt(R[LAST]);
     const v2 = ns('text', { x: xc(M.length - 1) + bw / 2 + 8, y: y(M[M.length - 1]) + 4, 'text-anchor': 'start', class: 'vt-ch-lbl vt-ch-ml' }, labs); v2.textContent = 'Meta ' + M[M.length - 1];
     g = { bars, hits, vals, mPath, len, dots, labs, xl, yl, y, B, xc, W };
     render(prog);
@@ -1158,13 +1523,15 @@ VT_DEMO.chart = card => {
   return {
     start: play, replay: play, still: () => render(1),
     fields: [
+      { k: 'val', t: 'number', l: 'Receita 4T26', v: R0, min: 0, max: 100, unit: 'R$ mi' },
       { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
       { k: 'dur', t: 'range', l: 'Montagem', v: 2.8, min: 1, max: 6, step: .2, fmt: v => vtFmt(v, 1) + ' s' },
-      { k: 'meta', t: 'toggle', l: 'Meta', v: true },
-      { k: 'labels', t: 'toggle', l: 'Rótulos', v: true }
+      { k: 'meta', t: 'toggle', l: 'Meta', v: true }
     ],
     set(k, v) {
-      if (k === 'acc') vtAccent(card, v);
+      /* o último trimestre refaz a barra, o rótulo, o vs. meta e a descrição */
+      if (k === 'val') { if (R[LAST] === v) return; R[LAST] = v; describe(); build(); if (g && prog >= 1 && !REDUCED) vtKick(g.bars[LAST], 'is-kick', 700); }
+      else if (k === 'acc') vtAccent(card, v);
       else if (k === 'meta') card.classList.toggle('no-meta', !v);
       else if (k === 'labels') card.classList.toggle('no-lbl', !v);
       else if (k === 'dur') { dur = v * 1000; clearTimeout(replayT); if (!REDUCED && card.classList.contains('is-on')) replayT = setTimeout(play, 420); }
@@ -1323,6 +1690,31 @@ VT_DEMO.matrix = (card, say) => {
     plot.append(b); bind(b); return b;
   };
   let bs = START.map(([name, x, y], i) => mk(name, x, y, i));
+  /* ponto livre para uma bolha nova: num quadrante sorteado (depois nos outros), o ponto com mais folga
+     em relação às outras bolhas e aos nomes dos quadrantes. Folga = distância livre no eixo mais
+     afastado, já com uma margem de respiro; se nenhum quadrante tem folga, vale o de maior folga geral */
+  const spot = b => {
+    const r = plot.getBoundingClientRect(), W = r.width, H = r.height;
+    if (!W || !H) return [25 + Math.random() * 50, 25 + Math.random() * 50];
+    const bw = b.offsetWidth + 12, bh = b.offsetHeight + 8;
+    const boxes = bs.filter(o => o !== b).map(o => [+o.dataset.x / 100 * W, +o.dataset.y / 100 * H, o.offsetWidth + 12, o.offsetHeight + 8]);
+    if (!card.classList.contains('no-names')) qs.forEach(q => { const a = $('span', q).getBoundingClientRect(); boxes.push([a.left - r.left + a.width / 2, a.top - r.top + a.height / 2, a.width + 10, a.height + 8]); });
+    const room = (x, y) => boxes.reduce((m, [ox, oy, ow, oh]) => Math.min(m, Math.max(Math.abs(x - ox) - (bw + ow) / 2, Math.abs(y - oy) - (bh + oh) / 2)), Infinity);
+    const q0 = Math.floor(Math.random() * 4);
+    let best = null;
+    for (let t = 0; t < 4; t++) {
+      const q = (q0 + t) % 4, qx = q % 2, qy = q >> 1;
+      const x0 = qx * W / 2 + bw / 2, x1 = Math.max(x0, (qx + 1) * W / 2 - bw / 2), y0 = qy * H / 2 + bh / 2, y1 = Math.max(y0, (qy + 1) * H / 2 - bh / 2);
+      let top = null;
+      for (let i = 0; i <= 8; i++) for (let j = 0; j <= 6; j++) {
+        const x = x0 + (x1 - x0) * i / 8, y = y0 + (y1 - y0) * j / 6, f = room(x, y);
+        if (!top || f > top[2]) top = [x, y, f];
+      }
+      if (!best || top[2] > best[2]) best = top;
+      if (top[2] >= 0) break;
+    }
+    return [vtClamp(best[0] / W * 100, 6, 94), vtClamp(best[1] / H * 100, 8, 92)];
+  };
   lbs.forEach((l, i) => l.addEventListener('click', () => focus(i)));
   /* clicar num quadrante vazio também destaca */
   plot.addEventListener('click', e => {
@@ -1335,16 +1727,21 @@ VT_DEMO.matrix = (card, say) => {
   return {
     replay: reset, still: reset,
     fields: [
-      { k: 'add', t: 'add', l: 'Iniciativa', ph: 'Ex.: Portal', max: 14 },
+      { k: 'add', t: 'add', l: 'Iniciativa', ph: 'Ex.: Portal', max: 14, full: `Máximo de ${MAXB} iniciativas` },
       { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
-      { k: 'names', t: 'toggle', l: 'Quadrantes', v: true },
+      { k: 'names', t: 'toggle', l: 'Rótulos', v: true },
       { k: 'axes', t: 'toggle', l: 'Eixos', v: true }
     ],
     set(k, v) {
       if (k === 'add') {
         if (bs.length >= MAXB) { say(`A matriz já tem ${MAXB} iniciativas.`); return false; }
-        const b = mk(v, (38 + Math.random() * 24).toFixed(1), (38 + Math.random() * 24).toFixed(1), 0);
-        bs.push(b); place(b); tally(); vtKick(b, 'is-new', 700);
+        /* nasce no centro e voa até um ponto livre */
+        const b = mk(v, 50, 50, 0);
+        bs.push(b); place(b);
+        const [x, y] = spot(b);
+        void b.offsetWidth;
+        b.dataset.x = x.toFixed(1); b.dataset.y = y.toFixed(1);
+        place(b); tally(); vtKick(b, 'is-new', 700);
         say(`${v} entrou em ${QN[quad(+b.dataset.x, +b.dataset.y)]}. Arraste para mudar de quadrante.`);
         if (bs.length >= MAXB) vtSync(card, 'add', 'full');
         return true;
@@ -1362,14 +1759,17 @@ VT_DEMO.matrix = (card, say) => {
 };
 
 /* ---------------------------------------------------------------- 18 · Connector / Flow Line */
-VT_DEMO.flow = card => {
+VT_DEMO.flow = (card, say) => {
   const box = $('.vt-fw-box', card), svg = $('.vt-fw-svg', card), cap = $('.vt-fw-cap', card);
+  /* o nó central pode ser renomeado no painel: as legendas usam o nome atual (c) */
+  const CORE = 'Motor';
+  let core = CORE;
   const N = {
-    dados: [58, 50, 'Dados', 'Os dados alimentam o Motor.'],
-    crm: [58, 190, 'CRM', 'O CRM alimenta o Motor.'],
-    motor: [200, 120, 'Motor', 'O Motor liga as fontes ao Painel e à Plateia.'],
-    painel: [342, 50, 'Painel', 'O Painel recebe do Motor e mostra à Plateia.'],
-    sala: [342, 190, 'Plateia', 'A Plateia recebe do Motor e do Painel.']
+    dados: [58, 50, 'Dados', c => `Os dados alimentam: ${c}.`],
+    crm: [58, 190, 'CRM', c => `O CRM alimenta: ${c}.`],
+    motor: [200, 120, CORE, c => `${c} liga as fontes ao Painel e à Plateia.`],
+    painel: [342, 50, 'Painel', c => `O Painel recebe de ${c} e mostra à Plateia.`],
+    sala: [342, 190, 'Plateia', c => `A Plateia recebe de ${c} e do Painel.`]
   };
   const E = [['dados', 'motor'], ['crm', 'motor'], ['motor', 'painel'], ['motor', 'sala'], ['painel', 'sala']];
   const DEF = 'Clique num nó para ver as ligações';
@@ -1403,7 +1803,7 @@ VT_DEMO.flow = card => {
       l.base.classList.toggle('is-hi', t); l.flow.classList.toggle('is-hi', t);
       if (t) btns[l.a === k ? l.b : l.a].classList.add('is-nb');
     });
-    cap.textContent = on ? N[k][3] : DEF;
+    cap.textContent = on ? N[k][3](core) : DEF;
   };
   /* pacotes de luz que saem do nó clicado e percorrem cada ligação */
   const send = k => {
@@ -1427,8 +1827,10 @@ VT_DEMO.flow = card => {
       Object.entries(btns).forEach(([n, x]) => x.setAttribute('aria-pressed', String(n === pinned)));
       hi(pinned || k);
       if (pinned) send(k);
+      say(pinned ? `${N[k][3](core)} Ligações em destaque.` : 'Todas as ligações à mostra.');
     });
   });
+  const unpin = () => { pinned = null; Object.values(btns).forEach(x => x.setAttribute('aria-pressed', 'false')); hi(null); };
   const draw = () => {
     timers.forEach(clearTimeout); timers = [];
     links.forEach(l => {
@@ -1448,15 +1850,20 @@ VT_DEMO.flow = card => {
   if (!REDUCED) links.forEach(l => { l.len = l.base.getTotalLength(); l.base.style.strokeDasharray = l.len; l.base.style.strokeDashoffset = l.len; l.flow.style.opacity = '0'; });
   return {
     start: draw,
-    replay() { pinned = null; Object.values(btns).forEach(x => x.setAttribute('aria-pressed', 'false')); hi(null); draw(); },
+    replay() { unpin(); draw(); },
     fields: [
+      { k: 'core', t: 'text', l: 'Nó central', v: CORE, max: 14 },
       { k: 'acc', t: 'color', l: 'Cor', v: '#c9a6ff' },
       { k: 'speed', t: 'range', l: 'Velocidade', v: 100, min: 25, max: 300, step: 25, fmt: v => v + '%' },
-      { k: 'curve', t: 'toggle', l: 'Curvas', v: true },
-      { k: 'flow', t: 'toggle', l: 'Fluxo', v: true }
+      { k: 'curve', t: 'toggle', l: 'Curvas', v: true }
     ],
     set(k, v) {
-      if (k === 'acc') vtAccent(card, v);
+      if (k === 'core') {
+        core = String(v).trim() || CORE;
+        btns.motor.textContent = core;
+        if (pinned) cap.textContent = N[pinned][3](core);
+      }
+      else if (k === 'acc') vtAccent(card, v);
       else if (k === 'speed') { speed = v / 100; card.style.setProperty('--vt-fs', speed.toFixed(2)); }
       else if (k === 'flow') card.classList.toggle('no-flow', !v);
       else if (k === 'curve') {
@@ -1464,6 +1871,8 @@ VT_DEMO.flow = card => {
         curve = v;
         links.forEach(l => { const d = path(l.a, l.b); l.base.setAttribute('d', d); l.flow.setAttribute('d', d); l.len = l.base.getTotalLength(); });
       }
-    }
+    },
+    /* o padrão: nenhum nó fixado, palco sem escurecer */
+    reset: unpin
   };
 };

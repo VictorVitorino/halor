@@ -1,5 +1,6 @@
 /* 06 · Glow / Light Sweep · o número principal tem anel de luz e varredura (CSS). Clicar num
-   indicador secundário o promove a principal: o anel acende e a luz varre de novo.
+   indicador secundário o promove a principal: o anel acende e a luz varre de novo. O principal é
+   um botão: o clique faz a luz passar outra vez.
    Editável: valor em destaque, cor, intensidade e varredura. */
 import { q, qa, vtAccent, vtSync, type VtCtx, type VtDemo } from '../ctx';
 
@@ -17,7 +18,7 @@ export function glowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
   const render = () => {
     const m = K[order[0]];
     k.textContent = m.k; v.textContent = m.v; dd.textContent = m.d;
-    main.setAttribute('aria-label', `Indicador em destaque: ${m.k}, ${m.v}, ${m.d}.`);
+    main.setAttribute('aria-label', `Indicador em destaque: ${m.k}, ${m.v}, ${m.d}. Clique para a luz passar de novo.`);
     side.forEach((b, i) => {
       const x = K[order[i + 1]], s = b.querySelector('span'), n = b.querySelector('b');
       if (s) s.textContent = x.k;
@@ -38,6 +39,8 @@ export function glowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     }, 220);
   };
   side.forEach((b, i) => ctx.on(b, 'click', () => promote(i + 1)));
+  /* o principal também responde: a varredura e o anel passam de novo */
+  ctx.on(main, 'click', () => ctx.kick(main, 'is-flare', 1300));
   render();
 
   return {

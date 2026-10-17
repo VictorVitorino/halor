@@ -87,6 +87,7 @@ function bootNavMotion() {
     }), { rootMargin: '-45% 0px -50% 0px' });
     map.forEach((a, s) => spy.observe(s));
   }
+  bootNavMenu(nav, list);
   if (REDUCED || !list) return;
   list.classList.add('nav-intro');
   setTimeout(() => list.classList.remove('nav-intro'), 3200);
@@ -95,4 +96,29 @@ function bootNavMotion() {
     if (document.hidden || currentView !== 'v-site') return;
     list.classList.remove('nav-idle'); void list.offsetWidth; list.classList.add('nav-idle');
   }, 9000);
+}
+
+/* menu compacto (até 960 px): o botão abre o painel com os mesmos links.
+   Fecha ao escolher uma seção, com Esc (o foco volta ao botão), ao tocar fora,
+   quando o foco sai da barra e quando a tela volta a ser larga. */
+function bootNavMenu(nav, list) {
+  const btn = $('.s-menu', nav); if (!btn || !list) return;
+  const mq = matchMedia('(max-width: 960px)');
+  let t = 0;
+  const isOpen = () => nav.classList.contains('menu-open');
+  const setOpen = on => {
+    if (on === isOpen()) return;
+    nav.classList.toggle('menu-open', on);
+    btn.setAttribute('aria-expanded', String(on));
+    if (on && !REDUCED) {
+      list.classList.remove('nav-intro'); void list.offsetWidth; list.classList.add('nav-intro');
+      clearTimeout(t); t = setTimeout(() => list.classList.remove('nav-intro'), 1800);
+    }
+  };
+  btn.addEventListener('click', () => setOpen(!isOpen()));
+  list.addEventListener('click', e => { if (e.target.closest('a')) setOpen(false); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } });
+  document.addEventListener('pointerdown', e => { if (isOpen() && !nav.contains(e.target)) setOpen(false); });
+  nav.addEventListener('focusout', e => { if (isOpen() && e.relatedTarget && !nav.contains(e.relatedTarget)) setOpen(false); });
+  mq.addEventListener('change', () => { if (!mq.matches) setOpen(false); });
 }

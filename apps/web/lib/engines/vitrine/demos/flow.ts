@@ -1,15 +1,17 @@
 /* 18 · Connector / Flow Line · linhas que se desenham entre os nós e passam a fluir; um clique mostra
-   as ligações e solta pacotes de luz por elas. Editável: cor, velocidade, curvas e fluxo. */
+   as ligações e solta pacotes de luz por elas. Editável: nome do nó central, cor, velocidade e curvas. */
 import { el, svgEl } from '../../../core';
 import { q, vtAccent, vtEase, type VtCtx, type VtDemo } from '../ctx';
 
 type NodeKey = 'dados' | 'crm' | 'motor' | 'painel' | 'sala';
-const N: Record<NodeKey, readonly [x: number, y: number, name: string, caption: string]> = {
-  dados: [58, 50, 'Dados', 'Os dados alimentam o Motor.'],
-  crm: [58, 190, 'CRM', 'O CRM alimenta o Motor.'],
-  motor: [200, 120, 'Motor', 'O Motor liga as fontes ao Painel e à Plateia.'],
-  painel: [342, 50, 'Painel', 'O Painel recebe do Motor e mostra à Plateia.'],
-  sala: [342, 190, 'Plateia', 'A Plateia recebe do Motor e do Painel.']
+/* o nó central pode ser renomeado no painel: as legendas usam o nome atual (c) */
+const CORE = 'Motor';
+const N: Record<NodeKey, readonly [x: number, y: number, name: string, caption: (c: string) => string]> = {
+  dados: [58, 50, 'Dados', c => `Os dados alimentam: ${c}.`],
+  crm: [58, 190, 'CRM', c => `O CRM alimenta: ${c}.`],
+  motor: [200, 120, CORE, c => `${c} liga as fontes ao Painel e à Plateia.`],
+  painel: [342, 50, 'Painel', c => `O Painel recebe de ${c} e mostra à Plateia.`],
+  sala: [342, 190, 'Plateia', c => `A Plateia recebe de ${c} e do Painel.`]
 };
 const E: readonly (readonly [NodeKey, NodeKey])[] = [['dados', 'motor'], ['crm', 'motor'], ['motor', 'painel'], ['motor', 'sala'], ['painel', 'sala']];
 const DEF = 'Clique num nó para ver as ligações';
@@ -19,7 +21,7 @@ interface Link { a: NodeKey; b: NodeKey; base: SVGPathElement; flow: SVGPathElem
 
 export function flowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
   const box = q('.vt-fw-box', card), svg = q<SVGSVGElement>('.vt-fw-svg', card), cap = q('.vt-fw-cap', card);
-  let curve = true, speed = 1;
+  let curve = true, speed = 1, core = CORE;
   const path = (a: NodeKey, b: NodeKey) => {
     const [ax, ay] = N[a], [bx, by] = N[b];
     if (!curve) return `M${ax} ${ay} L${bx} ${by}`;
@@ -50,7 +52,7 @@ export function flowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
       l.base.classList.toggle('is-hi', t); l.flow.classList.toggle('is-hi', t);
       if (t) btns[l.a === k ? l.b : l.a].classList.add('is-nb');
     });
-    cap.textContent = k ? N[k][3] : DEF;
+    cap.textContent = k ? N[k][3](core) : DEF;
   };
   /* pacotes de luz que saem do nó clicado e percorrem cada ligação */
   const send = (k: NodeKey) => {
@@ -75,8 +77,10 @@ export function flowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
       KEYS.forEach(n => btns[n].setAttribute('aria-pressed', String(n === pinned)));
       hi(pinned || k);
       if (pinned) send(k);
+      ctx.say(pinned ? `${N[k][3](core)} Ligações em destaque.` : 'Todas as ligações à mostra.');
     });
   });
+  const unpin = () => { pinned = null; KEYS.forEach(n => btns[n].setAttribute('aria-pressed', 'false')); hi(null); };
   const draw = () => {
     timers.forEach(ctx.cancel); timers = [];
     links.forEach(l => {
@@ -99,15 +103,20 @@ export function flowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
 
   return {
     start: draw,
-    replay() { pinned = null; KEYS.forEach(n => btns[n].setAttribute('aria-pressed', 'false')); hi(null); draw(); },
+    replay() { unpin(); draw(); },
     fields: [
+      { k: 'core', t: 'text', l: 'Nó central', v: CORE, max: 14 },
       { k: 'acc', t: 'color', l: 'Cor', v: '#c9a6ff' },
       { k: 'speed', t: 'range', l: 'Velocidade', v: 100, min: 25, max: 300, step: 25, fmt: v => v + '%' },
-      { k: 'curve', t: 'toggle', l: 'Curvas', v: true },
-      { k: 'flow', t: 'toggle', l: 'Fluxo', v: true }
+      { k: 'curve', t: 'toggle', l: 'Curvas', v: true }
     ],
     set(k, v) {
-      if (k === 'acc') vtAccent(card, String(v));
+      if (k === 'core') {
+        core = String(v).trim() || CORE;
+        btns.motor.textContent = core;
+        if (pinned) cap.textContent = N[pinned][3](core);
+      }
+      else if (k === 'acc') vtAccent(card, String(v));
       else if (k === 'speed') { speed = Number(v) / 100; card.style.setProperty('--vt-fs', speed.toFixed(2)); }
       else if (k === 'flow') card.classList.toggle('no-flow', !v);
       else if (k === 'curve') {
@@ -115,6 +124,8 @@ export function flowDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
         curve = !!v;
         links.forEach(l => { const d = path(l.a, l.b); l.base.setAttribute('d', d); l.flow.setAttribute('d', d); l.len = l.base.getTotalLength(); });
       }
-    }
+    },
+    /* o padrão: nenhum nó fixado, palco sem escurecer */
+    reset: unpin
   };
 }

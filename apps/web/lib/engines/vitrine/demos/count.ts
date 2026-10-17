@@ -24,7 +24,8 @@ export function countDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     bars[i].style.setProperty('--w', vtClamp(to(i) / goal(i)).toFixed(3));
     bars[i].style.setProperty('--p', e.toFixed(3));
   };
-  const label = (i: number) => its[i].setAttribute('aria-label', `${KEYS[i]}: ${vals[i].textContent}. ${sel === i ? 'Selecionado.' : 'Clique para ver o detalhe.'}`);
+  /* o rótulo usa sempre o valor final, nunca o número no meio da contagem */
+  const label = (i: number) => its[i].setAttribute('aria-label', `${KEYS[i]}: ${text(vals[i], to(i))}. ${sel === i ? 'Selecionado.' : 'Clique para ver o detalhe.'}`);
   const pct = (i: number) => Math.round(to(i) / goal(i) * 100);
   const DET = [
     () => `${pct(0)}% da meta anual de R$ 14,9 mi. O 4º trimestre puxou a alta.`,
@@ -88,6 +89,7 @@ export function countDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
       const i = +k.slice(1);
       if (to(i) === Number(v)) return;
       vals[i].dataset.to = String(v);
+      label(i);
       recount(i, shown[i]);
       if (sel === i) detail();
     },

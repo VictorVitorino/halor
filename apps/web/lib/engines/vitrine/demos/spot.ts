@@ -68,9 +68,9 @@ export function spotDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     still() { go(3); },
     fields: [
       { k: 'title', t: 'text', l: 'Título', v: ttl.textContent || '', max: 36 },
+      { k: 'acc', t: 'color', l: 'Halo', v: '#c9a6ff' },
       { k: 'size', t: 'range', l: 'Foco', v: 100, min: 60, max: 170, step: 5, fmt: v => v + '%' },
-      { k: 'dark', t: 'range', l: 'Escurecer', v: 84, min: 30, max: 96, step: 2, fmt: v => v + '%' },
-      { k: 'acc', t: 'color', l: 'Halo', v: '#c9a6ff' }
+      { k: 'dark', t: 'range', l: 'Escurecer', v: 84, min: 30, max: 96, step: 2, fmt: v => v + '%' }
     ],
     set(k, v) {
       if (k === 'title') ttl.textContent = String(v) || ' ';
@@ -78,6 +78,8 @@ export function spotDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
       else if (k === 'dark') card.style.setProperty('--vt-dk', (Number(v) / 100).toFixed(2));
       else if (k === 'acc') vtAccent(card, String(v));
       if (box.classList.contains('is-off')) go(3, true);
-    }
+    },
+    /* o padrão é o fim do roteiro: foco no passo 3, sem modo Livre e sem autoplay pendente */
+    reset() { auto = false; ctx.cancel(timer); timer = 0; go(3, true); }
   };
 }

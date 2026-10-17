@@ -1,6 +1,6 @@
 /* 03 · 04 · 3D Tilt / Hologram Card · camadas que inclinam com o cursor e reflexo que segue a luz.
    Clique (ou Enter) vira o cartão e mostra o verso com o detalhe. Editável: número, cor, inclinação e reflexo. */
-import { q, qa, vtAccent, vtClamp, type VtCtx, type VtDemo } from '../ctx';
+import { q, qa, vtAccent, vtClamp, vtFmt, vtNum, type VtCtx, type VtDemo } from '../ctx';
 
 const KEYS: Record<string, [number, number]> = { ArrowLeft: [0, -5], ArrowRight: [0, 5], ArrowUp: [5, 0], ArrowDown: [-5, 0] };
 const SHARE = [.55, .29, .16];
@@ -67,23 +67,27 @@ export function tiltDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     replay() { turn(false); manual = false; t0 = performance.now(); ry = -38; rx = 10; resume(); },
     still() { rx = 6; ry = -12; mx = 30; my = 30; apply(); },
     fields: [
-      { k: 'num', t: 'text', l: 'Número', v: '+38%', max: 8 },
+      { k: 'num', t: 'text', l: 'Número', v: '+38%', max: 12 },
       { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
       { k: 'tilt', t: 'range', l: 'Inclinação', v: 16, min: 0, max: 30, step: 1, fmt: v => v + '°' },
       { k: 'sheen', t: 'toggle', l: 'Reflexo', v: true }
     ],
     set(k, v) {
       if (k === 'num') {
-        const s = String(v);
+        /* sinal de menos tipográfico na frente e no verso */
+        const s = String(v).replace(/-(?=\s*\d)/g, '−');
         num.textContent = bnum.textContent = s || ' ';
-        /* o verso reparte o número nas três origens, na mesma proporção */
-        const m = s.match(/^([^\d−-]*)([−-]?)(\d+(?:[.,]\d+)?)(.*)$/);
+        /* o verso reparte o número nas três origens, na mesma proporção e com as mesmas
+           casas decimais, prefixo e unidade da entrada ("R$ 2,5 mi" vira 1,4 + 0,7 + 0,4) */
+        const m = s.match(/^([^\d−]*)(−?)\s*(\d+(?:[.,]\d+)*)(.*)$/);
         if (m) {
-          const n = parseFloat(m[3].replace(',', '.')), neg = !!m[2];
-          let left = Math.round(n);
+          const raw = m[3], n = vtNum(raw);
+          const dec = raw.includes(',') ? (raw.split(',').pop() || '').length : /^\d{1,3}(\.\d{3})+$/.test(raw) ? 0 : (raw.split('.')[1] || '').length;
+          const u = Math.pow(10, dec), sign = m[2] ? '−' : m[1].includes('+') ? '+' : '', pre = m[1].replace('+', '');
+          let left = Math.round(n * u);
           parts.forEach((p, i) => {
-            const x = i < 2 ? Math.round(n * SHARE[i]) : left; left -= x;
-            const b = p.querySelector('b'); if (b) b.textContent = `${neg ? '−' : (m[1] || '+')}${x}${m[4] || '%'}`;
+            const x = i < 2 ? Math.round(n * u * SHARE[i]) : left; left -= x;
+            const b = p.querySelector('b'); if (b) b.textContent = `${sign}${pre}${vtFmt(x / u, dec)}${m[4]}`;
           });
         }
         label();

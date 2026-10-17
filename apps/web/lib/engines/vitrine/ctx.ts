@@ -18,6 +18,8 @@ export interface VtField {
   v?: VtVal;
   min?: number; max?: number; step?: number; dec?: number;
   unit?: string; ph?: string;
+  /** Campo 'add': rótulo que aparece quando não cabe mais nada (o campo se apaga). */
+  full?: string;
   fmt?: (v: number) => string;
 }
 

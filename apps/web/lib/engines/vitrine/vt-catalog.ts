@@ -8,6 +8,7 @@
    ========================================================================== */
 import { el } from '../../core';
 import { qa, reflow, vtClamp, type VtCtx } from './ctx';
+import { vtMiniSay } from './data';
 
 /* · Ripple: a onda nasce no ponto do toque e some · */
 const VT_RIP = '.vt-demo, .vt-item, .vt-edit, .vt-replay, .vt-ed-reset, .vt-ed-add, .vt-chip, .vt-plus-pill';
@@ -53,6 +54,74 @@ export function vtCatalogLinks(sec: HTMLElement, live: Record<number, HTMLElemen
   });
 }
 
+/* · Estado de uma prévia · cyc: o índice em data-s · pick/net: o item aceso (-1 = nenhum).
+   Os que não têm estado devolvem null. vtMiniState aplica um estado e devolve, na rede, quantos
+   vizinhos acenderam. */
+type MiniPart = HTMLElement | SVGElement;
+export function vtMiniGet(m: HTMLElement): number | null {
+  const k = m.dataset.k;
+  if (k === 'cyc') return +(m.dataset.s || 0);
+  if (k === 'pick' || k === 'net') return qa<MiniPart>('[data-p]', m).findIndex(x => x.classList.contains('is-pk'));
+  return null;
+}
+export function vtMiniState(m: HTMLElement, i: number) {
+  const k = m.dataset.k;
+  if (k === 'cyc') { m.dataset.s = String(i); return 0; }
+  if (k !== 'pick' && k !== 'net') return 0;
+  const ps = qa<MiniPart>('[data-p]', m), on = i >= 0, p = on ? ps[i] : undefined;
+  ps.forEach(x => x.classList.toggle('is-pk', x === p));
+  m.classList.toggle('has-pk', on);
+  let cnt = 0;
+  if (k === 'net') {
+    const id = p?.dataset.p ?? null, nb = new Set<string>();
+    qa<SVGLineElement>('line', m).forEach(l => {
+      const ends = (l.dataset.e || '').split(' '), hit = id != null && ends.includes(id);
+      l.classList.toggle('on', hit); if (hit) ends.forEach(x => nb.add(x));
+    });
+    ps.forEach(x => { const v = nb.has(x.dataset.p || '') && x !== p; x.classList.toggle('nb', v); if (v) cnt++; });
+  }
+  return cnt;
+}
+/** Valor digitado no editor que um estado novo substitui (o progresso do 13 volta ao do estado). */
+export const VT_MINI_VALS = ['--p0', '--p1', '--p2', '--p3'] as const;
+/**
+ * O clique numa prévia (no catálogo ou ampliada no editor): alterna, escolhe, solta um pulso ou
+ * repete, e diz o que fez na região viva (a prévia é decorativa). Devolve o estado novo, ou null
+ * se a prévia não tem estado. A prévia pode estar ampliada (transform): as contas de posição
+ * voltam à escala dela.
+ */
+export function vtMiniHit(m: HTMLElement, e: MouseEvent, kb: boolean, n: number, name: string, ctx: VtCtx): number | null {
+  if (m.querySelector('.vm-hit')) ctx.kick(m, 'is-hit', 1000);
+  const k = m.dataset.k;
+  if (k === 'cyc') {
+    const s = (+(m.dataset.s || 0) + 1) % +(m.dataset.n || 1);
+    VT_MINI_VALS.forEach(v => m.style.removeProperty(v));
+    vtMiniState(m, s); ctx.say(vtMiniSay(n, name, s)); return s;
+  }
+  if (k === 'pick' || k === 'net') {
+    const ps = qa<MiniPart>('[data-p]', m);
+    let p = kb ? null : (e.target as Element).closest<MiniPart>('[data-p]');
+    if (p && !m.contains(p)) p = null;
+    if (!p) { const i = ps.findIndex(x => x.classList.contains('is-pk')); p = ps[(i + 1) % ps.length]; }
+    const on = !p.classList.contains('is-pk'), i = on ? ps.indexOf(p) : -1;
+    const cnt = vtMiniState(m, i);
+    ctx.say(vtMiniSay(n, name, ps.indexOf(p), on, cnt));
+    return i;
+  }
+  ctx.say(vtMiniSay(n, name));
+  if (k === 'spawn') {
+    const r = m.getBoundingClientRect(), sc = r.width / (m.offsetWidth || r.width);
+    const w = r.width / sc, h = r.height / sc;
+    const x = kb ? w * (.2 + Math.random() * .6) : (e.clientX - r.left) / sc, y = kb ? h * (.3 + Math.random() * .4) : (e.clientY - r.top) / sc;
+    if (x < 0 || y < 0 || x > w || y > h) return null;
+    const css = `left:${x}px;top:${y}px`;
+    const ns = [el('i', 'vm-pg vm-sp'), el('i', 'vm-pg vm-sp d2'), el('i', 'vm-dt vm-bc vm-sp')];
+    ns.forEach(n => { n.style.cssText = css; m.append(ctx.own(n)); });
+    ctx.later(() => ns.forEach(n => n.remove()), ctx.reduced ? 900 : 1700);
+  }
+  return null;
+}
+
 /* · Prévias: rodam com o cursor ou o foco, respondem ao clique · */
 export function vtMinis(sec: HTMLElement, ctx: VtCtx) {
   const play = (m: HTMLElement, on: boolean) => m.classList.toggle('is-play', on && !ctx.reduced);
@@ -77,38 +146,9 @@ export function vtMinis(sec: HTMLElement, ctx: VtCtx) {
     ctx.on(it, 'blur', () => { if (!hov) play(m, false); });
     if (it.dataset.live) return;
     ctx.on(it, 'click', e => {
-      const kb = e.detail === 0;
       restart(m);
       if (!hov) { ctx.cancel(tap); tap = ctx.later(() => { if (!hov && document.activeElement !== it) play(m, false); }, 4200); }
-      if (m.querySelector('.vm-hit')) ctx.kick(m, 'is-hit', 1000);
-      const k = m.dataset.k;
-      if (k === 'cyc') { m.dataset.s = String((+(m.dataset.s || 0) + 1) % +(m.dataset.n || 1)); return; }
-      if (k === 'pick' || k === 'net') {
-        const ps = qa<Element>('[data-p]', m);
-        let p = kb ? null : (e.target as Element).closest('[data-p]');
-        if (!p) { const i = ps.findIndex(x => x.classList.contains('is-pk')); p = ps[(i + 1) % ps.length]; }
-        const on = !p.classList.contains('is-pk');
-        ps.forEach(x => x.classList.toggle('is-pk', x === p && on));
-        m.classList.toggle('has-pk', on);
-        if (k === 'net') {
-          const id = (p as HTMLElement | SVGElement).dataset.p || '', nb = new Set<string>();
-          qa<SVGLineElement>('line', m).forEach(l => {
-            const ends = (l.dataset.e || '').split(' '), hit = on && ends.includes(id);
-            l.classList.toggle('on', hit); if (hit) ends.forEach(x => nb.add(x));
-          });
-          ps.forEach(x => x.classList.toggle('nb', nb.has((x as HTMLElement | SVGElement).dataset.p || '') && x !== p));
-        }
-        return;
-      }
-      if (k === 'spawn') {
-        const r = m.getBoundingClientRect();
-        const x = kb ? r.width * (.2 + Math.random() * .6) : e.clientX - r.left, y = kb ? r.height * (.3 + Math.random() * .4) : e.clientY - r.top;
-        if (x < 0 || y < 0 || x > r.width || y > r.height) return;
-        const css = `left:${x}px;top:${y}px`;
-        const ns = [el('i', 'vm-pg vm-sp'), el('i', 'vm-pg vm-sp d2'), el('i', 'vm-dt vm-bc vm-sp')];
-        ns.forEach(n => { n.style.cssText = css; m.append(ctx.own(n)); });
-        ctx.later(() => ns.forEach(n => n.remove()), ctx.reduced ? 900 : 1700);
-      }
+      vtMiniHit(m, e, e.detail === 0, +(it.dataset.n || 0), it.querySelector('.vt-item-t')?.textContent || '', ctx);
     });
   });
   /* a primeira vez que o catálogo aparece, cada prévia roda uma vez, em cascata */

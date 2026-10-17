@@ -108,6 +108,7 @@ export function bootNavMotion(root: ParentNode): Dispose {
     }), { rootMargin: '-45% 0px -50% 0px' });
     map.forEach((_a, s) => spy!.observe(s));
   }
+  const menu = bootNavMenu(nav, list);
   let intro = 0, idle = 0;
   if (!REDUCED && list) {
     list.classList.add('nav-intro');
@@ -119,8 +120,36 @@ export function bootNavMotion(root: ParentNode): Dispose {
     }, 9000);
   }
   return () => {
-    ac.abort(); cancelAnimationFrame(raf); clearTimeout(intro); clearInterval(idle); spy?.disconnect(); prog.remove();
+    ac.abort(); menu(); cancelAnimationFrame(raf); clearTimeout(intro); clearInterval(idle); spy?.disconnect(); prog.remove();
     list?.classList.remove('nav-intro', 'nav-idle');
     links.forEach(a => { a.classList.remove('is-on', 'nav-neon'); a.removeAttribute('aria-current'); });
   };
+}
+
+/* menu compacto (até 960 px): o botão abre o painel com os mesmos links.
+   Fecha ao escolher uma seção, com Esc (o foco volta ao botão), ao tocar fora,
+   quando o foco sai da barra e quando a tela volta a ser larga. */
+function bootNavMenu(nav: HTMLElement, list: HTMLElement | null): Dispose {
+  const btn = $<HTMLButtonElement>('.s-menu', nav);
+  if (!btn || !list) return () => {};
+  const ac = new AbortController(), signal = ac.signal;
+  const mq = matchMedia('(max-width: 960px)');
+  let t = 0;
+  const isOpen = () => nav.classList.contains('menu-open');
+  const setOpen = (on: boolean) => {
+    if (on === isOpen()) return;
+    nav.classList.toggle('menu-open', on);
+    btn.setAttribute('aria-expanded', String(on));
+    if (on && !REDUCED) {
+      list.classList.remove('nav-intro'); void list.offsetWidth; list.classList.add('nav-intro');
+      clearTimeout(t); t = window.setTimeout(() => list.classList.remove('nav-intro'), 1800);
+    }
+  };
+  btn.addEventListener('click', () => setOpen(!isOpen()), { signal });
+  list.addEventListener('click', e => { if ((e.target as Element).closest('a')) setOpen(false); }, { signal });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && isOpen()) { setOpen(false); btn.focus(); } }, { signal });
+  document.addEventListener('pointerdown', e => { if (isOpen() && !nav.contains(e.target as Node)) setOpen(false); }, { signal });
+  nav.addEventListener('focusout', e => { const to = e.relatedTarget as Node | null; if (isOpen() && to && !nav.contains(to)) setOpen(false); }, { signal });
+  mq.addEventListener('change', () => { if (!mq.matches) setOpen(false); }, { signal });
+  return () => { ac.abort(); clearTimeout(t); setOpen(false); };
 }

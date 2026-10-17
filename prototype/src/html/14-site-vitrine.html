@@ -121,13 +121,13 @@
           <!-- 06 · Glow / Light Sweep -->
           <article class="vt-card vt-w2" id="vt-d-glow" data-demo="glow" data-fx="6" data-intents="foco abertura" aria-labelledby="vt-t-glow">
             <div class="vt-demo vt-gl">
-              <div class="vt-gl-main" tabindex="0" role="img" aria-label="Indicador em destaque: margem bruta de 41%, mais 6 pontos no ano.">
-                <div class="vt-gl-in" aria-hidden="true">
+              <button class="vt-gl-main" type="button" aria-label="Indicador em destaque: Margem bruta, 41%, +6 p.p. no ano. Clique para a luz passar de novo.">
+                <span class="vt-gl-in" aria-hidden="true">
                   <span class="vt-gl-k">Margem bruta</span>
                   <b class="vt-gl-v">41%</b>
                   <span class="vt-gl-d">+6 p.p. no ano</span>
-                </div>
-              </div>
+                </span>
+              </button>
               <div class="vt-gl-side" role="group" aria-label="Indicadores secundários. Clique para pôr em destaque.">
                 <button class="vt-gl-s" type="button" data-i="1"><span>Custo</span><b>−12%</b></button>
                 <button class="vt-gl-s" type="button" data-i="2"><span>Prazo</span><b>18 dias</b></button>
@@ -201,8 +201,8 @@
                 <p class="vt-ch-leg" aria-hidden="true"><span class="vt-ch-lb">Receita</span><span class="vt-ch-ll">Meta</span></p>
               </div>
               <div class="vt-ch-plot">
-                <svg class="vt-ch-svg" viewBox="0 0 640 220" role="group" aria-labelledby="vt-ch-desc"><title id="vt-ch-desc">Receita trimestral sobe de 42 para 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima da meta nos últimos cinco trimestres. Clique numa barra para destacá-la.</title></svg>
-                <div class="vt-ch-tip" role="status" hidden></div>
+                <svg class="vt-ch-svg" viewBox="0 0 640 220" role="group" aria-labelledby="vt-ch-desc"><title id="vt-ch-desc">Receita trimestral vai de 42 a 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima da meta nos últimos cinco trimestres. Clique numa barra para destacá-la.</title></svg>
+                <div class="vt-ch-tip" aria-hidden="true" hidden></div>
               </div>
               <div class="vt-ch-scrub">
                 <label class="sr-only" for="vt-ch-range">Etapa da construção do gráfico</label>
@@ -314,7 +314,7 @@
               <div class="vt-fw-box">
                 <svg class="vt-fw-svg" viewBox="0 0 400 240" aria-hidden="true" focusable="false"></svg>
               </div>
-              <p class="vt-fw-cap mono" aria-live="polite">Clique num nó para ver as ligações</p>
+              <p class="vt-fw-cap mono">Clique num nó para ver as ligações</p>
             </div>
             <div class="vt-meta">
               <div class="vt-meta-row"><p class="vt-kick"><span class="mono">18</span>Processos</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-flow"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Connector e Flow Line"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
@@ -331,22 +331,22 @@
           <div>
             <p class="eyebrow">Catálogo completo</p>
             <h3 class="vt-cat-h">Os 40 efeitos, por número</h3>
-            <p class="vt-cat-sub">Passe o cursor numa prévia para ela rodar. Clique para mexer no efeito.</p>
+            <p class="vt-cat-sub">Passe o cursor numa prévia para ela rodar e clique para mexer nela. Em Editar efeito você muda cor, ritmo, intensidade e o detalhe de cada um.</p>
           </div>
           <p class="vt-count mono" id="vt-count">40 de 40</p>
         </div>
         <ul class="vt-cat" id="vt-cat" aria-label="Catálogo de efeitos"></ul>
         <div class="vt-cat-foot" data-rv="up">
           <button class="vt-plus-pill" id="vt-more" type="button" aria-controls="vt-cat" aria-expanded="false" aria-label="Ver mais 32 efeitos no catálogo"><span aria-hidden="true">+</span><b>32 efeitos</b></button>
-          <a class="vt-cat-plan" href="#assinar">Liberar todos num plano <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <a class="vt-cat-plan" href="#planos">Liberar todos num plano <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
 
         <!-- VALOR · o que entra na apresentação -->
         <div class="vt-value">
           <ul class="vt-stats">
-            <li><b class="display">40</b><span>efeitos prontos para entrar no slide</span></li>
-            <li><b class="display">7</b><span>famílias: movimento, dados, 3D, interface, interatividade, processos e narrativa</span></li>
-            <li><b class="display">1</b><span>arquivo HTML que abre em qualquer navegador, sem instalar nada</span></li>
+            <li data-rv="up" style="--rv-i: 0"><b class="display">40</b><span>efeitos prontos para entrar no slide</span></li>
+            <li data-rv="up" style="--rv-i: 1"><b class="display">7</b><span>famílias: movimento, dados, 3D, interface, interatividade, processos e narrativa</span></li>
+            <li data-rv="up" style="--rv-i: 2"><b class="display">1</b><span>arquivo HTML que abre em qualquer navegador, sem instalar nada</span></li>
           </ul>
           <ul class="vt-prin">
             <li><p class="eyebrow">Compreensão</p><h4>Reduzir esforço</h4><p>O movimento explica sequência, causa e efeito. Um fluxo que se desenha é entendido antes de ser lido.</p></li>
