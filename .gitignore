@@ -15,3 +15,5 @@ pitch/dist/
 
 # Protótipo: a página única com o vídeo embutido (--inline-media) não vai para o repositório
 prototype/dist/
+# o master 4K (crf 18) passa de 100 MB e não cabe no GitHub; a cópia 4K do repositório é halor-pitch-4k.mp4
+pitch/out/halor-pitch-4k-master.mp4
