@@ -1484,3 +1484,505 @@ VT_DEMO.flow = card => {
   paint();
   return { start: draw, replay() { hi(null); draw(); } };
 };
+
+/* ==========================================================================
+   PRÉVIA DO CATÁLOGO · os efeitos sem demo no palco abrem numa prévia leve,
+   jogável e já com os controles abertos (cor, ritmo e o que importa no efeito).
+   VT_PREV[n] = { how, ctl?, make(stage, S, ctx) -> { start, replay, apply, reset, stop } }
+   ctx.say(texto) anuncia para leitor de tela. O modal sai da seção e vai para o body.
+   ========================================================================== */
+const VT_PREV = {};
+const vtRe = (n, c = 'is-play') => { n.classList.remove(c); void n.offsetWidth; n.classList.add(c); };
+function vtPreview() {
+  const m = document.getElementById('vt-prev'); if (!m) return null;
+  document.body.append(m);
+  const box = $('.vt-pv-box', m);
+  let cur = null;
+  const clear = () => { cur?.stop?.(); cur = null; box.textContent = ''; };
+  new MutationObserver(() => { if (m.hidden) clear(); }).observe(m, { attributes: true, attributeFilter: ['hidden'] });
+  return n => {
+    const fx = VT_FX.find(f => f[0] === n), P = VT_PREV[n]; if (!fx || !P) return;
+    clear();
+    const [, name, fam, , , sum] = fx;
+    const card = el('article', 'vt-card vt-pv-card is-on is-vis'); card.id = 'vt-pv-c';
+    const top = el('div', 'vt-pv-top'), kick = el('p', 'vt-kick');
+    kick.append(el('span', 'mono', String(n).padStart(2, '0')), fam, el('span', 'vt-pvchip', 'Prévia'));
+    const x = el('button', 'btn-icon vt-pv-x'); x.type = 'button'; x.dataset.close = ''; x.setAttribute('aria-label', 'Fechar prévia');
+    x.innerHTML = '<svg aria-hidden="true"><use href="#i-x"/></svg>';
+    top.append(kick, x);
+    const stage = el('div', 'vt-demo vt-pv-stage pv-' + n);
+    const meta = el('div', 'vt-meta'), row = el('div', 'vt-meta-row');
+    const rep = el('button', 'btn btn-ghost btn-xs vt-replay'); rep.type = 'button';
+    rep.innerHTML = '<svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir'; rep.setAttribute('aria-label', 'Repetir ' + name);
+    row.append(el('p', 'vt-kick', 'Mexa e veja ao vivo'), rep);
+    const h = el('h3', null, name); h.id = 'vt-pv-t';
+    const how = el('p', 'vt-how'); how.innerHTML = '<svg aria-hidden="true"><use href="#i-spark"/></svg>'; how.append(P.how);
+    meta.append(row, h, el('p', 'vt-what', sum), how);
+    const foot = el('div', 'vt-pv-foot');
+    const cta = el('a', 'btn btn-primary btn-sm', 'Liberar os 40 efeitos'); cta.href = '#assinar'; cta.dataset.close = '';
+    foot.append(el('p', 'vt-pv-note', 'Na apresentação, o efeito já entra com as cores e a fonte da sua marca.'), cta);
+    card.append(top, stage, meta, foot);
+    box.append(card);
+    const S = {}, ctx = { card, say: t => ctx.E && ctx.E.say(t) };
+    const inst = P.make(stage, S, ctx) || {};
+    cur = inst;
+    ctx.E = vtEdit(card, [...(P.ctl || []),
+      { k: 'sp', t: 'range', label: 'Ritmo', min: .4, max: 2.5, step: .1, v: 1, fmt: vtX },
+      { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' }
+    ], (k, v, s, phase) => {
+      if (k === 'acc') vtAcc(card, v);
+      if (k === 'sp') stage.style.setProperty('--sp', v);
+      inst.apply?.(k, v, phase);
+    }, { S, reset: () => inst.reset?.() });
+    if (REDUCED) rep.hidden = true; else rep.addEventListener('click', () => inst.replay?.());
+    ctx.E.open(true);
+    openModal('vt-prev');
+    requestAnimationFrame(() => inst.start?.());
+  };
+}
+
+/* 01 · Motion Graphics */
+VT_PREV[1] = {
+  how: 'Clique na cena para ver a abertura de novo',
+  ctl: [{ k: 't', t: 'text', label: 'Título do capítulo', v: 'O plano', max: 22, wide: true }],
+  make(st) {
+    st.innerHTML = '<div class="pv-mg" aria-hidden="true"><i class="pv-mg-ring"></i><span class="pv-mg-k">Capítulo</span><b class="pv-mg-n">02</b><i class="pv-mg-line"></i><span class="pv-mg-t"></span></div><p class="sr-only"></p>';
+    const w = $('.pv-mg', st), t = $('.pv-mg-t', st), sr = $('.sr-only', st), play = () => vtRe(w);
+    st.addEventListener('click', play);
+    return { start: play, replay: play, apply(k, v) { if (k === 't') { t.textContent = v.trim() || ' '; sr.textContent = 'Capítulo 2: ' + v; } } };
+  }
+};
+
+/* 02 · Icon Motion */
+VT_PREV[2] = {
+  how: 'Passe o cursor ou clique num ícone',
+  make(st) {
+    const IC = [['Gráfico', 'M4 20V11M10 20V5M16 20v-7M2 20h20'], ['Alvo', 'M12 3a9 9 0 1 0 .01 0M12 8a4 4 0 1 0 .01 0M12 12h.01'],
+      ['Faísca', 'M12 2.5v5M12 16.5v5M2.5 12h5M16.5 12h5M5.3 5.3l3.5 3.5M15.2 15.2l3.5 3.5M18.7 5.3l-3.5 3.5M8.8 15.2l-3.5 3.5'], ['Tendência', 'M3 17l6-6 4 4 8-8M15 7h6v6']];
+    st.innerHTML = '<div class="pv-ic">' + IC.map(([n, d], i) => `<button type="button" class="pv-ic-b" style="--i:${i}" aria-label="Ícone ${n}: desenhar de novo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="${d}" pathLength="1"/></svg><span>${n}</span></button>`).join('') + '</div>';
+    const w = $('.pv-ic', st), play = () => vtRe(w);
+    $$('.pv-ic-b', st).forEach(b => { const hit = () => vtRe(b, 'is-hit'); b.addEventListener('pointerenter', hit); b.addEventListener('click', hit); });
+    return { start: play, replay: play };
+  }
+};
+
+/* 05 · Hover Elevation */
+VT_PREV[5] = {
+  how: 'Passe o cursor nos cards · clique muda o nível',
+  make(st, S, ctx) {
+    const K = [['Receita', 'R$ 12,8 mi'], ['Clientes', '1.240'], ['Margem', '41%']];
+    st.innerHTML = '<div class="pv-he">' + K.map(([k, v], i) => `<button type="button" class="pv-he-c" data-l="${i}"><span>${k}</span><b>${v}</b><em>Nível <i>${i}</i> de 3</em></button>`).join('') + '</div>';
+    const cs = $$('.pv-he-c', st);
+    cs.forEach(b => b.addEventListener('click', () => { const l = (+b.dataset.l + 1) % 4; b.dataset.l = l; $('i', b).textContent = l; ctx.say(`${$('span', b).textContent}: nível ${l} de 3.`); }));
+    return { reset: () => cs.forEach((b, i) => { b.dataset.l = i; $('i', b).textContent = i; }) };
+  }
+};
+
+/* 07 · Glassmorphism */
+VT_PREV[7] = {
+  how: 'Mova o cursor: o vidro flutua sobre o fundo',
+  ctl: [{ k: 'blur', t: 'range', label: 'Desfoque', min: 0, max: 30, step: 1, v: 14, fmt: v => v + ' px' }],
+  make(st) {
+    st.innerHTML = '<div class="pv-gm"><i></i><i></i><i></i><div class="pv-gm-p"><span>Plateia agora</span><b>312</b><em>+48 nos últimos 5 min</em></div></div>';
+    const p = $('.pv-gm-p', st);
+    st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(); p.style.setProperty('--px', ((e.clientX - r.left) / r.width - .5) * 28 + 'px'); p.style.setProperty('--py', ((e.clientY - r.top) / r.height - .5) * 20 + 'px'); });
+    st.addEventListener('pointerleave', () => { p.style.setProperty('--px', '0px'); p.style.setProperty('--py', '0px'); });
+    return { apply(k, v) { if (k === 'blur') st.style.setProperty('--blur', v + 'px'); } };
+  }
+};
+
+/* 08 · Animated Gradient */
+VT_PREV[8] = {
+  how: 'Clique na capa para girar a luz',
+  ctl: [{ k: 't', t: 'text', label: 'Título da capa', v: 'Relatório anual 2027', max: 30, wide: true }],
+  make(st, S, ctx) {
+    st.innerHTML = '<div class="pv-ag"><p class="pv-ag-k">Halor apresenta</p><p class="pv-ag-t"></p></div>';
+    const w = $('.pv-ag', st), t = $('.pv-ag-t', st); let a = 0;
+    st.addEventListener('click', () => { a = (a + 1) % 3; w.style.setProperty('--pv-ang', [120, 210, 300][a] + 'deg'); ctx.say('A luz mudou de direção.'); });
+    return { apply(k, v) { if (k === 't') t.textContent = vtNb(v.trim()) || ' '; }, reset() { a = 0; w.style.removeProperty('--pv-ang'); } };
+  }
+};
+
+/* 09 · Parallax */
+VT_PREV[9] = {
+  how: 'Mova o cursor: cada camada anda num ritmo',
+  ctl: [{ k: 'depth', t: 'range', label: 'Profundidade', min: 0, max: 2, step: .1, v: 1, fmt: vtPct }],
+  make(st, S) {
+    st.innerHTML = '<div class="pv-px" aria-hidden="true"><div class="pv-px-l" data-z="1">' + '<i></i>'.repeat(9) + '</div><div class="pv-px-l" data-z="2"><b class="pv-px-orb"></b></div><div class="pv-px-l" data-z="4"><div class="pv-px-card"><span>Meta 2027</span><b>+38%</b></div></div></div>';
+    const ls = $$('.pv-px-l', st);
+    let tx = 0, ty = 0, x = 0, y = 0, raf = 0, on = false, t0 = performance.now();
+    const paint = () => ls.forEach(l => { const z = +l.dataset.z * (S.depth ?? 1) * 9; l.style.transform = `translate3d(${(x * z).toFixed(2)}px, ${(y * z).toFixed(2)}px, 0)`; });
+    const tick = t => {
+      if (!on) { const s = (t - t0) / 1000 * (S.sp || 1); tx = Math.sin(s * .7) * .6; ty = Math.cos(s * .5) * .4; }
+      x += (tx - x) * .08; y += (ty - y) * .08; paint();
+      raf = requestAnimationFrame(tick);
+    };
+    st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(); on = true; tx = ((e.clientX - r.left) / r.width - .5) * 2; ty = ((e.clientY - r.top) / r.height - .5) * 2; if (REDUCED) { x = tx; y = ty; paint(); } });
+    st.addEventListener('pointerleave', () => { on = false; t0 = performance.now(); });
+    return { start() { if (!REDUCED) raf = requestAnimationFrame(tick); }, stop() { cancelAnimationFrame(raf); }, apply() { if (REDUCED) paint(); } };
+  }
+};
+
+/* 10 · Reveal / Mask Reveal */
+VT_PREV[10] = {
+  how: 'Clique na cena para revelar de novo',
+  ctl: [{ k: 'dir', t: 'seg', label: 'Revelar', opts: [['l', 'Da esquerda'], ['b', 'De baixo']], v: 'l', wide: true }],
+  make(st) {
+    st.innerHTML = '<div class="pv-rv"><p class="pv-rv-b pv-rv-k" style="--i:0">Resultado do trimestre</p><p class="pv-rv-b pv-rv-t" style="--i:1">A margem subiu para 41%</p><div class="pv-rv-b pv-rv-img" style="--i:2" aria-hidden="true"><i style="--h:.4"></i><i style="--h:.55"></i><i style="--h:.7"></i><i style="--h:1"></i></div><p class="pv-rv-b pv-rv-c" style="--i:3">Fonte: painel financeiro, março de 2027</p></div>';
+    const w = $('.pv-rv', st), play = () => vtRe(w);
+    st.addEventListener('click', play);
+    return { start: play, replay: play, apply(k, v, ph) { if (k === 'dir') { w.dataset.dir = v; if (!ph) play(); } } };
+  }
+};
+
+/* 13 · Progress Motion */
+VT_PREV[13] = {
+  how: 'Toque em Sortear para novas notas',
+  make(st, S, ctx) {
+    const K = ['Atenção', 'Retenção', 'Ação'], V0 = [82, 64, 71];
+    st.innerHTML = '<div class="pv-pg"><div class="pv-pg-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" class="t"/><circle cx="60" cy="60" r="50" class="v" pathLength="100"/></svg><b>0</b><span>Índice</span></div><div class="pv-pg-r"><ul>' + K.map(k => `<li><span>${k}</span><i><s></s><u title="Meta 75"></u></i><b>0</b></li>`).join('') + '</ul><button type="button" class="btn btn-ghost btn-xs pv-pg-go">Sortear</button></div></div>';
+    const li = $$('li', st), ring = $('.pv-pg-ring', st), rb = $('b', ring);
+    let cur = [0, 0, 0, 0], stop = null;
+    const set = vals => {
+      const idx = Math.round(vals.reduce((a, b) => a + b, 0) / vals.length), to = [...vals, idx], from = cur.slice();
+      li.forEach((l, i) => l.style.setProperty('--p', vals[i] / 100));
+      $('.v', ring).style.strokeDashoffset = 100 - idx;
+      stop?.();
+      const draw = q => { cur = from.map((a, i) => a + (to[i] - a) * vtEase(q)); li.forEach((l, i) => { $('b', l).textContent = Math.round(cur[i]); }); rb.textContent = Math.round(cur[3]); };
+      if (REDUCED) draw(1); else stop = vtTween(1300 / (S.sp || 1), draw);
+      ctx.say(`Índice ${idx}. ${K.map((k, i) => `${k} ${vals[i]}`).join(', ')}.`);
+    };
+    $('.pv-pg-go', st).addEventListener('click', () => set(K.map(() => 35 + Math.round(Math.random() * 62))));
+    return { start: () => set(V0), replay() { cur = [0, 0, 0, 0]; li.forEach(l => l.style.setProperty('--p', 0)); $('.v', ring).style.strokeDashoffset = 100; requestAnimationFrame(() => requestAnimationFrame(() => set(V0))); }, reset: () => set(V0), stop: () => stop?.() };
+  }
+};
+
+/* 14 · Heatmap Animation */
+VT_PREV[14] = {
+  how: 'Passe o cursor nas células para ler o valor',
+  make(st) {
+    const D = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'], H = ['9h', '11h', '13h', '15h', '17h', '19h'];
+    const V = D.map((d, i) => H.map((h, j) => Math.round(18 + 76 * Math.abs(Math.sin(i * 1.3 + j * .9 + 1)) * (j > 2 ? 1 : .72))));
+    const flat = V.flat(), sorted = flat.slice().sort((a, b) => a - b), max = Math.max(...flat), hot = flat.indexOf(max);
+    st.innerHTML = `<div class="pv-hm"><div class="pv-hm-g" role="img" aria-label="Mapa de calor de interações por dia e horário. Pico: ${D[Math.floor(hot / 6)]} às ${H[hot % 6]}, ${max} interações."></div><p class="pv-hm-o mono" aria-hidden="true"></p></div>`;
+    const g = $('.pv-hm-g', st), out = $('.pv-hm-o', st);
+    const def = `Pico: ${D[Math.floor(hot / 6)]} ${H[hot % 6]} · ${max} interações`;
+    g.append(el('span'), ...H.map(h => el('span', 'pv-hm-h', h)));
+    V.forEach((row, i) => { g.append(el('span', 'pv-hm-d', D[i])); row.forEach((v, j) => { const c = el('i'); c.style.setProperty('--v', ((v - 18) / (max - 18)).toFixed(2)); c.style.setProperty('--o', sorted.indexOf(v)); c.dataset.t = `${D[i]} ${H[j]} · ${v} interações`; g.append(c); }); });
+    out.textContent = def;
+    g.addEventListener('pointerover', e => { const c = e.target.closest('i'); if (c) out.textContent = c.dataset.t; });
+    g.addEventListener('pointerleave', () => { out.textContent = def; });
+    const play = () => vtRe(g);
+    return { start: play, replay: play };
+  }
+};
+
+/* 15 · Data Highlight */
+VT_PREV[15] = {
+  how: 'Clique numa barra para destacar só ela',
+  make(st, S, ctx) {
+    const R = [['Norte', 18], ['Nordeste', 26], ['Centro-Oeste', 21], ['Sudeste', 64], ['Sul', 42]];
+    st.innerHTML = '<div class="pv-dh"><p class="pv-dh-t">Novos clientes por região</p><div class="pv-dh-b">' + R.map(([k, v]) => `<button type="button" aria-pressed="false" style="--h:${v / 64}"><b>${v}</b><i></i><span>${k}</span></button>`).join('') + '</div><p class="pv-dh-c mono" aria-hidden="true">Clique numa região</p></div>';
+    const w = $('.pv-dh', st), bs = $$('.pv-dh-b button', st), cap = $('.pv-dh-c', st);
+    const pick = i => {
+      const on = bs[i].getAttribute('aria-pressed') !== 'true';
+      bs.forEach((b, j) => b.setAttribute('aria-pressed', String(on && j === i)));
+      w.classList.toggle('is-hl', on);
+      const t = on ? `${R[i][0]}: ${R[i][1]} novos clientes, ${Math.round(R[i][1] / 171 * 100)}% do total` : 'Clique numa região';
+      cap.textContent = t; ctx.say(on ? t + '.' : 'Destaque desligado.');
+    };
+    bs.forEach((b, i) => b.addEventListener('click', () => pick(i)));
+    return { reset() { bs.forEach(b => b.setAttribute('aria-pressed', 'false')); w.classList.remove('is-hl'); cap.textContent = 'Clique numa região'; } };
+  }
+};
+
+/* 17 · BPMN Flow Motion */
+VT_PREV[17] = {
+  how: 'A luz percorre o processo · clique numa etapa',
+  make(st, S, ctx) {
+    const K = ['Pedido', 'Análise', 'Aprovação', 'Entrega'];
+    st.innerHTML = '<div class="pv-bp"><div class="pv-bp-row"><i class="pv-bp-line"></i><i class="pv-bp-dot"></i>' + K.map((k, i) => `<button type="button" aria-pressed="false"><span class="mono">${String(i + 1).padStart(2, '0')}</span>${k}</button>`).join('') + '</div><p class="pv-bp-c" aria-hidden="true"></p></div>';
+    const bs = $$('.pv-bp-row button', st), dot = $('.pv-bp-dot', st), cap = $('.pv-bp-c', st);
+    const CAP = ['O pedido entra pelo site.', 'A equipe analisa em até 2 horas.', 'O gestor aprova com um clique.', 'A entrega sai no mesmo dia.'];
+    let at = 0, timer = 0, hold = 0;
+    const go = i => {
+      at = i; bs.forEach((b, j) => { b.setAttribute('aria-pressed', String(j === i)); b.classList.toggle('is-done', j < i); });
+      const b = bs[i]; dot.style.left = b.offsetLeft + b.offsetWidth / 2 + 'px'; cap.textContent = CAP[i];
+    };
+    const loop = () => { clearTimeout(timer); timer = setTimeout(() => { if (Date.now() > hold) go((at + 1) % K.length); loop(); }, 1500 / (S.sp || 1)); };
+    bs.forEach((b, i) => b.addEventListener('click', () => { hold = Date.now() + 4000; go(i); ctx.say(`${K[i]}: ${CAP[i]}`); }));
+    return { start() { go(0); if (!REDUCED) loop(); }, replay() { hold = 0; go(0); loop(); }, stop: () => clearTimeout(timer) };
+  }
+};
+
+/* 19 · Pulse / Beacon */
+VT_PREV[19] = {
+  how: 'Clique num ponto pulsante para marcar como visto',
+  make(st, S, ctx) {
+    const P = [['Pergunta da plateia', 24, 34], ['Enquete aberta', 62, 58], ['Comentário novo', 80, 26]];
+    st.innerHTML = '<div class="pv-pb"><div class="pv-pb-s" aria-hidden="true"><i></i><i></i><i></i></div>' + P.map(([k, x, y]) => `<button type="button" aria-pressed="false" style="left:${x}%;top:${y}%"><span>${k}</span></button>`).join('') + '<button type="button" class="btn btn-ghost btn-xs pv-pb-r">Reativar</button></div>';
+    const bs = $$('.pv-pb > button:not(.btn)', st);
+    bs.forEach((b, i) => { b.setAttribute('aria-label', P[i][0] + ': pendente'); b.addEventListener('click', () => { const v = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(v)); b.setAttribute('aria-label', `${P[i][0]}: ${v ? 'visto' : 'pendente'}`); ctx.say(`${P[i][0]} ${v ? 'marcado como visto' : 'pendente de novo'}.`); }); });
+    const on = () => bs.forEach((b, i) => { b.setAttribute('aria-pressed', 'false'); b.setAttribute('aria-label', P[i][0] + ': pendente'); });
+    $('.pv-pb-r', st).addEventListener('click', on);
+    return { reset: on };
+  }
+};
+
+/* 20 · Ripple Interaction */
+VT_PREV[20] = {
+  how: 'Clique em qualquer ponto da cena',
+  make(st, S, ctx) {
+    st.innerHTML = '<div class="pv-rp"><button type="button" class="pv-rp-b" aria-pressed="false">Confirmar presença</button></div>';
+    const w = $('.pv-rp', st), b = $('.pv-rp-b', st);
+    const wave = (x, y) => {
+      if (REDUCED) return;
+      const r = w.getBoundingClientRect(), s = el('span', 'pv-rp-w');
+      s.style.left = x - r.left + 'px'; s.style.top = y - r.top + 'px'; w.append(s);
+      s.addEventListener('animationend', () => s.remove());
+    };
+    w.addEventListener('pointerdown', e => wave(e.clientX, e.clientY));
+    b.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { const r = b.getBoundingClientRect(); wave(r.left + r.width / 2, r.top + r.height / 2); } });
+    b.addEventListener('click', () => { const v = b.getAttribute('aria-pressed') !== 'true'; b.setAttribute('aria-pressed', String(v)); b.textContent = v ? 'Presença confirmada' : 'Confirmar presença'; ctx.say(b.textContent + '.'); });
+    return { reset() { b.setAttribute('aria-pressed', 'false'); b.textContent = 'Confirmar presença'; } };
+  }
+};
+
+/* 22 · Expandable Card */
+VT_PREV[22] = {
+  how: 'Clique num card para abrir o detalhe',
+  make(st) {
+    const K = [['Por que agora', 'O cliente decide em março. Quem chegar antes define o padrão.'], ['O que muda', 'Um painel único no lugar de três planilhas e dois e-mails.'], ['Quanto custa', 'R$ 18 mil no trimestre, pago com a economia de horas.']];
+    st.innerHTML = '<div class="pv-ex">' + K.map(([h, b], i) => `<div class="pv-ex-i"><button type="button" aria-expanded="${i === 0}" aria-controls="pv-ex-${i}"><span class="mono">${String(i + 1).padStart(2, '0')}</span>${h}<svg aria-hidden="true"><use href="#i-chev"/></svg></button><div class="pv-ex-b" id="pv-ex-${i}"><p>${b}</p></div></div>`).join('') + '</div>';
+    const bs = $$('.pv-ex button', st);
+    bs.forEach(b => b.addEventListener('click', () => { const on = b.getAttribute('aria-expanded') !== 'true'; bs.forEach(x => x.setAttribute('aria-expanded', String(on && x === b))); }));
+    return { reset: () => bs.forEach((x, i) => x.setAttribute('aria-expanded', String(i === 0))) };
+  }
+};
+
+/* 23 · Modal Focus */
+VT_PREV[23] = {
+  how: 'Clique num card para trazê-lo ao palco',
+  make(st, S, ctx) {
+    const K = [['Receita', 'R$ 12,8 mi', 'Alta de 38% puxada pelo Sudeste.'], ['Clientes', '1.240', '312 vieram por indicação.'], ['Prazo', '18 dias', 'Nove dias mais rápido que em 2026.']];
+    st.innerHTML = '<div class="pv-mf"><div class="pv-mf-row">' + K.map(([k, v, d]) => `<button type="button" aria-pressed="false"><span>${k}</span><b>${v}</b><em>${d}</em></button>`).join('') + '</div></div>';
+    const w = $('.pv-mf', st), bs = $$('.pv-mf-row button', st);
+    const close = () => { bs.forEach(b => { b.setAttribute('aria-pressed', 'false'); b.style.removeProperty('--tx'); b.style.removeProperty('--ty'); }); w.classList.remove('has-f'); };
+    bs.forEach((b, i) => b.addEventListener('click', () => {
+      if (b.getAttribute('aria-pressed') === 'true') { close(); ctx.say('Card de volta ao lugar.'); return; }
+      close();
+      const r = b.getBoundingClientRect(), s = w.getBoundingClientRect();
+      b.style.setProperty('--tx', s.left + s.width / 2 - (r.left + r.width / 2) + 'px'); b.style.setProperty('--ty', s.top + s.height / 2 - (r.top + r.height / 2) + 'px');
+      b.setAttribute('aria-pressed', 'true'); w.classList.add('has-f'); ctx.say(`${K[i][0]} em foco: ${K[i][1]}. ${K[i][2]}`);
+    }));
+    w.addEventListener('click', e => { if (!e.target.closest('button')) close(); });
+    return { reset: close };
+  }
+};
+
+/* 25 · Magnetic Button */
+VT_PREV[25] = {
+  how: 'Aproxime o cursor do botão',
+  ctl: [{ k: 'mag', t: 'range', label: 'Força do ímã', min: 0, max: .8, step: .05, v: .35, fmt: vtPct }],
+  make(st, S, ctx) {
+    st.innerHTML = '<div class="pv-mb"><button type="button" class="pv-mb-b"><span>Começar agora</span></button></div>';
+    const b = $('.pv-mb-b', st), w = $('.pv-mb', st);
+    w.addEventListener('pointermove', e => {
+      if (REDUCED) return;
+      const r = b.getBoundingClientRect(), dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2), d = Math.hypot(dx, dy), f = d < 170 ? (S.mag ?? .35) : 0;
+      b.style.setProperty('--mx', dx * f + 'px'); b.style.setProperty('--my', dy * f + 'px'); b.classList.toggle('is-near', d < 170);
+    });
+    w.addEventListener('pointerleave', () => { b.style.setProperty('--mx', '0px'); b.style.setProperty('--my', '0px'); b.classList.remove('is-near'); });
+    b.addEventListener('click', () => { vtRe(b, 'is-hit'); ctx.say('Clique confirmado.'); });
+    return {};
+  }
+};
+
+/* 26 · Microinteractions */
+VT_PREV[26] = {
+  how: 'Toque em cada controle',
+  make(st, S, ctx) {
+    st.innerHTML = '<div class="pv-mi">' +
+      '<button type="button" class="pv-mi-sw" role="switch" aria-checked="false"><i></i><span>Notificações</span></button>' +
+      '<button type="button" class="pv-mi-lk" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span>Curtir</span><b>24</b></button>' +
+      '<button type="button" class="pv-mi-ck" aria-pressed="false"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" pathLength="1"/></svg></i><span>Revisar slide 3</span></button>' +
+      '<button type="button" class="pv-mi-sv"><span>Salvar</span></button></div>';
+    const sw = $('.pv-mi-sw', st), lk = $('.pv-mi-lk', st), ck = $('.pv-mi-ck', st), sv = $('.pv-mi-sv', st);
+    let t = 0;
+    sw.addEventListener('click', () => { const v = sw.getAttribute('aria-checked') !== 'true'; sw.setAttribute('aria-checked', String(v)); ctx.say(v ? 'Notificações ligadas.' : 'Notificações desligadas.'); });
+    lk.addEventListener('click', () => { const v = lk.getAttribute('aria-pressed') !== 'true'; lk.setAttribute('aria-pressed', String(v)); $('b', lk).textContent = v ? 25 : 24; vtRe(lk, 'is-hit'); ctx.say(v ? 'Curtido.' : 'Curtida removida.'); });
+    ck.addEventListener('click', () => { const v = ck.getAttribute('aria-pressed') !== 'true'; ck.setAttribute('aria-pressed', String(v)); ctx.say(v ? 'Tarefa concluída.' : 'Tarefa reaberta.'); });
+    sv.addEventListener('click', () => {
+      clearTimeout(t); sv.classList.remove('is-ok'); sv.classList.add('is-busy'); $('span', sv).textContent = 'Salvando';
+      t = setTimeout(() => { sv.classList.remove('is-busy'); sv.classList.add('is-ok'); $('span', sv).textContent = 'Salvo'; ctx.say('Salvo.'); t = setTimeout(() => { sv.classList.remove('is-ok'); $('span', sv).textContent = 'Salvar'; }, 1800); }, REDUCED ? 0 : 900 / (S.sp || 1));
+    });
+    return { stop: () => clearTimeout(t) };
+  }
+};
+
+/* 27 · Scroll Reveal */
+VT_PREV[27] = {
+  how: 'Role dentro da prévia: os blocos entram e saem',
+  make(st) {
+    const K = ['O problema', 'A virada', 'O número', 'O plano', 'O pedido', 'Obrigado'];
+    st.innerHTML = '<div class="pv-sr" tabindex="0" aria-label="Área de rolagem da prévia"><p class="pv-sr-hint mono">Role para baixo</p>' + K.map((k, i) => `<div class="pv-sr-b"><span class="mono">${String(i + 1).padStart(2, '0')}</span><b>${k}</b></div>`).join('') + '</div>';
+    const sc = $('.pv-sr', st);
+    const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-in', e.isIntersecting)), { root: sc, threshold: .35 });
+    $$('.pv-sr-b', st).forEach(b => io.observe(b));
+    return { replay() { sc.scrollTo({ top: 0, behavior: 'smooth' }); }, stop: () => io.disconnect() };
+  }
+};
+
+/* 28 · Sticky Storytelling */
+VT_PREV[28] = {
+  how: 'Role o texto: o visual fixo muda de fase',
+  make(st) {
+    const K = [['Antes', 'Três planilhas, dois e-mails e uma reunião para alinhar.'], ['Durante', 'Um painel junta tudo e a equipe decide junto.'], ['Depois', 'O relatório sai sozinho toda segunda-feira.']];
+    st.innerHTML = '<div class="pv-ss" tabindex="0" aria-label="Área de rolagem da prévia"><div class="pv-ss-v" data-f="0" aria-hidden="true"><div class="pv-ss-o"><b>1</b><span>Antes</span></div></div><div class="pv-ss-t">' + K.map(([k, d], i) => `<div class="pv-ss-s" data-i="${i}"><span class="mono">Fase ${i + 1}</span><b>${k}</b><p>${d}</p></div>`).join('') + '</div></div>';
+    const sc = $('.pv-ss', st), v = $('.pv-ss-v', st), o = $('.pv-ss-o', st);
+    const io = new IntersectionObserver(es => es.forEach(e => { if (!e.isIntersecting) return; const i = +e.target.dataset.i; v.dataset.f = i; $('b', o).textContent = i + 1; $('span', o).textContent = K[i][0]; }), { root: sc, threshold: .6 });
+    $$('.pv-ss-s', st).forEach(s => io.observe(s));
+    return { replay() { sc.scrollTo({ top: 0, behavior: 'smooth' }); }, stop: () => io.disconnect() };
+  }
+};
+
+/* 29 · Morphing Shapes */
+VT_PREV[29] = {
+  how: 'Troque a fase: silos viram centro, o centro vira rede',
+  make(st, S, ctx) {
+    const F = {
+      silos: [[22, 50, 20, 14], [50, 50, 20, 14], [78, 50, 20, 14], [50, 50, 0, 50], [50, 50, 0, 50]],
+      centro: [[50, 50, 36, 50], [50, 50, 36, 50], [50, 50, 36, 50], [50, 50, 0, 50], [50, 50, 0, 50]],
+      rede: [[50, 48, 16, 50], [22, 26, 11, 50], [78, 26, 11, 50], [24, 72, 11, 50], [76, 72, 11, 50]]
+    };
+    const N = { silos: 'Silos', centro: 'Centro', rede: 'Rede' };
+    st.innerHTML = '<div class="pv-mo"><div class="pv-mo-s" aria-hidden="true"><svg class="pv-mo-l" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M50 48L22 26M50 48L78 26M50 48L24 72M50 48L76 72"/></svg>' + '<i></i>'.repeat(5) + '</div><div class="pv-mo-c" role="group" aria-label="Fase da forma">' + Object.entries(N).map(([k, n]) => `<button type="button" data-f="${k}" aria-pressed="false">${n}</button>`).join('') + '</div></div>';
+    const w = $('.pv-mo', st), is = $$('.pv-mo-s i', st), bs = $$('.pv-mo-c button', st);
+    let timer = 0, auto = true;
+    const go = f => { w.dataset.f = f; is.forEach((n, i) => { const [x, y, s, r] = F[f][i]; n.style.cssText = `left:${x}%;top:${y}%;width:${s}%;border-radius:${r}%;--d:${i * 60}ms`; }); bs.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.f === f))); };
+    const ORDER = ['silos', 'centro', 'rede'];
+    const loop = () => { clearTimeout(timer); timer = setTimeout(() => { if (!auto) return; go(ORDER[(ORDER.indexOf(w.dataset.f) + 1) % 3]); loop(); }, 2200 / (S.sp || 1)); };
+    bs.forEach(b => b.addEventListener('click', () => { auto = false; clearTimeout(timer); go(b.dataset.f); ctx.say('Fase: ' + N[b.dataset.f] + '.'); }));
+    go('silos');
+    return { start() { if (!REDUCED) loop(); }, replay() { auto = true; go('silos'); loop(); }, stop: () => clearTimeout(timer) };
+  }
+};
+
+/* 31 · Shimmer / Holographic Sweep */
+VT_PREV[31] = {
+  how: 'Clique para carregar de novo',
+  make(st) {
+    st.innerHTML = '<div class="pv-sh"><div class="pv-sh-c"><div class="pv-sh-sk" aria-hidden="true"><i></i><i></i><i></i></div><div class="pv-sh-in"><span>Receita no ano</span><b>R$ 12,8 mi</b><em>+38% sobre 2026</em></div><i class="pv-sh-seal" aria-hidden="true">Verificado</i></div></div>';
+    const c = $('.pv-sh-c', st);
+    let t = 0;
+    const play = () => { clearTimeout(t); c.classList.remove('is-done'); vtRe(c, 'is-load'); t = setTimeout(() => c.classList.add('is-done'), REDUCED ? 0 : 1700 / (parseFloat(getComputedStyle(st).getPropertyValue('--sp')) || 1)); };
+    st.addEventListener('click', play);
+    return { start: play, replay: play, stop: () => clearTimeout(t) };
+  }
+};
+
+/* 32 · Floating Elements */
+VT_PREV[32] = {
+  how: 'Passe o cursor para pausar a órbita',
+  ctl: [{ k: 'r', t: 'range', label: 'Raio da órbita', min: .6, max: 1.2, step: .05, v: 1, fmt: vtPct }],
+  make(st) {
+    const K = ['Dados', 'Plateia', 'Marca', 'Ritmo'];
+    st.innerHTML = '<div class="pv-fe"><div class="pv-fe-core"><b>Halor</b></div><div class="pv-fe-orb">' + K.map((k, i) => `<span style="--a:${i * 90}deg"><i>${k}</i></span>`).join('') + '</div></div>';
+    return { apply(k, v) { if (k === 'r') st.style.setProperty('--r', v); } };
+  }
+};
+
+/* 34 · Carousel / Horizontal Gallery */
+VT_PREV[34] = {
+  how: 'Arraste para o lado ou use as setas',
+  make(st, S, ctx) {
+    const K = [['T1', 'Atenção', 'A capa que para a sala.'], ['T2', 'Ritmo', 'Um slide por ideia.'], ['T3', 'Prova', 'O número que convence.'], ['T4', 'Ação', 'O pedido no fim.'], ['T5', 'Memória', 'O que fica depois.']];
+    st.innerHTML = '<div class="pv-ca"><div class="pv-ca-t" tabindex="0" aria-label="Galeria: use as setas">' + K.map(([n, k, d]) => `<div class="pv-ca-c"><span class="mono">${n}</span><b>${k}</b><p>${d}</p></div>`).join('') + '</div><div class="pv-ca-n"><button type="button" class="btn-icon" data-d="-1" aria-label="Anterior"><svg aria-hidden="true"><use href="#i-chev-r"/></svg></button><div class="pv-ca-dots" aria-hidden="true">' + '<i></i>'.repeat(K.length) + '</div><button type="button" class="btn-icon" data-d="1" aria-label="Próximo"><svg aria-hidden="true"><use href="#i-chev-r"/></svg></button></div></div>';
+    const tr = $('.pv-ca-t', st), cs = $$('.pv-ca-c', st), ds = $$('.pv-ca-dots i', st);
+    let at = 0;
+    const near = () => { const c = tr.scrollLeft + tr.clientWidth / 2; let b = 0, bd = 1e9; cs.forEach((n, i) => { const d = Math.abs(n.offsetLeft + n.offsetWidth / 2 - c); if (d < bd) { bd = d; b = i; } }); return b; };
+    const mark = () => { const i = near(); if (i !== at) { at = i; ctx.say(`${K[i][1]}, ${i + 1} de ${K.length}.`); } cs.forEach((n, j) => n.classList.toggle('is-on', j === i)); ds.forEach((d, j) => d.classList.toggle('is-on', j === i)); };
+    const to = i => { i = vtClamp(i, 0, K.length - 1); const n = cs[i]; tr.scrollTo({ left: n.offsetLeft - (tr.clientWidth - n.offsetWidth) / 2, behavior: REDUCED ? 'auto' : 'smooth' }); };
+    tr.addEventListener('scroll', () => requestAnimationFrame(mark), { passive: true });
+    tr.addEventListener('keydown', e => { const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (d) { e.preventDefault(); to(near() + d); } });
+    $$('.pv-ca-n button', st).forEach(b => b.addEventListener('click', () => to(near() + +b.dataset.d)));
+    return { start: mark, replay: () => to(0), reset: () => to(0) };
+  }
+};
+
+/* 36 · Tooltip / Contextual Info */
+VT_PREV[36] = {
+  how: 'Passe o cursor ou foque os pontos marcados',
+  make(st) {
+    const P = [[18, 70, 'Março: campanha nova no ar.'], [55, 43.3, 'Junho: entrada no Sul.'], [84, 16.7, 'Setembro: recorde de 84 mi.']];
+    st.innerHTML = '<div class="pv-tt"><p class="pv-tt-t">Receita mensal <span class="mono">R$ mi</span></p><div class="pv-tt-a"><svg class="pv-tt-c" viewBox="0 0 100 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 52 L12 48 L18 42 L30 40 L42 34 L55 26 L68 24 L76 16 L84 10 L100 8" /></svg>' + P.map(([x, y, t], i) => `<button type="button" class="pv-tt-p" style="left:${x}%;top:${y}%"><span class="sr-only">Detalhe ${i + 1}: </span><span class="pv-tt-tip">${t}</span></button>`).join('') + '</div></div>';
+    return {};
+  }
+};
+
+/* 38 · Timeline Motion */
+VT_PREV[38] = {
+  how: 'A linha se desenha · clique num marco',
+  make(st, S, ctx) {
+    const K = [['2023', 'Primeiro cliente'], ['2024', 'Time de 12 pessoas'], ['2025', 'Chegada ao Sul'], ['2026', 'R$ 84 mi no ano'], ['2027', 'Expansão para a América Latina']];
+    st.innerHTML = '<div class="pv-tl"><div class="pv-tl-l"><i class="pv-tl-bar"></i>' + K.map(([y], i) => `<button type="button" style="--i:${i};left:${8 + i * 21}%" aria-pressed="${i === 4}"><span>${y}</span></button>`).join('') + '</div><p class="pv-tl-d" aria-live="off"></p></div>';
+    const w = $('.pv-tl', st), bs = $$('.pv-tl-l button', st), d = $('.pv-tl-d', st);
+    const pick = i => { bs.forEach((b, j) => b.setAttribute('aria-pressed', String(j === i))); d.textContent = `${K[i][0]} · ${K[i][1]}`; };
+    bs.forEach((b, i) => b.addEventListener('click', () => { pick(i); ctx.say(`${K[i][0]}: ${K[i][1]}.`); }));
+    pick(4);
+    const play = () => vtRe(w);
+    return { start: play, replay: play, reset: () => pick(4) };
+  }
+};
+
+/* 39 · Node Network Motion */
+VT_PREV[39] = {
+  how: 'Clique num nó: os vizinhos acendem',
+  make(st, S, ctx) {
+    const N = [['Halor', 50, 50], ['Marca', 20, 22], ['Dados', 80, 20], ['Plateia', 86, 62], ['Ritmo', 58, 86], ['Editor', 16, 70], ['Painel', 36, 82]];
+    const E = [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5], [1, 5], [2, 3], [3, 4], [4, 6], [5, 6]];
+    st.innerHTML = '<div class="pv-nn"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' + E.map(([a, b]) => `<line x1="${N[a][1]}" y1="${N[a][2]}" x2="${N[b][1]}" y2="${N[b][2]}"/>`).join('') + '</svg>' + N.map(([k, x, y], i) => `<button type="button" class="${i ? '' : 'is-core'}" style="left:${x}%;top:${y}%;--i:${i}" aria-pressed="false">${k}</button>`).join('') + '<p class="pv-nn-c mono" aria-hidden="true">Toque num nó</p></div>';
+    const w = $('.pv-nn', st), bs = $$('.pv-nn > button', st), ls = $$('.pv-nn line', st), cap = $('.pv-nn-c', st);
+    const pick = i => {
+      const on = bs[i].getAttribute('aria-pressed') !== 'true';
+      const nb = new Set(); E.forEach(([a, b], j) => { const hit = on && (a === i || b === i); ls[j].classList.toggle('is-hi', hit); if (hit) nb.add(a === i ? b : a); });
+      bs.forEach((b, j) => { b.setAttribute('aria-pressed', String(on && j === i)); b.classList.toggle('is-nb', nb.has(j)); });
+      w.classList.toggle('is-dim', on);
+      const t = on ? `${N[i][0]} se liga a ${[...nb].map(j => N[j][0]).join(', ')}` : 'Toque num nó';
+      cap.textContent = t; ctx.say(on ? t + '.' : 'Rede sem destaque.');
+    };
+    bs.forEach((b, i) => b.addEventListener('click', () => pick(i)));
+    return { reset() { if (bs.some(b => b.getAttribute('aria-pressed') === 'true')) pick(bs.findIndex(b => b.getAttribute('aria-pressed') === 'true')); } };
+  }
+};
+
+/* 40 · Animated Shader / Hero */
+VT_PREV[40] = {
+  how: 'Mova o cursor: a luz acompanha',
+  ctl: [{ k: 't', t: 'text', label: 'Título da capa', v: 'O ano em que a sala prestou atenção', max: 44, wide: true }],
+  make(st, S, ctx) {
+    st.innerHTML = '<canvas class="pv-sd-cv" aria-hidden="true"></canvas><div class="pv-sd"><p class="pv-sd-k">Abertura</p><p class="pv-sd-t"></p><i class="pv-sd-line"></i></div>';
+    const cv = $('canvas', st), c2 = cv.getContext('2d'), t = $('.pv-sd-t', st);
+    let W = 0, H = 0, raf = 0, mx = .5, my = .4, t0 = performance.now();
+    const size = () => { const r = st.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2); W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; c2.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    const col = () => { const s = getComputedStyle(ctx.card); return [s.getPropertyValue('--acc').trim(), s.getPropertyValue('--acc-hi').trim()]; };
+    const draw = now => {
+      const s = (now - t0) / 1000 * (S.sp || 1), [a, b] = col();
+      c2.globalCompositeOperation = 'source-over'; c2.fillStyle = '#07040f'; c2.fillRect(0, 0, W, H);
+      c2.globalCompositeOperation = 'lighter';
+      const B = [[.3 + .18 * Math.sin(s * .5), .4 + .2 * Math.cos(s * .4), .6, a, .55], [.72 + .15 * Math.cos(s * .37), .55 + .2 * Math.sin(s * .45), .55, b, .3], [mx, my, .35, b, .35], [.5 + .3 * Math.sin(s * .23), .9, .7, a, .35]];
+      B.forEach(([x, y, r, c, o]) => { const g = c2.createRadialGradient(x * W, y * H, 0, x * W, y * H, r * Math.max(W, H)); g.addColorStop(0, `rgba(${c}, ${o})`); g.addColorStop(1, `rgba(${c}, 0)`); c2.fillStyle = g; c2.fillRect(0, 0, W, H); });
+      c2.globalCompositeOperation = 'source-over';
+      c2.strokeStyle = `rgba(${b}, .12)`; c2.lineWidth = 1;
+      for (let k = 0; k < 7; k++) { c2.beginPath(); for (let x = 0; x <= W; x += 12) { const y = H * (.2 + k * .1) + Math.sin(x / 70 + s * (.6 + k * .1) + k) * 14; x ? c2.lineTo(x, y) : c2.moveTo(x, y); } c2.stroke(); }
+    };
+    const loop = now => { draw(now); raf = requestAnimationFrame(loop); };
+    st.addEventListener('pointermove', e => { const r = st.getBoundingClientRect(); mx = (e.clientX - r.left) / r.width; my = (e.clientY - r.top) / r.height; if (REDUCED) draw(performance.now()); });
+    const ro = new ResizeObserver(() => { size(); draw(performance.now()); });
+    return {
+      start() { size(); ro.observe(st); if (REDUCED) draw(performance.now()); else raf = requestAnimationFrame(loop); },
+      apply(k, v) { if (k === 't') t.textContent = vtNb(v.trim()) || ' '; if (k === 'acc' && REDUCED && W) requestAnimationFrame(() => draw(performance.now())); },
+      stop() { cancelAnimationFrame(raf); ro.disconnect(); }
+    };
+  }
+};
