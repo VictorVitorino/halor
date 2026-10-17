@@ -1,3 +1,231 @@
-<!-- CENA 11 · v4 (em produção) -->
+<!-- CENA 11 · v4 · Segundos que contam (lavanda) · "Cada efeito ganha segundos de atenção. E o Painel Halor mostra, slide a slide, quantos segundos o olhar ficou."
+     Ato A: três efeitos (Glow, Counter, Flow Line) soltam selos "+N s" que somam a atenção. Ato B: o Painel Halor abre em máscara a partir do clique,
+     barras agrupadas sobem slide a slide (Chart Build), contador do total, heatmap e Data Highlight + Tooltip no melhor slide. Números: simulação ilustrativa. -->
 <section class="scene s11" id="s11" data-world="paper">
+  <div class="cam s11-cam k cam-in" style="--in: 0; --dur: 1500">
+  <div class="cam s11-cam k cam-push" style="--in: calc(var(--w-olhar) - 200); --dur: 1600; --cz: 1.035; --cy: -6px">
+
+    <i class="s11-aura k fade" style="--in: 200; --dur: 1200"></i>
+
+    <!-- ===================== ATO A · cada efeito ganha segundos ===================== -->
+    <div class="kx" style="--out: calc(var(--w-painel) + 120); --xdur: 360; left: 0; top: 0">
+      <div class="kx" style="--out: calc(var(--w-painel) - 120); --xdur: 240; position: absolute; left: 0; top: 0; width: 1920px">
+        <p class="s11-eyebrow k up" style="--in: var(--w-cada); --dur: 520"><span>Cada efeito conta</span></p>
+      </div>
+      <div class="s11-hd">
+        <span class="s11-wt"><svg class="s11-watch k icon-in" style="--in: var(--w-ganha); --dur: 700" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13.5" r="8" pathLength="1" fill="none" stroke="#8b3dff" stroke-width="2"/><path d="M10 2.5h4M12 2.5v3M18.4 6.6l1.5-1.5" pathLength="1" fill="none" stroke="#6421d1" stroke-width="2" stroke-linecap="round"/></svg>
+        <span class="s11-handw k fade" style="--in: calc(var(--w-ganha) + 250); --dur: 200"><svg class="s11-hand l spin" style="--ldur: 1400" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 13.5V8.5" fill="none" stroke="#6421d1" stroke-width="2.2" stroke-linecap="round"/></svg></span></span>
+        <h2 class="s11-title"><span class="wd k mask-up" style="--in: var(--w-segundos); --dur: 480">Segundos</span> <span class="wd k mask-up" style="--in: var(--w-de); --dur: 420">de</span> <span class="wd k mask-up s11-vi" style="--in: var(--w-atencao); --dur: 480">atenção</span></h2>
+      </div>
+      <!-- soma: três linhas que descem dos efeitos até o total -->
+      <svg class="s11-sum" viewBox="0 0 1120 44" aria-hidden="true">
+        <path class="k draw" style="--in: calc(var(--w-atencao) - 120); --dur: 420" d="M190 0C190 30 560 14 560 44" pathLength="1" fill="none" stroke="#8b3dff" stroke-width="3" stroke-linecap="round"/>
+        <path class="k draw" style="--in: calc(var(--w-atencao) - 120); --dur: 420" d="M560 0V44" pathLength="1" fill="none" stroke="#8b3dff" stroke-width="3" stroke-linecap="round"/>
+        <path class="k draw" style="--in: calc(var(--w-atencao) - 120); --dur: 420" d="M930 0C930 30 560 14 560 44" pathLength="1" fill="none" stroke="#8b3dff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <div class="s11-total k pop-c" style="--in: var(--w-atencao); --dur: 560; left: 960px; top: 640px">
+        <span class="eq">=</span><b>+<span class="num-n k counter" style="--n0: 0; --n1: 9; --in: calc(var(--w-atencao) + 80); --dur: 700"></span> s</b><span>de atenção</span><i><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></i>
+      </div>
+      <i class="ring k ring-x" style="--in: var(--w-atencao); --dur: 900; left: 960px; top: 672px"></i>
+      <span class="s11-tag k pop-c" style="--in: calc(var(--w-atencao) + 260); --dur: 420; left: 960px; top: 724px"><b>i</b>simulação ilustrativa</span>
+    </div>
+
+    <!-- ===================== ATO B · Painel Halor ===================== -->
+    <div class="s11-pn k mask-c" style="--in: var(--w-painel); --dur: 850; --mx: 792px; --my: 532px; left: 300px; top: 140px">
+      <div class="s11-ph">
+        <svg class="s11-mk k s11-spin" style="--in: var(--w-halor); --dur: 700" viewBox="0 0 64 64" aria-hidden="true"><use href="#hl-mark"/></svg>
+        <div class="s11-pht">
+          <p class="s11-pt"><span class="s11-ptx k s11-txtsweep" style="--in: var(--w-halor); --dur: 1000">Painel Halor</span></p>
+          <p class="s11-ps">Proposta comercial · 6 slides · 128 pessoas</p>
+        </div>
+        <span class="s11-live"><i class="l pulse"></i>ao vivo</span>
+        <span class="s11-sim"><b>i</b>simulação ilustrativa</span>
+      </div>
+
+      <!-- coluna esquerda: total e efeitos -->
+      <div class="s11-cd s11-kpi">
+        <p class="s11-ck k fade" style="--in: calc(var(--w-painel) + 260); --dur: 300">Tempo de olhar · por pessoa</p>
+        <!-- esqueleto (carregando) até "quantos": nada de "0 s" contraditório -->
+        <div class="kx" style="--out: var(--w-quantos); --xdur: 200; left: 20px; top: 46px"><i class="s11-sk l shimmer" style="width: 150px; height: 72px; --ldur: 1400"></i></div>
+        <div class="kx" style="--out: var(--w-segundos2); --xdur: 200; left: 22px; top: 140px"><i class="s11-sk l shimmer" style="width: 190px; height: 14px; --ldur: 1400; --lph: 300"></i></div>
+        <div class="kx" style="--out: calc(var(--w-segundos2) + 260); --xdur: 200; left: 20px; top: 170px"><i class="s11-sk l shimmer" style="width: 128px; height: 26px; border-radius: 13px; --ldur: 1400; --lph: 600"></i></div>
+        <p class="s11-big k fade" style="--in: var(--w-quantos); --dur: 200"><span class="num-n k counter" style="--n0: 0; --n1: 59; --in: var(--w-quantos); --dur: 900"></span><small>s</small></p>
+        <p class="s11-vs k fade" style="--in: var(--w-segundos2); --dur: 320">vs <b>21 s</b> no slide parado</p>
+        <span class="s11-delta k pop" style="--in: calc(var(--w-segundos2) + 260); --dur: 420">2,8× mais olhar</span>
+        <svg class="s11-spark" viewBox="0 0 100 60" aria-hidden="true"><path class="k draw" style="--in: calc(var(--w-quantos) + 150); --dur: 800" d="M2 54L18 46L34 50L50 34L66 38L82 16L98 6" pathLength="1" fill="none" stroke="#c9a6ff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle class="k pop" style="--in: calc(var(--w-quantos) + 900); --dur: 300" cx="98" cy="6" r="5" fill="#fff"/></svg>
+        <i class="s11-kshine k sweep-x" style="--in: calc(var(--w-quantos) + 700); --dur: 900"></i>
+      </div>
+      <div class="s11-cd s11-fxl">
+        <p class="s11-ck k fade" style="--in: calc(var(--w-painel) + 300); --dur: 300">Efeitos que mais seguram</p>
+        <div class="kx" style="--out: calc(var(--w-painel) + 780); --xdur: 160; left: 14px; top: 52px"><i class="s11-slot l shimmer" style="--ldur: 1400"></i></div>
+        <div class="kx" style="--out: calc(var(--w-painel) + 840); --xdur: 160; left: 14px; top: 110px"><i class="s11-slot l shimmer" style="--ldur: 1400; --lph: 250"></i></div>
+        <div class="kx" style="--out: calc(var(--w-painel) + 900); --xdur: 160; left: 14px; top: 168px"><i class="s11-slot l shimmer" style="--ldur: 1400; --lph: 500"></i></div>
+        <div class="s11-fr k pop" style="--in: calc(var(--w-painel) + 780); --dur: 380; top: 52px"><i><svg viewBox="0 0 24 24"><use href="#s11-i-glow"/></svg></i><b>Glow</b><span><em style="width: 75%"></em></span><strong>+3 s</strong></div>
+        <div class="s11-fr k pop" style="--in: calc(var(--w-painel) + 840); --dur: 380; top: 110px"><i><svg viewBox="0 0 24 24"><use href="#s11-i-count"/></svg></i><b>Counter</b><span><em style="width: 50%"></em></span><strong>+2 s</strong></div>
+        <div class="s11-fr top k pop" style="--in: calc(var(--w-painel) + 900); --dur: 380; top: 168px"><i><svg viewBox="0 0 24 24"><use href="#s11-i-flow"/></svg></i><b>Flow Line</b><span><em style="width: 100%"></em></span><strong>+4 s</strong></div>
+        <div class="s11-who k fade" style="--in: var(--w-mostra); --dur: 400"><i style="--h: 268">AL</i><i style="--h: 320">RM</i><i style="--h: 160">JP</i><i style="--h: 30">CS</i><i style="--h: 200">LF</i><b>+123 pessoas</b></div>
+      </div>
+
+      <!-- centro: Chart Build slide a slide -->
+      <div class="s11-cd s11-ch">
+        <p class="s11-ck k fade" style="--in: calc(var(--w-painel) + 340); --dur: 300">Segundos de olhar · slide a slide</p>
+        <p class="s11-lg k fade" style="--in: calc(var(--w-mostra) + 160); --dur: 300"><span>slide parado</span><span class="b">slide Halor</span></p>
+        <div class="s11-grid" style="--stag: 70">
+          <i class="k grow-x" style="--in: calc(var(--w-painel) + 300); --i: 0; top: 0"></i><span class="s11-yl k fade" style="--in: calc(var(--w-painel) + 300); --i: 0; --dur: 300; top: 0">15 s</span>
+          <i class="k grow-x" style="--in: calc(var(--w-painel) + 300); --i: 1; top: 123.3px"></i><span class="s11-yl k fade" style="--in: calc(var(--w-painel) + 300); --i: 1; --dur: 300; top: 123.3px">10 s</span>
+          <i class="k grow-x" style="--in: calc(var(--w-painel) + 300); --i: 2; top: 246.7px"></i><span class="s11-yl k fade" style="--in: calc(var(--w-painel) + 300); --i: 2; --dur: 300; top: 246.7px">5 s</span>
+          <i class="base k grow-x" style="--in: calc(var(--w-painel) + 300); --i: 3; top: 370px"></i><span class="s11-yl k fade" style="--in: calc(var(--w-painel) + 300); --i: 3; --dur: 300; top: 370px">0</span>
+        </div>
+        <p class="s11-hk k fade" style="--in: calc(var(--w-painel) + 420); --dur: 300">Calor</p>
+        <i class="s11-hlf k fade" style="--in: var(--w-olhar); --dur: 380"></i>
+        <div class="s11-gs">
+            <div class="s11-g k s11-dim" style=" --in: var(--w-olhar); --dur: 420; left: 64.0px">
+              <div class="kx s11-skw" style="--out: calc(var(--w-slide) + 0); --xdur: 200"><i class="s11-skb l shimmer" style="left: 12px; height: 54px; --ldur: 1400; --lph: 0"></i><i class="s11-skb l shimmer" style="left: 50px; height: 118px; --ldur: 1400; --lph: 120"></i><i class="s11-skc"></i></div>
+              <i class="st k grow-y" style="--in: calc(var(--w-slide) + 0); --dur: 520; height: 98.7px"><em class="k fade" style="--in: calc(var(--w-slide) + 420); --dur: 240">4 s</em></i>
+              <i class="hb k grow-y" style="--in: calc(var(--w-slide) + 80); --dur: 620; height: 222.0px"><em class="k pop" style="--in: calc(var(--w-slide) + 420); --dur: 320">9 s</em></i>
+              <small class="k s11-lab" style="--in: calc(var(--w-slide) + 0); --dur: 300">Slide 1</small>
+              <b class="s11-hc k pop" style="--in: calc(var(--w-slide) + 420); --dur: 360; --c: 0.45"></b>
+            </div>
+            <div class="s11-g k s11-dim" style=" --in: var(--w-olhar); --dur: 420; left: 155.3px">
+              <div class="kx s11-skw" style="--out: calc(var(--w-slide) + 170); --xdur: 200"><i class="s11-skb l shimmer" style="left: 12px; height: 44px; --ldur: 1400; --lph: 250"></i><i class="s11-skb l shimmer" style="left: 50px; height: 104px; --ldur: 1400; --lph: 370"></i><i class="s11-skc"></i></div>
+              <i class="st k grow-y" style="--in: calc(var(--w-slide) + 170); --dur: 520; height: 74.0px"><em class="k fade" style="--in: calc(var(--w-slide) + 590); --dur: 240">3 s</em></i>
+              <i class="hb k grow-y" style="--in: calc(var(--w-slide) + 250); --dur: 620; height: 197.3px"><em class="k pop" style="--in: calc(var(--w-slide) + 590); --dur: 320">8 s</em></i>
+              <small class="k s11-lab" style="--in: calc(var(--w-slide) + 170); --dur: 300">Slide 2</small>
+              <b class="s11-hc k pop" style="--in: calc(var(--w-slide) + 590); --dur: 360; --c: 0.35"></b>
+            </div>
+            <div class="s11-g" style=" left: 246.7px">
+              <div class="kx s11-skw" style="--out: calc(var(--w-slide) + 340); --xdur: 200"><i class="s11-skb l shimmer" style="left: 12px; height: 62px; --ldur: 1400; --lph: 500"></i><i class="s11-skb l shimmer" style="left: 50px; height: 150px; --ldur: 1400; --lph: 620"></i><i class="s11-skc"></i></div>
+              <i class="st k grow-y" style="--in: calc(var(--w-slide) + 340); --dur: 520; height: 123.3px"><em class="k fade" style="--in: calc(var(--w-slide) + 760); --dur: 240">5 s</em></i>
+              <i class="hb best k grow-y" style="--in: calc(var(--w-slide) + 420); --dur: 620; height: 345.3px"><em class="k pop" style="--in: calc(var(--w-slide) + 760); --dur: 320">14 s</em></i>
+              <small class="k s11-lab" style="--in: calc(var(--w-slide) + 340); --dur: 300">Slide 3</small>
+              <b class="s11-hc k pop" style="--in: calc(var(--w-slide) + 760); --dur: 360; --c: 1"></b>
+              <i class="s11-hcp k fade" style="--in: calc(var(--w-olhar) + 200); --dur: 300"><b class="l s11-cbeat"></b><b class="l s11-cbeat" style="--lph: 700"></b></i>
+            </div>
+            <div class="s11-g k s11-dim" style=" --in: var(--w-olhar); --dur: 420; left: 338.0px">
+              <div class="kx s11-skw" style="--out: calc(var(--w-slide) + 510); --xdur: 200"><i class="s11-skb l shimmer" style="left: 12px; height: 40px; --ldur: 1400; --lph: 750"></i><i class="s11-skb l shimmer" style="left: 50px; height: 112px; --ldur: 1400; --lph: 870"></i><i class="s11-skc"></i></div>
+              <i class="st k grow-y" style="--in: calc(var(--w-slide) + 510); --dur: 520; height: 74.0px"><em class="k fade" style="--in: calc(var(--w-slide) + 930); --dur: 240">3 s</em></i>
+              <i class="hb k grow-y" style="--in: calc(var(--w-slide) + 590); --dur: 620; height: 246.7px"><em class="k pop" style="--in: calc(var(--w-slide) + 930); --dur: 320">10 s</em></i>
+              <small class="k s11-lab" style="--in: calc(var(--w-slide) + 510); --dur: 300">Slide 4</small>
+              <b class="s11-hc k pop" style="--in: calc(var(--w-slide) + 930); --dur: 360; --c: 0.55"></b>
+            </div>
+            <div class="s11-g k s11-dim" style=" --in: var(--w-olhar); --dur: 420; left: 429.3px">
+              <div class="kx s11-skw" style="--out: calc(var(--w-slide) + 680); --xdur: 200"><i class="s11-skb l shimmer" style="left: 12px; height: 34px; --ldur: 1400; --lph: 1000"></i><i class="s11-skb l shimmer" style="left: 50px; height: 92px; --ldur: 1400; --lph: 1120"></i><i class="s11-skc"></i></div>
+              <i class="st k grow-y" style="--in: calc(var(--w-slide) + 680); --dur: 520; height: 49.3px"><em class="k fade" style="--in: calc(var(--w-slide) + 1100); --dur: 240">2 s</em></i>
+              <i class="hb k grow-y" style="--in: calc(var(--w-slide) + 760); --dur: 620; height: 172.7px"><em class="k pop" style="--in: calc(var(--w-slide) + 1100); --dur: 320">7 s</em></i>
+              <small class="k s11-lab" style="--in: calc(var(--w-slide) + 680); --dur: 300">Slide 5</small>
+              <b class="s11-hc k pop" style="--in: calc(var(--w-slide) + 1100); --dur: 360; --c: 0.25"></b>
+            </div>
+            <div class="s11-g k s11-dim" style=" --in: var(--w-olhar); --dur: 420; left: 520.7px">
+              <div class="kx s11-skw" style="--out: calc(var(--w-slide) + 850); --xdur: 200"><i class="s11-skb l shimmer" style="left: 12px; height: 50px; --ldur: 1400; --lph: 1250"></i><i class="s11-skb l shimmer" style="left: 50px; height: 128px; --ldur: 1400; --lph: 1370"></i><i class="s11-skc"></i></div>
+              <i class="st k grow-y" style="--in: calc(var(--w-slide) + 850); --dur: 520; height: 98.7px"><em class="k fade" style="--in: calc(var(--w-slide) + 1270); --dur: 240">4 s</em></i>
+              <i class="hb k grow-y" style="--in: calc(var(--w-slide) + 930); --dur: 620; height: 271.3px"><em class="k pop" style="--in: calc(var(--w-slide) + 1270); --dur: 320">11 s</em></i>
+              <small class="k s11-lab" style="--in: calc(var(--w-slide) + 850); --dur: 300">Slide 6</small>
+              <b class="s11-hc k pop" style="--in: calc(var(--w-slide) + 1270); --dur: 360; --c: 0.65"></b>
+            </div>
+        </div>
+        <div class="s11-tip k s11-tip-in" style="--in: var(--w-ficou); --dur: 460">
+          <b>Slide 3 · 14 s de atenção</b>
+          <span>Glow + Counter + Flow Line</span>
+        </div>
+      </div>
+
+      <!-- direita: heatmap do melhor slide -->
+      <div class="s11-cd s11-hm">
+        <p class="s11-ck k fade" style="--in: calc(var(--w-painel) + 380); --dur: 300">Onde o olhar ficou</p>
+        <p class="s11-ht"><span class="wd k mask-up" style="--in: var(--w-olhar); --dur: 420">Slide 3</span> <span class="s11-sec k pop" style="--in: var(--w-ficou); --dur: 380"><span class="num-n k counter" style="--n0: 0; --n1: 14; --in: var(--w-ficou); --dur: 700"></span> s</span></p>
+        <div class="s11-thumb">
+          <i class="tk"></i><i class="tt"></i>
+          <div class="tb"><i style="--v: .4"></i><i style="--v: .6"></i><i style="--v: .5"></i><i class="hot" style="--v: .95"></i></div>
+          <div class="tn"><b>+32%</b><i></i><i></i></div>
+          <div class="kx" style="--out: calc(var(--w-olhar) - 100); --xdur: 260; left: 0; top: 0; width: 236px; height: 133px"><i class="s11-scan l s11-scanl" style="--ldur: 1300"></i></div>
+          <div class="s11-heat" style="--in: var(--w-olhar); --stag: 34; --dur: 340"><i class="k pop" style="--i: 6; --c: 0.5"></i><i class="k pop" style="--i: 6; --c: 0.7"></i><i class="k pop" style="--i: 6; --c: 0.6"></i><i class="k pop" style="--i: 7; --c: 0.3"></i><i class="k pop" style="--i: 8; --c: 0.1"></i><i class="k pop" style="--i: 10; --c: 0.1"></i><i class="k pop" style="--i: 12; --c: 0.2"></i><i class="k pop" style="--i: 13; --c: 0.1"></i><i class="k pop" style="--i: 4; --c: 0.3"></i><i class="k pop" style="--i: 4; --c: 0.45"></i><i class="k pop" style="--i: 4; --c: 0.35"></i><i class="k pop" style="--i: 6; --c: 0.2"></i><i class="k pop" style="--i: 7; --c: 0.1"></i><i class="k pop" style="--i: 9; --c: 0.2"></i><i class="k pop" style="--i: 11; --c: 0.3"></i><i class="k pop" style="--i: 13; --c: 0.2"></i><i class="k pop" style="--i: 3; --c: 0.4"></i><i class="k pop" style="--i: 2; --c: 0.8"></i><i class="k pop" style="--i: 3; --c: 0.9"></i><i class="k pop" style="--i: 4; --c: 0.7"></i><i class="k pop" style="--i: 6; --c: 0.2"></i><i class="k pop" style="--i: 8; --c: 0.5"></i><i class="k pop" style="--i: 10; --c: 0.8"></i><i class="k pop" style="--i: 12; --c: 0.4"></i><i class="k pop" style="--i: 2; --c: 0.5"></i><i class="k pop" style="--i: 0; --c: 1"></i><i class="k pop" style="--i: 2; --c: 0.95"></i><i class="k pop" style="--i: 4; --c: 0.8"></i><i class="k pop" style="--i: 6; --c: 0.3"></i><i class="k pop" style="--i: 8; --c: 0.4"></i><i class="k pop" style="--i: 10; --c: 0.7"></i><i class="k pop" style="--i: 12; --c: 0.3"></i><i class="k pop" style="--i: 3; --c: 0.2"></i><i class="k pop" style="--i: 2; --c: 0.5"></i><i class="k pop" style="--i: 3; --c: 0.6"></i><i class="k pop" style="--i: 4; --c: 0.4"></i><i class="k pop" style="--i: 6; --c: 0.1"></i><i class="k pop" style="--i: 8; --c: 0.1"></i><i class="k pop" style="--i: 10; --c: 0.2"></i><i class="k pop" style="--i: 12; --c: 0.1"></i></div>
+        </div>
+        <div class="kx" style="--out: calc(var(--w-olhar) - 100); --xdur: 260; left: 20px; top: 236px"><p class="s11-reading k fade" style="--in: calc(var(--w-painel) + 520); --dur: 300">lendo o olhar<span class="l blink2">…</span></p></div>
+        <p class="s11-scale k fade" style="--in: var(--w-olhar); --dur: 300"><span>frio</span><i></i><span>quente</span></p>
+        <div class="kx" style="--out: calc(var(--w-mostra) + 380); --xdur: 220; left: 20px; top: 284px"><div class="s11-skl l shimmer" style="--ldur: 1400; --lph: 200"><i style="width: 150px; height: 10px"></i><i></i><i></i><i></i><i></i></div></div>
+        <p class="s11-bh k fade" style="--in: calc(var(--w-mostra) + 380); --dur: 300">O que prendeu o olhar</p>
+        <div class="s11-brk">
+          <div class="k fade" style="--in: calc(var(--w-mostra) + 460); --dur: 300"><span>Gráfico</span><i><em class="k grow-x" style="--in: calc(var(--w-ficou) + 140); --dur: 520; width: 100%"></em></i><b class="k pop" style="--in: calc(var(--w-ficou) + 300); --dur: 300">6 s</b></div>
+          <div class="k fade" style="--in: calc(var(--w-mostra) + 550); --dur: 300"><span>Título</span><i><em class="k grow-x" style="--in: calc(var(--w-ficou) + 250); --dur: 520; width: 67%"></em></i><b class="k pop" style="--in: calc(var(--w-ficou) + 410); --dur: 300">4 s</b></div>
+          <div class="k fade" style="--in: calc(var(--w-mostra) + 640); --dur: 300"><span>Número</span><i><em class="k grow-x" style="--in: calc(var(--w-ficou) + 360); --dur: 520; width: 50%"></em></i><b class="k pop" style="--in: calc(var(--w-ficou) + 520); --dur: 300">3 s</b></div>
+          <div class="k fade" style="--in: calc(var(--w-mostra) + 730); --dur: 300"><span>Texto</span><i><em class="k grow-x" style="--in: calc(var(--w-ficou) + 470); --dur: 520; width: 17%"></em></i><b class="k pop" style="--in: calc(var(--w-ficou) + 630); --dur: 300">1 s</b></div>
+        </div>
+      </div>
+      <i class="s11-pshine k sweep-x" style="--in: 7550; --dur: 1000"></i>
+    </div>
+
+    <!-- ===================== os três efeitos (acima do painel: voam para a lista dele) ===================== -->
+    <div class="s11-tw k s11-dock" style="--in: calc(var(--w-painel) + 60); --dur: 720; --dx: -108px; --dy: 115px; left: 420px; top: 320px">
+      <div class="s11-tile k pop" style="--in: var(--w-efeito); --dur: 520">
+        <div class="s11-th"><i><svg class="k icon-in" style="--in: calc(var(--w-efeito) + 120); --dur: 600" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" pathLength="1"/><path pathLength="1" d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></svg></i><p><small>Efeito 01</small><b>Glow</b></p></div>
+        <div class="s11-demo"><span class="s11-glowt l">Plano 2027</span><i class="shim l sweep-x" style="--ldur: 2000"></i></div>
+        <div class="s11-meter"><span>tempo de olhar</span><i><b class="k grow-x" style="--in: var(--w-ganha); --dur: 900; width: 60%"></b></i></div>
+      </div>
+      <div class="s11-bub k s11-bub-in" style="--in: var(--w-segundos); --dur: 720">+<span class="num-n k counter" style="--n0: 1; --n1: 3; --in: calc(var(--w-segundos) + 120); --dur: 420"></span><small>s</small></div>
+    </div>
+    <div class="s11-tw k s11-dock" style="--in: calc(var(--w-painel) + 120); --dur: 720; --dx: -478px; --dy: 173px; left: 790px; top: 320px">
+      <div class="s11-tile k pop" style="--in: calc(var(--w-efeito) + 140); --dur: 520">
+        <div class="s11-th"><i><svg class="k icon-in" style="--in: calc(var(--w-efeito) + 260); --dur: 600" viewBox="0 0 24 24"><path pathLength="1" d="M4 9h16M4 15h16"/><path pathLength="1" d="M10 3.5L8.5 20.5M15.5 3.5L14 20.5"/></svg></i><p><small>Efeito 02</small><b>Counter</b></p></div>
+        <div class="s11-demo s11-cnt">
+          <svg viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="30" fill="none" stroke="rgba(201,166,255,.18)" stroke-width="8"/><circle class="k s11-r87" style="--in: calc(var(--w-efeito) + 300); --dur: 1000; stroke-dasharray: .87 1" cx="40" cy="40" r="30" pathLength="1" fill="none" stroke="#a970ff" stroke-width="8" stroke-linecap="round"/></svg>
+          <b><span class="num-n k counter" style="--n0: 0; --n1: 87; --in: calc(var(--w-efeito) + 300); --dur: 1000"></span><small>%</small></b><span>adoção</span>
+        </div>
+        <div class="s11-meter"><span>tempo de olhar</span><i><b class="k grow-x" style="--in: calc(var(--w-ganha) + 100); --dur: 900; width: 40%"></b></i></div>
+      </div>
+      <div class="s11-bub k s11-bub-in" style="--in: calc(var(--w-segundos) + 160); --dur: 720">+<span class="num-n k counter" style="--n0: 1; --n1: 2; --in: calc(var(--w-segundos) + 280); --dur: 380"></span><small>s</small></div>
+    </div>
+    <div class="s11-tw k s11-dock" style="--in: calc(var(--w-painel) + 180); --dur: 720; --dx: -848px; --dy: 231px; left: 1160px; top: 320px">
+      <div class="s11-tile k pop" style="--in: calc(var(--w-efeito) + 280); --dur: 520">
+        <div class="s11-th"><i><svg class="k icon-in" style="--in: calc(var(--w-efeito) + 400); --dur: 600" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2.5" pathLength="1"/><circle cx="19" cy="18" r="2.5" pathLength="1"/><path pathLength="1" d="M7.5 6H11a3 3 0 0 1 3 3v6a3 3 0 0 0 3 3h-.5"/></svg></i><p><small>Efeito 03</small><b>Flow Line</b></p></div>
+        <div class="s11-demo s11-flow">
+          <span class="na">Ideia</span><span class="nb">Decisão</span>
+          <svg viewBox="0 0 300 112" aria-hidden="true">
+            <defs><mask id="s11-flow-m" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="112"><path class="k draw" style="--in: calc(var(--w-efeito) + 520); --dur: 600" d="M104 56C140 14 160 98 196 56" pathLength="1" fill="none" stroke="#fff" stroke-width="10"/></mask></defs>
+            <path class="l dash" d="M104 56C140 14 160 98 196 56" fill="none" stroke="#c9a6ff" stroke-width="3" stroke-dasharray="7 11" stroke-linecap="round" mask="url(#s11-flow-m)"/>
+          </svg>
+          <div class="k fade" style="--in: calc(var(--w-efeito) + 1000); --dur: 200; left: 0; top: 0"><i class="s11-tok l s11-runl" style="--ldur: 1500"></i></div>
+        </div>
+        <div class="s11-meter"><span>tempo de olhar</span><i><b class="k grow-x" style="--in: calc(var(--w-ganha) + 200); --dur: 900; width: 80%"></b></i></div>
+      </div>
+      <div class="s11-bub k s11-bub-in" style="--in: calc(var(--w-segundos) + 320); --dur: 720">+<span class="num-n k counter" style="--n0: 1; --n1: 4; --in: calc(var(--w-segundos) + 440); --dur: 460"></span><small>s</small></div>
+    </div>
+
+    <!-- cliques com brilho -->
+    <i class="click k" style="--in: var(--w-segundos); left: 590px; top: 460px"></i>
+    <i class="click k" style="--in: calc(var(--w-segundos) + 160); left: 960px; top: 460px"></i>
+    <i class="click k" style="--in: calc(var(--w-segundos) + 320); left: 1330px; top: 460px"></i>
+    <i class="click k" style="--in: var(--w-painel); left: 1092px; top: 672px"></i>
+    <i class="click k" style="--in: var(--w-olhar); left: 964px; top: 560px"></i>
+    <i class="click s11-clk k" style="--in: calc(var(--w-painel) + 780); left: 482px; top: 575px"></i>
+    <i class="click s11-clk k" style="--in: calc(var(--w-painel) + 840); left: 482px; top: 633px"></i>
+    <i class="click s11-clk k" style="--in: calc(var(--w-painel) + 900); left: 482px; top: 691px"></i>
+
+    <!-- cursor 1: clica no total e abre o Painel -->
+    <div class="kx" style="--out: calc(var(--w-painel) + 420); --xdur: 300; left: 1089px; top: 670px">
+      <div class="k s11-cur-in" style="--in: var(--w-e); --dur: 300">
+        <div class="k press" style="--in: calc(var(--w-painel) - 30)">
+          <svg class="gcur" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+    <!-- cursor 2: clica no slide 3 (Data Highlight) -->
+    <div class="kx" style="--out: 8400; --xdur: 400; left: 961px; top: 558px">
+      <div class="k s11-cur-in2" style="--in: calc(var(--w-olhar) - 420); --dur: 400">
+        <div class="k press" style="--in: calc(var(--w-olhar) - 30)">
+          <svg class="gcur" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- ícones locais (traço 2, grade 24) -->
+  <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+    <symbol id="s11-i-glow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></symbol>
+    <symbol id="s11-i-count" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9h16M4 15h16M10 3.5L8.5 20.5M15.5 3.5L14 20.5"/></symbol>
+    <symbol id="s11-i-flow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M7.5 6H11a3 3 0 0 1 3 3v6a3 3 0 0 0 3 3h-.5"/></symbol>
+  </svg>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@efeito:pose=present,face=happy;@segundos:pose=point-right,face=wow;@atencao:pose=cheer,face=laugh;@e:pose=idle,face=happy;@painel:pose=point-right,face=proud;@slide:pose=present,face=focus;@quantos:face=wow;@olhar:pose=point-right,face=focus;@ficou+300:pose=celebrate,face=laugh;@ficou+1200:pose=idle,face=proud" style="--x: 150px; --y: 968px; --s: .82"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@segundos:face=surprised;@atencao:pose=look-up,face=wow;@painel+300:pose=idle,face=happy;@slide:pose=think,face=think;@quantos:pose=idle,face=wow;@ficou:pose=jump,face=laugh;@ficou+900:pose=hands-hips,face=proud" style="--x: 1772px; --y: 968px; --s: .78"></div>
 </section>

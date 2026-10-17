@@ -1,3 +1,243 @@
-<!-- CENA 8 · v4 (em produção) -->
-<section class="scene s8" id="s8" data-world="paper">
+<!-- CENA 8 · A primeira impressão · virada para o Ato 2: começa na noite, a Bia puxa o cordão e a luz lavanda abre;
+     cartela de capítulo (Motion Graphics) com o título do ato, "efeito halo" com anel de luz e a onda do halo colorindo uma fileira de slides.
+     Saída coreografada (slides descem, selos encolhem, título sai por máscara) e corte curto (data-fo) para a s9 com a Bia e o Cliente no mesmo lugar. -->
+<section class="scene s8" id="s8" data-world="paper" data-world-from="night" data-world-at="1250" data-world-cx="1690" data-world-cy="805" data-fo="80">
+
+  <!-- marca lúmen enquanto ainda é noite (o motor já usa a marca de papel desde o início da cena) -->
+  <a class="brand s8-brand kx s8-fadeout" style="--out: 1400; --xdur: 260" tabindex="-1" aria-hidden="true"><svg class="mk"><use href="#hl-mark"/></svg><span class="word">halor</span><span class="tag">pitch</span></a>
+
+  <!-- ===== 1 · noite: linhas de motion graphics que enquadram a cartela ===== -->
+  <div class="s8-mg kx" style="--out: 1150; --xdur: 500; left: 0; top: 0">
+    <i class="s8-hl k s8-gx" style="--in: 0; --dur: 700; top: 160px"></i>
+    <i class="s8-hl k s8-gx" style="--in: 120; --dur: 700; top: 720px"></i>
+    <i class="s8-vl k s8-gy" style="--in: 60; --dur: 700; left: 330px"></i>
+    <i class="s8-vl k s8-gy" style="--in: 180; --dur: 700; left: 1590px"></i>
+    <i class="mg-dot k pop" style="--in: 380; left: 330px; top: 160px"></i>
+    <i class="mg-dot k pop" style="--in: 460; left: 1590px; top: 160px"></i>
+    <i class="mg-dot k pop" style="--in: 540; left: 330px; top: 720px"></i>
+    <i class="mg-dot k pop" style="--in: 620; left: 1590px; top: 720px"></i>
+  </div>
+  <!-- traço central que se abre na cartela -->
+  <i class="s8-slit kx" style="--out: 900; --xdur: 300; left: 360px; top: 439px"><b class="k s8-gx" style="--in: 0; --dur: 420"></b></i>
+
+  <!-- ===== cartela de capítulo · Ato 2 · O olhar Halor ===== -->
+  <div class="s8-corners kx" style="--out: 3250; --xdur: 400; left: 342px; top: 172px; --stag: 70">
+    <i class="s8-cn tl k pop" style="--in: 260; --i: 0"></i><i class="s8-cn tr k pop" style="--in: 260; --i: 1"></i>
+    <i class="s8-cn bl k pop" style="--in: 260; --i: 2"></i><i class="s8-cn br k pop" style="--in: 260; --i: 3"></i>
+  </div>
+  <div class="s8-cap kx s8-close" style="--out: 3250; --xdur: 520; left: 360px; top: 190px">
+    <div class="s8-card k s8-open" style="--in: 280; --dur: 760">
+      <i class="s8-orb a"><b class="l s8-drift" style="--ldur: 5200"></b></i>
+      <i class="s8-orb b"><b class="l s8-drift" style="--ldur: 6400; --lph: 1800; --odx: -70px; --ody: -40px"></b></i>
+      <!-- anel AS-IS do guia, aqui: ATO 2 -->
+      <svg class="s8-dial" viewBox="0 0 320 320" aria-hidden="true">
+        <circle class="k draw" style="--in: 520; --dur: 900" pathLength="1" cx="160" cy="160" r="148" fill="none" stroke="rgba(201,166,255,.7)" stroke-width="3" transform="rotate(-90 160 160)"/>
+        <g class="k fade" style="--in: 700; --dur: 500"><g class="l spin" style="--ldur: 16000"><circle cx="160" cy="160" r="122" fill="none" stroke="rgba(201,166,255,.55)" stroke-width="2.4" stroke-dasharray="4 10" stroke-linecap="round"/></g></g>
+        <circle class="k draw" style="--in: 760; --dur: 700" pathLength="1" cx="160" cy="160" r="96" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6" opacity=".55"/>
+      </svg>
+      <p class="s8-ato k fade" style="--in: 760; --dur: 400">Ato</p>
+      <p class="s8-two k mask-up" style="--in: 820; --dur: 640">2</p>
+      <svg class="s8-acc k spin-in" style="--in: 980; --dur: 520" viewBox="0 0 24 24" aria-hidden="true"><use class="l twinkle" href="#i-spark"/></svg>
+      <i class="s8-div k s8-gy" style="--in: 600; --dur: 700"></i>
+      <p class="s8-eb k left" style="--in: 640; --dur: 520"><i class="l pulse"></i>Ato 2 · capítulo 01</p>
+      <!-- o nome do ato em display; sai por máscara para cima logo antes de "Por" -->
+      <div class="s8-act kx s8-act-out" style="--out: calc(var(--w-mas) + 40); --xdur: 300">
+        <p class="s8-actt k mask-up" style="--in: 600; --dur: 460">O olhar <span class="s8-qhl"><span class="wd">Halor</span><i class="s8-ul k grow-l" style="--in: 860; --dur: 420"></i></span></p>
+      </div>
+      <i class="s8-csweep k sweep-x" style="--in: 900; --dur: 1000"></i>
+      <h2 class="s8-q">
+        <span class="wd k mask-up" style="--in: var(--w-por); --dur: 420">Por</span>
+        <span class="wd k mask-up" style="--in: var(--w-que); --dur: 420">que</span>
+        <span class="wd k mask-up" style="--in: var(--w-isso); --dur: 420">isso</span><br>
+        <span class="s8-qhl"><span class="wd k mask-up" style="--in: var(--w-prende); --dur: 480">prende</span>
+        <span class="wd k mask-up" style="--in: var(--w-tanto); --dur: 480">tanto?</span><i class="s8-ul k grow-l" style="--in: calc(var(--w-tanto) + 200); --dur: 600"></i></span>
+      </h2>
+      <div class="s8-seg" style="--stag: 90">
+        <span class="on k up" style="--in: 760; --i: 0"><b>01</b> Efeito halo<i class="k grow-l" style="--in: 1000; --dur: 2200"></i></span>
+        <span class="k up" style="--in: 760; --i: 1"><b>02</b> 1º olhar</span>
+        <span class="k up" style="--in: 760; --i: 2"><b>03</b> Olhar Halor</span>
+        <span class="k up" style="--in: 760; --i: 3"><b>04</b> Segundos</span>
+      </div>
+      <i class="s8-csweep k sweep-x" style="--in: calc(var(--w-tanto) + 150); --dur: 1100"></i>
+    </div>
+  </div>
+
+  <!-- ===== cordão: a Bia puxa em "Mas" e a luz lavanda abre a partir do puxador ===== -->
+  <div class="s8-cord kx s8-cord-up" style="--out: 1700; --xdur: 600; left: 1690px; top: 0">
+    <div class="k pull" style="--in: 0; --dur: 600">
+      <div class="k s8-yank" style="--in: calc(var(--w-mas) - 60); --dur: 520">
+        <i class="cord-line"></i><b class="cord-knob"></b>
+      </div>
+    </div>
+  </div>
+  <i class="click k" style="--in: calc(var(--w-mas) + 60); left: 1690px; top: 866px"></i>
+  <i class="ring k ring-x" style="--in: 1250; --dur: 1000; left: 1690px; top: 805px"></i>
+  <i class="leak k leak-x" style="--in: 1200; --dur: 1300"></i>
+
+  <!-- ===== 2 · "efeito halo": título grande, anel de luz se desenhando em volta ===== -->
+  <div class="cam s8-cam k cam-push" style="--in: var(--w-uma); --dur: 5440; --cz: 1.03">
+    <div class="s8-xo kx s8-mout" style="--out: calc(var(--w-depois) + 1160); --xdur: 480">
+      <div class="s8-ttl k s8-lift" style="--in: calc(var(--w-uma) - 120); --dur: 760; left: 300px; top: 240px">
+        <!-- placa de papel: esconde os rabiscos do fundo atrás do título -->
+        <i class="s8-plate k fade" style="--in: calc(var(--w-efeito) - 200); --dur: 500"></i>
+        <i class="s8-bloom k s8-bloom-in" style="--in: var(--w-halo); --dur: 900"></i>
+        <h2 class="s8-h"><span class="wd k mask-up" style="--in: var(--w-efeito); --dur: 560">Efeito</span> <span class="wd s8-halo k mask-up" style="--in: var(--w-halo); --dur: 560">halo</span></h2>
+        <svg class="s8-ring" viewBox="0 0 1320 360" aria-hidden="true">
+          <defs><linearGradient id="s8-g-ring" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#6421d1"/><stop offset=".5" stop-color="#8b3dff"/><stop offset=".85" stop-color="#c9a6ff"/><stop offset="1" stop-color="#ff9ad5"/></linearGradient></defs>
+          <path class="k draw" style="--in: var(--w-halo); --dur: 1000" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05" fill="none" stroke="url(#s8-g-ring)" stroke-width="7" stroke-linecap="round"/>
+          <!-- cometa: cabeça curta e duas caudas afiladas -->
+          <path class="s8-tail2 k s8-tail2" style="--in: var(--w-halo); --dur: 1000" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05"/>
+          <path class="s8-tail1 k s8-tail1" style="--in: var(--w-halo); --dur: 1000" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05"/>
+          <path class="s8-head k s8-head" style="--in: var(--w-halo); --dur: 1000" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05"/>
+          <path class="s8-tail2 k s8-tail2" style="--in: var(--w-depois); --dur: 1300" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05"/>
+          <path class="s8-tail1 k s8-tail1" style="--in: var(--w-depois); --dur: 1300" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05"/>
+          <path class="s8-head k s8-head" style="--in: var(--w-depois); --dur: 1300" pathLength="1" d="M1212.85 116.61A610 150 0 1 1 917.8 44.05"/>
+        </svg>
+        <svg class="s8-rspark k spin-in" style="--in: calc(var(--w-halo) + 880); --dur: 520; left: 1085px; top: 70px" viewBox="0 0 24 24" aria-hidden="true"><use class="l twinkle" href="#i-spark"/></svg>
+        <div class="kx" style="--out: calc(var(--w-uma) - 160); --xdur: 300; left: 0; top: 0; width: 1320px">
+          <p class="s8-sub k up" style="--in: calc(var(--w-halo) + 380); --dur: 500">viés cognitivo · Thorndike, 1920</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3 · a primeira impressão colore tudo o que vem depois ===== -->
+    <!-- slide 1: o vivo (Animated Gradient + Glow) -->
+    <div class="s8-xo kx x-down" style="--out: calc(var(--w-depois) + 1040); --xdur: 380">
+      <div class="s8-slot s8-first k s8-rise" style="--in: calc(var(--w-depois) + 200); --dur: 600; left: 212px; top: 524px; width: 336px; height: 189px">
+        <div class="s8-in k s8-pop" style="--in: var(--w-primeira); --dur: 620">
+          <i class="s8-rp k s8-rp" style="--in: var(--w-marcante); --dur: 900"></i>
+          <i class="s8-rp k s8-rp" style="--in: calc(var(--w-marcante) + 380); --dur: 900"></i>
+          <!-- em "colore": o slide 1 emite a onda -->
+          <i class="s8-rp s8-rp2 k s8-rp" style="--in: calc(var(--w-colore) - 40); --dur: 760"></i>
+          <div class="s8-sl s8-viv s8-cover">
+            <i class="s8-orb c"><b class="l s8-drift" style="--ldur: 4200; --odx: 50px; --ody: 30px"></b></i>
+            <i class="s8-orb d"><b class="l s8-drift" style="--ldur: 5000; --lph: 1500; --odx: -40px; --ody: -26px"></b></i>
+            <svg class="s8-cmk" viewBox="0 0 64 64" aria-hidden="true"><use href="#hl-mark"/></svg>
+            <p class="s8-k">Kickoff</p>
+            <p class="s8-t1">Plano 2027</p>
+            <p class="s8-sm">Da fundação ao valor em escala</p>
+            <i class="s8-shine k sweep-x" style="--in: var(--w-marcante); --dur: 1000"></i>
+            <i class="s8-shine s8-shine2 k sweep-x" style="--in: calc(var(--w-colore) - 80); --dur: 760"></i>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-depois) + 300); --dur: 1000"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <i class="click k" style="--in: var(--w-primeira); left: 380px; top: 618px"></i>
+    <i class="s8-emit k ring-x" style="--in: calc(var(--w-colore) - 40); --dur: 820; left: 380px; top: 618px"></i>
+    <div class="s8-xo kx" style="--out: calc(var(--w-depois) + 960); --xdur: 300">
+      <div class="label s8-lb k pop-c" style="--in: var(--w-impressao); --dur: 480; left: 380px; top: 465px">1ª impressão</div>
+    </div>
+
+    <!-- slides 2 a 5: cinza, colorem quando a onda passa -->
+    <div class="s8-xo kx x-down" style="--out: calc(var(--w-depois) + 1100); --xdur: 380">
+      <div class="s8-slot k s8-rise" style="--in: calc(var(--w-depois) + 290); --dur: 600; left: 568px; top: 540px; width: 278px; height: 156px">
+        <div class="s8-in k up" style="--in: var(--w-uma); --dur: 520">
+          <div class="s8-sl s8-dull">
+            <p class="s8-k">Resultados do T3</p><p class="s8-big">+38<small>%</small></p><p class="s8-sm">receita recorrente</p>
+            <div class="s8-bars"><i style="--v:.36"></i><i style="--v:.52"></i><i style="--v:.66"></i><i class="hot" style="--v:.94"></i></div>
+          </div>
+          <div class="s8-sl s8-viv k s8-wipe" style="--in: calc(var(--w-colore) + 32); --dur: 448">
+            <p class="s8-k">Resultados do T3</p><p class="s8-big">+38<small>%</small></p><p class="s8-sm">receita recorrente</p>
+            <div class="s8-bars"><i style="--v:.36"></i><i style="--v:.52"></i><i style="--v:.66"></i><i class="hot" style="--v:.94"></i></div>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-colore) + 410); --dur: 900"></i>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-depois) + 390); --dur: 1000"></i>
+          </div>
+          <i class="s8-rp k s8-rp" style="--in: calc(var(--w-colore) + 460); --dur: 800"></i>
+        </div>
+      </div>
+    </div>
+    <div class="s8-xo kx x-down" style="--out: calc(var(--w-depois) + 1160); --xdur: 380">
+      <div class="s8-slot k s8-rise" style="--in: calc(var(--w-depois) + 380); --dur: 600; left: 866px; top: 540px; width: 278px; height: 156px">
+        <div class="s8-in k up" style="--in: calc(var(--w-uma) + 90); --dur: 520">
+          <div class="s8-sl s8-dull">
+            <p class="s8-k">Roadmap 2027</p><p class="s8-t">Quatro ondas</p>
+            <div class="s8-tl"><i></i><i></i><i class="on"></i><i></i></div>
+          </div>
+          <div class="s8-sl s8-viv k s8-wipe" style="--in: calc(var(--w-colore) + 512); --dur: 448">
+            <p class="s8-k">Roadmap 2027</p><p class="s8-t">Quatro ondas</p>
+            <div class="s8-tl"><i></i><i></i><i class="on"></i><i></i></div>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-colore) + 890); --dur: 900"></i>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-depois) + 480); --dur: 1000"></i>
+          </div>
+          <i class="s8-rp k s8-rp" style="--in: calc(var(--w-colore) + 940); --dur: 800"></i>
+        </div>
+      </div>
+    </div>
+    <div class="s8-xo kx x-down" style="--out: calc(var(--w-depois) + 1220); --xdur: 380">
+      <div class="s8-slot k s8-rise" style="--in: calc(var(--w-depois) + 470); --dur: 600; left: 1164px; top: 540px; width: 278px; height: 156px">
+        <div class="s8-in k up" style="--in: calc(var(--w-uma) + 180); --dur: 520">
+          <div class="s8-sl s8-dull">
+            <p class="s8-k">Diagnóstico</p>
+            <svg class="s8-donut" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24" class="tr"/><circle cx="32" cy="32" r="24" class="fl" pathLength="100" transform="rotate(-90 32 32)"/></svg>
+            <p class="s8-pct">70%</p><p class="s8-t s8-t-r">Três gargalos</p><p class="s8-sm s8-t-r2">concentram o atraso</p>
+          </div>
+          <div class="s8-sl s8-viv k s8-wipe" style="--in: calc(var(--w-colore) + 993); --dur: 448">
+            <p class="s8-k">Diagnóstico</p>
+            <svg class="s8-donut" viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="24" class="tr"/><circle cx="32" cy="32" r="24" class="fl" pathLength="100" transform="rotate(-90 32 32)"/></svg>
+            <p class="s8-pct">70%</p><p class="s8-t s8-t-r">Três gargalos</p><p class="s8-sm s8-t-r2">concentram o atraso</p>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-colore) + 1370); --dur: 900"></i>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-depois) + 570); --dur: 1000"></i>
+          </div>
+          <i class="s8-rp k s8-rp" style="--in: calc(var(--w-colore) + 1420); --dur: 800"></i>
+        </div>
+      </div>
+    </div>
+    <div class="s8-xo kx x-down" style="--out: calc(var(--w-depois) + 1280); --xdur: 380">
+      <div class="s8-slot k s8-rise" style="--in: calc(var(--w-depois) + 560); --dur: 600; left: 1462px; top: 540px; width: 278px; height: 156px">
+        <div class="s8-in k up" style="--in: calc(var(--w-uma) + 270); --dur: 520">
+          <div class="s8-sl s8-dull">
+            <p class="s8-k">Próximo passo</p><p class="s8-t">Proposta comercial</p>
+            <p class="s8-ck"><i></i>Escopo e prazos</p><span class="s8-btn">Aprovar</span>
+          </div>
+          <div class="s8-sl s8-viv k s8-wipe" style="--in: calc(var(--w-colore) + 1473); --dur: 448">
+            <p class="s8-k">Próximo passo</p><p class="s8-t">Proposta comercial</p>
+            <p class="s8-ck"><i></i>Escopo e prazos</p><span class="s8-btn">Aprovar</span>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-colore) + 1850); --dur: 900"></i>
+            <i class="s8-shine k sweep-x" style="--in: calc(var(--w-depois) + 660); --dur: 1000"></i>
+          </div>
+          <i class="s8-rp k s8-rp" style="--in: calc(var(--w-colore) + 1900); --dur: 800"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- a onda do halo: nasce no primeiro slide e atravessa a fileira até "depois" -->
+    <div class="s8-wave k s8-wave" style="--in: var(--w-colore); --dur: 1921; left: 548px; top: 498px"><u class="k s8-born" style="--in: var(--w-colore); --dur: 1921"></u><b></b><i></i><em class="k s8-born-em" style="--in: var(--w-colore); --dur: 1921"></em></div>
+
+    <!-- selos que pipocam quando cada slide ganha cor -->
+    <div class="s8-xo s8-sx kx x-shrink" style="--out: calc(var(--w-depois) + 1000); --xdur: 300; left: 707px; top: 716px">
+      <div class="badge s8-seal k pop-c" style="--in: calc(var(--w-colore) + 460); --dur: 520"><i><svg class="k icon-in" style="--in: calc(var(--w-colore) + 550); --dur: 600" viewBox="0 0 24 24"><circle pathLength="1" cx="12" cy="9" r="5.5"/><path pathLength="1" d="M8.6 13.4L7.2 21l4.8-2.6 4.8 2.6-1.4-7.6"/></svg></i>Competência</div>
+    </div>
+    <div class="s8-xo s8-sx kx x-shrink" style="--out: calc(var(--w-depois) + 1060); --xdur: 300; left: 1005px; top: 716px">
+      <div class="badge s8-seal k pop-c" style="--in: calc(var(--w-colore) + 940); --dur: 520"><i><svg class="k icon-in" style="--in: calc(var(--w-colore) + 1030); --dur: 600" viewBox="0 0 24 24"><path pathLength="1" d="M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z"/><path pathLength="1" d="M8.6 12.2l2.4 2.4 4.4-4.8"/></svg></i>Confiança</div>
+    </div>
+    <div class="s8-xo s8-sx kx x-shrink" style="--out: calc(var(--w-depois) + 1120); --xdur: 300; left: 1303px; top: 716px">
+      <div class="badge s8-seal k pop-c" style="--in: calc(var(--w-colore) + 1420); --dur: 520"><i><svg class="k icon-in" style="--in: calc(var(--w-colore) + 1510); --dur: 600" viewBox="0 0 24 24"><path pathLength="1" d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z"/><circle pathLength="1" cx="12" cy="12" r="3"/></svg></i>Clareza</div>
+    </div>
+    <div class="s8-xo s8-sx kx x-shrink" style="--out: calc(var(--w-depois) + 1180); --xdur: 300; left: 1584px; top: 716px">
+      <div class="badge s8-seal k pop-c" style="--in: calc(var(--w-colore) + 1900); --dur: 520"><i><svg class="k icon-in" style="--in: calc(var(--w-colore) + 1990); --dur: 600" viewBox="0 0 24 24"><path pathLength="1" d="M6.5 3.5h11v17L12 16.6l-5.5 3.9z"/><path pathLength="1" d="M12 7.2v5M9.5 9.7h5"/></svg></i>Lembrança</div>
+    </div>
+
+    <!-- chave: tudo que vem depois -->
+    <div class="s8-xo kx" style="--out: calc(var(--w-depois) + 960); --xdur: 320">
+      <i class="s8-brk k grow-l" style="--in: var(--w-tudo); --dur: 620; left: 568px; top: 500px"></i>
+      <div class="label white s8-lb2 k pop-c" style="--in: var(--w-vem); --dur: 480; left: 1154px; top: 478px">tudo que vem depois</div>
+    </div>
+
+    <!-- brilhos finais -->
+    <div class="s8-xo kx" style="--out: calc(var(--w-depois) + 960); --xdur: 300">
+      <svg class="spark k pop" style="--in: calc(var(--w-depois) + 120); left: 1712px; top: 510px" viewBox="0 0 24 24" aria-hidden="true"><use class="l twinkle" href="#i-spark"/></svg>
+      <svg class="spark k pop" style="--in: calc(var(--w-depois) + 260); left: 534px; top: 694px; width: 30px; height: 30px" viewBox="0 0 24 24" aria-hidden="true"><use class="l twinkle" href="#i-spark" style="--lph: 500"/></svg>
+      <svg class="spark k pop" style="--in: calc(var(--w-depois) + 400); left: 1141px; top: 524px; width: 26px; height: 26px" viewBox="0 0 24 24" aria-hidden="true"><use class="l twinkle" href="#i-spark" style="--lph: 900"/></svg>
+    </div>
+  </div>
+
+  <!-- ===== a Bia: segura o cordão no escuro, puxa em "Mas" e corre para a esquerda (termina como na s9: x 150, --s .8) ===== -->
+  <div class="k sway-x" style="--in: 1500; --dur: 1150; --dx: -1610px; left: 1760px; top: 968px">
+    <div class="bia" data-pose="stamp" data-face="focus" data-props="" data-keys="@mas-80:pose=stamp-down,face=wow,dur=220;@mas+300:pose=cheer,face=laugh;1500:pose=walk,face=happy;2640:pose=idle,face=happy,props=clicker;@efeito:pose=present,face=proud;@halo:pose=hold-ring,props=ring,face=laugh;@halo+760:pose=idle,props=clicker,face=happy;@primeira-120:pose=point-right,face=wink;@primeira+520:pose=idle,face=happy;@marcante:pose=present,face=wow;@colore:pose=point-right,face=happy;@colore+700:pose=idle;@depois:pose=celebrate,face=laugh;@depois+900:pose=idle,face=proud;@depois+1300:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .8"></div>
+  </div>
+  <!-- o Cliente chega pela direita e reage à onda -->
+  <div class="k walk-in-r" style="--in: 2900; --dur: 900; left: 1770px; top: 968px">
+    <div class="bia" data-skin="cliente" data-pose="walk" data-face="happy" data-props="" data-keys="3800:pose=idle,face=happy;@halo:pose=look-up,face=wow;@uma:pose=idle,face=happy;@primeira:pose=think,face=think;@marcante:pose=look-up,face=wow;@colore+200:pose=idle,face=surprised;@tudo:pose=hands-hips,face=wow;@depois:pose=celebrate,face=laugh;@depois+1000:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: .8"></div>
+  </div>
 </section>

@@ -1,3 +1,368 @@
-<!-- CENA 12 · v4 (em produção) -->
-<section class="scene s12" id="s12" data-world="paper">
+<!-- CENA 12 · v4 · Atenção → decisão (lavanda que escurece para a noite) · "Atenção vira lembrança. E lembrança vira decisão."
+     Node Network Motion (39) + BPMN Flow Motion (17): três cartões de palco escuros, Atenção → Lembrança → Decisão, nascem na palavra
+     com clique (Ripple 20) e Icon Motion (02); Connector / Flow Line (18): o conector se desenha atrás de um cometa de luz que corre
+     até o próximo nó e depois flui em loop; Pulse / Beacon (19) em cada nó aceso. Em "decisão": confete, check, selo carimbado,
+     a rede inteira acende em onda, a Bia pula e o Cliente aprova. No fim a lavanda se fecha sobre a Decisão e a noite chega (s13). -->
+<section class="scene s12" id="s12" data-world="night" data-world-from="paper" data-world-at="4300" data-world-cx="1490" data-world-cy="374">
+
+  <div class="cam s12-cam k cam-in" style="--in: 0; --dur: 1400">
+  <div class="cam s12-cam k cam-push" style="--in: 0; --dur: 4100; --cz: 1.03">
+  <div class="cam s12-cam k s12-punch" style="--in: var(--w-decisao); --dur: 560">
+  <div class="cam s12-cam k cam-push" style="--in: 4100; --dur: 1260; --cz: 1.1">
+
+    <div class="kx" style="--out: 4060; --xdur: 420; left: 0; top: 0"><i class="s12-aura k fade" style="--in: 0; --dur: 900"></i></div>
+
+    <!-- ===== rede de fundo (Node Network Motion): desenha no começo e acende em onda na decisão ===== -->
+    <svg class="s12-net" viewBox="0 0 1920 1080" aria-hidden="true">
+      <g class="s12-net-b" style="--in: 40; --dur: 520; --stag: 22">
+        <path class="k draw" style="--i: 0" d="M190 330L330 310" pathLength="1"/>
+        <path class="k draw" style="--i: 1" d="M330 310L680 330" pathLength="1"/>
+        <path class="k draw" style="--i: 2" d="M680 330L880 215" pathLength="1"/>
+        <path class="k draw" style="--i: 3" d="M880 215L1020 140" pathLength="1"/>
+        <path class="k draw" style="--i: 4" d="M1020 140L1130 190" pathLength="1"/>
+        <path class="k draw" style="--i: 5" d="M1130 190L1300 150" pathLength="1"/>
+        <path class="k draw" style="--i: 6" d="M1300 150L1740 300" pathLength="1"/>
+        <path class="k draw" style="--i: 7" d="M1740 300L1735 480" pathLength="1"/>
+        <path class="k draw" style="--i: 8" d="M1250 700L1440 790" pathLength="1"/>
+        <path class="k draw" style="--i: 9" d="M1250 700L990 770" pathLength="1"/>
+        <path class="k draw" style="--i: 10" d="M990 770L720 830" pathLength="1"/>
+        <path class="k draw" style="--i: 11" d="M720 830L420 800" pathLength="1"/>
+        <path class="k draw" style="--i: 12" d="M680 650L720 830" pathLength="1"/>
+        <path class="k draw" style="--i: 13" d="M680 650L680 330" pathLength="1"/>
+        <path class="k draw" style="--i: 14" d="M1200 590L1250 700" pathLength="1"/>
+        <path class="k draw" style="--i: 15" d="M1200 590L1130 190" pathLength="1"/>
+        <path class="k draw" style="--i: 16" d="M990 770L680 650" pathLength="1"/>
+        <path class="k draw" style="--i: 17" d="M190 330L420 800" pathLength="1"/>
+        <path class="k draw" style="--i: 18" d="M330 310L430 550" pathLength="1"/>
+        <path class="k draw" style="--i: 19" d="M680 650L430 550" pathLength="1"/>
+        <path class="k draw" style="--i: 20" d="M420 800L430 550" pathLength="1"/>
+        <path class="k draw" style="--i: 21" d="M680 330L430 550" pathLength="1"/>
+        <path class="k draw" style="--i: 22" d="M880 215L960 480" pathLength="1"/>
+        <path class="k draw" style="--i: 23" d="M1200 590L960 480" pathLength="1"/>
+        <path class="k draw" style="--i: 24" d="M990 770L960 480" pathLength="1"/>
+        <path class="k draw" style="--i: 25" d="M1200 590L1490 410" pathLength="1"/>
+        <path class="k draw" style="--i: 26" d="M1300 150L1490 410" pathLength="1"/>
+        <path class="k draw" style="--i: 27" d="M1735 480L1490 410" pathLength="1"/>
+        <path class="k draw" style="--i: 28" d="M1440 790L1490 410" pathLength="1"/>
+      </g>
+      <g class="s12-net-l">
+        <path class="k s12-netlit" style="--in: calc(var(--w-atencao) + 160)" d="M330 310L430 550"/>
+        <path class="k s12-netlit" style="--in: calc(var(--w-atencao) + 200)" d="M680 650L430 550"/>
+        <path class="k s12-netlit" style="--in: calc(var(--w-atencao) + 240)" d="M420 800L430 550"/>
+        <path class="k s12-netlit" style="--in: calc(var(--w-atencao) + 180)" d="M680 330L430 550"/>
+        <path class="k s12-netlit" style="--in: calc(var(--w-lembranca) + 160)" d="M880 215L960 480"/>
+        <path class="k s12-netlit" style="--in: calc(var(--w-lembranca) + 200)" d="M1200 590L960 480"/>
+        <path class="k s12-netlit" style="--in: calc(var(--w-lembranca) + 240)" d="M990 770L960 480"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 678)" d="M190 330L330 310"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 544)" d="M330 310L680 330"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 397)" d="M680 330L880 215"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 323)" d="M880 215L1020 140"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 265)" d="M1020 140L1130 190"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 200)" d="M1130 190L1300 150"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 103)" d="M1300 150L1740 300"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 136)" d="M1740 300L1735 480"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 200)" d="M1250 700L1440 790"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 270)" d="M1250 700L990 770"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 409)" d="M990 770L720 830"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 552)" d="M720 830L420 800"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 470)" d="M680 650L720 830"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 447)" d="M680 650L680 330"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 194)" d="M1200 590L1250 700"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 179)" d="M1200 590L1130 190"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 396)" d="M990 770L680 650"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 657)" d="M190 330L420 800"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 610)" d="M330 310L430 550"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 524)" d="M680 650L430 550"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 603)" d="M420 800L430 550"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 514)" d="M680 330L430 550"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 315)" d="M880 215L960 480"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 235)" d="M1200 590L960 480"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 306)" d="M990 770L960 480"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 93)" d="M1200 590L1490 410"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 88)" d="M1300 150L1490 410"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 70)" d="M1735 480L1490 410"/>
+        <path class="k s12-netwave" style="--in: calc(var(--w-decisao) + 105)" d="M1440 790L1490 410"/>
+      </g>
+      <g class="s12-net-d">
+        <circle class="k pop" style="--in: 120; --dur: 420" cx="190" cy="330" r="6"/>
+        <circle class="k pop" style="--in: 150; --dur: 420" cx="330" cy="310" r="6"/>
+        <circle class="k pop" style="--in: 180; --dur: 420" cx="680" cy="330" r="9"/>
+        <circle class="k pop" style="--in: 210; --dur: 420" cx="880" cy="215" r="9"/>
+        <circle class="k pop" style="--in: 240; --dur: 420" cx="1130" cy="190" r="9"/>
+        <circle class="k pop" style="--in: 270; --dur: 420" cx="1300" cy="150" r="6"/>
+        <circle class="k pop" style="--in: 300; --dur: 420" cx="1740" cy="300" r="6"/>
+        <circle class="k pop" style="--in: 330; --dur: 420" cx="1735" cy="480" r="6"/>
+        <circle class="k pop" style="--in: 360; --dur: 420" cx="1250" cy="700" r="9"/>
+        <circle class="k pop" style="--in: 390; --dur: 420" cx="1440" cy="790" r="6"/>
+        <circle class="k pop" style="--in: 420; --dur: 420" cx="990" cy="770" r="9"/>
+        <circle class="k pop" style="--in: 450; --dur: 420" cx="720" cy="830" r="6"/>
+        <circle class="k pop" style="--in: 480; --dur: 420" cx="680" cy="650" r="6"/>
+        <circle class="k pop" style="--in: 510; --dur: 420" cx="420" cy="800" r="6"/>
+        <circle class="k pop" style="--in: 540; --dur: 420" cx="1200" cy="590" r="9"/>
+        <circle class="k pop" style="--in: 570; --dur: 420" cx="1020" cy="140" r="6"/>
+      </g>
+      <g class="s12-net-h">
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 776)" cx="190" cy="330" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 700)" cx="330" cy="310" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 507)" cx="680" cy="330" r="12"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 412)" cx="880" cy="215" r="12"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 292)" cx="1130" cy="190" r="12"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 237)" cx="1300" cy="150" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 210)" cx="1740" cy="300" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 200)" cx="1735" cy="480" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 267)" cx="1250" cy="700" r="12"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 270)" cx="1440" cy="790" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 398)" cx="990" cy="770" r="12"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 542)" cx="720" cy="830" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 524)" cx="680" cy="650" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 686)" cx="420" cy="800" r="9"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 247)" cx="1200" cy="590" r="12"/>
+        <circle class="k s12-netwave" style="--in: calc(var(--w-decisao) + 358)" cx="1020" cy="140" r="9"/>
+      </g>
+    </svg>
+
+    <!-- ===== HUD: cadeia, progresso em três segmentos e odômetro de etapa ===== -->
+    <div class="kx" style="--out: 4100; --xdur: 360; left: 0; top: 0">
+      <div class="s12-hud k mask-r" style="--in: 80; --dur: 300; left: 300px; top: 150px">
+        <p class="s12-eb"><i class="l pulse"></i>Cadeia Halor · resultado</p>
+        <div class="s12-prog">
+          <span class="s12-seg"><i class="k grow-l" style="--in: var(--w-atencao); --dur: 520"></i></span>
+          <span class="s12-seg"><i class="k grow-l" style="--in: var(--w-lembranca); --dur: 520"></i></span>
+          <span class="s12-seg s12-seg-ok"><i class="k grow-l" style="--in: var(--w-decisao); --dur: 520"></i></span>
+          <span class="s12-odo">etapa
+            <b><span class="k move-xy" style="--in: var(--w-atencao); --dur: 380; --dx: 0px; --dy: -34px"><span class="k move-xy" style="--in: var(--w-lembranca); --dur: 380; --dx: 0px; --dy: -34px"><span class="k move-xy" style="--in: var(--w-decisao); --dur: 380; --dx: 0px; --dy: -34px"><em>0</em><em>1</em><em>2</em><em>3</em></span></span></span></b>/3</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== encaixes vazios (o slide sendo montado) ===== -->
+    <div class="kx" style="--out: calc(var(--w-atencao) + 400); --xdur: 200; left: 0; top: 0"><div class="s12-slot k fade" style="--in: 140; --dur: 360; left: 300px; top: 390px"><i>+</i><small>etapa 1</small></div></div>
+    <div class="kx" style="--out: calc(var(--w-lembranca) + 400); --xdur: 200; left: 0; top: 0"><div class="s12-slot k fade" style="--in: 220; --dur: 360; left: 830px; top: 320px"><i>+</i><small>etapa 2</small></div></div>
+    <div class="kx" style="--out: calc(var(--w-decisao) + 400); --xdur: 200; left: 0; top: 0"><div class="s12-slot k fade" style="--in: 300; --dur: 360; left: 1360px; top: 250px"><i>+</i><small>etapa 3</small></div></div>
+
+    <!-- ===== conectores (Connector / Flow Line + BPMN): tubo que se desenha atrás do cometa, fluxo em loop ===== -->
+    <svg class="s12-wire" viewBox="0 0 1920 1080" aria-hidden="true">
+      <!-- 0 · evento de início BPMN: o slide no ar manda o token para "Atenção" -->
+      <g class="kx" style="--out: 4100; --xdur: 360">
+        <path class="s12-w-glow k draw s12-sync" style="--in: 140; --dur: 260" d="M204 550H300" pathLength="1"/>
+        <path class="s12-w-tube s12-w-thin k draw s12-sync" style="--in: 140; --dur: 260" d="M204 550H300" pathLength="1"/>
+        <path class="s12-w-comet k s12-run" style="--in: 140; --dur: 260" d="M204 550H300" pathLength="1"/>
+        <path class="s12-w-head k s12-runh" style="--in: 140; --dur: 260" d="M204 550H300" pathLength="1"/>
+        <g class="k fade" style="--in: 400; --dur: 300"><path class="s12-w-flow l dash" d="M204 550H300"/></g>
+        <circle class="s12-ev k pop" style="--in: 40; --dur: 340" cx="180" cy="550" r="24"/>
+        <circle class="s12-ev-c k pop" style="--in: 120; --dur: 300" cx="180" cy="550" r="7"/>
+        <path class="s12-arrow k pop" style="--in: 380; --dur: 260" d="M278 540L294 550L278 560"/>
+      </g>
+      <circle class="s12-port k pop" style="--in: var(--w-atencao); --dur: 260" cx="300" cy="550" r="9"/>
+      <!-- fim · evento de fim BPMN: a decisão segue para a rede -->
+      <path class="s12-w-glow k draw s12-sync" style="--in: calc(var(--w-decisao) + 380); --dur: 220" d="M1620 410H1711" pathLength="1"/>
+      <path class="s12-w-tube s12-w-thin k draw s12-sync" style="--in: calc(var(--w-decisao) + 380); --dur: 220" d="M1620 410H1711" pathLength="1"/>
+      <path class="s12-w-comet k s12-run" style="--in: calc(var(--w-decisao) + 380); --dur: 220" d="M1620 410H1711" pathLength="1"/>
+      <path class="s12-w-head k s12-runh" style="--in: calc(var(--w-decisao) + 380); --dur: 220" d="M1620 410H1711" pathLength="1"/>
+      <circle class="s12-port k pop" style="--in: calc(var(--w-decisao) + 360); --dur: 260" cx="1620" cy="410" r="9"/>
+      <circle class="s12-ev s12-ev-end k pop" style="--in: calc(var(--w-decisao) + 560); --dur: 380" cx="1737" cy="410" r="22"/>
+      <circle class="s12-ev-c s12-ev-c-end k pop" style="--in: calc(var(--w-decisao) + 620); --dur: 320" cx="1737" cy="410" r="8"/>
+
+      <!-- 1 · Atenção → Lembrança ("vira") -->
+      <path class="s12-w-glow k draw s12-sync" style="--in: var(--w-vira); --dur: 220" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      <path class="s12-w-tube k draw s12-sync" style="--in: var(--w-vira); --dur: 220" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      <g class="k fade" style="--in: calc(var(--w-vira) + 220); --dur: 300"><path class="s12-w-flow l dash" d="M560 550C680 550 710 480 830 480"/></g>
+      <path class="s12-w-comet k s12-run" style="--in: var(--w-vira); --dur: 220" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      <path class="s12-w-head k s12-runh" style="--in: var(--w-vira); --dur: 220" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      <path class="s12-w-comet k s12-run" style="--in: 2120; --dur: 300" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      <path class="s12-w-head k s12-runh" style="--in: 2120; --dur: 300" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      <g class="k fade" style="--in: 3960; --dur: 300">
+        <path class="s12-w-comet l s12-loop" style="--ldur: 1500; --lph: 0" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+        <path class="s12-w-head l s12-looph" style="--ldur: 1500; --lph: 0" d="M560 550C680 550 710 480 830 480" pathLength="1"/>
+      </g>
+      <circle class="s12-port k pop" style="--in: var(--w-vira); --dur: 260" cx="560" cy="550" r="9"/>
+      <circle class="s12-port k pop" style="--in: calc(var(--w-vira) + 200); --dur: 260" cx="830" cy="480" r="9"/>
+      <path class="s12-arrow k pop" style="--in: calc(var(--w-vira) + 180); --dur: 280" d="M806 470L822 480L806 490"/>
+
+      <!-- 2 · Lembrança → Decisão ("vira" de novo) -->
+      <path class="s12-w-glow k draw s12-sync" style="--in: var(--w-vira2); --dur: 220" d="M1090 480C1210 480 1240 410 1360 410" pathLength="1"/>
+      <path class="s12-w-tube k draw s12-sync" style="--in: var(--w-vira2); --dur: 220" d="M1090 480C1210 480 1240 410 1360 410" pathLength="1"/>
+      <g class="k fade" style="--in: calc(var(--w-vira2) + 220); --dur: 300"><path class="s12-w-flow l dash" d="M1090 480C1210 480 1240 410 1360 410"/></g>
+      <path class="s12-w-comet k s12-run" style="--in: var(--w-vira2); --dur: 220" d="M1090 480C1210 480 1240 410 1360 410" pathLength="1"/>
+      <path class="s12-w-head k s12-runh" style="--in: var(--w-vira2); --dur: 220" d="M1090 480C1210 480 1240 410 1360 410" pathLength="1"/>
+      <g class="k fade" style="--in: 3960; --dur: 300">
+        <path class="s12-w-comet l s12-loop" style="--ldur: 1500; --lph: 750" d="M1090 480C1210 480 1240 410 1360 410" pathLength="1"/>
+        <path class="s12-w-head l s12-looph" style="--ldur: 1500; --lph: 750" d="M1090 480C1210 480 1240 410 1360 410" pathLength="1"/>
+      </g>
+      <circle class="s12-port k pop" style="--in: var(--w-vira2); --dur: 260" cx="1090" cy="480" r="9"/>
+      <circle class="s12-port k pop" style="--in: calc(var(--w-vira2) + 200); --dur: 260" cx="1360" cy="410" r="9"/>
+      <path class="s12-arrow k pop" style="--in: calc(var(--w-vira2) + 180); --dur: 280" d="M1336 400L1352 410L1336 420"/>
+    </svg>
+
+    <!-- ===== nó 1 · Atenção ===== -->
+    <div class="s12-nd" style="left: 300px; top: 390px">
+      <div class="s12-pop k s12-cardin" style="--in: var(--w-atencao); --dur: 640">
+        <div class="s12-cd">
+          <i class="s12-lit k fade" style="--in: calc(var(--w-atencao) + 140); --dur: 420"></i>
+          <span class="s12-clip"><i class="shim k sweep-x" style="--in: calc(var(--w-atencao) + 260); --dur: 760"></i></span>
+          <p class="s12-top"><b>1</b><span>o olhar</span></p>
+          <div class="s12-orb">
+            <span class="s12-bc k fade" style="--in: calc(var(--w-atencao) + 260); --dur: 300"><i class="l s12-beat" style="--lph: 0"></i><i class="l s12-beat" style="--lph: 700"></i><i class="l s12-beat" style="--lph: 1400"></i></span>
+            <span class="s12-orb-c"></span>
+            <svg class="s12-ic k icon-in" style="--in: calc(var(--w-atencao) + 260); --dur: 560" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5S2.5 12 2.5 12z" pathLength="1"/><circle cx="12" cy="12" r="3.2" pathLength="1"/></svg>
+            <i class="s12-pupil k pop" style="--in: calc(var(--w-atencao) + 640); --dur: 360"></i>
+          </div>
+          <p class="s12-nm"><span class="k mask-up" style="--in: calc(var(--w-atencao) + 120); --dur: 520">Atenção</span></p>
+          <i class="s12-ul k grow-x" style="--in: calc(var(--w-atencao) + 380); --dur: 420"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== nó 2 · Lembrança ===== -->
+    <div class="s12-nd" style="left: 830px; top: 320px">
+      <div class="s12-lift k s12-hover" style="--in: calc(var(--w-lembranca2) - 40); --dur: 900">
+      <div class="s12-pop k s12-cardin" style="--in: var(--w-lembranca); --dur: 640">
+        <div class="s12-cd">
+          <i class="s12-lit k fade" style="--in: calc(var(--w-lembranca) + 140); --dur: 420"></i>
+          <span class="s12-clip"><i class="shim k sweep-x" style="--in: calc(var(--w-lembranca) + 260); --dur: 760"></i><i class="shim s12-shim2 k sweep-x" style="--in: var(--w-lembranca2); --dur: 900"></i></span>
+          <p class="s12-top"><b>2</b><span>a memória</span></p>
+          <div class="s12-orb">
+            <span class="s12-bc k fade" style="--in: calc(var(--w-lembranca) + 260); --dur: 300"><i class="l s12-beat" style="--lph: 233"></i><i class="l s12-beat" style="--lph: 933"></i><i class="l s12-beat" style="--lph: 1633"></i></span>
+            <span class="s12-orb-c"></span>
+            <svg class="s12-ic k icon-in" style="--in: calc(var(--w-lembranca) + 260); --dur: 560" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5h10a1 1 0 0 1 1 1V20.5l-6-4.2-6 4.2V4.5a1 1 0 0 1 1-1z" pathLength="1"/></svg>
+            <svg class="s12-ic s12-ic-sp k s12-twirl" style="--in: calc(var(--w-lembranca) + 680); --dur: 520" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.4Q12 10 15.6 10Q12 10 12 13.6Q12 10 8.4 10Q12 10 12 6.4Z"/></svg>
+          </div>
+          <p class="s12-nm"><span class="k mask-up" style="--in: calc(var(--w-lembranca) + 120); --dur: 520">Lembrança</span></p>
+          <i class="s12-ul k grow-x" style="--in: calc(var(--w-lembranca) + 380); --dur: 420"></i>
+        </div>
+      </div>
+      </div>
+      <i class="s12-ring k ring-x" style="--in: var(--w-lembranca2); --dur: 900; left: 130px; top: 124px"></i>
+      <span class="s12-tag k s12-tagin" style="--in: calc(var(--w-lembranca2) + 80); --dur: 480; left: 130px; top: -76px"><i><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></i>fica na memória</span>
+    </div>
+
+    <!-- ===== nó 3 · Decisão (selo, check, confete) ===== -->
+    <i class="s12-bloom k s12-bloomin" style="--in: var(--w-decisao); --dur: 900"></i>
+    <div class="s12-nd s12-n3" style="left: 1360px; top: 250px">
+      <div class="s12-shk k shake" style="--in: calc(var(--w-decisao) + 560); --dur: 280">
+      <div class="s12-pop k s12-cardin" style="--in: var(--w-decisao); --dur: 640">
+        <div class="s12-cd">
+          <i class="s12-hot k fade" style="--in: calc(var(--w-decisao) + 60); --dur: 360"></i>
+          <span class="s12-clip"><i class="shim k sweep-x" style="--in: calc(var(--w-decisao) + 420); --dur: 760"></i><i class="s12-flash k flash" style="--in: var(--w-decisao); --dur: 520"></i></span>
+          <p class="s12-top"><b>3</b><span>o sim</span></p>
+          <div class="s12-orb">
+            <span class="s12-bc k fade" style="--in: calc(var(--w-decisao) + 240); --dur: 300"><i class="l s12-beat" style="--lph: 466"></i><i class="l s12-beat" style="--lph: 1166"></i><i class="l s12-beat" style="--lph: 1866"></i></span>
+            <span class="s12-orb-c"></span>
+            <span class="s12-icw k s12-chkpop" style="--in: calc(var(--w-decisao) + 300); --dur: 440"><svg class="s12-ic k icon-in" style="--in: calc(var(--w-decisao) + 300); --dur: 320" viewBox="0 0 24 24" aria-hidden="true"><path d="M9.7 16.7L5.5 12.5" pathLength="1"/><path d="M9.7 16.7L18.5 7.8" pathLength="1"/></svg></span>
+          </div>
+          <p class="s12-nm"><span class="k mask-up" style="--in: calc(var(--w-decisao) + 120); --dur: 520">Decisão</span></p>
+          <i class="s12-ul k grow-x" style="--in: calc(var(--w-decisao) + 380); --dur: 420"></i>
+        </div>
+      </div>
+      </div>
+    </div>
+    <i class="s12-ring k ring-x" style="--in: var(--w-decisao); --dur: 900; left: 1490px; top: 374px"></i>
+    <i class="s12-ring s12-ring-b k ring-x" style="--in: calc(var(--w-decisao) + 160); --dur: 1100; left: 1490px; top: 374px"></i>
+    <div class="s12-conf" style="left: 1490px; top: 410px">
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 51); --dur: 1227; --sx: 150px; --sy: 7px; --dx: 342px; --dy: 14px; --rot: 321deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 54); --dur: 1294; --sx: 147px; --sy: 34px; --dx: 365px; --dy: 72px; --rot: -254deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 44); --dur: 1345; --sx: 140px; --sy: 64px; --dx: 287px; --dy: 115px; --rot: 324deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 84); --dur: 1356; --sx: 130px; --sy: 89px; --dx: 329px; --dy: 191px; --rot: -375deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 77); --dur: 1193; --sx: 127px; --sy: 96px; --dx: 293px; --dy: 191px; --rot: 231deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 59); --dur: 1419; --sx: 113px; --sy: 119px; --dx: 238px; --dy: 218px; --rot: 213deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 68); --dur: 1208; --sx: 86px; --sy: 147px; --dx: 175px; --dy: 261px; --rot: 281deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 74); --dur: 1337; --sx: 74px; --sy: 157px; --dx: 170px; --dy: 290px; --rot: 379deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 49); --dur: 1157; --sx: 37px; --sy: 175px; --dx: 96px; --dy: 290px; --rot: -254deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 6); --dur: 1332; --sx: 29px; --sy: 176px; --dx: 70px; --dy: 290px; --rot: -258deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 75); --dur: 1411; --sx: -10px; --sy: 180px; --dx: -27px; --dy: 290px; --rot: -262deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 77); --dur: 1496; --sx: -23px; --sy: 178px; --dx: -46px; --dy: 290px; --rot: 323deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 82); --dur: 1226; --sx: -53px; --sy: 169px; --dx: -154px; --dy: 290px; --rot: -185deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 37); --dur: 1333; --sx: -64px; --sy: 163px; --dx: -132px; --dy: 290px; --rot: 316deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 8); --dur: 1391; --sx: -86px; --sy: 147px; --dx: -218px; --dy: 290px; --rot: 272deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 71); --dur: 1373; --sx: -110px; --sy: 122px; --dx: -310px; --dy: 288px; --rot: -213deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 61); --dur: 1220; --sx: -119px; --sy: 109px; --dx: -341px; --dy: 262px; --rot: -322deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 4); --dur: 1187; --sx: -131px; --sy: 88px; --dx: -363px; --dy: 206px; --rot: -371deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 5); --dur: 1164; --sx: -143px; --sy: 55px; --dx: -355px; --dy: 116px; --rot: 348deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 3); --dur: 1318; --sx: -149px; --sy: 25px; --dx: -344px; --dy: 50px; --rot: 203deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 47); --dur: 1490; --sx: -150px; --sy: -8px; --dx: -404px; --dy: -17px; --rot: -387deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 44); --dur: 1317; --sx: -147px; --sy: -36px; --dx: -373px; --dy: -77px; --rot: 215deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 74); --dur: 1293; --sx: -140px; --sy: -66px; --dx: -346px; --dy: -139px; --rot: -237deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 49); --dur: 1349; --sx: -131px; --sy: -88px; --dx: -341px; --dy: -195px; --rot: -353deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 68); --dur: 1310; --sx: -120px; --sy: -108px; --dx: -341px; --dy: -250px; --rot: -216deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 48); --dur: 1432; --sx: -107px; --sy: -126px; --dx: -260px; --dy: -250px; --rot: -394deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 54); --dur: 1460; --sx: -83px; --sy: -150px; --dx: -238px; --dy: -250px; --rot: 206deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 83); --dur: 1296; --sx: -59px; --sy: -166px; --dx: -131px; --dy: -250px; --rot: -295deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 68); --dur: 1222; --sx: -40px; --sy: -174px; --dx: -96px; --dy: -250px; --rot: -298deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 84); --dur: 1473; --sx: -17px; --sy: -179px; --dx: -45px; --dy: -250px; --rot: 272deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 38); --dur: 1258; --sx: 1px; --sy: -180px; --dx: 2px; --dy: -250px; --rot: -281deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 59); --dur: 1370; --sx: 14px; --sy: -179px; --dx: 40px; --dy: -250px; --rot: -231deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 87); --dur: 1352; --sx: 53px; --sy: -169px; --dx: 110px; --dy: -250px; --rot: 248deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 64); --dur: 1280; --sx: 68px; --sy: -160px; --dx: 174px; --dy: -250px; --rot: 340deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 64); --dur: 1222; --sx: 94px; --sy: -140px; --dx: 192px; --dy: -249px; --rot: 187deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 8); --dur: 1267; --sx: 103px; --sy: -131px; --dx: 279px; --dy: -250px; --rot: -211deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 42); --dur: 1469; --sx: 123px; --sy: -103px; --dx: 288px; --dy: -207px; --rot: -288deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 6); --dur: 1198; --sx: 132px; --sy: -85px; --dx: 282px; --dy: -158px; --rot: 193deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 25); --dur: 1453; --sx: 145px; --sy: -46px; --dx: 376px; --dy: -100px; --rot: 331deg"></i>
+      <i class="k s12-fall" style="--in: calc(var(--w-decisao) + 43); --dur: 1409; --sx: 147px; --sy: -34px; --dx: 362px; --dy: -71px; --rot: -313deg"></i>
+    </div>
+    <!-- selo carimbado no canto do cartão da Decisão -->
+    <div class="s12-seal-w" style="left: 1556px; top: 176px">
+      <div class="k s12-stamp" style="--in: calc(var(--w-decisao) + 300); --dur: 560">
+        <svg class="s12-seal" viewBox="0 0 160 160" aria-hidden="true">
+          <defs><path id="s12-seal-p" d="M80 80m-57 0a57 57 0 1 1 114 0a57 57 0 1 1-114 0"/></defs>
+          <circle cx="80" cy="80" r="76" fill="#fff"/>
+          <circle cx="80" cy="80" r="71" fill="none" stroke="#8b3dff" stroke-width="3"/>
+          <circle cx="80" cy="80" r="44" fill="none" stroke="#d9c7ff" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/>
+          <text class="s12-seal-t"><textPath href="#s12-seal-p" textLength="352" lengthAdjust="spacing">DECISÃO TOMADA · APROVADO ·</textPath></text>
+          <circle cx="80" cy="80" r="36" fill="#1d1538"/>
+          <use href="#hl-mark" x="52" y="52" width="56" height="56"/>
+        </svg>
+      </div>
+    </div>
+
+    <i class="s12-ring s12-ring-s k ring-x" style="--in: calc(var(--w-decisao) + 560); --dur: 700; left: 1631px; top: 251px"></i>
+
+    <!-- ===== cliques com brilho (Ripple) ===== -->
+    <i class="click k" style="--in: var(--w-atencao); --dur: 560; left: 430px; top: 550px"></i>
+    <i class="click k" style="--in: var(--w-lembranca); --dur: 560; left: 960px; top: 480px"></i>
+    <i class="click k" style="--in: var(--w-decisao); --dur: 560; left: 1490px; top: 410px"></i>
+    <svg class="s12-rays" style="left: 170px; top: 290px" viewBox="0 0 520 520" aria-hidden="true"><g class="k s12-ray" style="--in: var(--w-atencao); --dur: 480"><path d="M410 322L451 339" pathLength="1"/><path d="M335 440L352 481" pathLength="1"/><path d="M185 440L168 481" pathLength="1"/><path d="M110 322L69 339" pathLength="1"/><path d="M110 198L69 181" pathLength="1"/><path d="M185 80L168 39" pathLength="1"/><path d="M335 80L352 39" pathLength="1"/><path d="M410 198L451 181" pathLength="1"/></g></svg>
+    <svg class="s12-rays" style="left: 700px; top: 220px" viewBox="0 0 520 520" aria-hidden="true"><g class="k s12-ray" style="--in: var(--w-lembranca); --dur: 480"><path d="M410 322L451 339" pathLength="1"/><path d="M335 440L352 481" pathLength="1"/><path d="M185 440L168 481" pathLength="1"/><path d="M110 322L69 339" pathLength="1"/><path d="M110 198L69 181" pathLength="1"/><path d="M185 80L168 39" pathLength="1"/><path d="M335 80L352 39" pathLength="1"/><path d="M410 198L451 181" pathLength="1"/></g></svg>
+    <svg class="s12-rays s12-rays-b" style="left: 1230px; top: 150px" viewBox="0 0 520 520" aria-hidden="true"><g class="k s12-ray" style="--in: var(--w-decisao); --dur: 560"><path d="M414 324L471 348" pathLength="1"/><path d="M336 444L360 501" pathLength="1"/><path d="M184 444L160 501" pathLength="1"/><path d="M106 324L49 348" pathLength="1"/><path d="M106 196L49 172" pathLength="1"/><path d="M184 76L160 19" pathLength="1"/><path d="M336 76L360 19" pathLength="1"/><path d="M414 196L471 172" pathLength="1"/></g></svg>
+    <!-- chegada do cometa: o porto acende -->
+    <i class="s12-hit k s12-ping" style="--in: calc(var(--w-vira) + 210); --dur: 520; left: 830px; top: 480px"></i>
+    <i class="s12-hit k s12-ping" style="--in: 2400; --dur: 520; left: 830px; top: 480px"></i>
+    <i class="s12-hit k s12-ping" style="--in: var(--w-atencao); --dur: 520; left: 300px; top: 550px"></i>
+    <i class="s12-hit k s12-ping" style="--in: calc(var(--w-decisao) + 580); --dur: 560; left: 1737px; top: 410px"></i>
+    <i class="s12-hit k s12-ping" style="--in: calc(var(--w-vira2) + 210); --dur: 520; left: 1360px; top: 410px"></i>
+    <!-- brilhos -->
+    <svg class="s12-tw" style="left: 1310px; top: 196px" viewBox="0 0 24 24" aria-hidden="true"><g class="k pop" style="--in: calc(var(--w-decisao) + 200); --dur: 400"><path class="l twinkle" d="M12 2.5Q12 12 21.5 12Q12 12 12 21.5Q12 12 2.5 12Q12 12 12 2.5Z"/></g></svg>
+    <svg class="s12-tw s12-tw-s" style="left: 1640px; top: 520px" viewBox="0 0 24 24" aria-hidden="true"><g class="k pop" style="--in: calc(var(--w-decisao) + 320); --dur: 400"><path class="l twinkle" style="--lph: 600" d="M12 2.5Q12 12 21.5 12Q12 12 12 21.5Q12 12 2.5 12Q12 12 12 2.5Z"/></g></svg>
+    <svg class="s12-tw s12-tw-s" style="left: 270px; top: 360px" viewBox="0 0 24 24" aria-hidden="true"><g class="k pop" style="--in: calc(var(--w-atencao) + 300); --dur: 400"><path class="l twinkle" style="--lph: 300" d="M12 2.5Q12 12 21.5 12Q12 12 12 21.5Q12 12 2.5 12Q12 12 12 2.5Z"/></g></svg>
+
+    <!-- ===== cursor com halo: clica cada encaixe na sua palavra ===== -->
+    <div class="s12-curw kx" style="--out: calc(var(--w-decisao) + 340); --xdur: 260; left: 760px; top: 800px">
+      <div class="k fade" style="--in: 0; --dur: 260">
+      <div class="k move-xy" style="--in: 30; --dur: 350; --dx: -330px; --dy: -250px">
+      <div class="k move-xy" style="--in: calc(var(--w-atencao) + 140); --dur: 260; --dx: 110px; --dy: 150px">
+      <div class="k move-xy" style="--in: 820; --dur: 460; --dx: 420px; --dy: -220px">
+      <div class="k move-xy" style="--in: calc(var(--w-lembranca) + 140); --dur: 260; --dx: 110px; --dy: 150px">
+      <div class="k move-xy" style="--in: 2140; --dur: 300; --dx: -40px; --dy: -50px">
+      <div class="k move-xy" style="--in: 2860; --dur: 560; --dx: 460px; --dy: -170px">
+      <div class="k move-xy" style="--in: calc(var(--w-decisao) + 140); --dur: 260; --dx: 150px; --dy: 100px">
+        <div class="s12-cur">
+          <i class="s12-cur-h"></i>
+          <div class="k press" style="--in: var(--w-atencao)"><div class="k press" style="--in: var(--w-lembranca)"><div class="k press" style="--in: var(--w-decisao)">
+            <svg class="gcur" style="left: -3px; top: -2px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+          </div></div></div>
+        </div>
+      </div></div></div></div></div></div></div>
+      </div>
+    </div>
+
+  </div></div></div></div>
+
+  <!-- ===== a lavanda se fecha sobre a Decisão: anel de luz na borda da íris (segue --paper-k do motor) ===== -->
+  <i class="s12-iris" aria-hidden="true"></i>
+
+  <!-- ===== Cliente aprova ===== -->
+  <div class="s12-say k s12-bub" style="--in: calc(var(--w-decisao) + 420); --dur: 520; left: 1530px; top: 604px"><i><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i><b>Aprovado!</b></div>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@atencao:pose=point-right,face=wow;@atencao+650:pose=idle,face=happy;@lembranca:pose=present,face=happy;@lembranca2:pose=point-right,face=wink;@vira2:pose=look-up,face=focus;@decisao:pose=jump,face=laugh,dur=240;@decisao+300:pose=celebrate,face=laugh;@decisao+900:pose=cheer,face=proud;4700:pose=wave,face=happy" style="--x: 150px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-skin="cliente" data-pose="hands-hips" data-face="think" data-props="" data-keys="@atencao+200:face=wow;@lembranca:pose=idle,face=happy;@lembranca2:pose=think,face=think;@vira2:pose=look-up,face=surprised;@decisao:pose=stamp,face=proud;@decisao+420:pose=stamp-down,face=laugh,dur=200;@decisao+820:pose=cheer,face=laugh;4700:pose=idle,face=happy" style="--x: 1770px; --y: 968px; --s: .8"></div>
 </section>

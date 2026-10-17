@@ -1,3 +1,288 @@
-<!-- CENA 13 · v4 (em produção) -->
-<section class="scene s13" id="s13" data-world="night" data-field="1" data-field-entrance="1" data-chip="">
+<!-- CENA 13 · Fecho · noite (é o pôster do vídeo)
+     Abertura de fecho (0 → "Halor"): a lavanda da cena 12 se fecha numa íris no ponto do símbolo; Animated Shader / Hero (guia 40)
+     acende: nebulosa que deriva, isolinhas que se deformam como ruído e um fio neon com cometas de luz. O símbolo se monta peça a peça
+     (faísca que chega como cometa, anel aberto desenhado com cabeça de luz, anel interno, núcleo com onda de choque e raios).
+     "halor." sobe letra a letra com varredura de luz; a frase entra palavra a palavra (Animated Typography, guia 11) e "prendem o olhar."
+     ganha sublinhado neon enquanto o símbolo pulsa como um olho (beacon). Em "Faça", a câmera reenquadra (Motion Graphics, guia 01):
+     o selo sobe, "Faça cada olhar render." entra grande, o botão "Começar grátis" é atraído pelo cursor (Magnetic Button, guia 25)
+     e recebe o clique em "render" (Ripple, guia 20) que explode em confete de luz (Particle System, guia 30). Pílulas e halor.app
+     fecham o quadro, que fica limpo nos últimos 2 s. -->
+<section class="scene s13" id="s13" data-world="night" data-world-cx="960" data-world-cy="280" data-field="1" data-field-entrance="1" data-chip="">
+
+  <!-- ====================== 40 · Animated Shader / Hero: luz de fundo ====================== -->
+  <div class="s13-aura k fade" style="--in: 0; --dur: 1600" aria-hidden="true">
+    <b class="s13-blob s13-b1 l s13-drift" style="--ldur: 13000; --lph: 0"></b>
+    <b class="s13-blob s13-b2 l s13-drift" style="--ldur: 11000; --lph: 4200"></b>
+    <b class="s13-blob s13-b3 l s13-drift" style="--ldur: 15000; --lph: 8100"></b>
+    <b class="s13-blob s13-b4 l s13-drift" style="--ldur: 12000; --lph: 2500"></b>
+  </div>
+  <div class="s13-isowrap k s13-isoin" style="--in: 120; --dur: 1800" aria-hidden="true">
+    <svg class="s13-isosvg" viewBox="0 0 1920 1080" fill="none">
+      <defs>
+        <linearGradient id="s13-gw" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1920" y2="0">
+          <stop offset="0" stop-color="#f4eeff" stop-opacity=".95"/>
+          <stop offset=".24" stop-color="#c9a6ff" stop-opacity=".9"/>
+          <stop offset=".4" stop-color="#a970ff" stop-opacity="0"/>
+          <stop offset=".6" stop-color="#a970ff" stop-opacity="0"/>
+          <stop offset=".76" stop-color="#c9a6ff" stop-opacity=".9"/>
+          <stop offset="1" stop-color="#f4eeff" stop-opacity=".95"/>
+        </linearGradient>
+      </defs>
+      <g class="s13-isolines">
+      <path class="s13-iso s13-iso0" d="M1918 570C1935 628 1878 704 1819 756C1760 808 1656 853 1563 883C1471 912 1359 917 1262 934C1165 950 1082 973 982 981C882 989 751 1005 664 983C577 961 519 894 461 850C402 806 364 766 312 719C261 672 179 626 152 570C126 514 122 444 152 385C181 327 243 256 329 219C416 182 561 171 670 164C778 158 884 171 982 179C1080 187 1176 191 1257 213C1338 234 1391 276 1468 308C1546 341 1645 362 1720 406C1795 449 1902 512 1918 570Z"/>
+      <path class="s13-iso s13-iso1" d="M2127 558C2142 629 2072 721 1993 780C1913 838 1764 880 1648 908C1532 935 1403 924 1295 944C1186 964 1107 1015 997 1028C888 1042 739 1049 637 1026C535 1002 466 934 384 887C303 841 208 802 146 747C84 693 29 625 13 558C-3 491 7 412 50 347C93 282 172 208 271 168C371 128 528 119 649 106C770 93 888 81 997 90C1107 98 1215 128 1306 158C1396 187 1440 233 1539 267C1639 300 1805 308 1903 356C2001 405 2112 487 2127 558Z"/>
+      <path class="s13-iso s13-iso2" d="M2253 535C2264 619 2193 731 2089 794C1986 857 1772 887 1632 913C1492 940 1368 927 1250 953C1133 979 1048 1053 928 1069C809 1086 656 1072 532 1050C407 1028 294 983 181 937C68 891 -79 841 -146 774C-212 707 -221 614 -217 535C-214 456 -190 369 -127 300C-64 231 50 168 160 122C271 76 408 50 536 26C664 1 806 -37 928 -26C1051 -15 1164 56 1269 93C1375 129 1436 162 1562 195C1687 228 1908 235 2023 291C2138 348 2242 451 2253 535Z"/>
+      <path class="s13-iso s13-iso3" d="M2441 526C2445 622 2362 750 2234 817C2107 883 1832 896 1676 927C1519 957 1420 968 1296 1000C1172 1031 1064 1101 931 1115C798 1130 653 1103 498 1089C343 1074 148 1071 1 1026C-146 981 -319 902 -383 819C-447 736 -415 617 -385 526C-354 436 -287 345 -197 275C-108 205 39 163 152 107C264 51 349 -21 479 -60C609 -100 792 -145 931 -130C1070 -115 1185 -11 1314 29C1442 70 1552 77 1701 112C1850 148 2084 173 2207 242C2330 311 2436 431 2441 526Z"/>
+      <path class="s13-iso s13-iso4" d="M2678 541C2672 646 2542 780 2396 852C2250 924 1965 932 1803 974C1642 1015 1564 1067 1430 1100C1296 1133 1152 1158 999 1170C846 1182 705 1174 513 1172C322 1170 29 1206 -150 1159C-329 1112 -502 991 -560 888C-617 785 -566 642 -498 541C-429 441 -266 356 -148 286C-30 215 109 189 212 118C315 47 341 -89 472 -143C603 -196 836 -220 999 -204C1162 -188 1294 -86 1452 -47C1610 -7 1784 -14 1948 31C2113 75 2316 136 2437 221C2559 306 2685 436 2678 541Z"/>
+      <path class="s13-iso s13-iso5" d="M2779 564C2754 675 2555 799 2408 882C2261 964 2052 1001 1899 1058C1746 1116 1644 1199 1490 1227C1337 1255 1159 1216 979 1228C799 1239 642 1286 413 1298C184 1311 -188 1357 -394 1302C-601 1246 -778 1089 -827 966C-876 843 -803 672 -687 564C-572 455 -272 390 -132 316C7 242 66 208 151 118C235 29 236 -157 374 -222C512 -287 784 -279 979 -271C1174 -262 1353 -206 1544 -170C1735 -134 1957 -117 2127 -53C2296 10 2453 108 2561 211C2670 314 2805 452 2779 564Z"/>
+      </g>
+      <g class="s13-neong">
+      <path class="s13-iso s13-iso1 s13-neon" d="M2127 558C2142 629 2072 721 1993 780C1913 838 1764 880 1648 908C1532 935 1403 924 1295 944C1186 964 1107 1015 997 1028C888 1042 739 1049 637 1026C535 1002 466 934 384 887C303 841 208 802 146 747C84 693 29 625 13 558C-3 491 7 412 50 347C93 282 172 208 271 168C371 128 528 119 649 106C770 93 888 81 997 90C1107 98 1215 128 1306 158C1396 187 1440 233 1539 267C1639 300 1805 308 1903 356C2001 405 2112 487 2127 558Z"/>
+      </g>
+      <g class="s13-comets">
+      <path class="s13-iso s13-iso1 s13-cm" style="--cdur: 5200; --cph: 0" pathLength="1" d="M2127 558C2142 629 2072 721 1993 780C1913 838 1764 880 1648 908C1532 935 1403 924 1295 944C1186 964 1107 1015 997 1028C888 1042 739 1049 637 1026C535 1002 466 934 384 887C303 841 208 802 146 747C84 693 29 625 13 558C-3 491 7 412 50 347C93 282 172 208 271 168C371 128 528 119 649 106C770 93 888 81 997 90C1107 98 1215 128 1306 158C1396 187 1440 233 1539 267C1639 300 1805 308 1903 356C2001 405 2112 487 2127 558Z"/>
+      <path class="s13-iso s13-iso1 s13-cm" style="--cdur: 5200; --cph: 2600" pathLength="1" d="M2127 558C2142 629 2072 721 1993 780C1913 838 1764 880 1648 908C1532 935 1403 924 1295 944C1186 964 1107 1015 997 1028C888 1042 739 1049 637 1026C535 1002 466 934 384 887C303 841 208 802 146 747C84 693 29 625 13 558C-3 491 7 412 50 347C93 282 172 208 271 168C371 128 528 119 649 106C770 93 888 81 997 90C1107 98 1215 128 1306 158C1396 187 1440 233 1539 267C1639 300 1805 308 1903 356C2001 405 2112 487 2127 558Z"/>
+      <path class="s13-iso s13-iso3 s13-cm s13-cmp" style="--cdur: 6800; --cph: 1200" pathLength="1" d="M2441 526C2445 622 2362 750 2234 817C2107 883 1832 896 1676 927C1519 957 1420 968 1296 1000C1172 1031 1064 1101 931 1115C798 1130 653 1103 498 1089C343 1074 148 1071 1 1026C-146 981 -319 902 -383 819C-447 736 -415 617 -385 526C-354 436 -287 345 -197 275C-108 205 39 163 152 107C264 51 349 -21 479 -60C609 -100 792 -145 931 -130C1070 -115 1185 -11 1314 29C1442 70 1552 77 1701 112C1850 148 2084 173 2207 242C2330 311 2436 431 2441 526Z"/>
+      <path class="s13-iso s13-iso4 s13-cm" style="--cdur: 7600; --cph: 4100" pathLength="1" d="M2678 541C2672 646 2542 780 2396 852C2250 924 1965 932 1803 974C1642 1015 1564 1067 1430 1100C1296 1133 1152 1158 999 1170C846 1182 705 1174 513 1172C322 1170 29 1206 -150 1159C-329 1112 -502 991 -560 888C-617 785 -566 642 -498 541C-429 441 -266 356 -148 286C-30 215 109 189 212 118C315 47 341 -89 472 -143C603 -196 836 -220 999 -204C1162 -188 1294 -86 1452 -47C1610 -7 1784 -14 1948 31C2113 75 2316 136 2437 221C2559 306 2685 436 2678 541Z"/>
+      <path class="s13-iso s13-iso2 s13-cm" style="--cdur: 6100; --cph: 3300" pathLength="1" d="M2253 535C2264 619 2193 731 2089 794C1986 857 1772 887 1632 913C1492 940 1368 927 1250 953C1133 979 1048 1053 928 1069C809 1086 656 1072 532 1050C407 1028 294 983 181 937C68 891 -79 841 -146 774C-212 707 -221 614 -217 535C-214 456 -190 369 -127 300C-64 231 50 168 160 122C271 76 408 50 536 26C664 1 806 -37 928 -26C1051 -15 1164 56 1269 93C1375 129 1436 162 1562 195C1687 228 1908 235 2023 291C2138 348 2242 451 2253 535Z"/>
+      </g>
+    </svg>
+  </div>
+  <i class="s13-shade" aria-hidden="true"></i>
+
+  <div class="s13-cam k cam-in" style="--in: 0; --dur: 1900">
+
+    <!-- ====================== quadro de composição (HUD), sai quando a câmera reenquadra ====================== -->
+    <div class="s13-hudwrap kx" style="--out: 4180; --xdur: 420">
+      <svg class="s13-frame" viewBox="0 0 1920 1080" fill="none" aria-hidden="true" style="--stag: 80">
+        <path class="k draw" style="--in: 250; --i: 0; --dur: 650" pathLength="1" d="M300 204V140H364"/>
+        <path class="k draw" style="--in: 250; --i: 1; --dur: 650" pathLength="1" d="M1556 140H1620V204"/>
+        <path class="k draw" style="--in: 250; --i: 2; --dur: 650" pathLength="1" d="M1620 826V890H1556"/>
+      </svg>
+      <p class="s13-hud k fade" style="--in: 450; --dur: 400; left: 324px; top: 156px"><i class="l s13-rec"></i>halor · fecho</p>
+      <p class="s13-hud s13-hudr k fade" style="--in: 520; --dur: 400; right: 324px; top: 156px">halor.app</p>
+      <p class="s13-hud s13-hudr k fade" style="--in: 660; --dur: 400; right: 324px; top: 858px">sem código · sem IA</p>
+      <!-- canto de baixo à esquerda sai antes de a Bia apontar em "prendem" -->
+      <div class="s13-hudbl kx" style="--out: calc(var(--w-prendem) - 320); --xdur: 300">
+        <svg class="s13-frame" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
+          <path class="k draw" style="--in: 490; --dur: 650" pathLength="1" d="M364 890H300V826"/>
+        </svg>
+        <p class="s13-hud k fade" style="--in: 590; --dur: 400; left: 324px; top: 858px">tempo <b>01:5<span class="num-n k counter" style="--n0: 0; --n1: 9; --in: 0; --dur: 9000"></span></b></p>
+      </div>
+    </div>
+
+    <!-- ====================== o selo: símbolo + halor. + frase (reenquadra em "Faça") ====================== -->
+    <div class="s13-hero k s13-reframe" style="--in: 4180; --dur: 760">
+
+      <!-- luz do símbolo: bloom que respira e raios que giram -->
+      <i class="s13-bloom k fade" style="--in: 200; --dur: 1200"><b class="l s13-breath"></b></i>
+      <i class="s13-rayin k s13-rayin" style="--in: var(--w-halor); --dur: 1400"><b class="l s13-rays"></b></i>
+
+      <!-- o símbolo se monta: faísca (cometa) → anel aberto (cabeça de luz) → anel interno → núcleo -->
+      <div class="s13-markbox">
+        <svg class="s13-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="s13-ringo k s13-draw2" style="--in: 560; --dur: 760" pathLength="1" d="M55.56 21.01A26 26 0 1 1 42.99 8.44" fill="none" stroke="url(#hl-g-ring)" stroke-width="5.5" stroke-linecap="round"/>
+          <g transform="rotate(150 32 32)"><circle class="k s13-draw" style="--in: 760; --dur: 620" pathLength="1" cx="32" cy="32" r="16.5" fill="none" stroke="url(#hl-g-ring)" stroke-width="1.6" opacity=".6"/></g>
+          <circle class="s13-cflash k s13-cflash" style="--in: var(--w-halor); --dur: 560" cx="32" cy="32" r="15" fill="#fff"/>
+          <g class="s13-iris k s13-iris" style="--in: var(--w-olhar); --dur: 700">
+            <circle class="s13-core k pop" style="--in: var(--w-halor); --dur: 560" cx="32" cy="32" r="8.5" fill="url(#hl-g-core)"/>
+          </g>
+          <circle class="s13-glint k pop" style="--in: var(--w-olhar); --dur: 420" cx="29" cy="29" r="2.1" fill="#fff"/>
+        </svg>
+        <i class="s13-head k s13-orbit" style="--in: 560; --dur: 760"></i>
+        <i class="s13-head s13-head2 k s13-orbit2" style="--in: 760; --dur: 620"></i>
+      </div>
+      <!-- faísca: entra como cometa do alto à direita, pousa com flare e fica cintilando -->
+      <div class="s13-spk" style="left: 1035px; top: 205px">
+        <div class="k s13-flyin" style="--in: 120; --dur: 520">
+          <i class="s13-trail k s13-trail" style="--in: 120; --dur: 820"></i>
+          <div class="l s13-twinkle" style="--ldur: 2600; --lph: 300">
+            <svg class="s13-spks" viewBox="43.2 6.4 14.4 14.4" aria-hidden="true"><path d="M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z" fill="#fff"/></svg>
+          </div>
+        </div>
+        <svg class="s13-flare k s13-flare" style="--in: 600; --dur: 700" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-spark"/></svg>
+        <i class="s13-ping k s13-ping" style="--in: 600; --dur: 600"></i>
+      </div>
+      <!-- núcleo acende em "Halor": onda de choque dupla -->
+      <i class="ring k ring-x" style="--in: var(--w-halor); --dur: 1000; left: 960px; top: 280px"></i>
+      <i class="ring s13-ringbig k ring-x" style="--in: calc(var(--w-halor) + 120); --dur: 1300; left: 960px; top: 280px"></i>
+      <!-- "prendem o olhar": o símbolo pulsa como um olho (Pulse / Beacon) -->
+      <i class="s13-bcn k s13-bcn" style="--in: var(--w-olhar); --dur: 1100; left: 960px; top: 280px"></i>
+      <i class="s13-bcn k s13-bcn" style="--in: calc(var(--w-olhar) + 260); --dur: 1100; left: 960px; top: 280px"></i>
+      <div class="s13-beat k fade" style="--in: 6400; --dur: 500"><b class="l s13-beatl" style="--lph: 6600"></b><b class="l s13-beatl" style="--lph: 7900"></b></div>
+
+      <!-- "halor.": letra a letra por máscara, varredura de luz e reflexo anamórfico -->
+      <i class="s13-wglow k fade" style="--in: calc(var(--w-halor) + 150); --dur: 900"></i>
+      <h2 class="s13-word" style="--stag: 62"><span class="s13-wbox"><span class="s13-m k s13-clip" style="--in: var(--w-halor); --i: 0; --dur: 720"><span class="s13-ch k s13-rise">h</span></span><span class="s13-m k s13-clip" style="--in: var(--w-halor); --i: 1; --dur: 720"><span class="s13-ch k s13-rise">a</span></span><span class="s13-m k s13-clip" style="--in: var(--w-halor); --i: 2; --dur: 720"><span class="s13-ch k s13-rise">l</span></span><span class="s13-m k s13-clip" style="--in: var(--w-halor); --i: 3; --dur: 720"><span class="s13-ch k s13-rise">o</span></span><span class="s13-m k s13-clip" style="--in: var(--w-halor); --i: 4; --dur: 720"><span class="s13-ch k s13-rise">r</span></span><span class="s13-dot k s13-dotin" style="--in: calc(var(--w-halor) + 340); --dur: 520">.</span><span class="s13-hot k s13-sweep" style="--in: calc(var(--w-halor) + 470); --dur: 1150" aria-hidden="true"><span>h</span><span>a</span><span>l</span><span>o</span><span>r</span><span>.</span></span></span></h2>
+      <i class="s13-streak k s13-streak" style="--in: calc(var(--w-halor) + 470); --dur: 1150"></i>
+      <i class="s13-ln s13-lnl k grow-x" style="--in: calc(var(--w-halor) + 420); --dur: 800; left: 330px; width: 330px"></i>
+      <i class="s13-ln k grow-x" style="--in: calc(var(--w-halor) + 420); --dur: 800; left: 1260px; width: 330px"></i>
+      <i class="mg-dot k pop" style="--in: calc(var(--w-halor) + 380); --dur: 400; left: 660px; top: 512px"></i>
+      <i class="mg-dot k pop" style="--in: calc(var(--w-halor) + 380); --dur: 400; left: 1260px; top: 512px"></i>
+
+      <!-- 11 · Animated Typography: a frase entra no tempo de cada palavra -->
+      <p class="s13-tag k s13-tagup" style="--in: 4180; --dur: 760">
+        <span class="s13-m k s13-clip" style="--in: var(--w-apresentacoes); --dur: 560"><span class="wd k s13-rise">Apresentações</span></span>
+        <span class="s13-lud"><span class="s13-m k s13-clip" style="--in: var(--w-ludicas); --dur: 560"><span class="wd k s13-rise"><span class="s13-ludw k s13-boing" style="--in: calc(var(--w-ludicas) + 260); --dur: 700">lúdicas</span></span></span></span>
+        <span class="s13-m k s13-clip" style="--in: var(--w-que); --dur: 520"><span class="wd k s13-rise">que</span></span>
+        <span class="s13-hl"><span class="s13-m k s13-clip" style="--in: var(--w-prendem); --dur: 520"><span class="wd k s13-rise">prendem</span></span> <span class="s13-m k s13-clip" style="--in: var(--w-o); --dur: 480"><span class="wd k s13-rise">o</span></span> <span class="s13-m k s13-clip" style="--in: var(--w-olhar); --dur: 520"><span class="wd k s13-rise">olhar.</span></span><i class="s13-ul k s13-ul" style="--in: var(--w-prendem); --dur: 860"></i></span>
+      </p>
+    </div>
+
+    <!-- ====================== "Faça cada olhar render." ====================== -->
+    <i class="s13-sloglow k s13-glowin" style="--in: var(--w-olhar2); --dur: 900"></i>
+    <h2 class="s13-slo">
+      <span class="s13-m k s13-clip" style="--in: var(--w-faca); --dur: 640"><span class="wd k s13-drop">Faça</span></span>
+      <span class="s13-m k s13-clip" style="--in: var(--w-cada); --dur: 600"><span class="wd k s13-drop">cada</span></span>
+      <span class="s13-lux"><span class="s13-m k s13-clip" style="--in: var(--w-olhar2); --dur: 600"><span class="wd k s13-drop"><span class="s13-luxw">olhar</span></span></span> <span class="wd k s13-mater" style="--in: var(--w-render); --dur: 620"><span class="s13-luxw s13-rend k s13-ignite" style="--in: calc(var(--w-render) + 80); --dur: 1000">render.</span></span><span class="s13-luxhot k s13-sweep" style="--in: calc(var(--w-render-end) + 60); --dur: 1100" aria-hidden="true"><span class="wd">olhar</span> <span class="wd">render.</span></span></span>
+    </h2>
+
+    <!-- ====================== 25 · Magnetic Button + 20 · Ripple ====================== -->
+    <div class="s13-mag kx" style="--out: 5960; --xdur: 380"><i class="k s13-magin" style="--in: 5200; --dur: 400"></i><i class="s13-mag2 k s13-magin" style="--in: 5290; --dur: 400"></i></div>
+    <div class="s13-btnpos k s13-btnin" style="--in: var(--w-cada); --dur: 620">
+      <!-- atração em dois tempos (o cursor chega por baixo e depois pousa no terço direito), mola com sobressinal ao clicar -->
+      <div class="k move-xy" style="--in: 5300; --dur: 300; --dx: 16px; --dy: 9px">
+        <div class="k move-xy" style="--in: 5450; --dur: 300; --dx: 12px; --dy: -2px">
+          <div class="k s13-spring" style="--in: 5780; --dur: 620; --dx: -28px; --dy: -7px">
+            <div class="k s13-stretch" style="--in: 5300; --dur: 1100">
+              <div class="s13-btn k s13-press" style="--in: calc(var(--w-render) - 70); --dur: 300">
+                <i class="s13-btnflash k s13-btnflash" style="--in: var(--w-render); --dur: 900"></i>
+                <i class="s13-rip k s13-rip" style="--in: var(--w-render); --dur: 760; left: 356px; top: 53px"></i>
+                <i class="s13-sheen l s13-sheen" style="--lph: 900"></i>
+                <span class="s13-btnl">
+                  <span class="k move-xy" style="--in: 5300; --dur: 300; --dx: 10px; --dy: 5px"><span class="k move-xy" style="--in: 5450; --dur: 300; --dx: 4px; --dy: -1px"><span class="k s13-spring" style="--in: 5780; --dur: 620; --dx: -14px; --dy: -4px"><span class="s13-btnt">Começar grátis</span><i class="s13-btna"><svg class="l s13-nudge" style="--lph: 200" viewBox="0 0 24 24"><use href="#i-arrow"/></svg></i></span></span></span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 30 · Particle System: a explosão de luz nasce no ponto do clique -->
+    <i class="s13-bloomc k s13-bloomc" style="--in: var(--w-render); --dur: 1100; left: 1050px; top: 718px"></i>
+    <div class="s13-rays2" style="left: 1135px; top: 722px">
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 45); --dur: 671; --a: 7deg; --r: 281px; width: 160px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 42); --dur: 629; --a: 32deg; --r: 94px; width: 106px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 32); --dur: 509; --a: 47deg; --r: 96px; width: 112px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 17); --dur: 567; --a: 70deg; --r: 92px; width: 96px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 47); --dur: 629; --a: 99deg; --r: 97px; width: 115px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 39); --dur: 564; --a: 122deg; --r: 79px; width: 118px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 28); --dur: 643; --a: 150deg; --r: 98px; width: 96px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 10); --dur: 675; --a: 174deg; --r: 276px; width: 176px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 9); --dur: 698; --a: 206deg; --r: 183px; width: 205px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 36); --dur: 607; --a: 224deg; --r: 271px; width: 181px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 29); --dur: 654; --a: 255deg; --r: 258px; width: 158px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 27); --dur: 545; --a: 288deg; --r: 179px; width: 196px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 47); --dur: 497; --a: 306deg; --r: 221px; width: 156px"></i>
+      <i class="k s13-shoot" style="--in: calc(var(--w-render) + 25); --dur: 486; --a: 331deg; --r: 181px; width: 144px"></i>
+    </div>
+    <div class="s13-burstbox" style="left: 1135px; top: 722px">
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 25); --dur: 1482; --dx: 742px; --dy: 47px; --rot: 173deg; width: 12px; height: 12px; margin: -6px 0 0 -6px; --c: #ffffff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 33); --dur: 1477; --dx: 567px; --dy: 80px; --rot: 166deg; width: 8px; height: 8px; margin: -4px 0 0 -4px; --c: #c9a6ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 10); --dur: 1188; --dx: 400px; --dy: 59px; --rot: 205deg; width: 21px; height: 21px; margin: -10px 0 0 -10px; --c: #a970ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 65); --dur: 1163; --dx: 513px; --dy: 66px; --rot: 210deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #f4eeff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 43); --dur: 1258; --dx: 400px; --dy: 86px; --rot: 89deg; width: 13px; height: 13px; margin: -7px 0 0 -7px; --c: #ff9ad5"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 69); --dur: 1243; --dx: 631px; --dy: 119px; --rot: 243deg; width: 24px; height: 24px; margin: -12px 0 0 -12px; --c: #c9a6ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 39); --dur: 1161; --dx: 413px; --dy: 109px; --rot: 14deg; width: 11px; height: 11px; margin: -5px 0 0 -5px; --c: #ffffff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 66); --dur: 1153; --dx: 352px; --dy: 107px; --rot: 41deg; width: 11px; height: 11px; margin: -5px 0 0 -5px; --c: #f7bd55"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 60); --dur: 1113; --dx: 279px; --dy: 126px; --rot: -243deg; width: 18px; height: 18px; margin: -9px 0 0 -9px; --c: #ffffff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 41); --dur: 1221; --dx: 191px; --dy: 129px; --rot: -157deg; width: 17px; height: 17px; margin: -9px 0 0 -9px; --c: #c9a6ff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 23); --dur: 1112; --dx: 266px; --dy: 170px; --rot: -99deg; width: 15px; height: 15px; margin: -7px 0 0 -7px; --c: #a970ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 10); --dur: 1412; --dx: 124px; --dy: 138px; --rot: -250deg; width: 25px; height: 25px; margin: -12px 0 0 -12px; --c: #f4eeff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 69); --dur: 1285; --dx: 69px; --dy: 164px; --rot: 178deg; width: 14px; height: 14px; margin: -7px 0 0 -7px; --c: #ff9ad5"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 26); --dur: 1157; --dx: -48px; --dy: 187px; --rot: 76deg; width: 11px; height: 11px; margin: -6px 0 0 -6px; --c: #c9a6ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 9); --dur: 1298; --dx: -46px; --dy: 143px; --rot: -194deg; width: 19px; height: 19px; margin: -9px 0 0 -9px; --c: #ffffff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 65); --dur: 1436; --dx: -185px; --dy: 157px; --rot: 160deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #f7bd55"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 61); --dur: 1226; --dx: -141px; --dy: 130px; --rot: 162deg; width: 15px; height: 15px; margin: -7px 0 0 -7px; --c: #ffffff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 48); --dur: 1147; --dx: -210px; --dy: 131px; --rot: 30deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #c9a6ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 55); --dur: 1238; --dx: -174px; --dy: 118px; --rot: -228deg; width: 9px; height: 9px; margin: -4px 0 0 -4px; --c: #a970ff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 69); --dur: 1225; --dx: -354px; --dy: 124px; --rot: -174deg; width: 13px; height: 13px; margin: -6px 0 0 -6px; --c: #f4eeff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 16); --dur: 1209; --dx: -272px; --dy: 75px; --rot: 32deg; width: 18px; height: 18px; margin: -9px 0 0 -9px; --c: #ff9ad5" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 62); --dur: 1197; --dx: -356px; --dy: 80px; --rot: -112deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #c9a6ff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 1); --dur: 1094; --dx: -613px; --dy: 115px; --rot: -29deg; width: 9px; height: 9px; margin: -5px 0 0 -5px; --c: #ffffff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 61); --dur: 1233; --dx: -595px; --dy: 72px; --rot: 253deg; width: 22px; height: 22px; margin: -11px 0 0 -11px; --c: #f7bd55" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 8); --dur: 1053; --dx: -402px; --dy: 53px; --rot: -237deg; width: 13px; height: 13px; margin: -6px 0 0 -6px; --c: #ffffff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 24); --dur: 1052; --dx: -646px; --dy: 72px; --rot: 67deg; width: 11px; height: 11px; margin: -6px 0 0 -6px; --c: #c9a6ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 51); --dur: 1448; --dx: -591px; --dy: 102px; --rot: 124deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #a970ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 22); --dur: 1064; --dx: -573px; --dy: 31px; --rot: 50deg; width: 18px; height: 18px; margin: -9px 0 0 -9px; --c: #f4eeff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 65); --dur: 1103; --dx: -657px; --dy: -17px; --rot: 90deg; width: 13px; height: 13px; margin: -6px 0 0 -6px; --c: #ff9ad5"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 36); --dur: 1324; --dx: -431px; --dy: -36px; --rot: 124deg; width: 24px; height: 24px; margin: -12px 0 0 -12px; --c: #c9a6ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 37); --dur: 1090; --dx: -450px; --dy: -129px; --rot: -14deg; width: 8px; height: 8px; margin: -4px 0 0 -4px; --c: #ffffff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 40); --dur: 1074; --dx: -322px; --dy: -86px; --rot: -152deg; width: 14px; height: 14px; margin: -7px 0 0 -7px; --c: #f7bd55"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 42); --dur: 1172; --dx: -218px; --dy: -43px; --rot: 250deg; width: 19px; height: 19px; margin: -9px 0 0 -9px; --c: #ffffff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 22); --dur: 1226; --dx: -257px; --dy: -135px; --rot: -189deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #c9a6ff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 56); --dur: 1302; --dx: -153px; --dy: -73px; --rot: 252deg; width: 13px; height: 13px; margin: -6px 0 0 -6px; --c: #a970ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 24); --dur: 1192; --dx: -138px; --dy: -148px; --rot: -89deg; width: 21px; height: 21px; margin: -10px 0 0 -10px; --c: #f4eeff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 48); --dur: 1286; --dx: -228px; --dy: -291px; --rot: -239deg; width: 9px; height: 9px; margin: -4px 0 0 -4px; --c: #ff9ad5"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 27); --dur: 1191; --dx: -62px; --dy: -206px; --rot: -96deg; width: 9px; height: 9px; margin: -4px 0 0 -4px; --c: #c9a6ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 40); --dur: 1171; --dx: -47px; --dy: -140px; --rot: -82deg; width: 16px; height: 16px; margin: -8px 0 0 -8px; --c: #ffffff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 69); --dur: 1333; --dx: 18px; --dy: -389px; --rot: -100deg; width: 21px; height: 21px; margin: -10px 0 0 -10px; --c: #f7bd55"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 7); --dur: 1111; --dx: 11px; --dy: -98px; --rot: 1deg; width: 13px; height: 13px; margin: -7px 0 0 -7px; --c: #ffffff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 38); --dur: 1147; --dx: 80px; --dy: -119px; --rot: 119deg; width: 18px; height: 18px; margin: -9px 0 0 -9px; --c: #c9a6ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 32); --dur: 1076; --dx: 117px; --dy: -133px; --rot: 84deg; width: 8px; height: 8px; margin: -4px 0 0 -4px; --c: #a970ff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 33); --dur: 1308; --dx: 130px; --dy: -109px; --rot: 232deg; width: 9px; height: 9px; margin: -5px 0 0 -5px; --c: #f4eeff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 56); --dur: 1297; --dx: 283px; --dy: -237px; --rot: -170deg; width: 20px; height: 20px; margin: -10px 0 0 -10px; --c: #ff9ad5" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 46); --dur: 1246; --dx: 381px; --dy: -182px; --rot: -139deg; width: 19px; height: 19px; margin: -9px 0 0 -9px; --c: #c9a6ff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 40); --dur: 1151; --dx: 377px; --dy: -218px; --rot: 84deg; width: 11px; height: 11px; margin: -5px 0 0 -5px; --c: #ffffff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 64); --dur: 1097; --dx: 347px; --dy: -70px; --rot: 153deg; width: 17px; height: 17px; margin: -8px 0 0 -8px; --c: #f7bd55" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 48); --dur: 1271; --dx: 623px; --dy: -156px; --rot: 45deg; width: 13px; height: 13px; margin: -6px 0 0 -6px; --c: #ffffff"></i>
+      <i class="s13-bp k s13-burst" style="--in: calc(var(--w-render) + 48); --dur: 1285; --dx: 420px; --dy: -19px; --rot: 110deg; width: 12px; height: 12px; margin: -6px 0 0 -6px; --c: #c9a6ff"></i>
+      <svg class="s13-bp s13-bps k s13-burst" style="--in: calc(var(--w-render) + 44); --dur: 1293; --dx: 427px; --dy: -62px; --rot: 99deg; width: 19px; height: 19px; margin: -10px 0 0 -10px; --c: #a970ff" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+      <i class="s13-bp s13-bpr k s13-burst" style="--in: calc(var(--w-render) + 68); --dur: 1473; --dx: 348px; --dy: 36px; --rot: 77deg; width: 21px; height: 21px; margin: -10px 0 0 -10px; --c: #f4eeff"></i>
+    </div>
+    <i class="ring s13-btnring k ring-x" style="--in: calc(var(--w-render) + 40); --dur: 1000; left: 1000px; top: 716px"></i>
+    <i class="click k" style="--in: var(--w-render); left: 1135px; top: 722px"></i>
+
+    <!-- cursor com halo: chega em arco por baixo, atrai o botão, pousa no terço direito, clica em "render" e sai do quadro -->
+    <div class="s13-curpos kx" style="--out: 6150; --xdur: 360; left: 1330px; top: 942px">
+      <div class="k fade" style="--in: var(--w-cada); --dur: 240">
+        <div class="k move-xy" style="--in: var(--w-cada); --dur: 380; --dx: -180px; --dy: -142px">
+          <div class="k move-xy" style="--in: 5300; --dur: 340; --dx: -15px; --dy: -78px">
+            <div class="k move-xy" style="--in: 5900; --dur: 420; --dx: 130px; --dy: 110px">
+              <svg class="gcur k s13-cpress" style="--in: calc(var(--w-render) - 90); --dur: 280; left: -3px; top: -2px" viewBox="0 0 34 44" aria-hidden="true"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================== pílulas e endereço ====================== -->
+    <div class="s13-pills" style="--stag: 120">
+      <span class="s13-pill k s13-pillin" style="--in: calc(var(--w-render-end) - 120); --i: 0"><i class="s13-ok"><svg class="k icon-in" style="--in: calc(var(--w-render-end) + 40); --i: 0; --dur: 380" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Sem código</span>
+      <span class="s13-pill k s13-pillin" style="--in: calc(var(--w-render-end) - 120); --i: 1"><i class="s13-ok"><svg class="k icon-in" style="--in: calc(var(--w-render-end) + 40); --i: 1; --dur: 380" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Sem precisar de IA</span>
+      <span class="s13-pill k s13-pillin" style="--in: calc(var(--w-render-end) - 120); --i: 2"><i class="s13-ok"><svg class="k icon-in" style="--in: calc(var(--w-render-end) + 40); --i: 2; --dur: 380" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Abre em qualquer navegador</span>
+    </div>
+    <div class="s13-url k s13-pillin" style="--in: calc(var(--w-render-end) + 300); --dur: 560">
+      <svg class="s13-urli" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-link"/></svg><span>halor<em>.app</em></span>
+    </div>
+
+    <!-- confete de luz pelo quadro -->
+    <svg class="s13-tw k s13-tw" style="--in: 5724; --dur: 900; left: 358px; top: 293px; width: 18px; height: 18px; margin: -9px 0 0 -9px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw s13-twp k s13-tw" style="--in: 5841; --dur: 900; left: 498px; top: 193px; width: 22px; height: 22px; margin: -11px 0 0 -11px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 5923; --dur: 900; left: 1403px; top: 192px; width: 22px; height: 22px; margin: -11px 0 0 -11px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 5939; --dur: 900; left: 1592px; top: 312px; width: 30px; height: 30px; margin: -15px 0 0 -15px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 5981; --dur: 900; left: 322px; top: 559px; width: 29px; height: 29px; margin: -14px 0 0 -14px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw s13-twp k s13-tw" style="--in: 6031; --dur: 900; left: 1638px; top: 575px; width: 34px; height: 34px; margin: -17px 0 0 -17px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6092; --dur: 900; left: 409px; top: 426px; width: 26px; height: 26px; margin: -13px 0 0 -13px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6184; --dur: 900; left: 1479px; top: 439px; width: 22px; height: 22px; margin: -11px 0 0 -11px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6280; --dur: 900; left: 715px; top: 125px; width: 27px; height: 27px; margin: -14px 0 0 -14px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw s13-twp k s13-tw" style="--in: 6278; --dur: 900; left: 1226px; top: 139px; width: 25px; height: 25px; margin: -12px 0 0 -12px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6382; --dur: 900; left: 242px; top: 749px; width: 32px; height: 32px; margin: -16px 0 0 -16px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6410; --dur: 900; left: 1674px; top: 769px; width: 21px; height: 21px; margin: -10px 0 0 -10px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6517; --dur: 900; left: 568px; top: 651px; width: 21px; height: 21px; margin: -11px 0 0 -11px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw s13-twp k s13-tw" style="--in: 6591; --dur: 900; left: 1342px; top: 646px; width: 21px; height: 21px; margin: -10px 0 0 -10px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6595; --dur: 900; left: 638px; top: 880px; width: 30px; height: 30px; margin: -15px 0 0 -15px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6655; --dur: 900; left: 1310px; top: 891px; width: 23px; height: 23px; margin: -11px 0 0 -11px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw k s13-tw" style="--in: 6759; --dur: 900; left: 170px; top: 406px; width: 23px; height: 23px; margin: -12px 0 0 -12px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="s13-tw s13-twp k s13-tw" style="--in: 6791; --dur: 900; left: 1783px; top: 416px; width: 26px; height: 26px; margin: -13px 0 0 -13px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <!-- faíscas que ficam no pôster -->
+    <div class="s13-stay k fade" style="--in: 6300; --dur: 600; left: 368px; top: 500px"><svg class="s13-st l twinkle" style="--ldur: 2200; --lph: 0" viewBox="0 0 24 24"><use href="#i-spark"/></svg></div>
+    <div class="s13-stay k fade" style="--in: 6400; --dur: 600; left: 1556px; top: 470px"><svg class="s13-st s13-stp l twinkle" style="--ldur: 2600; --lph: 900" viewBox="0 0 24 24"><use href="#i-spark"/></svg></div>
+    <div class="s13-stay k fade" style="--in: 6500; --dur: 600; left: 1250px; top: 168px"><svg class="s13-st s13-sts l twinkle" style="--ldur: 1900; --lph: 400" viewBox="0 0 24 24"><use href="#i-spark"/></svg></div>
+
+    <!-- ====================== Bia e Cliente comemoram ====================== -->
+    <div class="bia" data-pose="look-up" data-face="wow" data-props="clicker" data-keys="@halor:pose=present,face=proud;@ludicas:pose=jump,face=laugh;@ludicas+420:pose=idle,face=happy;@prendem:pose=point-right,face=wink;@olhar+380:pose=idle,face=happy;@faca:pose=present,face=happy;@render:pose=celebrate,face=laugh,dur=260,ease=spark;@render+820:pose=wave,face=happy" style="--x: 170px; --y: 968px; --s: .85"></div>
+    <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-keys="@halor:pose=look-up,face=wow;@ludicas:pose=idle,face=laugh;@prendem:pose=look-up,face=focus;@faca:pose=point-left,face=happy;@render:pose=cheer,face=laugh,dur=260,ease=spark;@render+820:pose=hands-hips,face=proud" style="--x: 1750px; --y: 968px; --s: .85"></div>
+  </div>
 </section>

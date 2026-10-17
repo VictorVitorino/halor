@@ -1,3 +1,230 @@
-<!-- CENA 10 · v4 (em produção) -->
+<!-- CENA 10 · v4 · Como prendemos o olhar (lavanda) · "É aí que entra o olhar Halor: luz no que importa, movimento com propósito e a plateia participando."
+     Três pilares que nascem na palavra, cada um demonstrado ao vivo num palco escuro: Spotlight/Glow · Chart Build + Flow Line · votação ao vivo + Heatmap.
+     Câmera diretora: em "luz" aproxima (1,2×) o card 01, em "movimento" e "plateia" faz pan até o card seguinte, em 6760 recua para o tríptico. -->
 <section class="scene s10" id="s10" data-world="paper">
+  <div class="cam s10-cam k cam-in" style="--in: 0; --dur: 1500">
+
+    <!-- luz ambiente atrás do título -->
+    <i class="s10-aura k fade" style="--in: 300; --dur: 1200"></i>
+
+    <!-- sobretítulo de abertura -->
+    <div class="kx" style="--out: calc(var(--w-luz) - 260); --xdur: 300; left: 0; top: 0">
+      <p class="s10-eyebrow k up" style="--in: 120; --dur: 600">atenção se desenha</p>
+    </div>
+
+    <!-- linhas de motion graphics que entram e miram o centro -->
+    <div class="kx" style="--out: calc(var(--w-luz) - 260); --xdur: 300; left: 0; top: 0">
+      <i class="mg-line k grow-x" style="--in: var(--w-entra); --dur: 520; left: 40px; top: 469px; width: 236px"></i>
+      <i class="mg-line k grow-x" style="--in: var(--w-entra); --dur: 520; left: 1644px; top: 469px; width: 236px; transform-origin: right center"></i>
+      <i class="mg-dot k pop" style="--in: calc(var(--w-entra) + 420); --dur: 300; left: 276px; top: 470px"></i>
+      <i class="mg-dot k pop" style="--in: calc(var(--w-entra) + 420); --dur: 300; left: 1644px; top: 470px"></i>
+    </div>
+
+    <div class="kx" style="--out: calc(var(--w-olhar) - 60); --xdur: 260; left: 0; top: 0">
+      <i class="s10-seed k pop" style="--in: var(--w-e); --dur: 420; left: 533px; top: 470px"></i>
+      <i class="beacon k fade" style="--in: var(--w-e); --dur: 200; left: 533px; top: 470px"><b class="l beat" style="--lph: 120"></b><b class="l beat" style="--lph: 820"></b></i>
+    </div>
+    <!-- retículo: entra girando em "aí" e, antes de "olhar", colapsa para a pupila (o olho nasce dele) -->
+    <div class="s10-retx k s10-ret-out" style="--in: calc(var(--w-olhar) - 160); --dur: 320; left: 443px; top: 380px">
+      <div class="s10-retw k s10-ret-in" style="--in: var(--w-ai); --dur: 600">
+        <svg class="s10-ret l spin" style="--ldur: 6000" viewBox="0 0 180 180" aria-hidden="true"><circle cx="90" cy="90" r="80" fill="none" stroke="#8b3dff" stroke-width="3" stroke-dasharray="10 14" opacity=".7"/><path d="M90 0v22M90 158v22M0 90h22M158 90h22" stroke="#6421d1" stroke-width="4" stroke-linecap="round"/></svg>
+      </div>
+    </div>
+
+    <!-- HERÓI: olho (Icon Motion) + "O olhar Halor"; em "luz" sobe e vira o cabeçalho da cena -->
+    <div class="s10-hero k s10-hero-up" style="--in: calc(var(--w-luz) - 240); --dur: 680">
+      <i class="s10-plate k fade" style="--in: calc(var(--w-luz) - 160); --dur: 500"></i>
+      <div class="s10-focus k s10-focus-in" style="--in: var(--w-entra); --dur: 700">
+        <i class="s10-cn tl"></i><i class="s10-cn tr"></i><i class="s10-cn bl"></i><i class="s10-cn br"></i>
+      </div>
+      <div class="s10-eyewrap k glow" style="--in: var(--w-halor); --dur: 500">
+        <div class="s10-blink l">
+          <svg class="s10-eye" viewBox="0 0 140 90" aria-hidden="true">
+            <g class="k icon-in" style="--in: var(--w-olhar); --dur: 700">
+              <path d="M8 46C36 10 104 10 132 46C104 82 36 82 8 46Z" pathLength="1" fill="none" stroke="url(#hl-g-ring-paper)" stroke-width="6" stroke-linejoin="round"/>
+              <path d="M40 17L33 5M70 10V-3M100 17L107 5" pathLength="1" fill="none" stroke="#6421d1" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="70" cy="46" r="23" pathLength="1" fill="none" stroke="#8b3dff" stroke-width="5"/>
+            </g>
+            <g class="s10-gaze l">
+              <circle class="k pop" style="--in: calc(var(--w-olhar) + 380); --dur: 380" cx="70" cy="46" r="11" fill="#17112b"/>
+            </g>
+            <g class="k s10-mark-in" style="--in: var(--w-halor); --dur: 600">
+              <circle cx="70" cy="46" r="21" fill="#fff"/>
+              <use href="#hl-mark-paper" x="49" y="25" width="42" height="42"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <i class="ring k ring-x" style="--in: var(--w-halor); --dur: 900; left: 243px; top: 125px"></i>
+      <svg class="spark k pop" style="--in: calc(var(--w-halor) + 120); left: 326px; top: 26px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+      <svg class="spark k pop" style="--in: calc(var(--w-halor) + 260); left: 114px; top: 176px; width: 26px; height: 26px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 500" href="#i-spark"/></svg>
+      <h2 class="s10-title"><span class="wd k mask-up" style="--in: var(--w-o); --dur: 520">O</span> <span class="wd k mask-up" style="--in: var(--w-olhar); --dur: 520">olhar</span> <span class="wd k mask-up" style="--in: var(--w-halor); --dur: 560"><span class="s10-hal k s10-txtsweep" style="--in: calc(var(--w-halor) + 260); --dur: 1100">Halor</span></span></h2>
+    </div>
+
+    <!-- etiqueta dos números de exemplo (fica fora da câmera: sempre no mesmo lugar da tela) -->
+    <span class="s10-sim k pop" style="--in: calc(var(--w-luz) + 360); --dur: 420"><b>i</b>simulação ilustrativa</span>
+
+    <!-- ===================== CÂMERA DIRETORA (zoom em volta de 960,590 + pans) ===================== -->
+    <div class="s10-dir k s10-zin" style="--in: var(--w-luz); --dur: 760">
+    <div class="s10-dir k s10-zout" style="--in: 6760; --dur: 800">
+    <div class="s10-dir k move-xy" style="--in: var(--w-luz); --dur: 760; --dx: 324.67px; --dy: 12px">
+    <div class="s10-dir k move-xy" style="--in: var(--w-movimento); --dur: 640; --dx: -324.67px; --dy: 0px">
+    <div class="s10-dir k move-xy" style="--in: var(--w-plateia); --dur: 640; --dx: -324.67px; --dy: 0px">
+    <div class="s10-dir k move-xy" style="--in: 6760; --dur: 800; --dx: 324.67px; --dy: -12px">
+
+    <!-- slots fantasma: o que vem a seguir, já marcado no palco; viram os cards na palavra -->
+    <div class="s10-ghost kx" style="--out: var(--w-movimento); --xdur: 260; left: 748px; top: 296px">
+      <div class="k fade" style="--in: calc(var(--w-luz) + 240); --dur: 500"><b>02</b><span>Movimento</span></div>
+    </div>
+    <div class="s10-ghost kx" style="--out: var(--w-plateia); --xdur: 260; left: 1206px; top: 296px">
+      <div class="k fade" style="--in: calc(var(--w-luz) + 360); --dur: 500"><b>03</b><span>Plateia</span></div>
+    </div>
+
+    <!-- ============ PILAR 1 · LUZ (Spotlight / Focus + Glow) ============ -->
+    <div class="s10-cardw k s10-rise" style="--in: var(--w-luz); --dur: 700; left: 290px; top: 296px">
+      <div class="s10-card">
+        <div class="s10-ch"><b>01</b><span>Luz</span><em><i class="l pulse"></i>ao vivo</em></div>
+        <div class="s10-stage s10-paper">
+          <p class="s10-sk">Resultados do T3</p>
+          <p class="s10-st">Receita bate a meta</p>
+          <div class="s10-tile" style="left: 22px"><b>4,2 mi</b><span>receita</span></div>
+          <div class="s10-tile key" style="left: 140px"><b>+32%</b><span>vs T2</span></div>
+          <div class="s10-tile" style="left: 258px"><b>87%</b><span>no prazo</span></div>
+          <div class="s10-lines"><i style="width: 168px"></i><i style="width: 140px"></i><i style="width: 152px"></i></div>
+          <div class="s10-mb"><i style="--v: .36"></i><i style="--v: .5"></i><i style="--v: .44"></i><i style="--v: .7"></i><i class="hot" style="--v: .96"></i></div>
+          <!-- véu do spotlight: entra sobre o título e desliza para o número que importa; depois respira (deriva lenta) -->
+          <div class="s10-veil k fade" style="--in: calc(var(--w-luz) + 250); --dur: 360">
+            <div class="s10-spotw l" style="--ldur: 3200"><i class="s10-spot k s10-spot-go" style="--in: calc(var(--w-importa) + 150); --dur: 520"></i></div>
+          </div>
+          <!-- o número acende: brilho, varredura de luz e pulso contínuo -->
+          <div class="s10-hotw">
+            <div class="s10-hotp l" style="--ldur: 2200; --lph: 400">
+              <div class="s10-hot k fade" style="--in: calc(var(--w-importa) + 420); --dur: 300">
+                <b>+32%</b><span>vs T2</span>
+                <i class="s10-shine k sweep-x" style="--in: calc(var(--w-importa) + 560); --dur: 900"></i>
+                <i class="s10-shine l s10-sweepl" style="--ldur: 2000; --lph: 320"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="s10-cf"><span>Spotlight</span><span>Glow</span><small>o resto apaga · o número acende</small></div>
+        <i class="s10-cshine k sweep-x" style="--in: calc(var(--w-luz) + 200); --dur: 1000"></i>
+      </div>
+    </div>
+
+    <!-- ============ PILAR 2 · MOVIMENTO (Chart Build + Connector / Flow Line) ============ -->
+    <div class="s10-cardw k s10-rise" style="--in: var(--w-movimento); --dur: 450; left: 748px; top: 296px">
+      <div class="s10-card">
+        <div class="s10-ch"><b>02</b><span>Movimento</span><em><i class="l pulse"></i>ao vivo</em></div>
+        <div class="s10-stage s10-dark">
+          <p class="s10-sk">Roadmap 2027</p>
+          <p class="s10-st">Quatro ondas de valor</p>
+          <div class="s10-bars" style="--stag: 80">
+            <i class="k grow-y" style="--in: calc(var(--w-movimento) + 360); --i: 0; --dur: 480; left: 26px; height: 52px"><em>+8%</em></i>
+            <i class="k grow-y" style="--in: calc(var(--w-movimento) + 360); --i: 1; --dur: 480; left: 82px; height: 82px"><em>+15%</em></i>
+            <i class="k grow-y" style="--in: calc(var(--w-movimento) + 360); --i: 2; --dur: 480; left: 138px; height: 112px"><em>+24%</em></i>
+            <i class="hot k grow-y" style="--in: calc(var(--w-movimento) + 360); --i: 3; --dur: 560; left: 194px; height: 166px"></i>
+          </div>
+          <p class="s10-ax"><span style="left: 26px">O1</span><span style="left: 82px">O2</span><span style="left: 138px">O3</span><span style="left: 194px">O4</span></p>
+          <div class="s10-goal k pop" style="--in: calc(var(--w-proposito) + 560); --dur: 500"><b>+41%</b><span>valor em escala</span></div>
+          <!-- a trilha do olhar: 1 (sob o título) → 2 (topo da onda 4) → 3 (meta) -->
+          <svg class="s10-trail" viewBox="0 0 380 316" aria-hidden="true">
+            <defs><mask id="s10-trail-m" maskUnits="userSpaceOnUse" x="0" y="0" width="380" height="316"><path class="k draw" style="--in: var(--w-proposito); --dur: 760" d="M34 92C100 88 172 90 215 122C236 140 262 168 300 168" pathLength="1" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/></mask></defs>
+            <path d="M34 92C100 88 172 90 215 122C236 140 262 168 300 168" fill="none" stroke="rgba(201,166,255,.25)" stroke-width="7" stroke-linecap="round" mask="url(#s10-trail-m)"/>
+            <path class="l dash" d="M34 92C100 88 172 90 215 122C236 140 262 168 300 168" fill="none" stroke="#e9deff" stroke-width="3" stroke-dasharray="7 11" stroke-linecap="round" mask="url(#s10-trail-m)"/>
+          </svg>
+          <i class="s10-token k s10-run" style="--in: var(--w-proposito); --dur: 760"></i>
+          <div class="k fade" style="--in: calc(var(--w-proposito) + 900); --dur: 200; left: 0; top: 0"><i class="s10-token l s10-runl" style="--ldur: 1600"></i></div>
+          <i class="s10-stop k pop" style="--in: var(--w-proposito); --dur: 420; left: 34px; top: 92px">1</i>
+          <i class="s10-stop k pop" style="--in: calc(var(--w-proposito) + 300); --dur: 420; left: 215px; top: 122px">2</i>
+          <i class="s10-stop k pop" style="--in: calc(var(--w-proposito) + 600); --dur: 420; left: 300px; top: 168px">3</i>
+        </div>
+        <div class="s10-cf"><span>Chart Build</span><span>Flow Line</span><small>o olhar segue 1 → 2 → 3</small></div>
+        <i class="s10-cshine k sweep-x" style="--in: calc(var(--w-movimento) + 200); --dur: 1000"></i>
+      </div>
+    </div>
+
+    <!-- ============ PILAR 3 · PLATEIA (votação ao vivo + Heatmap) ============ -->
+    <div class="s10-cardw k s10-rise" style="--in: var(--w-plateia); --dur: 450; left: 1206px; top: 296px">
+      <div class="s10-card">
+        <div class="s10-ch"><b>03</b><span>Plateia</span><em><i class="l pulse"></i>ao vivo</em></div>
+        <div class="s10-stage s10-dark">
+          <p class="s10-sk">Votação ao vivo</p>
+          <p class="s10-votes"><span class="num-n k counter" style="--n0: 0; --n1: 128; --in: calc(var(--w-plateia) + 120); --dur: 1300"></span> votos</p>
+          <p class="s10-st">Qual onda priorizar?</p>
+          <div class="s10-vote" style="--stag: 120">
+            <div style="top: 86px"><span>Fundação</span><i><b class="k grow-x" style="--in: calc(var(--w-plateia) + 300); --i: 0; --dur: 900; width: 24%"></b></i><em><span class="num-n k counter" style="--n0: 0; --n1: 24; --in: calc(var(--w-plateia) + 300); --i: 0; --dur: 900"></span>%</em></div>
+            <div class="win" style="top: 124px"><span>Escala</span><i><b class="k grow-x" style="--in: calc(var(--w-plateia) + 300); --i: 1; --dur: 1000; width: 58%"></b></i><em><span class="num-n k counter" style="--n0: 0; --n1: 58; --in: calc(var(--w-plateia) + 300); --i: 1; --dur: 1000"></span>%</em></div>
+            <div style="top: 162px"><span>Valor</span><i><b class="k grow-x" style="--in: calc(var(--w-plateia) + 300); --i: 2; --dur: 900; width: 18%"></b></i><em><span class="num-n k counter" style="--n0: 0; --n1: 18; --in: calc(var(--w-plateia) + 300); --i: 2; --dur: 900"></span>%</em></div>
+          </div>
+          <div class="s10-avs" style="--stag: 70">
+            <i class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 0; --h: 268">AL</i><i class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 1; --h: 320">RM</i><i class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 2; --h: 160">JP</i><i class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 3; --h: 30">CS</i><i class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 4; --h: 200">LF</i><i class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 5; --h: 290">BT</i><b class="k pop" style="--in: calc(var(--w-plateia) + 80); --i: 6">+122</b>
+          </div>
+          <!-- Heatmap de atenção sobre a votação: grade 4×8 revelada em onda a partir da célula quente -->
+          <div class="s10-heat" style="--in: var(--w-participando); --stag: 55; --dur: 380">
+            <i class="k pop" style="--i: 5; --c: 0.12"></i><i class="k pop" style="--i: 4; --c: 0.2"></i><i class="k pop" style="--i: 3; --c: 0.28"></i><i class="k pop" style="--i: 2; --c: 0.38"></i><i class="k pop" style="--i: 1; --c: 0.5"></i><i class="k pop" style="--i: 2; --c: 0.4"></i><i class="k pop" style="--i: 3; --c: 0.25"></i><i class="k pop" style="--i: 4; --c: 0.12"></i>
+            <i class="k pop" style="--i: 4; --c: 0.3"></i><i class="k pop" style="--i: 3; --c: 0.5"></i><i class="k pop" style="--i: 2; --c: 0.68"></i><i class="k pop" style="--i: 1; --c: 0.85"></i><i class="hot k pop" style="--i: 0; --c: 1"></i><i class="k pop" style="--i: 1; --c: 0.78"></i><i class="k pop" style="--i: 2; --c: 0.55"></i><i class="k pop" style="--i: 3; --c: 0.4"></i>
+            <i class="k pop" style="--i: 5; --c: 0.18"></i><i class="k pop" style="--i: 4; --c: 0.28"></i><i class="k pop" style="--i: 3; --c: 0.42"></i><i class="k pop" style="--i: 2; --c: 0.58"></i><i class="k pop" style="--i: 1; --c: 0.7"></i><i class="k pop" style="--i: 2; --c: 0.5"></i><i class="k pop" style="--i: 3; --c: 0.3"></i><i class="k pop" style="--i: 4; --c: 0.18"></i>
+            <i class="k pop" style="--i: 6; --c: 0.35"></i><i class="k pop" style="--i: 5; --c: 0.45"></i><i class="k pop" style="--i: 4; --c: 0.38"></i><i class="k pop" style="--i: 3; --c: 0.28"></i><i class="k pop" style="--i: 2; --c: 0.22"></i><i class="k pop" style="--i: 3; --c: 0.16"></i><i class="k pop" style="--i: 4; --c: 0.1"></i><i class="k pop" style="--i: 5; --c: 0.08"></i>
+          </div>
+          <p class="s10-hk k fade" style="--in: var(--w-participando); --dur: 300">Atenção da sala</p>
+          <p class="s10-scale k fade" style="--in: calc(var(--w-participando) + 200); --dur: 300"><span>frio</span><i></i><span>quente</span></p>
+          <i class="beacon k fade" style="--in: calc(var(--w-participando) + 450); --dur: 300; left: 212px; top: 139px"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i>
+          <span class="s10-peak k pop-c" style="--in: calc(var(--w-participando) + 450); --dur: 450; left: 212px; top: 84px">pico · 92</span>
+        </div>
+        <div class="s10-cf"><span>Votação</span><span>Heatmap</span><small>a sala responde ao vivo</small></div>
+        <i class="s10-cshine k sweep-x" style="--in: calc(var(--w-plateia) + 200); --dur: 1000"></i>
+      </div>
+    </div>
+
+    <!-- linha de luz que une os três princípios (no recuo para o tríptico) -->
+    <i class="mg-line s10-join k grow-x" style="--in: 6780; --dur: 700; left: 502px; top: 829px; width: 916px"></i>
+    <i class="mg-dot k pop" style="--in: 6780; --dur: 300; left: 502px; top: 830px"></i>
+    <i class="mg-dot k pop" style="--in: 7120; --dur: 300; left: 960px; top: 830px"></i>
+    <i class="mg-dot k pop" style="--in: 7460; --dur: 300; left: 1418px; top: 830px"></i>
+
+    <!-- três princípios: pílulas numeradas que acendem na palavra -->
+    <div class="s10-pill k pop-c" style="--in: var(--w-luz); --dur: 520; left: 502px">
+      <b>1</b>Luz no que importa
+      <div class="s10-pill-on k fade" style="--in: calc(var(--w-luz) + 200); --dur: 280"><b>1</b>Luz no que importa<i class="s10-shine k sweep-x" style="--in: 6900; --dur: 900"></i></div>
+    </div>
+    <div class="s10-pill k pop-c" style="--in: var(--w-movimento); --dur: 520; left: 960px">
+      <b>2</b>Movimento com propósito
+      <div class="s10-pill-on k fade" style="--in: calc(var(--w-movimento) + 200); --dur: 280"><b>2</b>Movimento com propósito<i class="s10-shine k sweep-x" style="--in: 7040; --dur: 900"></i></div>
+    </div>
+    <div class="s10-pill k pop-c" style="--in: var(--w-plateia); --dur: 520; left: 1418px">
+      <b>3</b>Plateia participando
+      <div class="s10-pill-on k fade" style="--in: calc(var(--w-plateia) + 200); --dur: 280"><b>3</b>Plateia participando<i class="s10-shine k sweep-x" style="--in: 7180; --dur: 900"></i></div>
+    </div>
+    <i class="ring k ring-x" style="--in: var(--w-luz); --dur: 800; left: 502px; top: 830px; width: 150px; height: 150px; margin: -75px 0 0 -75px"></i>
+    <i class="ring k ring-x" style="--in: var(--w-movimento); --dur: 800; left: 960px; top: 830px; width: 150px; height: 150px; margin: -75px 0 0 -75px"></i>
+    <i class="ring k ring-x" style="--in: var(--w-plateia); --dur: 800; left: 1418px; top: 830px; width: 150px; height: 150px; margin: -75px 0 0 -75px"></i>
+
+    <!-- cliques com brilho: no centro do +32%, na onda 4 do gráfico e na barra "Escala" -->
+    <i class="click k" style="--in: calc(var(--w-importa) + 150); left: 502px; top: 508px"></i>
+    <i class="click k" style="--in: calc(var(--w-movimento) + 300); left: 986px; top: 596px"></i>
+    <i class="click k" style="--in: calc(var(--w-plateia) + 300); left: 1484px; top: 486px"></i>
+
+    <!-- cursor com halo: clica no número, no gráfico e no voto (anda junto com a câmera) -->
+    <div class="kx" style="--out: 7300; --xdur: 400; left: 499px; top: 506px">
+      <div class="k s10-cur-in" style="--in: calc(var(--w-luz) + 100); --dur: 450">
+        <div class="k move-xy" style="--in: calc(var(--w-movimento) - 60); --dur: 340; --dx: 484px; --dy: 88px">
+          <div class="k move-xy" style="--in: calc(var(--w-plateia) - 80); --dur: 360; --dx: 498px; --dy: -110px">
+            <div class="k press" style="--in: calc(var(--w-importa) + 120)">
+              <div class="k press" style="--in: calc(var(--w-movimento) + 270)">
+                <div class="k press" style="--in: calc(var(--w-plateia) + 270)">
+                  <svg class="gcur" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div></div></div></div></div></div>
+  </div>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="lens" data-keys="@entra:pose=point-right,face=happy;@olhar:pose=lens-look,face=focus,dur=500;@halor:pose=present,face=proud;@luz:pose=point-right,face=wow;@importa+200:face=wink;@movimento:pose=lens-look,face=focus;@proposito+300:pose=point-right,face=happy;@plateia:pose=cheer,face=laugh;@participando+400:pose=celebrate,face=laugh;@participando+1200:pose=idle,face=proud" style="--x: 150px; --y: 968px; --s: .82"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@olhar:face=wow;@halor:pose=look-up,face=surprised;@luz+300:pose=idle,face=happy;@importa+200:face=wow;@movimento:pose=think,face=think;@proposito+500:pose=idle,face=happy;@plateia:pose=wave,face=laugh;@participando+300:pose=cheer,face=laugh;@participando+1100:pose=idle,face=happy" style="--x: 1772px; --y: 968px; --s: .78"></div>
 </section>
