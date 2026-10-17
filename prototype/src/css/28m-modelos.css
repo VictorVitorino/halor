@@ -20,14 +20,14 @@
 .pd-sub { display: grid; gap: 6px; }
 .pd-sub h3 { font-family: var(--f-display); font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.025em; }
 .pd-carousel { position: relative; min-width: 0; }
-.pd-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 10px 4px 24px; scrollbar-width: thin; scrollbar-color: rgba(201, 166, 255, .3) transparent; cursor: grab; --mL: 4%; --mR: 96%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); }
+.pd-track { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 10px 4px 34px; scrollbar-width: thin; scrollbar-color: rgba(201, 166, 255, .3) transparent; cursor: grab; --mL: 4%; --mR: 96%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); }
 .pd-carousel.at-start .pd-track { --mL: 0%; }
 .pd-carousel.at-end .pd-track { --mR: 100%; }
 .pd-track.drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
 .pd-track:focus-visible { outline-offset: 4px; }
 .pd-model { flex: 0 0 clamp(276px, 25vw, 344px); scroll-snap-align: start; border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: background .45s var(--ease-halo), border-color .45s var(--ease-halo), transform .35s var(--ease-halo), box-shadow .45s var(--ease-halo); }
 @media (max-width: 700px) { .pd-model { flex-basis: min(84vw, 344px); } }
-.pd-model:hover, .pd-model:focus-visible { background: linear-gradient(155deg, color-mix(in srgb, var(--ac) 74%, #12082c), #160a38 88%); border-color: var(--ac); transform: translateY(-4px); box-shadow: 0 24px 60px -24px var(--ac), 0 0 0 1px var(--ac); }
+.pd-model:hover, .pd-model:focus-visible { background: linear-gradient(155deg, color-mix(in srgb, var(--ac) 74%, #12082c), #160a38 88%); border-color: var(--ac); transform: translateY(-4px); box-shadow: 0 16px 34px -20px var(--ac), 0 0 0 1px var(--ac); }
 .pd-model:hover .chip, .pd-model:focus-visible .chip { background: rgba(255, 255, 255, .18); color: #fff; }
 .pd-mthumb { position: relative; padding: 10px 10px 0; }
 /* varredura de luz no cartão inteiro ao passar o mouse */
@@ -102,7 +102,7 @@
 .ws-beam { position: absolute; left: 28cqw; width: 44cqw; bottom: 3cqw; height: 38cqw; background: linear-gradient(0deg, rgba(201, 166, 255, .42), rgba(201, 166, 255, 0) 85%); clip-path: polygon(44% 100%, 56% 100%, 100% 0, 0 0); opacity: calc(.5 + .3 * var(--md-hi)); }
 .ws-stage { position: absolute; left: 0; right: 0; top: 19.4cqw; height: 30cqw; perspective: 70cqw; }
 .ws-sway, .ws-rig { position: absolute; inset: 0; transform-style: preserve-3d; }
-.ws-rig { transform: rotateY(calc(var(--mx, 0) * 18deg)) rotateX(calc(var(--my, 0) * -14deg)); transition: transform .5s var(--ease-halo); }
+.ws-rig { transform: rotateY(calc(var(--mx, 0) * 13deg)) rotateX(calc(var(--my, 0) * -10deg)); transition: transform .5s var(--ease-halo); }
 /* os cards nascem com o dobro do tamanho e scale(.5): em 3D o Chrome rasteriza melhor e o texto fica nítido */
 .ws-c { position: absolute; top: -9.3cqw; left: 50%; width: 42cqw; height: 46cqw; margin-left: -21cqw; transform-style: preserve-3d; }
 .ws-c1 { transform: translateX(-23.5cqw) translateZ(-5cqw) rotateY(30deg) scale(.5); }

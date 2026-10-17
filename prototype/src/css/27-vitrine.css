@@ -222,7 +222,8 @@
 }
 .vt-gl-main:hover, .vt-gl-main:focus-visible { --int: calc(var(--int-b) * 1.8); animation-duration: calc(2.4s / var(--spin)), calc(1.4s / var(--spin)); }
 @keyframes vt-spin { to { --vt-a: 360deg; } }
-@keyframes vt-breathe { from { box-shadow: 0 0 calc(20px * var(--int)) rgba(var(--acc), calc(.35 * min(1, var(--int)))); } to { box-shadow: 0 0 calc(44px * var(--int)) rgba(var(--acc), calc(.7 * min(1, var(--int)))), 0 0 calc(90px * var(--int)) rgba(var(--acc), calc(.3 * min(1, var(--int)))); } }
+/* o desfoque tem teto (sombras muito largas viram blocos no Chrome); acima dele a intensidade vira opacidade */
+@keyframes vt-breathe { from { box-shadow: 0 0 calc(20px * min(var(--int), 1.8)) rgba(var(--acc), calc(.35 * min(1.6, var(--int)))); } to { box-shadow: 0 0 calc(44px * min(var(--int), 1.5)) rgba(var(--acc), calc(.7 * min(1.4, var(--int)))), 0 0 calc(80px * min(var(--int), 1.1)) rgba(var(--acc), calc(.3 * min(2.4, var(--int)))); } }
 .vt-gl-in {
   position: relative; height: 100%; border-radius: calc(var(--r-lg) - 1.5px); overflow: hidden;
   display: grid; align-content: center; justify-items: start; gap: 6px; padding: 18px 20px;
@@ -373,6 +374,18 @@
 .vt-ch-det-m em { font-style: normal; font-weight: 700; }
 .vt-ch-det-m em.is-up { color: var(--ok-n); }
 .vt-ch-det-m em.is-down { color: var(--danger-n); }
+/* no celular o detalhe vira uma faixa sobre a linha do tempo, sem cobrir as barras */
+@container (max-width: 520px) {
+  .vt-ch-det, .vt-ch-det.is-right { top: auto; bottom: -60px; left: -4px; right: -4px; width: auto; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "q m x" "v p x"; column-gap: 14px; row-gap: 1px; align-items: center; padding: 8px 10px 8px 12px; background: rgba(23, 16, 48, .98); }
+  .vt-ch-det-h { display: contents; }
+  .vt-ch-det-q { grid-area: q; }
+  .vt-ch-x { grid-area: x; margin: 0; }
+  .vt-ch-det-v { grid-area: v; }
+  .vt-ch-det-v b { font-size: 22px; }
+  .vt-ch-det-v span { display: none; }
+  .vt-ch-det-m { grid-area: m; }
+  .vt-ch-det-p { grid-area: p; }
+}
 .vt-ch-scrub { display: grid; gap: 4px; }
 .vt-ch-steps { display: flex; justify-content: space-between; font-size: 10.5px; color: var(--text-mute); letter-spacing: .06em; text-transform: uppercase; }
 .vt-range { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; margin: 0; cursor: pointer; }
@@ -452,7 +465,7 @@
 
 /* ---------------------------------------------------------------- 35 · Interactive Matrix */
 .vt-mx { display: grid; grid-template-rows: 1fr auto; gap: 10px; padding: 16px 16px 14px 34px; }
-.vt-mx-plot { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; touch-action: pan-y; }
+.vt-mx-plot { position: relative; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 3px; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
 .vt-mx-q { position: relative; border-radius: var(--r-sm); background: rgba(244, 238, 255, .035); border: 1px solid rgba(201, 166, 255, .1); transition: background var(--t-base), border-color var(--t-base); }
 .vt-mx-q span { position: absolute; left: 8px; top: 6px; font-size: 10.5px; font-weight: 600; color: var(--text-mute); letter-spacing: .01em; }
 .vt-mx-q.is-f { background: rgba(var(--acc), .15); border-color: rgba(var(--acc-hi), .28); }
@@ -486,7 +499,7 @@
 
 /* ---------------------------------------------------------------- 18 · Connector / Flow Line */
 .vt-fw { display: grid; grid-template-rows: 1fr auto; gap: 6px; padding: 14px 14px 12px; }
-.vt-fw-box { position: relative; align-self: center; justify-self: center; width: 100%; max-height: 100%; aspect-ratio: 400 / 240; }
+.vt-fw-box { user-select: none; -webkit-user-select: none; position: relative; align-self: center; justify-self: center; width: 100%; max-height: 100%; aspect-ratio: 400 / 240; }
 .vt-fw-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .vt-fw-svg { --fsp: 1; --gap: 14px; }
 .vt-fw-base { fill: none; stroke: rgba(var(--acc-hi), .45); stroke-width: 1.5; transition: stroke var(--t-base), opacity var(--t-base); }

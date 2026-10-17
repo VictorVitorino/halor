@@ -1276,10 +1276,17 @@ VT_DEMO.matrix = card => {
   };
   /* ímã: cada bolha vai para o centro do seu quadrante, empilhada sem se sobrepor */
   const snap = () => {
+    const h = plot.clientHeight || 200, need = 34 * (S.bs || S.size || 1) / h * 100;
     [0, 1, 2, 3].forEach(q => {
-      const list = bs.filter(b => qOf(b) === q).sort((a, b) => a.dataset.y - b.dataset.y);
-      const n = list.length, stp = n > 1 ? Math.min(13, 34 / (n - 1)) : 0;
-      list.forEach((b, k) => { b.dataset.x = q % 2 ? 72 : 28; b.dataset.y = (q > 1 ? 72 : 28) + (k - (n - 1) / 2) * stp; place(b); });
+      const list = bs.filter(b => qOf(b) === q).sort((a, b) => a.dataset.y - b.dataset.y || a.dataset.x - b.dataset.x);
+      const n = list.length, fit = Math.floor(38 / need) + 1, cols = n > fit ? 2 : 1, rows = Math.ceil(n / cols);
+      const stp = Math.min(need, rows > 1 ? 38 / (rows - 1) : 0);
+      list.forEach((b, k) => {
+        const r = cols > 1 ? Math.floor(k / 2) : k, cx = q % 2 ? 72 : 28;
+        b.dataset.x = cols > 1 ? cx + (k % 2 ? 11 : -11) : cx;
+        b.dataset.y = vtClamp((q > 1 ? 71 : 29) + (r - (rows - 1) / 2) * stp, 8, 92);
+        place(b);
+      });
     });
   };
   const mkB = (name, x, y, i) => {
