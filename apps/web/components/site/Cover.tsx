@@ -19,8 +19,9 @@ export default function Cover() {
           <span className="w lux" style={{ "--i": "3" } as CSSProperties}>render.</span>
         </h1>
         <p className="s-sub s-in" style={{ "--d": "1.05s" } as CSSProperties}>
-          O que antes exigia código, agora é{' '}
-          <span className="neon-band">de todo mundo!</span>
+          O que exigia código agora é{' '}
+          <span className="neon-band">de todo mundo</span>
+          .
         </p>
         <p className="lede s-lede s-in" style={{ "--d": "1.3s" } as CSSProperties}>Apresentações vivas, que prendem o olhar do começo ao fim.</p>
         <div className="s-cta s-in" style={{ "--d": "1.5s" } as CSSProperties}>
@@ -36,7 +37,7 @@ export default function Cover() {
               <use href="#i-play" />
             </svg>
             {' '}Conheça o Halor{' '}
-            <span className="s-dur">(1 min 28 s)</span>
+            <span className="s-dur">(1 min 46 s)</span>
           </button>
         </div>
       </div>

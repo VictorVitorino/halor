@@ -1,14 +1,13 @@
-    <!-- VITRINE DE EFEITOS · 40 efeitos que prendem o olhar. 12 rodam ao vivo no palco, nas cores Halor,
-         e todos são editáveis: o botão Editar efeito abre, dentro do card, um painel que muda o efeito na hora. -->
+    <!-- VITRINE DE EFEITOS · 40 efeitos que prendem o olhar. 12 rodam ao vivo no palco, nas cores Halor. -->
     <section class="s-sec theme-night vt-sec" id="vitrine" aria-labelledby="vt-h">
       <div class="wrap">
         <div class="s-head">
           <p class="eyebrow">Vitrine de efeitos</p>
           <h2 class="display" id="vt-h">40 efeitos que prendem o&nbsp;olhar.</h2>
-          <p class="lede">Cada efeito já entra na apresentação com a marca de quem usa: suas cores, sua fonte, seu logo. Os doze abaixo estão ao vivo e são editáveis: clique, arraste, mude textos, cores e&nbsp;intensidade.</p>
+          <p class="lede">Cada efeito já entra na apresentação com a marca de quem usa: suas cores, sua fonte, seu logo. Os doze abaixo estão ao vivo: toque, arraste e abra <b>Editar</b> em qualquer card para mudar cor, ritmo e texto na&nbsp;hora.</p>
         </div>
 
-        <div class="vt-filter" role="group" aria-labelledby="vt-filter-l">
+        <div class="vt-filter" role="group" aria-labelledby="vt-filter-l" data-rv>
           <p class="vt-filter-l" id="vt-filter-l">O que você quer comunicar?</p>
           <div class="vt-chips" id="vt-chips">
             <button class="vt-chip" type="button" data-intent="todos" aria-pressed="true">Todos</button>
@@ -25,8 +24,8 @@
         </div>
         <p class="sr-only" id="vt-status" aria-live="polite"></p>
 
-        <!-- PALCO · demonstrações ao vivo e editáveis -->
-        <div class="vt-stage" id="vt-stage">
+        <!-- PALCO · demonstrações ao vivo -->
+        <div class="vt-stage" id="vt-stage" data-rv-stagger>
 
           <!-- 30 · Particle System -->
           <article class="vt-card vt-w4 vt-hero" id="vt-d-particle" data-demo="particle" data-fx="30" data-intents="abertura relacao" aria-labelledby="vt-t-particle">
@@ -38,48 +37,35 @@
               </div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">30</span>3D</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-particle"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Particle System"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">30</span>3D</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Particle System"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-particle">Particle System</h3>
               <p class="vt-what">Um campo vivo de partículas que se ligam por proximidade. O fundo de capa que já começa respirando.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-spark"/></svg>Mova o cursor · clique para um pulso de luz</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-spark"/></svg>Mova o cursor · clique para um pulso</p>
             </div>
           </article>
 
           <!-- 03 e 04 · Hologram 3D Card e 3D Tilt -->
           <article class="vt-card vt-w2 vt-hero" id="vt-d-tilt" data-demo="tilt" data-fx="3 4" data-intents="detalhe abertura foco" aria-labelledby="vt-t-tilt">
             <div class="vt-demo vt-ti">
-              <div class="vt-ti-card" tabindex="0" role="button" aria-pressed="false" aria-label="Cartão holográfico com a marca do cliente: crescimento de 38% no ano. Enter vira o cartão e mostra o detalhe; as setas inclinam.">
-                <div class="vt-ti-front" aria-hidden="true">
-                  <div class="vt-ti-bg"></div>
-                  <div class="vt-ti-l1">
-                    <span class="vt-ti-brand"><i></i>Sua marca</span>
-                    <span class="vt-ti-yr mono">2027</span>
-                  </div>
-                  <div class="vt-ti-l2">
-                    <b>+38%</b>
-                    <span>Crescimento no ano</span>
-                  </div>
-                  <div class="vt-ti-l3"><i style="--h:.42"></i><i style="--h:.58"></i><i style="--h:.5"></i><i style="--h:.74"></i><i style="--h:1"></i></div>
-                  <div class="vt-ti-sheen"></div>
+              <div class="vt-ti-card" tabindex="0" role="button" aria-label="Cartão holográfico com a marca do cliente: +38% de crescimento no ano. Ele inclina com o cursor; setas inclinam e Enter solta um reflexo.">
+                <div class="vt-ti-bg" aria-hidden="true"></div>
+                <div class="vt-ti-l1" aria-hidden="true">
+                  <span class="vt-ti-brand"><i></i>Sua marca</span>
+                  <span class="vt-ti-yr mono">2027</span>
                 </div>
-                <div class="vt-ti-back" aria-hidden="true">
-                  <p class="vt-ti-bk mono">De onde veio</p>
-                  <p class="vt-ti-bt">Como chegamos a <b>+38%</b></p>
-                  <ul class="vt-ti-bl">
-                    <li style="--w:.55"><span>Novos clientes</span><b>+21%</b></li>
-                    <li style="--w:.29"><span>Recompra</span><b>+11%</b></li>
-                    <li style="--w:.16"><span>Preço médio</span><b>+6%</b></li>
-                  </ul>
-                  <p class="vt-ti-bf mono">Clique para voltar</p>
+                <div class="vt-ti-l2" aria-hidden="true">
+                  <b>+38%</b>
+                  <span>Crescimento no ano</span>
                 </div>
+                <div class="vt-ti-l3" aria-hidden="true"><i style="--h:.42"></i><i style="--h:.58"></i><i style="--h:.5"></i><i style="--h:.74"></i><i style="--h:1"></i></div>
+                <div class="vt-ti-sheen" aria-hidden="true"></div>
               </div>
-              <p class="sr-only vt-ti-live" aria-live="polite"></p>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">03 · 04</span>3D</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-tilt"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir 3D Tilt e Hologram Card"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">03 · 04</span>3D</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir 3D Tilt e Hologram Card"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-tilt">3D Tilt · Hologram Card</h3>
-              <p class="vt-what">Camadas com profundidade real que inclinam com o cursor e devolvem um reflexo holográfico. No verso, o detalhe.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-spark"/></svg>Mova o cursor · clique para virar</p>
+              <p class="vt-what">Camadas com profundidade real que inclinam com o cursor e devolvem um reflexo holográfico.</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-spark"/></svg>Mova o cursor · clique para um reflexo</p>
             </div>
           </article>
 
@@ -87,16 +73,16 @@
           <article class="vt-card vt-w3" id="vt-d-type" data-demo="type" data-fx="11" data-intents="abertura foco" aria-labelledby="vt-t-type">
             <div class="vt-demo vt-ty">
               <div class="vt-ty-in">
-                <p class="vt-ty-k mono">Resultado do ano</p>
-                <p class="sr-only vt-ty-sr">Receita recorrente cresceu 38% em doze meses.</p>
-                <p class="vt-ty-h" role="toolbar" aria-label="Palavras do título: escolha a palavra-chave"><button class="w" type="button" style="--i:0" aria-pressed="false">Receita</button> <button class="w" type="button" style="--i:1" aria-pressed="false" tabindex="-1">recorrente</button> <button class="w vt-ty-u" type="button" style="--i:2" aria-pressed="true" tabindex="-1">cresceu</button> <button class="w vt-ty-n" type="button" style="--i:4" aria-pressed="false" tabindex="-1">38%</button> <button class="w" type="button" style="--i:5" aria-pressed="false" tabindex="-1">em</button> <button class="w" type="button" style="--i:6" aria-pressed="false" tabindex="-1">doze</button> <button class="w" type="button" style="--i:7" aria-pressed="false" tabindex="-1">meses.</button></p>
+                <p class="vt-ty-k mono" aria-hidden="true">Resultado do ano</p>
+                <p class="sr-only">Receita recorrente cresceu 38% em doze meses.</p>
+                <p class="vt-ty-h" aria-hidden="true" title="Clique numa palavra para destacá-la"><span class="w" style="--i:0">Receita</span> <span class="w" style="--i:1">recorrente</span> <span class="w vt-ty-u" style="--i:2">cresceu</span> <span class="w vt-ty-n" style="--i:4">38%</span> <span class="w" style="--i:5">em</span> <span class="w" style="--i:6">doze</span> <span class="w" style="--i:7">meses.</span></p>
               </div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">11</span>Movimento</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-type"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Animated Typography"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">11</span>Movimento</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Animated Typography"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-type">Animated Typography</h3>
               <p class="vt-what">O título entra palavra a palavra, a palavra-chave ganha um sublinhado de luz e o número pousa por último.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-text"/></svg>Clique numa palavra para torná-la a palavra-chave</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-text"/></svg>Clique numa palavra para destacá-la</p>
             </div>
           </article>
 
@@ -104,40 +90,39 @@
           <article class="vt-card vt-w3" id="vt-d-count" data-demo="count" data-fx="12" data-intents="magnitude" aria-labelledby="vt-t-count">
             <div class="vt-demo vt-co">
               <ul class="vt-co-list">
-                <li><button class="vt-co-i" type="button" aria-pressed="false"><span class="vt-co-k">Receita no ano</span><b class="vt-co-v" data-to="12.8" data-dec="1" data-pre="R$ " data-suf=" mi" data-goal="14.9">R$ 12,8 mi</b><i class="vt-co-bar" style="--w:.86"></i></button></li>
-                <li><button class="vt-co-i" type="button" aria-pressed="false"><span class="vt-co-k">Crescimento</span><b class="vt-co-v" data-to="38" data-pre="+" data-suf="%" data-goal="59">+38%</b><i class="vt-co-bar" style="--w:.64"></i></button></li>
-                <li><button class="vt-co-i" type="button" aria-pressed="false"><span class="vt-co-k">Novos clientes</span><b class="vt-co-v" data-to="1240" data-goal="1240">1.240</b><i class="vt-co-bar" style="--w:1"></i></button></li>
+                <li><button class="vt-co-tile" type="button"><span class="vt-co-k">Receita no ano</span><b class="vt-co-v">R$ 12,8 mi</b><i class="vt-co-bar" style="--p:.86"></i></button></li>
+                <li><button class="vt-co-tile" type="button"><span class="vt-co-k">Crescimento</span><b class="vt-co-v">+38%</b><i class="vt-co-bar" style="--p:.64"></i></button></li>
+                <li><button class="vt-co-tile" type="button"><span class="vt-co-k">Novos clientes</span><b class="vt-co-v">1.240</b><i class="vt-co-bar" style="--p:1"></i></button></li>
               </ul>
-              <p class="vt-co-det" aria-live="polite"><span class="vt-co-hint">Clique num indicador para ver o detalhe.</span></p>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">12</span>Dados</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-count"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Counter Animation"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">12</span>Dados</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Counter Animation"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-count">Counter Animation</h3>
               <p class="vt-what">Números que sobem do zero ao valor final. A plateia sente o tamanho do resultado antes de ler.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-chart"/></svg>Clique num indicador: a barra pulsa e o detalhe aparece</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-replay"/></svg>Clique num número para contar de novo</p>
             </div>
           </article>
 
           <!-- 06 · Glow / Light Sweep -->
           <article class="vt-card vt-w2" id="vt-d-glow" data-demo="glow" data-fx="6" data-intents="foco abertura" aria-labelledby="vt-t-glow">
             <div class="vt-demo vt-gl">
-              <button class="vt-gl-main" type="button" aria-label="Indicador em destaque: Margem bruta, 41%, +6 p.p. no ano. Clique para a luz passar de novo.">
-                <span class="vt-gl-in" aria-hidden="true">
+              <div class="vt-gl-main" tabindex="0" role="img" aria-label="Indicador principal em destaque: margem bruta de 41%, mais 6 pontos.">
+                <div class="vt-gl-in" aria-hidden="true">
                   <span class="vt-gl-k">Margem bruta</span>
                   <b class="vt-gl-v">41%</b>
                   <span class="vt-gl-d">+6 p.p. no ano</span>
-                </span>
-              </button>
-              <div class="vt-gl-side" role="group" aria-label="Indicadores secundários. Clique para pôr em destaque.">
-                <button class="vt-gl-s" type="button" data-i="1"><span>Custo</span><b>−12%</b></button>
-                <button class="vt-gl-s" type="button" data-i="2"><span>Prazo</span><b>18 dias</b></button>
+                </div>
+              </div>
+              <div class="vt-gl-side" role="group" aria-label="Indicadores secundários">
+                <button class="vt-gl-s" type="button"><span>Custo</span><b>−12%</b><svg aria-hidden="true"><use href="#i-up"/></svg></button>
+                <button class="vt-gl-s" type="button"><span>Prazo</span><b>18 dias</b><svg aria-hidden="true"><use href="#i-up"/></svg></button>
               </div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">06</span>Movimento</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-glow"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Glow e Light Sweep"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">06</span>Movimento</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Glow e Light Sweep"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-glow">Glow / Light Sweep</h3>
-              <p class="vt-what">O número principal ganha anel de luz e varredura. Os outros ficam quietos até a sua vez.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-spark"/></svg>Clique num indicador para pô-lo em destaque</p>
+              <p class="vt-what">O número principal ganha anel de luz e varredura. Os outros ficam quietos.</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-spark"/></svg>Clique num indicador para trazê-lo à luz</p>
             </div>
           </article>
 
@@ -167,10 +152,10 @@
               </div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">24</span>Narrativa</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-spot"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Spotlight"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">24</span>Narrativa</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Spotlight"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-spot">Spotlight / Focus</h3>
               <p class="vt-what">Um foco de luz apaga o resto e conduz o olhar, passo a passo, até o ponto que importa.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-target"/></svg>Clique num bloco ou nos passos · Livre segue o cursor</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-target"/></svg>Clique numa etapa · no Livre, arraste o foco</p>
             </div>
           </article>
 
@@ -186,23 +171,36 @@
               <p class="sr-only vt-st-live" aria-live="polite"></p>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">33</span>Interatividade</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-stack"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Card Stack"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">33</span>Interatividade</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Card Stack"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-stack">Card Stack</h3>
               <p class="vt-what">Uma pilha com profundidade. O card do topo sai e vai para o fundo, um capítulo por vez.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-cards"/></svg>Arraste ou clique o card do topo</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-cards"/></svg>Arraste, clique ou use os pontos</p>
             </div>
           </article>
 
           <!-- 16 · Chart Build Animation -->
-          <article class="vt-card vt-w4" id="vt-d-chart" data-demo="chart" data-fx="16 15" data-intents="magnitude tempo" aria-labelledby="vt-t-chart">
+          <article class="vt-card vt-w4" id="vt-d-chart" data-demo="chart" data-fx="16" data-intents="magnitude tempo" aria-labelledby="vt-t-chart">
             <div class="vt-demo vt-ch">
               <div class="vt-ch-head">
                 <p class="vt-ch-t">Receita por trimestre <span class="mono">R$ mi</span></p>
-                <p class="vt-ch-leg" aria-hidden="true"><span class="vt-ch-lb">Receita</span><span class="vt-ch-ll">Meta</span></p>
+                <div class="vt-ch-tools">
+                  <div class="vt-ch-leg" role="group" aria-label="Séries do gráfico">
+                    <button class="vt-ch-lb" type="button" aria-pressed="true">Receita</button>
+                    <button class="vt-ch-ll" type="button" aria-pressed="true">Meta</button>
+                  </div>
+                  <button class="vt-ch-act" type="button" data-act="max" aria-pressed="false" aria-label="Destacar maior"><svg aria-hidden="true"><use href="#i-spark"/></svg><span class="vt-ch-full">Destacar maior</span><span class="vt-ch-short" aria-hidden="true">Maior</span></button>
+                  <button class="vt-ch-act" type="button" data-act="sort" aria-pressed="false"><svg aria-hidden="true"><use href="#i-bars"/></svg>Ordenar</button>
+                </div>
               </div>
               <div class="vt-ch-plot">
-                <svg class="vt-ch-svg" viewBox="0 0 640 220" role="group" aria-labelledby="vt-ch-desc"><title id="vt-ch-desc">Receita trimestral vai de 42 a 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima da meta nos últimos cinco trimestres. Clique numa barra para destacá-la.</title></svg>
+                <svg class="vt-ch-svg" viewBox="0 0 640 220" role="group" aria-labelledby="vt-ch-desc"><title id="vt-ch-desc">Receita trimestral sobe de 42 para 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima ou na meta em 6 de 8 trimestres.</title></svg>
                 <div class="vt-ch-tip" aria-hidden="true" hidden></div>
+                <div class="vt-ch-det" hidden>
+                  <div class="vt-ch-det-h"><span class="mono vt-ch-det-q"></span><button class="vt-ch-x" type="button" aria-label="Fechar detalhe"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
+                  <p class="vt-ch-det-v"><b></b><span>receita, R$ mi</span></p>
+                  <p class="vt-ch-det-m"></p>
+                  <p class="vt-ch-det-p"></p>
+                </div>
               </div>
               <div class="vt-ch-scrub">
                 <label class="sr-only" for="vt-ch-range">Etapa da construção do gráfico</label>
@@ -211,10 +209,10 @@
               </div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">16 · 15</span>Dados</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-chart"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Chart Build Animation"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
-              <h3 id="vt-t-chart">Chart Build · Data Highlight</h3>
-              <p class="vt-what">O gráfico se monta em etapas: as barras crescem, a meta se desenha, os pontos surgem e os rótulos fecham a leitura. Um clique acende só a barra que sustenta a mensagem.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-chart"/></svg>Clique numa barra · arraste a linha do tempo</p>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">16</span>Dados</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Chart Build Animation"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
+              <h3 id="vt-t-chart">Chart Build Animation</h3>
+              <p class="vt-what">O gráfico se monta em etapas: as barras crescem, a meta se desenha, os pontos surgem e os rótulos fecham a leitura.</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-chart"/></svg>Clique numa barra · a legenda liga e desliga</p>
             </div>
           </article>
 
@@ -244,7 +242,7 @@
               <button class="btn btn-quiet btn-xs vt-fl-all" type="button">Virar todos</button>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">21</span>Interatividade</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-flip"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Flip Card"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">21</span>Interatividade</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Flip Card"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-flip">Flip Card</h3>
               <p class="vt-what">O card gira em 3D e mostra o verso. Antes na frente, depois atrás, no mesmo lugar.</p>
               <p class="vt-how"><svg aria-hidden="true"><use href="#i-cards"/></svg>Clique em um card para virar</p>
@@ -256,13 +254,11 @@
             <div class="vt-demo vt-ba">
               <div class="vt-ba-box">
                 <div class="vt-ba-after" aria-hidden="true">
-                  <span class="vt-ba-tag vt-ba-tag-r">Depois</span>
                   <p class="vt-ba-k">Receita no ano</p>
                   <b class="vt-ba-big">+38%</b>
                   <div class="vt-ba-bars"><i style="--h:.38"></i><i style="--h:.5"></i><i style="--h:.62"></i><i style="--h:1"></i></div>
                 </div>
                 <div class="vt-ba-before" aria-hidden="true">
-                  <span class="vt-ba-tag">Antes</span>
                   <div class="vt-ba-txt">
                     <p class="vt-ba-h">Resultados consolidados do exercício</p>
                     <ul>
@@ -275,14 +271,16 @@
                   <table><tr><th>Tri</th><th>Receita</th><th>Var.</th></tr><tr><td>1T</td><td>2,4</td><td>3,1%</td></tr><tr><td>2T</td><td>2,9</td><td>4,0%</td></tr><tr><td>3T</td><td>3,3</td><td>2,2%</td></tr><tr><td>4T</td><td>4,2</td><td>5,8%</td></tr></table>
                 </div>
                 <div class="vt-ba-line" aria-hidden="true"></div>
+                <button class="vt-ba-tag" type="button" data-to="100" aria-label="Mostrar só o antes">Antes</button>
+                <button class="vt-ba-tag vt-ba-tag-r" type="button" data-to="0" aria-label="Mostrar só o depois">Depois</button>
                 <div class="vt-ba-knob" role="slider" tabindex="0" aria-label="Divisor entre antes e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" aria-valuetext="Metade antes, metade depois"><svg aria-hidden="true"><use href="#i-chev"/></svg><svg aria-hidden="true"><use href="#i-chev-r"/></svg></div>
               </div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">37</span>Interatividade</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-ba"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Before e After Slider"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">37</span>Interatividade</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Before e After Slider"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-ba">Before / After Slider</h3>
               <p class="vt-what">Um divisor arrastável mostra o slide de antes e o de depois no mesmo lugar. A diferença fala sozinha.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Arraste ou clique no quadro · setas no teclado</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Arraste o divisor · toque nas etiquetas</p>
             </div>
           </article>
 
@@ -297,14 +295,13 @@
                 <span class="vt-mx-ax vt-mx-ay" aria-hidden="true">Impacto</span>
                 <span class="vt-mx-ax vt-mx-axx" aria-hidden="true">Esforço</span>
               </div>
-              <div class="vt-mx-leg" role="group" aria-label="Quadrantes: clique para destacar"></div>
-              <p class="sr-only vt-mx-live" aria-live="polite"></p>
+              <div class="vt-mx-leg" role="group" aria-label="Quadrantes: toque para pôr em foco"></div>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">35</span>Interatividade</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-matrix"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Interactive Matrix"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">35</span>Interatividade</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Interactive Matrix"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-matrix">Interactive Matrix</h3>
               <p class="vt-what">Impacto contra esforço. Cada iniciativa troca de quadrante na frente da sala e a contagem se refaz.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-grid"/></svg>Arraste as bolhas · clique num quadrante</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-grid"/></svg>Arraste as bolhas · toque na legenda</p>
             </div>
           </article>
 
@@ -314,39 +311,35 @@
               <div class="vt-fw-box">
                 <svg class="vt-fw-svg" viewBox="0 0 400 240" aria-hidden="true" focusable="false"></svg>
               </div>
-              <p class="vt-fw-cap mono">Clique num nó para ver as ligações</p>
+              <p class="vt-fw-cap mono" aria-live="polite">Tudo ligado. Toque num nó para desligar e ver o efeito.</p>
             </div>
             <div class="vt-meta">
-              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">18</span>Processos</p><div class="vt-acts"><button class="btn btn-ghost btn-xs vt-edit" type="button" aria-expanded="false" aria-controls="vt-ed-flow"><svg aria-hidden="true"><use href="#i-sliders"/></svg><span>Editar efeito</span></button><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Connector e Flow Line"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div></div>
+              <div class="vt-meta-row"><p class="vt-kick"><span class="mono">18</span>Processos</p><button class="btn btn-ghost btn-xs vt-replay" type="button" aria-label="Repetir Connector e Flow Line"><svg aria-hidden="true"><use href="#i-replay"/></svg>Repetir</button></div>
               <h3 id="vt-t-flow">Connector / Flow Line</h3>
               <p class="vt-what">As linhas se desenham entre os nós e passam a fluir. O caminho é entendido antes de ser lido.</p>
-              <p class="vt-how"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Clique num nó: a luz percorre as ligações</p>
+              <p class="vt-how"><svg aria-hidden="true"><use href="#i-arrowline"/></svg>Clique num nó para ligar e desligar</p>
             </div>
           </article>
         </div>
         <p class="vt-empty" id="vt-empty" hidden></p>
 
-        <!-- CATÁLOGO · os 40 efeitos, cada um com uma prévia que responde ao cursor e ao clique -->
-        <div class="vt-cat-head">
+        <!-- CATÁLOGO · os 40 efeitos -->
+        <div class="vt-cat-head" data-rv>
           <div>
             <p class="eyebrow">Catálogo completo</p>
             <h3 class="vt-cat-h">Os 40 efeitos, por número</h3>
-            <p class="vt-cat-sub">Passe o cursor numa prévia para ela rodar e clique para mexer nela. Em Editar efeito você muda cor, ritmo, intensidade e o detalhe de cada um.</p>
           </div>
           <p class="vt-count mono" id="vt-count">40 de 40</p>
         </div>
-        <ul class="vt-cat" id="vt-cat" aria-label="Catálogo de efeitos"></ul>
-        <div class="vt-cat-foot" data-rv="up">
-          <button class="vt-plus-pill" id="vt-more" type="button" aria-controls="vt-cat" aria-expanded="false" aria-label="Ver mais 32 efeitos no catálogo"><span aria-hidden="true">+</span><b>32 efeitos</b></button>
-          <a class="vt-cat-plan" href="#planos">Liberar todos num plano <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
+        <ul class="vt-cat" id="vt-cat" aria-label="Catálogo de efeitos" data-rv-stagger></ul>
+        <button class="btn btn-ghost btn-sm vt-more" id="vt-more" type="button" aria-controls="vt-cat" aria-expanded="false">Ver os 40 efeitos</button>
 
         <!-- VALOR · o que entra na apresentação -->
-        <div class="vt-value">
+        <div class="vt-value" data-rv>
           <ul class="vt-stats">
-            <li data-rv="up" style="--rv-i: 0"><b class="display">40</b><span>efeitos prontos para entrar no slide</span></li>
-            <li data-rv="up" style="--rv-i: 1"><b class="display">7</b><span>famílias: movimento, dados, 3D, interface, interatividade, processos e narrativa</span></li>
-            <li data-rv="up" style="--rv-i: 2"><b class="display">1</b><span>arquivo HTML que abre em qualquer navegador, sem instalar nada</span></li>
+            <li><b class="display">40</b><span>efeitos prontos para entrar no slide</span></li>
+            <li><b class="display">7</b><span>famílias: movimento, dados, 3D, interface, interatividade, processos e narrativa</span></li>
+            <li><b class="display">1</b><span>arquivo HTML que abre em qualquer navegador, sem instalar nada</span></li>
           </ul>
           <ul class="vt-prin">
             <li><p class="eyebrow">Compreensão</p><h4>Reduzir esforço</h4><p>O movimento explica sequência, causa e efeito. Um fluxo que se desenha é entendido antes de ser lido.</p></li>
@@ -354,5 +347,11 @@
             <li><p class="eyebrow">Narrativa</p><h4>Dar ritmo</h4><p>Cada revelação marca o tempo da fala e mantém a sala com você do primeiro ao último slide.</p></li>
           </ul>
         </div>
+      </div>
+
+      <!-- PRÉVIA · os efeitos do catálogo sem demo no palco abrem aqui, já editáveis (o JS monta o conteúdo e leva o modal para o body) -->
+      <div class="modal theme-night vt-pv" id="vt-prev" hidden role="dialog" aria-modal="true" aria-labelledby="vt-pv-t">
+        <div class="modal-bg" data-close></div>
+        <div class="modal-box vt-pv-box"></div>
       </div>
     </section>

@@ -1,6 +1,5 @@
 /* Gerado a partir de prototype/src/html com conversão fiel (tools/html-to-tsx.mjs).
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines. */
-import type { CSSProperties } from 'react';
 import Link from 'next/link';
 export default function SiteNav() {
   return (
@@ -12,10 +11,7 @@ export default function SiteNav() {
           </svg>
           <span className="wordmark">halor</span>
         </Link>
-        <button className="s-menu" type="button" aria-expanded="false" aria-controls="s-links" aria-label="Menu das seções">
-          <span className="s-menu-i" aria-hidden="true"><i /><i /><i /></span>
-        </button>
-        <nav className="s-links" id="s-links" aria-label="Seções do site">
+        <nav className="s-links" aria-label="Seções do site">
           <a href="#efeito">Efeito Halor</a>
           {' '}
           <a href="#produto">Produto</a>
@@ -25,8 +21,6 @@ export default function SiteNav() {
           <a href="#vitrine">Vitrine de efeitos</a>
           {' '}
           <a href="#planos">Planos</a>
-          {' '}
-          <Link className="s-menu-only" href="/entrar" style={{ '--i': 5 } as CSSProperties}>Entrar</Link>
         </nav>
         <div className="s-nav-cta">
           <Link className="btn btn-quiet btn-sm" href="/entrar">Entrar</Link>

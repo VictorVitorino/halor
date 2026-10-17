@@ -1,252 +1,36 @@
 /* ==========================================================================
-   PRODUTO · gravação do Estúdio em três cenas (monte e edite na própria
-   apresentação, baixe em HTML/PDF/PPT, importe um modelo que você já tem)
-   e o carrossel de modelos prontos, cada um com um efeito vivo.
-   As miniaturas têm renderizador próprio (pdThumbHTML): composições de
-   apresentação 16:9 com o efeito montado em CSS/SVG.
+   PRODUTO · gravação do Estúdio em loop (montar, baixar HTML, apresentar)
+   e vitrine de modelos prontos
    ========================================================================== */
-const PD_MODELS = [
-  { id: 'mg', n: 'Kickoff de projeto', d: 'Escopo, prazo e time numa abertura que se monta diante da sala.', fx: ['Motion Graphics'], ac: '#8b3dff' },
-  { id: 'ic', n: 'Aula e treinamento', d: 'Cada ideia ganha um ícone que se desenha e reage, e a coruja do halo aponta a da vez.', fx: ['Icon Motion', 'Mascote Halor'], ac: '#a970ff' },
-  { id: 'gl', n: 'Relatório executivo', d: 'O número que importa, com brilho e contador.', fx: ['Glow / Light Sweep', 'Contador'], ac: '#7a33eb' },
-  { id: 'ho', n: 'Workshop', d: 'Cartões em 3D que chamam a sala para participar.', fx: ['Hologram 3D Cards'], ac: '#b791ff' },
-  { id: 'rv', n: 'Apresentação institucional', d: 'A história se revela em camadas, no tempo da fala.', fx: ['Reveal / Mask Reveal'], ac: '#9f70ff' },
-  { id: 'pg', n: 'Onboarding de time', d: 'A primeira semana em barras que avançam.', fx: ['Progress Motion'], ac: '#8752f5' },
-  { id: 'dh', n: 'Pesquisa ao vivo', d: 'O resultado acende o que importa no gráfico.', fx: ['Data Highlight'], ac: '#c9a6ff' },
-  { id: 'bp', n: 'Processo e operação', d: 'Um sinal percorre o processo, etapa por etapa.', fx: ['BPMN Flow Motion'], ac: '#7040d6' },
-  { id: 'cn', n: 'Roadmap do ano', d: 'As ondas do ano ligadas por linhas de fluxo.', fx: ['Connector / Flow Line'], ac: '#9c6cff' },
-  { id: 'sh', n: 'Abertura de evento', d: 'Uma abertura de palco com luz em movimento.', fx: ['Animated Shader'], ac: '#cfb3ff' }
-];
-
-/* curvas de nível onduladas do "shader" (fechadas, suavizadas por Catmull-Rom; geradas uma vez e congeladas) */
-const PD_SH_PATHS = [
-  'M259.6 92C261.1 93.9 263.3 96.7 263 98.7C262.7 100.7 260.1 102.9 257.8 104.1C255.6 105.3 251.9 105.5 249.4 106.1C246.9 106.7 244.9 107.2 242.6 107.6C240.4 108.1 238.2 108.7 236 108.7C233.8 108.7 231.6 108.1 229.4 107.6C227.1 107.2 225.1 106.7 222.6 106.1C220.1 105.5 216.4 105.3 214.2 104.1C211.9 102.9 209.3 100.7 209 98.7C208.7 96.7 210.9 93.9 212.4 92C213.9 90.1 216.9 89.1 218.1 87.6C219.3 86 219 84.7 219.6 82.9C220.2 81.2 220.3 78.5 221.7 76.9C223.1 75.4 225.7 74.1 228.1 73.4C230.5 72.7 233.4 72.7 236 72.7C238.6 72.7 241.5 72.7 243.9 73.4C246.3 74.1 248.9 75.4 250.3 76.9C251.7 78.5 251.8 81.2 252.4 82.9C253 84.7 252.7 86 253.9 87.6C255.1 89.1 258.1 90.1 259.6 92Z',
-  'M283.9 92C285.3 95.9 288 100.8 287 104.6C286.1 108.5 282.5 113.2 278.1 115.3C273.6 117.4 265.4 117 260.2 117.4C255.1 117.9 251 116.6 247 117.8C243 119 240.5 122.7 236 124.6C231.5 126.5 225.2 129.4 220.1 129.3C215.1 129.2 209.6 126.4 205.7 123.8C201.9 121.2 199.4 117.1 197 113.6C194.5 110.2 191.9 106.8 191 103.1C190.2 99.5 190.4 95.4 191.8 92C193.3 88.6 197.5 85.9 199.5 83C201.5 80 202.5 77.8 203.6 74C204.7 70.3 203.6 64.5 206.1 60.6C208.6 56.8 213.6 52.1 218.6 51C223.5 50 231 52.5 236 54.4C241 56.3 244.6 60.4 248.6 62.5C252.5 64.6 256 65.4 259.8 67C263.6 68.6 268.3 69.9 271.4 72.4C274.6 74.8 276.5 78.2 278.6 81.5C280.6 84.7 282.5 88.1 283.9 92Z',
-  'M311.6 92C309.5 97.8 304.1 103 300.4 108C296.7 112.9 293.9 117.8 289.4 121.6C284.8 125.4 278.8 128.6 273 130.8C267.1 133 260.4 132.8 254.2 134.7C248 136.7 243.2 139.8 236 142.4C228.8 145 219.1 150.5 211.1 150.6C203 150.6 192.7 147.3 187.8 142.5C183 137.8 183.1 128 182.2 121.8C181.4 115.6 184 110.2 182.8 105.2C181.5 100.2 176.8 96.9 174.7 92C172.6 87.1 169.6 81 170.2 75.7C170.9 70.4 174.9 65.1 178.6 60.2C182.3 55.3 187 50.5 192.5 46.4C198.1 42.2 204.7 36.8 211.9 35.4C219.2 34 229.1 35.4 236 38C242.9 40.6 248 47.9 253.4 51.3C258.7 54.6 261.7 56.6 268.3 58.1C274.9 59.6 285.5 58 292.9 60.4C300.4 62.9 309.8 67.7 312.9 72.9C316 78.2 313.7 86.2 311.6 92Z',
-  'M337.7 92C332.9 99.4 318.4 105.2 311.2 110.6C304 116 298.6 118.6 294.5 124.4C290.5 130.3 291.7 139.1 287 145.6C282.3 152 274.9 159.8 266.4 163.4C257.9 166.9 246.1 166.7 236 166.7C225.9 166.6 215.4 165.3 205.8 163C196.2 160.6 185 157.8 178.5 152.4C171.9 147 168.3 137.8 166.5 130.5C164.6 123.3 169.1 115.4 167.3 109C165.6 102.6 160.8 98.9 156 92C151.1 85.1 139.8 76 138.3 67.8C136.9 59.6 140.5 48.7 147.5 43C154.5 37.2 169.7 35.3 180.2 33.4C190.7 31.5 200.9 32.4 210.2 31.6C219.5 30.7 227.4 28.1 236 28.1C244.6 28 253.7 29.1 261.9 31.1C270.1 33.2 276.7 37.3 285.3 40.3C293.9 43.2 304.3 44.7 313.5 49.1C322.6 53.4 336.1 59 340.2 66.2C344.2 73.3 342.5 84.6 337.7 92Z',
-  'M349.8 92C347.2 100.6 338.3 108.8 331.8 115.8C325.4 122.7 316.4 126.2 311.3 133.7C306.3 141.2 307.1 151.3 301.5 160.8C296 170.3 289 185.5 278.1 190.9C267.2 196.3 248.6 196.7 236 193.3C223.4 189.9 212.1 177.3 202.6 170.4C193.1 163.6 187.4 157.2 178.9 152C170.4 146.7 159.3 144.5 151.5 138.8C143.6 133.1 136.5 125.6 131.7 117.8C127 110 125.8 101.2 123.2 92C120.6 82.8 115.6 72.3 116.4 62.4C117.2 52.4 119.4 39.1 128 32.2C136.7 25.3 155 21.9 168.4 21C181.7 20.1 196.8 26.6 208.1 26.5C219.4 26.5 225.3 23.9 236 20.5C246.7 17.1 259.9 7.5 272.6 6.1C285.3 4.7 301.7 7 312.1 12.2C322.4 17.4 328.9 28.6 334.8 37.3C340.6 46 344.7 55.3 347.2 64.4C349.7 73.6 352.3 83.4 349.8 92Z'
-];
-
-/* mascote Halor (coruja com o brilho do halo) que vive no slide de aula: salta, aponta e acompanha a ideia da vez */
-const PD_OWL = '<svg class="pd-owl" viewBox="0 0 64 68" aria-hidden="true"><ellipse class="pd-owl-halo" cx="32" cy="7" rx="13" ry="3.6"/>'
-  + '<g class="pd-owl-b"><path d="M17.5 23L15 12.5l9.5 6zM46.5 23L49 12.5l-9.5 6z" fill="#7a33eb"/>'
-  + '<path d="M32 16C20 16 13.5 25 13.5 37c0 14 8 23 18.5 23S50.5 51 50.5 37C50.5 25 44 16 32 16z" fill="#8b3dff"/>'
-  + '<path d="M21 23.5c-3.2 2.6-5 6.4-5.4 11" fill="none" stroke="#c9a6ff" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>'
-  + '<ellipse cx="32" cy="45.5" rx="11" ry="11.5" fill="#f4eeff"/><path d="M27 42.5q2 1.6 4 0M33 42.5q2 1.6 4 0M30 48q2 1.6 4 0" fill="none" stroke="#c9a6ff" stroke-width="1.3" stroke-linecap="round"/>'
-  + '<circle cx="25" cy="31" r="7" fill="#fff"/><circle cx="39" cy="31" r="7" fill="#fff"/>'
-  + '<g class="pd-owl-eye"><circle cx="25" cy="30.5" r="3.6" fill="#17112b"/><circle cx="39" cy="30.5" r="3.6" fill="#17112b"/><circle cx="26.2" cy="29.2" r="1.2" fill="#fff"/><circle cx="40.2" cy="29.2" r="1.2" fill="#fff"/></g>'
-  + '<ellipse cx="18.6" cy="38.6" rx="2.2" ry="1.3" fill="#ff9ad5" opacity=".8"/><ellipse cx="45.4" cy="38.6" rx="2.2" ry="1.3" fill="#ff9ad5" opacity=".8"/>'
-  + '<path d="M29.4 35.4h5.2L32 39.2z" fill="#f7bd55"/><path d="M27 60v2.6M30 60v2.6M34 60v2.6M37 60v2.6" stroke="#f7bd55" stroke-width="2" stroke-linecap="round"/>'
-  + '<path d="M49 36c3 3 4 8 3 13-3-2-4.5-6-4.5-9z" fill="#6421d1"/>'
-  + '<path class="pd-owl-w" d="M15.5 35c-6 .2-11 3.4-13.6 8.6 5.6 1 10.6-.6 14.2-4.2z" fill="#6421d1"/></g></svg>';
-
-/* miniatura de cada modelo: um slide 16:9 de verdade, com o efeito vivo */
-function pdThumbHTML(id) {
-  const foot = (dark, n) => `<div class="pd-th-ft"><b><svg aria-hidden="true"><use href="${dark ? '#hl-mark' : '#hl-mark-paper'}"/></svg>halor</b><span>${n}</span></div>`;
-  switch (id) {
-    case 'mg': return `<div class="pd-th pd-th-dark pd-th-mg"><span class="pd-th-grid"></span>
-<div class="pd-mg-orb"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="pd-mg-c1" cx="50" cy="50" r="45" pathLength="1"/><circle class="pd-mg-c2" cx="50" cy="50" r="35"/></svg><b>KICKOFF</b><i class="pd-mg-sq"></i></div>
-<div class="pd-mg-copy"><p class="pd-th-k"><i></i>Capítulo 01 · Kickoff</p><p class="pd-th-h"><span>Do kickoff à</span> <span>entrega em</span> <em>12 semanas.</em></p><span class="pd-mg-rule"></span>
-<div class="pd-mg-kpis"><div><b>12</b><span>semanas</span><i></i></div><div><b>4</b><span>frentes</span><i></i></div><div><b>1</b><span>time</span><i></i></div></div></div>
-<div class="pd-mg-track"><i></i><i></i><i></i><i></i></div>${foot(1, '01')}</div>`;
-    case 'ic': {
-      const ic = [
-        ['Ver', 'O olhar decide rápido', '<path class="pd-ic-eye" pathLength="1" d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle class="pd-ic-pupil" pathLength="1" cx="12" cy="12" r="3"/>'],
-        ['Sentir', 'A emoção segura a atenção', '<path class="pd-ic-heart" pathLength="1" d="M12 19.5s-7.5-4.6-7.5-10A4.2 4.2 0 0 1 12 7a4.2 4.2 0 0 1 7.5 2.5c0 5.4-7.5 10-7.5 10z"/>'],
-        ['Lembrar', 'A imagem fica na memória', '<path pathLength="1" d="M9 17.5h6M10 20.5h4"/><path pathLength="1" d="M12 3.5a5.5 5.5 0 0 0-3.2 10c.7.5 1.2 1.3 1.2 2.2v.3h4v-.3c0-.9.5-1.7 1.2-2.2A5.5 5.5 0 0 0 12 3.5z"/><path class="pd-ic-ray" pathLength="1" d="M3 9.5h1.5M19.5 9.5H21M5.2 3.6l1 1M18.8 3.6l-1 1"/>']
-      ];
-      return `<div class="pd-th pd-th-light pd-th-ic"><span class="pd-th-grid"></span><p class="pd-th-k">Aula 4 · Design de atenção</p><p class="pd-th-h">Três ideias para levar.</p>
-<div class="pd-ic-row">${ic.map((t, i) => `<div class="pd-ic-t" style="--i:${i}"><span class="pd-ic-i"><svg viewBox="0 0 24 24" aria-hidden="true">${t[2]}</svg></span><b>${t[0]}</b><small>${t[1]}</small></div>`).join('')}</div>${PD_OWL}${foot(0, '04')}</div>`;
-    }
-    case 'gl': return `<div class="pd-th pd-th-light pd-th-gl"><span class="pd-th-grid"></span><p class="pd-th-k">Relatório executivo · 3º trimestre</p><p class="pd-th-h">O trimestre em um número.</p>
-<div class="pd-gl-kpi"><small>Leitura completa</small><b class="pd-gl-n"><span class="pd-gl-cnt"></span>%</b><span class="pd-gl-sub">+32 pontos sobre o trimestre anterior</span><i class="pd-gl-bar"><i></i></i><span class="pd-gl-sweep"></span></div>
-<div class="pd-gl-tiles"><div style="--v:62%"><small>Tempo médio</small><b>7 min</b><i></i></div><div style="--v:78%"><small>Votos na sala</small><b>1.240</b><i></i></div><div style="--v:68%"><small>Adoção</small><b>68%</b><i></i></div><div style="--v:45%"><small>Compartilhado</small><b>312×</b><i></i></div></div>${foot(0, '07')}</div>`;
-    case 'ho': return `<div class="pd-th pd-th-dark pd-th-ho"><span class="pd-th-grid"></span><span class="pd-ho-floor"></span>
-<span class="pd-ho-note n1">Prazo</span><span class="pd-ho-note n2">Cliente</span><span class="pd-ho-note n3">Dados</span>
-<div class="pd-ho-scene"><div class="pd-ho-card pd-ho-b2"></div><div class="pd-ho-card pd-ho-b1"></div>
-<div class="pd-ho-card pd-ho-front"><p class="pd-ho-k">Workshop · Ideação<i></i></p><p class="pd-ho-h">O que não pode faltar?</p>
-<div class="pd-ho-stats"><div><b>24</b><span>ideias</span></div><div><b>6</b><span>grupos</span></div><div><b>10</b><span>minutos</span></div></div>
-<p class="pd-ho-ft"><span>Votação aberta</span><span>Rodada 2</span></p><span class="pd-ho-sheen"></span></div></div></div>`;
-    case 'rv': return `<div class="pd-th pd-th-light pd-th-rv"><span class="pd-th-grid"></span><div class="pd-rv-copy"><p class="pd-th-k">Quem somos</p>
-<p class="pd-th-h"><span><i>Uma história</i></span><span><i>que se vê.</i></span></p><p class="pd-rv-p">Missão, números e pessoas em poucos slides.</p>
-<div class="pd-rv-nums"><div><b>12</b><span>anos</span></div><div><b>340</b><span>pessoas</span></div><div><b>9</b><span>cidades</span></div></div></div>
-<div class="pd-rv-img"><span class="pd-rv-pic a"></span><span class="pd-rv-pic b"><i></i><i></i><i></i></span><span class="pd-rv-cur"></span><span class="pd-rv-cap">Nossa casa</span></div>${foot(0, '02')}</div>`;
-    case 'pg': {
-      const bars = [['Conhecer o time', 100], ['Ferramentas', 80], ['Primeira entrega', 60], ['Feedback', 30]];
-      return `<div class="pd-th pd-th-light pd-th-pg"><span class="pd-th-grid"></span><p class="pd-th-k">Boas-vindas · semana 1</p><p class="pd-th-h">Sua primeira semana.</p>
-<div class="pd-pg-gauge"><span class="pd-pg-ring"></span><b><span class="pd-pg-cnt"></span>%</b><small>da trilha</small></div>
-<div class="pd-pg-bars">${bars.map((b, i) => `<div style="--v:${b[1]}%;--i:${i}"><span>${b[0]}</span><b>${b[1]}%</b><i><i></i></i></div>`).join('')}</div>${foot(0, '05')}</div>`;
-    }
-    case 'dh': {
-      const bars = [['Design', 38], ['Dados', 32], ['Vendas', 22], ['RH', 16], ['TI', 12], ['Jurídico', 8]];
-      return `<div class="pd-th pd-th-light pd-th-dh"><span class="pd-th-grid"></span><p class="pd-th-k"><i></i>Pesquisa ao vivo · 128 votos</p><p class="pd-th-h">A sala respondeu.</p>
-<div class="pd-dh-chart">${bars.map((b, i) => `<div class="pd-dh-b${i < 3 ? ' top' : ''}${i === 5 ? ' low' : ''}" style="--h:${Math.round(b[1] / 38 * 100)};--i:${i}"><em>${b[1]}</em><i></i><span>${b[0]}</span></div>`).join('')}
-<span class="pd-dh-brk"></span><div class="pd-dh-call a"><b>3 frentes somam 72%</b><span>Design, Dados e Vendas</span></div><div class="pd-dh-call b"><b>Jurídico pede atenção</b><span>só 6% dos votos</span></div></div>${foot(0, '09')}</div>`;
-    }
-    case 'bp': return `<div class="pd-th pd-th-light pd-th-bp"><span class="pd-th-grid"></span><p class="pd-th-k">Processo · atendimento</p><p class="pd-th-h">Do pedido à entrega.</p>
-<div class="pd-bp-st"><span class="s0">Pedido recebido</span><span class="s1">Elegível? Sim</span><span class="s2">Em análise</span><span class="s3">Entregue</span></div>
-<svg class="pd-bp-svg" viewBox="0 0 320 180" aria-hidden="true"><defs><marker id="pd-bp-ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5 0 10z" fill="#9b8fc4"/></marker></defs>
-<rect class="pd-bp-pool" x="12" y="58" width="296" height="100" rx="6"/><path class="pd-bp-lane" d="M18 58H30V158H18A6 6 0 0 1 12 152V64A6 6 0 0 1 18 58Z"/><line class="pd-bp-sep" x1="30" y1="108" x2="308" y2="108"/>
-<text class="pd-bp-ll" transform="translate(23.5 83) rotate(-90)">CLIENTE</text><text class="pd-bp-ll" transform="translate(23.5 133) rotate(-90)">OPERAÇÃO</text>
-<path class="pd-bp-no" d="M150 72V65H92V71"/>
-<path class="pd-bp-f f0" d="M51 83H65"/><path class="pd-bp-f f1" d="M118 83H138"/><path class="pd-bp-f f2" d="M150 94V133H165"/><path class="pd-bp-f f3" d="M218 133H229"/><path class="pd-bp-f f4" d="M282 133H288"/>
-<g class="pd-bp-n n0"><circle cx="44" cy="83" r="7"/></g>
-<g class="pd-bp-n n1"><rect x="66" y="71" width="52" height="24" rx="5"/><text x="92" y="86">Pedido</text></g>
-<g class="pd-bp-n n2"><path d="M150 72L161 83 150 94 139 83z"/><text x="150" y="86">?</text></g>
-<g class="pd-bp-n n3"><rect x="166" y="121" width="52" height="24" rx="5"/><text x="192" y="136">Análise</text></g>
-<g class="pd-bp-n n4"><rect x="230" y="121" width="52" height="24" rx="5"/><text x="256" y="136">Entrega</text></g>
-<g class="pd-bp-n n5"><circle cx="296" cy="133" r="7"/></g>
-<text class="pd-bp-yes" x="155" y="106">sim</text><text class="pd-bp-yes" x="100" y="63.5">ajustar</text>
-<circle class="pd-bp-tok" r="5.5" cx="0" cy="0"/>
-</svg>${foot(0, '06')}</div>`;
-    case 'cn': {
-      const P = ['M64 108C78 108 74 80 88 80', 'M64 108C78 108 74 136 88 136', 'M140 80C154 80 154 108 168 108', 'M140 136C154 136 154 108 168 108', 'M220 108H252'];
-      const nodes = [['T1', 'Base', 12, 96], ['T2', 'Escala', 88, 68], ['T2', 'Pessoas', 88, 124], ['T3', 'Dados', 168, 96], ['T4', 'IA', 252, 96]];
-      return `<div class="pd-th pd-th-dark pd-th-cn"><span class="pd-th-grid"></span><p class="pd-th-k">Roadmap 2027</p><p class="pd-th-h">Quatro ondas, um ano.</p>
-<svg class="pd-cn-svg" viewBox="0 0 320 180" aria-hidden="true">
-${P.map((d, i) => `<path class="pd-cn-l" style="--i:${i}" pathLength="1" d="${d}"/><path class="pd-cn-flow" style="--i:${i}" d="${d}"/>`).join('')}
-${P.map((d, i) => `<circle class="pd-cn-pk" style="--i:${i}" r="2.4"><animateMotion dur="${(2 + i * .25).toFixed(2)}s" begin="${(i * .35).toFixed(2)}s" repeatCount="indefinite" path="${d}"/></circle>`).join('')}
-${nodes.map((n, i) => `<g class="pd-cn-n${i === 4 ? ' end' : ''}" style="--i:${i}"><rect x="${n[2]}" y="${n[3]}" width="52" height="24" rx="6"/><text class="pd-cn-t" x="${n[2] + 7}" y="${n[3] + 10}">${n[0]}</text><text x="${n[2] + 7}" y="${n[3] + 19}">${n[1]}</text></g>`).join('')}
-</svg>${foot(1, '03')}</div>`;
-    }
-    case 'sh': return `<div class="pd-th pd-th-dark pd-th-sh"><div class="pd-sh-fx"><span class="pd-sh-blob a"></span><span class="pd-sh-blob b"></span><span class="pd-sh-blob c"></span>
-<svg class="pd-sh-lines" viewBox="-36 -14 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g>${PD_SH_PATHS.map((d, i) => `<path class="pd-sh-base" d="${d}"/><path class="pd-sh-hot" style="--i:${i}" pathLength="1" d="${d}"/>`).join('')}</g></svg></div>
-<div class="pd-sh-copy"><p class="pd-th-k">Evento 2027 · Abertura</p><p class="pd-th-h">Bem-vindos ao próximo capítulo.</p><span class="pd-sh-rule"></span><p class="pd-sh-sub"><i></i>Auditório principal · 9h</p></div>${foot(1, '01')}</div>`;
-  }
-  return '';
-}
-
-/* cartão do carrossel: miniatura viva, nome, uso e o chip com o nome do efeito (grupo nomeado pelo título) */
-function pdModelHTML(m) {
-  return `<article class="pd-model" role="group" aria-labelledby="pd-m-${m.id}" style="--ac:${m.ac}"><div class="pd-mthumb" aria-hidden="true">${pdThumbHTML(m.id)}</div>`
-    + `<div class="pd-mb"><h4 id="pd-m-${m.id}">${m.n}</h4><p>${m.d}</p><div class="pd-fx">${m.fx.map((f, i) => `<span class="chip${i ? ' chip-line' : ' pd-fxchip'}">${i ? '' : '<svg aria-hidden="true"><use href="#i-spark"/></svg>'}${f}</span>`).join('')}</div></div></article>`;
-}
-
-/* gravação do Estúdio: endereço, duração e descrição de cada cena */
-const REC_SCENES = [
-  { url: 'estudio.halor · kickoff-2027.html', d: 8600, a: 'Cena 1 de 3: a apresentação montada em HTML e editada ali mesmo, no modo apresentação.' },
-  { url: 'estudio.halor · Baixar apresentação', d: 7600, a: 'Cena 2 de 3: a apresentação baixada em HTML, pronta para apresentar. Também sai em PDF ou PPT.' },
-  { url: 'estudio.halor · Importar arquivo', d: 9400, a: 'Cena 3 de 3: um PDF, PPT ou HTML enviado vira uma apresentação Halor, do antes para o depois.' }
+/* slides da gravação do Estúdio (trilho e canvas) */
+const REC_SLIDES = [
+  { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] },
+  { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] },
+  { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', unit: '%', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] },
+  { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' }
 ];
 
 function bootProduto() {
-  pdBootModels();
-  bootEvo();
   bootEfeitoFx();
   const gain = $('.pd-gain');
   if (gain) new IntersectionObserver(es => { if (es[0].isIntersecting) gain.classList.add('on'); }, { threshold: .4 }).observe(gain);
-  pdBootRec();
-}
-
-/* Modelos: monta os cartões, setas, arrasto e teclado. Cada efeito liga só com o carrossel na tela e o
-   cartão perto da área visível (começa um pouco antes de aparecer, sem "piscar" do quadro final ao inicial).
-   Cursor, toque ou as setas do teclado reiniciam a coreografia; "Pausar efeitos" deixa todos no quadro final. */
-function pdBootModels() {
-  const track = $('#pd-models'); if (!track) return;
-  track.innerHTML = PD_MODELS.map(pdModelHTML).join('');
-  const box = track.closest('.pd-models'), car = track.closest('.pd-carousel'), cards = $$('.pd-model', track);
-  const prev = $('.pd-prev', box), next = $('.pd-next', box), fxBtn = $('.pd-fxpause', box), live = $('#pd-live', box);
-  const beh = () => (REDUCED ? 'auto' : 'smooth');
-  const step = () => (cards[0] ? cards[0].getBoundingClientRect().width + 16 : 300);
-  const by = () => Math.max(step(), Math.floor(track.clientWidth / step()) * step());
-  const go = dx => track.scrollBy({ left: dx, behavior: beh() });
-  prev.addEventListener('click', () => go(-by()));
-  next.addEventListener('click', () => go(by()));
-  let dx = null, sl = 0, pt = 'mouse';
-  track.addEventListener('pointerdown', e => { pt = e.pointerType; if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; track.classList.add('drag'); });
-  window.addEventListener('pointermove', e => { if (dx != null) track.scrollLeft = sl - (e.clientX - dx); });
-  window.addEventListener('pointerup', () => { dx = null; track.classList.remove('drag'); });
-  /* bordas: máscara e setas desligadas no começo e no fim; o foco nunca fica num botão desligado */
-  const edge = () => {
-    const s = track.scrollLeft < 10, e = track.scrollLeft + track.clientWidth > track.scrollWidth - 10, a = document.activeElement;
-    car.classList.toggle('at-start', s); car.classList.toggle('at-end', e);
-    prev.disabled = s; next.disabled = e;
-    if ((a === prev && s) || (a === next && e)) (a === next && !s ? prev : a === prev && !e ? next : track).focus({ preventScroll: true });
-  };
-  track.addEventListener('scroll', edge, { passive: true }); edge();
-
-  /* efeitos: ligados = carrossel à vista, cartão perto da área visível e sem pausa */
-  let carOn = false, fxOff = false;
-  const near = new Set();
-  const smil = (c, on) => $$('svg', c).forEach(s => { if (s.pauseAnimations) on && !REDUCED ? s.unpauseAnimations() : s.pauseAnimations(); });
-  const apply = c => { const on = !REDUCED && carOn && near.has(c) && !fxOff; if (c.classList.contains('pd-on') !== on) { c.classList.toggle('pd-on', on); smil(c, on); } };
-  const all = () => cards.forEach(apply);
-  const replay = c => { if (REDUCED || fxOff || !c.classList.contains('pd-on')) return; c.classList.remove('pd-on'); void c.offsetWidth; c.classList.add('pd-on'); };
-  cards.forEach(c => {
-    smil(c, false);
-    c.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') replay(c); });
-    c.addEventListener('click', () => { if (pt !== 'mouse') replay(c); });
-  });
-
-  /* teclado: o trilho é uma parada só; as setas andam de modelo em modelo (destaque, rolagem e efeito de novo) */
-  let cur = -1;
-  const vis = c => { const t = track.getBoundingClientRect(), r = c.getBoundingClientRect(); return r.left >= t.left - 2 && r.right <= t.right + 2; };
-  const first = () => Math.max(0, cards.findIndex(vis));
-  const mark = i => { cur = i; cards.forEach((c, k) => c.classList.toggle('pd-cur', k === i)); live.textContent = `${PD_MODELS[i].n}, ${PD_MODELS[i].fx[0]}. Modelo ${i + 1} de ${cards.length}.`; };
-  track.addEventListener('focus', () => { if (cur < 0 || !vis(cards[cur])) mark(first()); });
-  track.addEventListener('keydown', e => {
-    if (cur < 0 || !vis(cards[cur])) cur = first();
-    const n = { ArrowRight: cur + 1, ArrowLeft: cur - 1, Home: 0, End: cards.length - 1 }[e.key];
-    if (n == null) return;
-    e.preventDefault();
-    const i = Math.max(0, Math.min(cards.length - 1, n)); if (i === cur) return;
-    const fwd = i > cur; mark(i);
-    if (e.key === 'Home') track.scrollTo({ left: 0, behavior: beh() });
-    else if (e.key === 'End') track.scrollTo({ left: track.scrollWidth, behavior: beh() });
-    else if (!vis(cards[i])) go(fwd ? step() : -step());
-    replay(cards[i]);
-  });
-
-  if (REDUCED || !('IntersectionObserver' in window)) { fxBtn.hidden = true; return; }
-  fxBtn.addEventListener('click', () => {
-    fxOff = !fxOff; all();
-    $('use', fxBtn).setAttribute('href', fxOff ? '#i-play' : '#i-pause');
-    $('span', fxBtn).textContent = fxOff ? 'Retomar efeitos' : 'Pausar efeitos';
-  });
-  new IntersectionObserver(es => { carOn = es[es.length - 1].isIntersecting; all(); }, { rootMargin: '160px 0px' }).observe(track);
-  const io = new IntersectionObserver(es => { es.forEach(e => (e.isIntersecting ? near.add(e.target) : near.delete(e.target))); all(); }, { root: track, rootMargin: '0px 40%' });
-  cards.forEach(c => io.observe(c));
-}
-
-/* Gravação do Estúdio: três cenas em loop enquanto o palco está à vista; etapas escolhem a cena e o botão pausa.
-   Relógio e animações andam juntos: fora da tela ou pausada, os dois congelam (.rec-hold) e continuam de onde pararam. */
-function pdBootRec() {
   const stage = $('#rec-stage'); if (!stage) return;
-  const rec = stage.closest('.pd-rec'), frame = stage.closest('.pd-rec-frame'), url = $('#rec-url'), btns = $$('[data-rec]'), pause = $('#rec-pause');
-  let st = 0, timer = 0, visible = false, paused = false, running = false, t0 = 0, left = 0;
-  const can = () => !REDUCED && visible && !paused && currentView === 'v-site';
-  const run = v => { running = v; rec.classList.toggle('rec-hold', !v); };
-  /* para o relógio guardando o que falta da cena (para continuar de onde parou) */
-  const stop = () => { if (!running) return; clearTimeout(timer); run(false); left = Math.max(0, left - (performance.now() - t0)); };
-  const go = () => {
-    stop(); if (!can()) return;
-    run(true); t0 = performance.now();
-    timer = setTimeout(() => { set((st + 1) % REC_SCENES.length); go(); }, left);
-  };
+  const rail = $('#re-rail');
+  REC_SLIDES.forEach((s, i) => { const d = el('div', 're-th' + (i === 2 ? ' on' : '')); d.insertAdjacentHTML('beforeend', slideHTML(s, i + 1, 'halor')); rail.appendChild(d); });
+  $('#re-canvas').innerHTML = slideHTML(REC_SLIDES[2], 3, 'halor');
+  $('#ru-after').innerHTML = slideHTML({ type: 'cover', k: 'Plano 2027', h: 'Plano 2027 em 12 semanas.', sub: 'Importado de apresentacao-antiga.pptx' }, 1, 'halor');
+  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Salvar como', 'estudio.halor · Importar arquivo'];
+  let st = 0, timer = 0, visible = false;
   const set = n => {
-    clearTimeout(timer); run(false);
-    st = n; left = REC_SCENES[n].d; stage.dataset.state = String(n);
-    stage.classList.remove('play'); rec.classList.remove('rec-run'); void stage.offsetWidth; stage.classList.add('play'); rec.classList.add('rec-run');
-    rec.style.setProperty('--rec-d', REC_SCENES[n].d + 'ms');
-    url.textContent = REC_SCENES[n].url; stage.setAttribute('aria-label', REC_SCENES[n].a);
-    btns.forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.rec === n)));
+    st = n; stage.dataset.state = String(n);
+    stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play');
+    $('#rec-url').textContent = URLS[n];
+    $$('[data-rec]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.rec === n)));
   };
-  const paint = () => {
-    rec.classList.toggle('rec-paused', paused);
-    $('use', pause).setAttribute('href', paused ? '#i-play' : '#i-pause');
-    $('span', pause).textContent = paused ? 'Continuar a gravação' : 'Pausar a gravação';
-  };
-  /* escolher uma etapa é pedir para ver a cena: tira a pausa e, em tela estreita, traz o palco para a vista */
-  btns.forEach(b => b.addEventListener('click', () => {
-    if (paused) { paused = false; paint(); }
-    set(+b.dataset.rec); go();
-    if (matchMedia('(max-width: 960px)').matches) { const r = frame.getBoundingClientRect(); if (r.top < 72 || r.bottom > innerHeight) frame.scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' }); }
-  }));
-  if (REDUCED) pause.hidden = true;
-  pause.addEventListener('click', () => { if (paused) { paused = false; paint(); go(); } else { stop(); paused = true; paint(); } });
-  /* ao voltar à tela: com a gravação rodando, a cena recomeça; pausada, mantém o quadro e o tempo que falta */
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { if (!paused) set(st); go(); } else stop(); }).observe(stage);
-  document.addEventListener('halor:view', () => (can() ? go() : stop()));
+  const loop = () => { clearTimeout(timer); if (REDUCED || !visible || currentView !== 'v-site') return; timer = setTimeout(() => { set((st + 1) % 3); loop(); }, 4600); };
+  $$('[data-rec]').forEach(b => b.addEventListener('click', () => { set(+b.dataset.rec); loop(); }));
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); loop(); } else clearTimeout(timer); }).observe(stage);
+  document.addEventListener('halor:view', loop);
   set(0);
 }
 

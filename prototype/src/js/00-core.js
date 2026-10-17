@@ -54,7 +54,7 @@ function openModal(id) {
   const m = document.getElementById(id); if (!m) return;
   lastFocus = document.activeElement;
   m.hidden = false;
-  const f = m.querySelector('input, button:not([data-close]), [href]') || m.querySelector('button');
+  const f = m.querySelector('input, button:not([data-close]), a[href]') || m.querySelector('button');
   setTimeout(() => f && f.focus(), 30);
 }
 function closeModal(m) { m.hidden = true; if (lastFocus) lastFocus.focus(); }

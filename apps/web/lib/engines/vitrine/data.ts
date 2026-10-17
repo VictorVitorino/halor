@@ -50,7 +50,7 @@ export const VT_FX: readonly VtFx[] = [
   [29, 'Morphing Shapes', 'Movimento', 'ritmo comparacao', 2, 'Formas que se transformam: silos viram centro, o centro vira rede.'],
   [30, 'Particle System', '3D', 'abertura relacao', 3, 'Campo de partículas ligadas que reage ao cursor. Um fundo vivo de capa.'],
   [31, 'Shimmer / Holographic Sweep', 'Movimento', 'foco abertura', 1, 'Um brilho varre o espaço até o conteúdo chegar, com selo holográfico.'],
-  [32, 'Floating Elements', 'Movimento', 'abertura relacao', 2, 'Cards que flutuam em órbita ao redor de um núcleo.'],
+  [32, 'Floating Elements', 'Movimento', 'abertura relacao', 2, 'Cards que flutuam em órbita ao redor de um núcleo. O cursor pausa.'],
   [33, 'Card Stack', 'Interatividade', 'detalhe ritmo', 2, 'Uma pilha de cards: o do topo sai e vai para o fundo, um por vez.'],
   [34, 'Carousel / Horizontal Gallery', 'Interatividade', 'detalhe tempo', 1, 'Galeria horizontal em que cada card encaixa no centro.'],
   [35, 'Interactive Matrix', 'Interatividade', 'comparacao foco', 1, 'Matriz 2×2 com bolhas que você arrasta entre os quadrantes.'],
@@ -61,47 +61,15 @@ export const VT_FX: readonly VtFx[] = [
   [40, 'Animated Shader / Hero', '3D', 'abertura', 3, 'Capa com fundo vivo gerado em tempo real e um fio de luz atrás do título.']
 ];
 
-/** Itens do catálogo à mostra antes de abrir; o botão + mostra os outros ali mesmo. */
+/** Itens do catálogo à mostra; o resto fica atrás da pílula que leva aos planos. */
 export const VT_SHOW = 8;
 
 /**
- * Efeitos com demonstração ao vivo e editável no palco. Espelha o `data-fx` dos cards em
- * components/site/Vitrine.tsx: no catálogo esses itens ganham o selo "Ao vivo" e levam até o card.
+ * Efeitos com demonstração ao vivo no palco. Espelha o `data-fx` dos cards em
+ * components/site/Vitrine.tsx: o catálogo renderiza esses itens como botão com o selo "Ao vivo".
  */
-export const VT_LIVE: ReadonlySet<number> = new Set([30, 3, 4, 11, 12, 6, 24, 33, 16, 15, 21, 37, 35, 18]);
+export const VT_LIVE: ReadonlySet<number> = new Set([30, 3, 4, 11, 12, 6, 24, 33, 16, 21, 37, 35, 18]);
 
-/** Texto e rótulo do botão + do catálogo para N itens filtrados (aberto ou não). */
-export const vtMoreText = (n: number, open: boolean) => open ? 'Mostrar menos' : `${n - VT_SHOW} efeitos`;
-export const vtMoreLabel = (n: number, open: boolean) => open ? 'Mostrar menos efeitos no catálogo' : `Ver mais ${n - VT_SHOW} efeitos no catálogo`;
-
-/* · O que o clique numa prévia fez, dito ao leitor de tela (a prévia é decorativa) ·
-   Espelha VT_MINI_SAY do protótipo. cyc: um texto por estado · pick/net: (índice, aceso?, vizinhos) => texto ·
-   os demais: um texto. Sem entrada: "a prévia rodou de novo". */
-const ord = (i: number) => ['primeiro', 'segundo', 'terceiro', 'quarto'][i] || `${i + 1}º`;
-type MiniSay = string | readonly string[] | ((i: number, on: boolean, nb: number) => string);
-export const VT_MINI_SAY: Readonly<Record<number, MiniSay>> = {
-  4: ['camadas juntas', 'camadas afastadas, com mais profundidade'],
-  5: (i, on) => on ? `${ord(i)} card elevado` : 'todos os cards no chão',
-  7: ['vidro desfocado', 'vidro nítido'],
-  8: ['paleta 1 de 3', 'paleta 2 de 3', 'paleta 3 de 3'],
-  13: ['progresso em 72%', 'progresso em 48%', 'progresso em 94%'],
-  14: (i, on) => on ? `célula ${i + 1} de 24 em destaque` : 'mapa inteiro aceso',
-  19: 'um novo pulso foi solto',
-  20: ['onda solta', 'card tocado e selecionado'],
-  22: ['primeiro card aberto', 'segundo card aberto', 'terceiro card aberto'],
-  23: ['modal fechado', 'modal aberto, fundo escurecido'],
-  26: ['tudo desligado', 'chave ligada', 'item marcado', 'favorito salvo'],
-  28: ['fase 1 de 4', 'fase 2 de 4', 'fase 3 de 4', 'fase 4 de 4'],
-  29: ['círculo', 'losango', 'rede'],
-  31: ['carregando, com brilho', 'conteúdo carregado'],
-  32: ['órbita fechada', 'órbita aberta'],
-  34: ['card 1 de 4 no centro', 'card 2 de 4 no centro', 'card 3 de 4 no centro', 'card 4 de 4 no centro'],
-  36: (i, on) => on ? `${ord(i)} detalhe aberto` : 'detalhes fechados',
-  38: ['marco 1 de 4', 'marco 2 de 4', 'marco 3 de 4', 'marco 4 de 4'],
-  39: (i, on, nb) => on ? `nó ${i + 1} aceso com ${nb} vizinhos` : 'rede em repouso'
-};
-export function vtMiniSay(n: number, name: string, s = 0, on = false, nb = 0) {
-  const t = VT_MINI_SAY[n];
-  const what = typeof t === 'function' ? t(s, on, nb) : Array.isArray(t) ? t[s] : (t as string | undefined) || 'a prévia rodou de novo';
-  return `${name}: ${what}.`;
-}
+/** Texto e rótulo da pílula "+ N efeitos" para N itens filtrados. */
+export const vtPlusText = (n: number) => `${n - VT_SHOW} efeitos`;
+export const vtPlusLabel = (n: number) => `Mais ${n - VT_SHOW} efeitos: escolha um plano para liberar todos`;
