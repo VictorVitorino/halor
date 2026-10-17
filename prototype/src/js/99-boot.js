@@ -24,5 +24,7 @@ function boot() {
   route();
   bootHalos();
   bootFields();
+  bootNavFx();
+  bootReveal();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

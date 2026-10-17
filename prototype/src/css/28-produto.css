@@ -220,11 +220,16 @@
 .pd-what article { padding: clamp(18px, 2.2vw, 24px); gap: 8px; }
 .pd-what p:not(.pd-k) { font-size: 14.5px; line-height: 1.5; }
 
-/* etapas: título e uma frase só, sem quebrar linha no desktop */
-@media (min-width: 961px) {
-  /* a coluna das etapas nunca fica menor que a frase mais longa: sem quebra e sem vazar da página entre 961 e 1100 px */
+/* etapas: título e uma frase só, sem quebrar linha nas telas largas */
+@media (min-width: 1280px) {
+  /* a coluna das etapas nunca fica menor que a frase mais longa */
   .pd-rec { grid-template-columns: minmax(0, 1.65fr) minmax(max-content, 1fr); }
   .rec-steps small { white-space: nowrap; }
+}
+/* entre 961 e 1279 px o quadro da gravação mantém a presença e a frase longa quebra equilibrada */
+@media (min-width: 961px) and (max-width: 1279px) {
+  .pd-rec { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+  .rec-steps small { text-wrap: balance; }
 }
 
 /* barra da gravação: o ponto ao vivo não é cortado e, no celular, fica só o ponto */
