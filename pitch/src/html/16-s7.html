@@ -1,11 +1,12 @@
 <!-- CENA 7 · Download · noite · 9320 ms (60440 → 69760)
      "No fim, baixe do jeito que precisar: HTML interativo, PDF ou PowerPoint, editável ou idêntico."
      A apresentação pronta (Hologram 3D 03 + Shimmer 31) e o botão "Salvar" magnético com brilho pulsante (Magnetic Button 25, Beacon 19).
-     Em "baixe" o cursor clica (Ripple 20), a apresentação voa para a miniatura e o diálogo "Salvar como" abre do botão (Microinteractions 26).
+     Em "baixe" o cursor clica (Ripple 20), a apresentação voa para a miniatura e o diálogo "Salvar como" abre do botão por máscara circular (Microinteractions 26).
      Cada formato é marcado NA palavra, com brilho de clique: o arquivo nasce como Hologram 3D Card com Shimmer e Icon Motion (02),
      corre por um rastro de luz e voa para a pasta Downloads, onde a barra (Progress Motion 13) completa e o check bate.
-     PowerPoint: "editável" abre o slide em camadas soltas (texto, formas, fundo) e "idêntico" mostra uma placa única e travada, fiel ao pixel.
-     "Salvar" fecha: 4 de 4, selo de concluído no palco e os arquivos flutuam ligados a ele (Floating Elements 32). -->
+     PowerPoint: "editável" abre o slide em camadas soltas e etiquetadas (texto, formas, fundo) e "idêntico" mostra uma placa única e travada, fiel ao pixel.
+     As duas versões ficam no palco até o fim; só ícones pequenos voam para a pasta.
+     "Salvar" fecha: 4 de 4, o diálogo se recolhe no selo de concluído e o selo se liga aos 4 arquivos que flutuam (Floating Elements 32). -->
 <section class="scene s7" id="s7" data-world="night">
   <i class="s7-bgl"></i>
   <i class="s7-floor k fade" style="--in: 0; --dur: 1200"></i>
@@ -23,16 +24,23 @@
       <p class="k s7-kin" style="--in: 180; --dur: 700"><i></i>Etapa final · exportar<i></i></p>
     </div>
 
-    <!-- raio de atração do botão magnético -->
+    <!-- raio de atração do botão magnético: encolhe e acende quando o cursor entra -->
     <div class="s7-magr kx x-shrink" style="--out: calc(var(--w-baixe) + 60); --xdur: 300">
       <div class="s7-w k pop" style="--in: 380; --dur: 600">
-        <svg class="s7-w l spin" style="--ldur: 14000" viewBox="0 0 280 280" fill="none" aria-hidden="true"><circle cx="140" cy="140" r="136" stroke="rgba(201,166,255,.42)" stroke-width="2" stroke-dasharray="7 9"/></svg>
+        <div class="s7-w k s7-magon" style="--in: 720; --dur: 320">
+          <svg class="s7-w l spin" style="--ldur: 14000" viewBox="0 0 280 280" fill="none" aria-hidden="true"><circle class="k s7-magst" style="--in: 720; --dur: 320" cx="140" cy="140" r="136" stroke="rgba(201,166,255,.42)" stroke-width="2" stroke-dasharray="7 9"/></svg>
+        </div>
       </div>
     </div>
-    <i class="beacon s7-bea kx" style="--out: var(--w-baixe); --xdur: 200"><b class="l beat" style="--ldur: 1600"></b><b class="l beat" style="--ldur: 1600; --lph: 800"></b></i>
+    <i class="beacon s7-bea kx" style="--out: var(--w-baixe); --xdur: 200"><span class="k pop" style="--in: 420; --dur: 420"><b class="l beat" style="--ldur: 1600"></b><b class="l beat" style="--ldur: 1600; --lph: 800"></b></span></i>
 
     <!-- ===================== B · o diálogo Salvar como ===================== -->
-    <div class="s7-dlg k s7-open" style="--in: calc(var(--w-baixe) + 80); --dur: 620">
+    <!-- sai encolhendo para dentro do selo; escurece de leve a cada nascimento para dar a vez ao palco -->
+    <div class="s7-dlgx kx x-shrink" style="--out: calc(var(--w-identico) + 900); --xdur: 260">
+    <div class="s7-w k s7-dim" style="--in: var(--w-html); --dur: 900">
+    <div class="s7-w k s7-dim" style="--in: var(--w-pdf); --dur: 900">
+    <div class="s7-w k s7-dim" style="--in: var(--w-powerpoint); --dur: 900">
+    <div class="s7-dlg k s7-open" style="--in: calc(var(--w-baixe) + 80); --dur: 600">
       <div class="s7-dh">
         <svg class="mk"><use href="#hl-mark-paper"/></svg>
         <b>Salvar como</b>
@@ -44,82 +52,87 @@
         <p>Plano 2027</p><small>Kickoff</small>
         <span class="s7-tb"><i style="--v: .4"></i><i style="--v: .62"></i><i style="--v: .5"></i><i class="hot" style="--v: 1"></i></span>
       </div>
-      <p class="s7-nl k fade" style="--in: calc(var(--w-baixe) + 380); --dur: 300">Nome do arquivo</p>
-      <div class="s7-in k fade" style="--in: calc(var(--w-baixe) + 400); --dur: 300">
+      <p class="s7-nl k fade" style="--in: calc(var(--w-baixe) + 120); --dur: 240">Nome do arquivo</p>
+      <div class="s7-in k fade" style="--in: calc(var(--w-baixe) + 120); --dur: 240">
         <span class="k type" style="--in: var(--w-do); --dur: 520">Plano 2027 · Kickoff</span><i class="s7-caret k fade" style="--in: calc(var(--w-do) + 520); --dur: 60"><i class="l s7-blink"></i></i>
       </div>
       <p class="s7-meta k fade" style="--in: calc(var(--w-do) + 200); --dur: 400">12 slides · 18 efeitos · 2 personagens</p>
 
-      <p class="s7-fl k fade" style="--in: calc(var(--w-baixe) + 300); --dur: 300">Formato</p>
+      <p class="s7-fl k fade" style="--in: calc(var(--w-baixe) + 80); --dur: 240">Formato</p>
       <p class="s7-fh k fade" style="--in: calc(var(--w-precisar) - 60); --dur: 400">escolha um ou mais</p>
 
       <!-- 1 · HTML interativo -->
-      <div class="s7-row k s7-rowin" style="top: 232px; --in: calc(var(--w-baixe) + 340); --dur: 460">
+      <div class="s7-row k s7-rowin" style="top: 232px; --in: calc(var(--w-baixe) + 100); --dur: 380">
         <i class="s7-on k s7-onin" style="--in: var(--w-html); --dur: 300"></i>
         <div class="s7-rh">
-          <span class="s7-ic s7-ic-html k s7-boing" style="--in: var(--w-html); --dur: 520"><svg class="k icon-in" style="--in: calc(var(--w-baixe) + 480); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M8.5 7.5L4 12l4.5 4.5"/><path pathLength="1" d="M15.5 7.5L20 12l-4.5 4.5"/><path pathLength="1" d="M13.5 5.5l-3 13"/></svg></span>
+          <span class="s7-ic s7-ic-html k s7-boing" style="--in: var(--w-html); --dur: 520"><svg class="k icon-in" style="--in: calc(var(--w-baixe) + 180); --dur: 560" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M8.5 7.5L4 12l4.5 4.5"/><path pathLength="1" d="M15.5 7.5L20 12l-4.5 4.5"/><path pathLength="1" d="M13.5 5.5l-3 13"/></svg></span>
           <span class="s7-rt"><b>HTML interativo</b><small>abre no navegador, tudo animado</small></span>
           <span class="s7-cb"><i class="s7-cbf k pop" style="--in: var(--w-html); --dur: 320"></i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-html) + 80); --dur: 300" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         </div>
       </div>
       <!-- 2 · PDF -->
-      <div class="s7-row k s7-rowin" style="top: 324px; --in: calc(var(--w-baixe) + 450); --dur: 460">
+      <div class="s7-row k s7-rowin" style="top: 324px; --in: calc(var(--w-baixe) + 150); --dur: 380">
         <i class="s7-on k s7-onin" style="--in: var(--w-pdf); --dur: 300"></i>
         <div class="s7-rh">
-          <span class="s7-ic s7-ic-pdf k s7-boing" style="--in: var(--w-pdf); --dur: 520"><svg class="k icon-in" style="--in: calc(var(--w-baixe) + 590); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M6 3.5h8l4.5 4.5v12.5H6z"/><path pathLength="1" d="M14 3.5V8h4.5"/><path pathLength="1" d="M9 13h6"/><path pathLength="1" d="M9 16.5h4"/></svg></span>
+          <span class="s7-ic s7-ic-pdf k s7-boing" style="--in: var(--w-pdf); --dur: 520"><svg class="k icon-in" style="--in: calc(var(--w-baixe) + 230); --dur: 560" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M6 3.5h8l4.5 4.5v12.5H6z"/><path pathLength="1" d="M14 3.5V8h4.5"/><path pathLength="1" d="M9 13h6"/><path pathLength="1" d="M9 16.5h4"/></svg></span>
           <span class="s7-rt"><b>PDF</b><small>para anexar, enviar e imprimir</small></span>
           <span class="s7-cb"><i class="s7-cbf k pop" style="--in: var(--w-pdf); --dur: 320"></i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-pdf) + 80); --dur: 300" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
         </div>
       </div>
-      <!-- 3 · PowerPoint, com editável e idêntico -->
-      <div class="s7-row s7-row3 k s7-rowin" style="top: 416px; --in: calc(var(--w-baixe) + 560); --dur: 460">
-        <i class="s7-on k s7-onin" style="--in: var(--w-powerpoint); --dur: 300"></i>
-        <div class="s7-rh">
-          <span class="s7-ic s7-ic-ppt k s7-boing" style="--in: var(--w-powerpoint); --dur: 520"><svg class="k icon-in" style="--in: calc(var(--w-baixe) + 700); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M3.5 4.5h17"/><path pathLength="1" d="M5 4.5V15h14V4.5"/><path pathLength="1" d="M12 15v3.5M8.5 20.5L12 18l3.5 2.5"/><path pathLength="1" d="M8.5 11.5l2.5-2.5 2 2 2.5-3"/></svg></span>
-          <span class="s7-rt"><b>PowerPoint</b><small>arquivo .pptx, do jeito que preferir</small></span>
-          <span class="s7-cb"><i class="s7-cbf k pop" style="--in: var(--w-powerpoint); --dur: 320"></i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-powerpoint) + 80); --dur: 300" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
-        </div>
-        <div class="s7-chips k s7-chact" style="--in: calc(var(--w-powerpoint) + 120); --dur: 360">
-          <div class="s7-chip" style="left: 0">
-            <i class="s7-chon k s7-onin" style="--in: var(--w-editavel); --dur: 280"></i>
-            <svg class="s7-chi k s7-boing" style="--in: var(--w-editavel); --dur: 520" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>
-            <span><b>Editável</b><small>textos e formas soltos</small></span>
-            <i class="s7-chk k pop" style="--in: calc(var(--w-editavel) + 60); --dur: 360"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+      <!-- 3 · PowerPoint: a linha só se abre em "powerpoint" e mostra editável e idêntico -->
+      <div class="s7-r3w k s7-rowin" style="top: 416px; --in: calc(var(--w-baixe) + 200); --dur: 380">
+        <div class="s7-row s7-row3 k s7-expand" style="--in: var(--w-powerpoint); --dur: 360">
+          <i class="s7-on k s7-onin" style="--in: var(--w-powerpoint); --dur: 300"></i>
+          <div class="s7-rh">
+            <span class="s7-ic s7-ic-ppt k s7-boing" style="--in: var(--w-powerpoint); --dur: 520"><svg class="k icon-in" style="--in: calc(var(--w-baixe) + 280); --dur: 560" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M3.5 4.5h17"/><path pathLength="1" d="M5 4.5V15h14V4.5"/><path pathLength="1" d="M12 15v3.5M8.5 20.5L12 18l3.5 2.5"/><path pathLength="1" d="M8.5 11.5l2.5-2.5 2 2 2.5-3"/></svg></span>
+            <span class="s7-rt"><b>PowerPoint</b><small>arquivo .pptx, do jeito que preferir</small></span>
+            <span class="s7-cb"><i class="s7-cbf k pop" style="--in: var(--w-powerpoint); --dur: 320"></i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-powerpoint) + 80); --dur: 300" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
           </div>
-          <div class="s7-chip" style="left: 260px">
-            <i class="s7-chon k s7-onin" style="--in: var(--w-identico); --dur: 280"></i>
-            <svg class="s7-chi k s7-boing" style="--in: var(--w-identico); --dur: 520" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/><path d="M12 14.5v2.5"/></svg>
-            <span><b>Idêntico</b><small>fiel ao pixel, travado</small></span>
-            <i class="s7-chk k pop" style="--in: calc(var(--w-identico) + 60); --dur: 360"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+          <div class="s7-chips k up" style="--in: calc(var(--w-powerpoint) + 140); --dur: 400">
+            <div class="s7-chip" style="left: 0">
+              <i class="s7-chon k s7-onin" style="--in: var(--w-editavel); --dur: 280"></i>
+              <svg class="s7-chi k s7-boing" style="--in: var(--w-editavel); --dur: 520" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>
+              <span><b>Editável</b><small>textos e formas soltos</small></span>
+              <i class="s7-chk k pop" style="--in: calc(var(--w-editavel) + 60); --dur: 360"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+            </div>
+            <div class="s7-chip" style="left: 260px">
+              <i class="s7-chon k s7-onin" style="--in: var(--w-identico); --dur: 280"></i>
+              <svg class="s7-chi k s7-boing" style="--in: var(--w-identico); --dur: 520" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/><path d="M12 14.5v2.5"/></svg>
+              <span><b>Idêntico</b><small>fiel ao pixel, travado</small></span>
+              <i class="s7-chk k pop" style="--in: calc(var(--w-identico) + 60); --dur: 360"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+            </div>
           </div>
         </div>
       </div>
 
       <!-- rodapé: destino, progresso (13), contador e botão com estado de sucesso (26) -->
-      <i class="s7-sep k grow-x" style="--in: calc(var(--w-baixe) + 600); --dur: 500"></i>
-      <p class="s7-dest k fade" style="--in: calc(var(--w-baixe) + 660); --dur: 400"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 7a2 2 0 0 1 2-2h4.2l2 2.5h6.8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>Salvar em <b>Downloads › Plano 2027</b></p>
-      <div class="s7-cnt k fade" style="--in: calc(var(--w-baixe) + 700); --dur: 400">
-        <span class="kx" style="--out: calc(var(--w-interativo) + 1200); --xdur: 120">0 de 4</span>
-        <span class="kx" style="--out: calc(var(--w-powerpoint) + 340); --xdur: 120"><span class="k s7-cin" style="--in: calc(var(--w-interativo) + 1200); --dur: 300">1 de 4</span></span>
-        <span class="kx" style="--out: calc(var(--w-identico) + 1360); --xdur: 100"><span class="k s7-cin" style="--in: calc(var(--w-powerpoint) + 340); --dur: 300">2 de 4</span></span>
-        <span class="kx" style="--out: calc(var(--w-identico) + 1420); --xdur: 80"><span class="k s7-cin" style="--in: calc(var(--w-identico) + 1360); --dur: 200">3 de 4</span></span>
-        <span class="s7-c4"><span class="k s7-cin" style="--in: calc(var(--w-identico) + 1420); --dur: 300">4 de 4</span></span>
+      <i class="s7-sep k grow-x" style="--in: calc(var(--w-baixe) + 160); --dur: 420"></i>
+      <p class="s7-dest k fade" style="--in: calc(var(--w-baixe) + 180); --dur: 300"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 7a2 2 0 0 1 2-2h4.2l2 2.5h6.8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>Salvar em <b>Downloads › Plano 2027</b></p>
+      <div class="s7-cnt k fade" style="--in: calc(var(--w-baixe) + 200); --dur: 300">
+        <span class="kx" style="--out: calc(var(--w-interativo) + 1320); --xdur: 120">0 de 4</span>
+        <span class="kx" style="--out: calc(var(--w-powerpoint) + 460); --xdur: 120"><span class="k s7-cin" style="--in: calc(var(--w-interativo) + 1320); --dur: 300">1 de 4</span></span>
+        <span class="kx" style="--out: calc(var(--w-identico) + 820); --xdur: 80"><span class="k s7-cin" style="--in: calc(var(--w-powerpoint) + 460); --dur: 300">2 de 4</span></span>
+        <span class="s7-c4"><span class="k s7-cin" style="--in: calc(var(--w-identico) + 860); --dur: 300">4 de 4</span></span>
       </div>
-      <div class="s7-bar k fade" style="--in: calc(var(--w-baixe) + 700); --dur: 400">
-        <i class="k grow-x" style="--in: calc(var(--w-interativo) + 860); --dur: 340"></i>
-        <i class="k grow-x" style="--in: calc(var(--w-powerpoint) + 0); --dur: 340"></i>
-        <i class="k grow-x" style="--in: calc(var(--w-identico) + 1120); --dur: 240"></i>
-        <i class="k grow-x" style="--in: calc(var(--w-identico) + 1180); --dur: 240"></i>
-        <b class="s7-barsw k s7-barsw" style="--in: calc(var(--w-identico) + 1420); --dur: 600"></b>
+      <div class="s7-bar k fade" style="--in: calc(var(--w-baixe) + 200); --dur: 300">
+        <i class="k grow-x" style="--in: calc(var(--w-interativo) + 980); --dur: 340"></i>
+        <i class="k grow-x" style="--in: calc(var(--w-powerpoint) + 120); --dur: 340"></i>
+        <i class="k grow-x" style="--in: calc(var(--w-identico) + 560); --dur: 240"></i>
+        <i class="k grow-x" style="--in: calc(var(--w-identico) + 620); --dur: 240"></i>
+        <b class="s7-barsw k s7-barsw" style="--in: calc(var(--w-identico) + 860); --dur: 500"></b>
       </div>
-      <span class="s7-cancel k fade" style="--in: calc(var(--w-baixe) + 740); --dur: 400">Cancelar</span>
-      <div class="s7-go k fade" style="--in: calc(var(--w-baixe) + 780); --dur: 400">
-        <div class="s7-w k press" style="--in: calc(var(--w-identico) + 560); --dur: 260">
+      <span class="s7-cancel k fade" style="--in: calc(var(--w-baixe) + 220); --dur: 300">Cancelar</span>
+      <div class="s7-go k fade" style="--in: calc(var(--w-baixe) + 240); --dur: 300">
+        <div class="s7-w k press" style="--in: calc(var(--w-identico) + 300); --dur: 260">
           <span class="s7-gob"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10.5l5 5 5-5"/><path d="M5 19.5h14"/></svg>Salvar</span>
-          <span class="kx" style="--out: calc(var(--w-identico) + 1380); --xdur: 100"><span class="s7-going k fade" style="--in: calc(var(--w-identico) + 600); --dur: 160"><i class="l spinf" style="--ldur: 900"></i>Salvando…</span></span>
-          <span class="s7-gook k s7-okin" style="--in: calc(var(--w-identico) + 1400); --dur: 340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-identico) + 1460); --dur: 280" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Concluído</span>
+          <span class="kx" style="--out: calc(var(--w-identico) + 1100); --xdur: 100"><span class="s7-going k fade" style="--in: calc(var(--w-identico) + 340); --dur: 160"><i class="l spinf" style="--ldur: 900"></i>Salvando…</span></span>
+          <span class="s7-gook k s7-okin" style="--in: calc(var(--w-identico) + 840); --dur: 300"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-identico) + 880); --dur: 240" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg>Concluído</span>
         </div>
       </div>
+    </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <!-- a apresentação pronta (holograma) que voa para a miniatura do diálogo -->
@@ -142,10 +155,10 @@
       </div>
     </div>
 
-    <!-- botão Salvar magnético (25) com brilho pulsante -->
+    <!-- botão Salvar magnético (25) com brilho pulsante: puxa forte, com mola -->
     <div class="s7-savepos kx x-shrink" style="--out: calc(var(--w-baixe) + 140); --xdur: 300">
       <div class="s7-w k pop" style="--in: 300; --dur: 560">
-        <div class="s7-w k move-xy" style="--in: 720; --dur: 320; --dx: 14px; --dy: 5px">
+        <div class="s7-w k move-xy s7-ovs" style="--in: 720; --dur: 320; --dx: 26px; --dy: 9px">
           <div class="s7-w k press" style="--in: var(--w-baixe); --dur: 260">
             <i class="s7-sglow l pulse" style="--ldur: 1400"></i>
             <span class="s7-save"><svg class="k icon-in" style="--in: 520; --dur: 600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M12 4v11"/><path pathLength="1" d="M7 10.5l5 5 5-5"/><path pathLength="1" d="M5 19.5h14"/></svg>Salvar<i class="s7-sh l s7-shx" style="--ldur: 2200; --lph: -600"></i></span>
@@ -159,16 +172,19 @@
     <svg class="s7-frame" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
       <path class="k draw" style="--in: calc(var(--w-precisar) - 40); --dur: 420" pathLength="1" d="M950 182V142H990"/>
       <path class="k draw" style="--in: calc(var(--w-precisar) + 20); --dur: 420" pathLength="1" d="M1590 142H1630V182"/>
-      <path class="k draw" style="--in: calc(var(--w-precisar) + 80); --dur: 420" pathLength="1" d="M950 596V630H966"/>
-      <path class="k draw" style="--in: calc(var(--w-precisar) + 140); --dur: 420" pathLength="1" d="M1614 630H1630V596"/>
+      <!-- cantos de baixo somem quando a comparação ocupa a base do palco -->
+      <g class="kx" style="--out: var(--w-editavel); --xdur: 300">
+        <path class="k draw" style="--in: calc(var(--w-precisar) + 80); --dur: 420" pathLength="1" d="M950 596V630H966"/>
+        <path class="k draw" style="--in: calc(var(--w-precisar) + 140); --dur: 420" pathLength="1" d="M1614 630H1630V596"/>
+      </g>
     </svg>
     <p class="s7-stl k fade" style="--in: calc(var(--w-precisar) + 100); --dur: 400">Prévia do arquivo</p>
     <i class="s7-proj k fade" style="--in: calc(var(--w-precisar) + 60); --dur: 600"></i>
-    <!-- flash do projetor a cada nascimento -->
+    <!-- flash do projetor a cada nascimento; o último acende no selo -->
     <i class="s7-pflash k flash" style="--in: calc(var(--w-html) + 60); --dur: 700"></i>
     <i class="s7-pflash k flash" style="--in: calc(var(--w-pdf) + 60); --dur: 700"></i>
     <i class="s7-pflash k flash" style="--in: calc(var(--w-powerpoint) + 60); --dur: 700"></i>
-    <i class="s7-pflash k flash" style="--in: calc(var(--w-identico) + 1200); --dur: 800"></i>
+    <i class="s7-pflash k flash" style="--in: calc(var(--w-identico) + 920); --dur: 760; left: 330px; top: 262px"></i>
 
     <!-- prévia vazia no palco até o primeiro formato -->
     <div class="s7-ghost kx" style="--out: calc(var(--w-html) + 40); --xdur: 220">
@@ -188,23 +204,24 @@
       <path class="s7-cm k s7-comet" style="--in: calc(var(--w-pdf) + 20); --dur: 420" pathLength="1" d="M862 514C980 514 990 380 1090 380"/>
       <path class="s7-tr k s7-trail" style="--in: calc(var(--w-powerpoint) + 20); --dur: 900" pathLength="1" d="M862 606C1000 606 990 380 1090 380"/>
       <path class="s7-cm k s7-comet" style="--in: calc(var(--w-powerpoint) + 20); --dur: 420" pathLength="1" d="M862 606C1000 606 990 380 1090 380"/>
-      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-identico) + 20); --dur: 900" pathLength="1" d="M770 690C920 690 1180 600 1330 420"/>
-      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-identico) + 20); --dur: 440" pathLength="1" d="M770 690C920 690 1180 600 1330 420"/>
-      <!-- voo: do palco até a pasta -->
-      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-interativo) + 420); --dur: 900" pathLength="1" d="M1290 470C1290 600 1026 560 1026 700"/>
-      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-interativo) + 440); --dur: 420" pathLength="1" d="M1290 470C1290 600 1026 560 1026 700"/>
-      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-powerpoint) - 400); --dur: 900" pathLength="1" d="M1290 470C1290 600 1202 560 1202 700"/>
-      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-powerpoint) - 380); --dur: 400" pathLength="1" d="M1290 470C1290 600 1202 560 1202 700"/>
-      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-identico) + 720); --dur: 900" pathLength="1" d="M1105 480C1150 600 1378 560 1378 700"/>
-      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-identico) + 740); --dur: 400" pathLength="1" d="M1105 480C1150 600 1378 560 1378 700"/>
-      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-identico) + 780); --dur: 900" pathLength="1" d="M1458 480C1490 600 1554 560 1554 700"/>
-      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-identico) + 800); --dur: 400" pathLength="1" d="M1458 480C1490 600 1554 560 1554 700"/>
+      <!-- idêntico: passa por cima da pasta, sem cruzar a aba -->
+      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-identico) + 20); --dur: 900" pathLength="1" d="M800 690C850 626 960 624 1200 624C1320 624 1345 560 1345 470"/>
+      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-identico) + 20); --dur: 440" pathLength="1" d="M800 690C850 626 960 624 1200 624C1320 624 1345 560 1345 470"/>
+      <!-- voo: do palco até a pasta (os PowerPoint mandam só ícones pequenos e ficam no palco) -->
+      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-interativo) + 540); --dur: 900" pathLength="1" d="M1290 470C1290 600 1026 560 1026 700"/>
+      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-interativo) + 560); --dur: 420" pathLength="1" d="M1290 470C1290 600 1026 560 1026 700"/>
+      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-powerpoint) - 280); --dur: 900" pathLength="1" d="M1290 470C1290 600 1202 560 1202 700"/>
+      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-powerpoint) - 260); --dur: 400" pathLength="1" d="M1290 470C1290 600 1202 560 1202 700"/>
+      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-identico) + 340); --dur: 900" pathLength="1" d="M1170 430C1300 470 1335 560 1378 700"/>
+      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-identico) + 350); --dur: 380" pathLength="1" d="M1170 430C1300 470 1335 560 1378 700"/>
+      <path class="s7-tr k s7-trail" style="--in: calc(var(--w-identico) + 400); --dur: 900" pathLength="1" d="M1570 430C1650 500 1630 630 1554 700"/>
+      <path class="s7-cm k s7-comet" style="--in: calc(var(--w-identico) + 410); --dur: 380" pathLength="1" d="M1570 430C1650 500 1630 630 1554 700"/>
     </svg>
 
     <!-- HTML interativo: holograma com um mini slide vivo dentro -->
     <div class="s7-cpos" style="left: 1090px; top: 255px">
-      <div class="s7-w k s7-flyx" style="--in: calc(var(--w-interativo) + 420); --dur: 440; --dx: -264px">
-        <div class="s7-w k s7-flyy" style="--in: calc(var(--w-interativo) + 420); --dur: 440; --dy: 380px; --sc: .226">
+      <div class="s7-w k s7-flyx" style="--in: calc(var(--w-interativo) + 540); --dur: 440; --dx: -264px">
+        <div class="s7-w k s7-flyy" style="--in: calc(var(--w-interativo) + 540); --dur: 440; --dy: 380px; --sc: .226">
           <div class="s7-w s7-big"><div class="s7-w k s7-born" style="--in: calc(var(--w-html) + 60); --dur: 560">
             <div class="s7-w l s7-tilt" style="--ldur: 4200; --lph: -900">
               <div class="s7-fc s7-fc-html">
@@ -212,20 +229,26 @@
                 <span class="s7-fci"><svg class="k icon-in" style="--in: calc(var(--w-html) + 200); --dur: 600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M8.5 7.5L4 12l4.5 4.5"/><path pathLength="1" d="M15.5 7.5L20 12l-4.5 4.5"/><path pathLength="1" d="M13.5 5.5l-3 13"/></svg></span>
                 <div class="s7-ms">
                   <p class="s7-ms-k">Resultados do T3</p>
-                  <p class="s7-ms-t">Receita no trimestre</p>
-                  <span class="s7-ms-b"><i class="l s7-barl" style="--v: .38; --lph: 0"></i><i class="l s7-barl" style="--v: .55; --lph: -200"></i><i class="l s7-barl" style="--v: .46; --lph: -400"></i><i class="l s7-barl" style="--v: .7; --lph: -600"></i><i class="hot l s7-barl" style="--v: .95; --lph: -800"></i><i class="l s7-barl" style="--v: .62; --lph: -1000"></i></span>
-                  <span class="s7-tip k pop" style="--in: calc(var(--w-interativo) + 40); --dur: 380">+32%</span>
+                  <p class="s7-ms-t">Receita por mês</p>
+                  <span class="s7-ms-b">
+                    <i class="l s7-barl" style="--v: .38; --lph: 0"></i><i class="l s7-barl" style="--v: .55; --lph: -200"></i><i class="l s7-barl" style="--v: .46; --lph: -400"></i>
+                    <!-- a barra clicada: acende, dá um salto e ganha o balão -->
+                    <i class="s7-b4" style="--v: .7"><i class="s7-w k s7-bump" style="--in: var(--w-interativo); --dur: 420"><i class="s7-w l s7-barl" style="--lph: -600"><b></b><b class="hot k fade" style="--in: var(--w-interativo); --dur: 200"></b></i></i></i>
+                    <i class="l s7-barl" style="--v: .95; --lph: -800"></i><i class="l s7-barl" style="--v: .62; --lph: -1000"></i>
+                  </span>
+                  <svg class="s7-tipl" viewBox="0 0 357 125" fill="none" aria-hidden="true"><path class="k draw" style="--in: calc(var(--w-interativo) + 80); --dur: 220; stroke-dasharray: .16 .12 .16 .12 .16 .12 .16 1" pathLength="1" d="M207 47V70"/></svg>
+                  <span class="s7-tip k pop" style="--in: calc(var(--w-interativo) + 160); --dur: 380">+32%</span>
                   <!-- cursor de dentro do HTML: o arquivo responde ao clique -->
                   <div class="s7-mcur" style="left: 120px; top: 130px">
                     <div class="k fade" style="--in: calc(var(--w-html) + 380); --dur: 200">
-                      <div class="k move-xy" style="--in: calc(var(--w-html) + 420); --dur: 220; --dx: 132px; --dy: -54px">
+                      <div class="k move-xy" style="--in: calc(var(--w-html) + 420); --dur: 260; --dx: 87px; --dy: -42px">
                         <div class="k press" style="--in: var(--w-interativo); --dur: 240">
                           <svg viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <i class="click s7-mclick k" style="--in: var(--w-interativo); --dur: 650; left: 252px; top: 76px"></i>
+                  <i class="click s7-mclick k" style="--in: var(--w-interativo); --dur: 650; left: 207px; top: 88px"></i>
                 </div>
                 <span class="s7-ff">plano-2027.html</span>
                 <span class="s7-live k s7-livein" style="--in: var(--w-interativo); --dur: 400"><i class="l pulse" style="--ldur: 900"></i>ao vivo</span>
@@ -240,9 +263,9 @@
 
     <!-- PDF: folha de papel com as páginas atrás -->
     <div class="s7-cpos" style="left: 1090px; top: 255px">
-      <div class="s7-w k s7-flyx" style="--in: calc(var(--w-powerpoint) - 400); --dur: 400; --dx: -88px">
-        <div class="s7-w k s7-flyy" style="--in: calc(var(--w-powerpoint) - 400); --dur: 400; --dy: 380px; --sc: .226">
-          <div class="s7-w s7-big"><div class="s7-w k s7-born" style="--in: calc(var(--w-pdf) + 60); --dur: 480">
+      <div class="s7-w k s7-flyx" style="--in: calc(var(--w-powerpoint) - 280); --dur: 400; --dx: -88px">
+        <div class="s7-w k s7-flyy" style="--in: calc(var(--w-powerpoint) - 280); --dur: 400; --dy: 380px; --sc: .226">
+          <div class="s7-w s7-big"><div class="s7-w k s7-born" style="--in: calc(var(--w-pdf) + 40); --dur: 480">
             <div class="s7-w l s7-tilt" style="--ldur: 4200; --lph: -1500">
               <i class="s7-pg" style="transform: rotate(-6deg) translate(-16px, 8px)"></i>
               <i class="s7-pg" style="transform: rotate(4deg) translate(14px, 4px)"></i>
@@ -266,36 +289,32 @@
       </div>
     </div>
 
-    <!-- PowerPoint EDITÁVEL: o slide se abre em camadas soltas -->
+    <!-- PowerPoint EDITÁVEL: o slide se abre em camadas soltas (fica no palco até o fim) -->
     <div class="s7-cpos" style="left: 1090px; top: 255px">
-      <div class="s7-w k s7-flyx" style="--in: calc(var(--w-identico) + 720); --dur: 420; --dx: 153px">
-        <div class="s7-w k s7-flyy" style="--in: calc(var(--w-identico) + 720); --dur: 420; --dy: 368px; --sc: .351">
-          <div class="s7-w k s7-ppmove" style="--in: var(--w-editavel); --dur: 620">
-            <div class="s7-w k s7-born" style="--in: calc(var(--w-powerpoint) + 60); --dur: 540">
-              <div class="s7-w l float" style="--ldur: 4600; --lph: -800">
-                <div class="s7-persp">
-                  <div class="s7-ly s7-ly0 k s7-iso" style="--in: calc(var(--w-editavel) + 60); --dur: 680; --z: 0px">
-                    <div class="s7-fc s7-fc-ppt">
-                      <span class="s7-tag s7-tag-ppt">PPTX</span><span class="s7-tt">PowerPoint</span>
-                      <span class="s7-fci"><svg class="k icon-in" style="--in: calc(var(--w-powerpoint) + 200); --dur: 600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M3.5 4.5h17"/><path pathLength="1" d="M5 4.5V15h14V4.5"/><path pathLength="1" d="M12 15v3.5M8.5 20.5L12 18l3.5 2.5"/><path pathLength="1" d="M8.5 11.5l2.5-2.5 2 2 2.5-3"/></svg></span>
-                      <i class="s7-sl0"></i>
-                      <span class="s7-ff">plano-2027.pptx</span>
-                      <i class="s7-sh s7-shp l s7-shx" style="--ldur: 2600; --lph: -900"></i>
-                      <i class="s7-bflash k flash" style="--in: calc(var(--w-powerpoint) + 100); --dur: 500"></i>
-                    </div>
-                  </div>
-                  <div class="s7-ly s7-ly1 k s7-iso" style="--in: calc(var(--w-editavel) + 60); --dur: 680; --z: 84px">
-                    <i class="s7-sheet k fade" style="--in: calc(var(--w-editavel) + 220); --dur: 400"></i>
-                    <span class="s7-pb4"><i style="--v: .45"></i><i style="--v: .66"></i><i style="--v: .52"></i><i class="hot" style="--v: 1"></i></span>
-                    <i class="s7-dot"></i>
-                  </div>
-                  <div class="s7-ly s7-ly2 k s7-iso" style="--in: calc(var(--w-editavel) + 60); --dur: 680; --z: 168px">
-                    <i class="s7-sheet k fade" style="--in: calc(var(--w-editavel) + 260); --dur: 400"></i>
-                    <p class="s7-l2t">Plano 2027<i class="s7-caret2 k fade" style="--in: calc(var(--w-editavel) + 560); --dur: 60"><i class="l s7-blink"></i></i></p>
-                    <p class="s7-l2s">Da fundação ao valor</p>
-                    <i class="s7-l2sel k fade" style="--in: calc(var(--w-editavel) + 520); --dur: 200"><b></b><b></b><b></b><b></b></i>
-                  </div>
+      <div class="s7-w k s7-ppmove" style="--in: var(--w-editavel); --dur: 620">
+        <div class="s7-w k s7-born" style="--in: calc(var(--w-powerpoint) + 60); --dur: 540">
+          <div class="s7-w l float" style="--ldur: 4600; --lph: -800">
+            <div class="s7-persp">
+              <div class="s7-ly s7-ly0 k s7-iso" style="--in: calc(var(--w-editavel) + 60); --dur: 680; --z: 0px">
+                <div class="s7-fc s7-fc-ppt">
+                  <span class="s7-tag s7-tag-ppt">PPTX</span><span class="s7-tt">PowerPoint</span>
+                  <span class="s7-fci"><svg class="k icon-in" style="--in: calc(var(--w-powerpoint) + 200); --dur: 600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M3.5 4.5h17"/><path pathLength="1" d="M5 4.5V15h14V4.5"/><path pathLength="1" d="M12 15v3.5M8.5 20.5L12 18l3.5 2.5"/><path pathLength="1" d="M8.5 11.5l2.5-2.5 2 2 2.5-3"/></svg></span>
+                  <i class="s7-sl0"></i>
+                  <span class="s7-ff">plano-2027.pptx</span>
+                  <i class="s7-sh s7-shp l s7-shx" style="--ldur: 2600; --lph: -900"></i>
+                  <i class="s7-bflash k flash" style="--in: calc(var(--w-powerpoint) + 100); --dur: 500"></i>
                 </div>
+              </div>
+              <div class="s7-ly s7-ly1 k s7-iso" style="--in: calc(var(--w-editavel) + 60); --dur: 680; --z: 110px">
+                <i class="s7-sheet k fade" style="--in: calc(var(--w-editavel) + 220); --dur: 400"></i>
+                <span class="s7-pb4"><i style="--v: .45"></i><i style="--v: .66"></i><i style="--v: .52"></i><i class="hot" style="--v: 1"></i></span>
+                <i class="s7-dot"></i>
+              </div>
+              <div class="s7-ly s7-ly2 k s7-iso" style="--in: calc(var(--w-editavel) + 60); --dur: 680; --z: 220px">
+                <i class="s7-sheet k fade" style="--in: calc(var(--w-editavel) + 260); --dur: 400"></i>
+                <p class="s7-l2t">Plano 2027<i class="s7-caret2 k fade" style="--in: calc(var(--w-editavel) + 560); --dur: 60"><i class="l s7-blink"></i></i></p>
+                <p class="s7-l2s">Da fundação ao valor</p>
+                <i class="s7-l2sel k fade" style="--in: calc(var(--w-editavel) + 520); --dur: 200"><b></b><b></b><b></b><b></b></i>
               </div>
             </div>
           </div>
@@ -303,43 +322,54 @@
       </div>
     </div>
 
-    <!-- PowerPoint IDÊNTICO: uma placa só, maciça e travada, fiel ao pixel -->
-    <div class="s7-cpos" style="left: 1258px; top: 275px">
-      <div class="s7-w k s7-flyx" style="--in: calc(var(--w-identico) + 780); --dur: 420; --dx: 96px">
-        <div class="s7-w k s7-flyy" style="--in: calc(var(--w-identico) + 780); --dur: 420; --dy: 358px; --sc: .351">
-          <div class="s7-w k s7-born" style="--in: calc(var(--w-identico) + 60); --dur: 520">
-            <div class="s7-w l float" style="--ldur: 4600; --lph: -2600">
-              <div class="s7-w s7-sc74">
-                <div class="s7-persp">
-                  <i class="s7-ly s7-iso-st s7-slab" style="--z: -18px"></i>
-                  <i class="s7-ly s7-iso-st s7-slab" style="--z: -12px"></i>
-                  <i class="s7-ly s7-iso-st s7-slab" style="--z: -6px"></i>
-                  <div class="s7-ly s7-iso-st" style="--z: 0px">
-                    <div class="s7-fc s7-fc-ppt s7-fc-img">
-                      <span class="s7-tag s7-tag-ppt">PPTX</span><span class="s7-tt">PowerPoint</span>
-                      <span class="s7-fci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 15.5l4.5-4.5 4 4 2.5-2.5 5 5"/><path d="M15.5 9.5h.01"/></svg></span>
-                      <i class="s7-sl0"></i>
-                      <span class="s7-pb4"><i style="--v: .45"></i><i style="--v: .66"></i><i style="--v: .52"></i><i class="hot" style="--v: 1"></i></span>
-                      <i class="s7-dot"></i>
-                      <p class="s7-l2t">Plano 2027</p>
-                      <p class="s7-l2s">Da fundação ao valor</p>
-                      <i class="s7-px"></i>
-                      <i class="s7-scan l s7-scany" style="--ldur: 1800"></i>
-                      <span class="s7-ff">plano-2027.pptx</span>
-                      <i class="s7-bflash k flash" style="--in: calc(var(--w-identico) + 100); --dur: 500"></i>
-                    </div>
-                  </div>
+    <!-- PowerPoint IDÊNTICO: uma placa só, maciça e travada, fiel ao pixel (fica no palco até o fim) -->
+    <div class="s7-cpos" style="left: 1258px; top: 295px">
+      <div class="s7-w k s7-born" style="--in: calc(var(--w-identico) + 60); --dur: 520">
+        <div class="s7-w l float" style="--ldur: 4600; --lph: -2600">
+          <div class="s7-w s7-sc74">
+            <div class="s7-persp">
+              <i class="s7-ly s7-iso-st s7-slab" style="--z: -18px"></i>
+              <i class="s7-ly s7-iso-st s7-slab" style="--z: -12px"></i>
+              <i class="s7-ly s7-iso-st s7-slab" style="--z: -6px"></i>
+              <div class="s7-ly s7-iso-st" style="--z: 0px">
+                <div class="s7-fc s7-fc-ppt s7-fc-img">
+                  <span class="s7-tag s7-tag-ppt">PPTX</span><span class="s7-tt">PowerPoint</span>
+                  <span class="s7-fci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v14H4z"/><path d="M4 15.5l4.5-4.5 4 4 2.5-2.5 5 5"/><path d="M15.5 9.5h.01"/></svg></span>
+                  <i class="s7-sl0"></i>
+                  <span class="s7-pb4"><i style="--v: .45"></i><i style="--v: .66"></i><i style="--v: .52"></i><i class="hot" style="--v: 1"></i></span>
+                  <i class="s7-dot"></i>
+                  <p class="s7-l2t">Plano 2027</p>
+                  <p class="s7-l2s">Da fundação ao valor</p>
+                  <i class="s7-px"></i>
+                  <i class="s7-scan l s7-scany" style="--ldur: 1800"></i>
+                  <span class="s7-ff">plano-2027.pptx</span>
+                  <i class="s7-bflash k flash" style="--in: calc(var(--w-identico) + 100); --dur: 500"></i>
                 </div>
               </div>
-              <span class="s7-lock k pop" style="--in: calc(var(--w-identico) + 340); --dur: 420; left: 196px; top: 6px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/><path d="M12 14.5v2.5"/></svg></span>
             </div>
           </div>
+          <span class="s7-lock k pop" style="--in: calc(var(--w-identico) + 340); --dur: 420; left: 196px; top: 6px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/><path d="M12 14.5v2.5"/></svg></span>
         </div>
       </div>
     </div>
 
-    <!-- etiquetas das camadas e rótulos da comparação (saem quando o Salvar é clicado) -->
-    <div class="s7-cmpw kx" style="--out: calc(var(--w-identico) + 660); --xdur: 260">
+    <!-- etiquetas das camadas do editável, com linhas de chamada -->
+    <div class="s7-lyw">
+      <svg class="s7-lyl" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
+        <path class="k draw" style="--in: calc(var(--w-editavel) + 420); --dur: 240" pathLength="1" d="M950 232L966 262"/>
+        <path class="k draw" style="--in: calc(var(--w-editavel) + 500); --dur: 240" pathLength="1" d="M1300 316H1222"/>
+        <path class="k draw" style="--in: calc(var(--w-editavel) + 580); --dur: 240" pathLength="1" d="M990 498L1016 470"/>
+      </svg>
+      <i class="s7-lyd k pop" style="--in: calc(var(--w-editavel) + 600); --dur: 300; left: 966px; top: 264px"></i>
+      <i class="s7-lyd k pop" style="--in: calc(var(--w-editavel) + 680); --dur: 300; left: 1222px; top: 316px"></i>
+      <i class="s7-lyd k pop" style="--in: calc(var(--w-editavel) + 760); --dur: 300; left: 1016px; top: 470px"></i>
+      <span class="s7-lyt k s7-tagin" style="--in: calc(var(--w-editavel) + 460); --dur: 360; left: 902px; top: 196px"><i>1</i>Texto</span>
+      <span class="s7-lyt k s7-tagin" style="--in: calc(var(--w-editavel) + 540); --dur: 360; left: 1300px; top: 298px"><i>2</i>Formas</span>
+      <span class="s7-lyt k s7-tagin" style="--in: calc(var(--w-editavel) + 620); --dur: 360; left: 900px; top: 498px"><i>3</i>Fundo</span>
+    </div>
+
+    <!-- rótulos da comparação: ficam até o fim -->
+    <div class="s7-cmpw">
       <div class="s7-cmp k up" style="--in: calc(var(--w-editavel) + 420); --dur: 460; left: 955px">
         <span class="s7-cmpp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg>Editável</span>
         <small>3 camadas · texto, formas, fundo</small>
@@ -351,80 +381,100 @@
       <b class="s7-vs k pop" style="--in: calc(var(--w-identico) + 160); --dur: 420">ou</b>
     </div>
 
-    <!-- selo de concluído no palco -->
-    <div class="s7-seal k s7-sealin" style="--in: calc(var(--w-identico) + 1200); --dur: 560">
+    <!-- só os ícones dos PowerPoint voam para a pasta; as duas versões continuam no palco -->
+    <div class="s7-mini" style="left: 1118px; top: 366px">
+      <div class="s7-w k s7-arcx" style="--in: calc(var(--w-identico) + 340); --dur: 360; --ax: 128px; --dx: 208px">
+        <div class="s7-w k s7-flyy2" style="--in: calc(var(--w-identico) + 340); --dur: 360; --dy: 328px; --sc: .42">
+          <div class="s7-fi s7-fi-ppt"><span>PPTX</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg></div>
+        </div>
+      </div>
+    </div>
+    <div class="s7-mini" style="left: 1518px; top: 366px">
+      <div class="s7-w k s7-arcx" style="--in: calc(var(--w-identico) + 400); --dur: 360; --ax: 54px; --dx: -16px">
+        <div class="s7-w k s7-flyy2" style="--in: calc(var(--w-identico) + 400); --dur: 360; --dy: 328px; --sc: .42">
+          <div class="s7-fi s7-fi-ppt"><span>PPTX</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- selo de concluído no lugar do diálogo -->
+    <div class="s7-seal k s7-sealin" style="--in: calc(var(--w-identico) + 900); --dur: 520">
+      <i class="s7-sl-bk"></i>
       <i class="s7-sl-r l spin" style="--ldur: 9000"></i>
-      <i class="s7-sl-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-identico) + 1300); --dur: 340" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+      <i class="s7-sl-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path class="k draw" style="--in: calc(var(--w-identico) + 980); --dur: 300" pathLength="1" d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
       <b>Concluído</b>
       <small>4 arquivos em Downloads</small>
     </div>
-    <i class="ring s7-ring2 k ring-x" style="--in: calc(var(--w-identico) + 1220); --dur: 900; left: 1290px; top: 316px"></i>
-    <div class="confetti" style="left: 1290px; top: 316px">
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: -230px; --dy: -110px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: 220px; --dy: -140px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: -120px; --dy: -170px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: 260px; --dy: 30px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: -270px; --dy: 40px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: 90px; --dy: -190px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: 300px; --dy: -60px"></i>
-      <i class="k fly" style="--in: calc(var(--w-identico) + 1220); --dur: 900; --dx: -300px; --dy: -50px"></i>
+    <i class="ring s7-ring2 k ring-x" style="--in: calc(var(--w-identico) + 920); --dur: 900; left: 590px; top: 462px"></i>
+    <div class="confetti" style="left: 590px; top: 462px">
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: -230px; --dy: -110px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: 220px; --dy: -140px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: -120px; --dy: -170px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: 250px; --dy: 30px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: -250px; --dy: 40px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: 90px; --dy: -190px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: 280px; --dy: -60px"></i>
+      <i class="k fly" style="--in: calc(var(--w-identico) + 920); --dur: 900; --dx: -280px; --dy: -50px"></i>
     </div>
-
-    <!-- Floating Elements (32): o selo ligado aos quatro arquivos (passa por trás da pasta) -->
-    <svg class="s7-hubs" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
-      <g class="s7-hub">
-        <path class="k draw" style="--in: calc(var(--w-identico) + 1300); --dur: 460" pathLength="1" d="M1290 548C1290 610 1026 600 1026 700"/>
-        <path class="k draw" style="--in: calc(var(--w-identico) + 1340); --dur: 460" pathLength="1" d="M1290 548C1290 610 1202 620 1202 700"/>
-        <path class="k draw" style="--in: calc(var(--w-identico) + 1380); --dur: 460" pathLength="1" d="M1290 548C1290 610 1378 620 1378 700"/>
-        <path class="k draw" style="--in: calc(var(--w-identico) + 1420); --dur: 460" pathLength="1" d="M1290 548C1290 610 1554 600 1554 700"/>
-      </g>
-    </svg>
-    <i class="mg-dot s7-hubdot k pop" style="--in: calc(var(--w-identico) + 1290); --dur: 360; left: 1290px; top: 548px"></i>
 
     <!-- ===================== D · a pasta Downloads ===================== -->
     <div class="s7-dock k up" style="--in: calc(var(--w-jeito) - 60); --dur: 600">
       <div class="s7-dk-tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3.5 7a2 2 0 0 1 2-2h4.2l2 2.5h6.8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>Downloads<em>›</em><span>Plano 2027</span></div>
       <i class="s7-dk-panel"></i>
 
+      <!-- Floating Elements (32): o selo ligado aos quatro arquivos (as linhas correm por trás deles) -->
+      <svg class="s7-hubs" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
+        <g class="s7-hub">
+          <path class="k draw" style="--in: calc(var(--w-identico) + 940); --dur: 200" pathLength="1" d="M686 444C800 444 830 734 930 734H986"/>
+          <path class="k draw" style="--in: calc(var(--w-identico) + 970); --dur: 220" pathLength="1" d="M690 464C806 464 836 750 930 750H1162"/>
+          <path class="k draw" style="--in: calc(var(--w-identico) + 1000); --dur: 230" pathLength="1" d="M688 484C812 484 842 766 930 766H1338"/>
+          <path class="k draw" style="--in: calc(var(--w-identico) + 1030); --dur: 240" pathLength="1" d="M682 504C818 504 848 782 930 782H1514"/>
+        </g>
+      </svg>
+      <i class="mg-dot s7-hdot k pop" style="--in: calc(var(--w-identico) + 1060); --dur: 280; left: 38px; top: 54px"></i>
+      <i class="mg-dot s7-hdot k pop" style="--in: calc(var(--w-identico) + 1120); --dur: 280; left: 214px; top: 70px"></i>
+      <i class="mg-dot s7-hdot k pop" style="--in: calc(var(--w-identico) + 1180); --dur: 280; left: 390px; top: 86px"></i>
+      <i class="mg-dot s7-hdot k pop" style="--in: calc(var(--w-identico) + 1240); --dur: 280; left: 566px; top: 102px"></i>
+
       <div class="s7-slot" style="left: 18px">
         <i class="s7-ph k pop" style="--in: calc(var(--w-precisar) + 60); --dur: 400"></i>
         <div class="s7-w l bob" style="--ldur: 2600; --lph: 0">
-          <div class="s7-fi s7-fi-html k s7-land" style="--in: calc(var(--w-interativo) + 800); --dur: 480"><span>HTML</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5L4 12l4.5 4.5"/><path d="M15.5 7.5L20 12l-4.5 4.5"/><path d="M13.5 5.5l-3 13"/></svg></div>
-          <i class="s7-ok k pop" style="--in: calc(var(--w-interativo) + 1200); --dur: 380"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+          <div class="s7-fi s7-fi-html k s7-land" style="--in: calc(var(--w-interativo) + 920); --dur: 480"><span>HTML</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 7.5L4 12l4.5 4.5"/><path d="M15.5 7.5L20 12l-4.5 4.5"/><path d="M13.5 5.5l-3 13"/></svg></div>
+          <i class="s7-ok k pop" style="--in: calc(var(--w-interativo) + 1320); --dur: 380"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
         </div>
-        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-interativo) + 800); --dur: 400">HTML · interativo</b>
-        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-interativo) + 860); --dur: 340"></i></i>
-        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-interativo) + 840); --dur: 700"></i>
+        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-interativo) + 920); --dur: 400">HTML · interativo</b>
+        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-interativo) + 980); --dur: 340"></i></i>
+        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-interativo) + 960); --dur: 700"></i>
       </div>
       <div class="s7-slot" style="left: 194px">
         <i class="s7-ph k pop" style="--in: calc(var(--w-precisar) + 140); --dur: 400"></i>
         <div class="s7-w l bob" style="--ldur: 2600; --lph: -650">
-          <div class="s7-fi s7-fi-pdf k s7-land" style="--in: calc(var(--w-powerpoint) - 60); --dur: 480"><span>PDF</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h8l4.5 4.5v12.5H6z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6"/><path d="M9 16.5h4"/></svg></div>
-          <i class="s7-ok k pop" style="--in: calc(var(--w-powerpoint) + 340); --dur: 380"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+          <div class="s7-fi s7-fi-pdf k s7-land" style="--in: calc(var(--w-powerpoint) + 60); --dur: 480"><span>PDF</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h8l4.5 4.5v12.5H6z"/><path d="M14 3.5V8h4.5"/><path d="M9 13h6"/><path d="M9 16.5h4"/></svg></div>
+          <i class="s7-ok k pop" style="--in: calc(var(--w-powerpoint) + 460); --dur: 380"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
         </div>
-        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-powerpoint) - 60); --dur: 400">PDF</b>
-        <i class="s7-pbar"><i class="k grow-x" style="--in: var(--w-powerpoint); --dur: 340"></i></i>
-        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-powerpoint) - 20); --dur: 700"></i>
+        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-powerpoint) + 60); --dur: 400">PDF</b>
+        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-powerpoint) + 120); --dur: 340"></i></i>
+        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-powerpoint) + 100); --dur: 700"></i>
       </div>
       <div class="s7-slot" style="left: 370px">
         <i class="s7-ph k pop" style="--in: calc(var(--w-precisar) + 220); --dur: 400"></i>
         <div class="s7-w l bob" style="--ldur: 2600; --lph: -1300">
-          <div class="s7-fi s7-fi-ppt k s7-land" style="--in: calc(var(--w-identico) + 1080); --dur: 480"><span>PPTX</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg></div>
-          <i class="s7-ok k pop" style="--in: calc(var(--w-identico) + 1360); --dur: 340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+          <div class="s7-fi s7-fi-ppt k s7-land" style="--in: calc(var(--w-identico) + 700); --dur: 480"><span>PPTX</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/></svg></div>
+          <i class="s7-ok k pop" style="--in: calc(var(--w-identico) + 800); --dur: 340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
         </div>
-        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-identico) + 1080); --dur: 400">PPTX · editável</b>
-        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-identico) + 1120); --dur: 240"></i></i>
-        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-identico) + 1060); --dur: 700"></i>
+        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-identico) + 700); --dur: 400">PPTX · editável</b>
+        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-identico) + 720); --dur: 220"></i></i>
+        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-identico) + 680); --dur: 560"></i>
       </div>
       <div class="s7-slot" style="left: 546px">
         <i class="s7-ph k pop" style="--in: calc(var(--w-precisar) + 300); --dur: 400"></i>
         <div class="s7-w l bob" style="--ldur: 2600; --lph: -1950">
-          <div class="s7-fi s7-fi-ppt k s7-land" style="--in: calc(var(--w-identico) + 1140); --dur: 480"><span>PPTX</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg></div>
-          <i class="s7-ok k pop" style="--in: calc(var(--w-identico) + 1420); --dur: 340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
+          <div class="s7-fi s7-fi-ppt k s7-land" style="--in: calc(var(--w-identico) + 760); --dur: 480"><span>PPTX</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9.5H6z"/><path d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg></div>
+          <i class="s7-ok k pop" style="--in: calc(var(--w-identico) + 860); --dur: 340"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>
         </div>
-        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-identico) + 1140); --dur: 400">PPTX · idêntico</b>
-        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-identico) + 1180); --dur: 240"></i></i>
-        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-identico) + 1120); --dur: 700"></i>
+        <b class="s7-fn k s7-fnlit" style="--in: calc(var(--w-identico) + 760); --dur: 400">PPTX · idêntico</b>
+        <i class="s7-pbar"><i class="k grow-x" style="--in: calc(var(--w-identico) + 780); --dur: 220"></i></i>
+        <i class="s7-rip k s7-rip" style="--in: calc(var(--w-identico) + 740); --dur: 560"></i>
       </div>
     </div>
 
@@ -449,10 +499,10 @@
     <i class="click k" style="--in: var(--w-powerpoint); left: 838px; top: 616px"></i>
     <i class="click k" style="--in: var(--w-editavel); left: 480px; top: 690px"></i>
     <i class="click k" style="--in: var(--w-identico); left: 740px; top: 690px"></i>
-    <i class="click k" style="--in: calc(var(--w-identico) + 560); left: 806px; top: 862px"></i>
+    <i class="click k" style="--in: calc(var(--w-identico) + 300); left: 806px; top: 862px"></i>
 
-    <!-- cursor com halo -->
-    <div class="s7-cur" style="left: 1210px; top: 880px">
+    <!-- cursor com halo (some quando o diálogo se recolhe) -->
+    <div class="s7-cur kx" style="left: 1210px; top: 880px; --out: calc(var(--w-identico) + 940); --xdur: 300">
       <div class="k fade" style="--in: 260; --dur: 220">
         <div class="k move-xy" style="--in: 400; --dur: 560; --dx: -144px; --dy: -176px">
           <div class="k move-xy" style="--in: calc(var(--w-baixe) + 220); --dur: 480; --dx: -136px; --dy: -144px">
@@ -461,17 +511,15 @@
                 <div class="k move-xy" style="--in: calc(var(--w-powerpoint) - 420); --dur: 340; --dx: 0px; --dy: 92px">
                   <div class="k move-xy" style="--in: calc(var(--w-editavel) - 480); --dur: 400; --dx: -358px; --dy: 74px">
                     <div class="k move-xy" style="--in: calc(var(--w-identico) - 460); --dur: 380; --dx: 260px; --dy: 0px">
-                      <div class="k move-xy" style="--in: calc(var(--w-identico) + 220); --dur: 300; --dx: 66px; --dy: 172px">
-                        <div class="k move-xy" style="--in: calc(var(--w-identico) + 860); --dur: 560; --dx: 104px; --dy: -72px">
-                          <div class="k press" style="--in: var(--w-baixe)">
-                            <div class="k press" style="--in: var(--w-html)">
-                              <div class="k press" style="--in: var(--w-pdf)">
-                                <div class="k press" style="--in: var(--w-powerpoint)">
-                                  <div class="k press" style="--in: var(--w-editavel)">
-                                    <div class="k press" style="--in: var(--w-identico)">
-                                      <div class="k press" style="--in: calc(var(--w-identico) + 560)">
-                                        <svg class="gcur" style="left: -3px; top: -2px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
-                                      </div>
+                      <div class="k move-xy" style="--in: calc(var(--w-identico) + 80); --dur: 220; --dx: 66px; --dy: 172px">
+                        <div class="k press" style="--in: var(--w-baixe)">
+                          <div class="k press" style="--in: var(--w-html)">
+                            <div class="k press" style="--in: var(--w-pdf)">
+                              <div class="k press" style="--in: var(--w-powerpoint)">
+                                <div class="k press" style="--in: var(--w-editavel)">
+                                  <div class="k press" style="--in: var(--w-identico)">
+                                    <div class="k press" style="--in: calc(var(--w-identico) + 300)">
+                                      <svg class="gcur" style="left: -3px; top: -2px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
                                     </div>
                                   </div>
                                 </div>
@@ -495,6 +543,6 @@
 
   <i class="leak k leak-x" style="--in: 0; --dur: 1100"></i>
 
-  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@no:pose=present,face=happy;@baixe:pose=point-right,face=wow;@precisar:pose=hands-hips,face=happy;@html:pose=point-right,face=focus;@interativo:pose=cheer,face=laugh;@pdf:pose=point-right,face=wink;@powerpoint:pose=think,face=think;@editavel:pose=present,face=focus;@identico:pose=point-right,face=proud;@identico+1200:pose=celebrate,face=laugh" style="--x: 150px; --y: 968px; --s: .8"></div>
-  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@fim:face=wow;@baixe:pose=look-up,face=wow;@precisar:pose=idle,face=happy;@html:face=surprised;@interativo:pose=hands-hips,face=laugh;@pdf:pose=idle,face=happy;@powerpoint:pose=think,face=think;@editavel:face=wow;@identico:pose=look-up,face=surprised;@identico+1200:pose=jump,face=laugh;@identico+1600:pose=celebrate,face=laugh" style="--x: 1770px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@no:pose=present,face=happy;@baixe:pose=point-right,face=wow;@precisar:pose=hands-hips,face=happy;@html:pose=point-right,face=focus;@interativo:pose=cheer,face=laugh;@pdf:pose=point-right,face=wink;@powerpoint:pose=think,face=think;@editavel:pose=present,face=focus;@identico:pose=point-right,face=proud;@identico+900:pose=celebrate,face=laugh" style="--x: 150px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@fim:face=wow;@baixe:pose=look-up,face=wow;@precisar:pose=idle,face=happy;@html:face=surprised;@interativo:pose=hands-hips,face=laugh;@pdf:pose=idle,face=happy;@powerpoint:pose=think,face=think;@editavel:face=wow;@identico:pose=look-up,face=surprised;@identico+900:pose=jump,face=laugh;@identico+1300:pose=celebrate,face=laugh" style="--x: 1770px; --y: 968px; --s: .8"></div>
 </section>

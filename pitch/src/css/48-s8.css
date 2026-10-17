@@ -1,8 +1,6 @@
 /* ---------- CENA 8 · A primeira impressão · virada para o Ato 2 (noite → lavanda) ---------- */
 
 /* · marca lúmen sobre a marca de papel enquanto a cena ainda é noite (paliativo: o motor troca a marca pelo mundo final da cena) · */
-.s8 .s8-brand { z-index: 45; color: var(--halor-lumen); pointer-events: none; }
-.s8 .s8-brand .tag { color: var(--halor-ash); border-color: rgba(201, 166, 255, .3); }
 .kx.s8-fadeout { animation-name: s8-fadeout; animation-timing-function: linear; }
 @keyframes s8-fadeout { from { opacity: 1; } to { opacity: 0; } }
 

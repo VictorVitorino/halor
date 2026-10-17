@@ -210,7 +210,7 @@ const P = (() => {
   /* legendas: cada fala vai até a próxima (ou até o fim da cena + 300 ms) */
   (ROTEIRO.scenes || []).forEach(sc => (sc.lines || []).forEach(l => captions.push({ at: l.at, text: l.text, hl: l.hl || [], sceneTo: sc.to })));
   captions.sort((a, b) => a.at - b.at);
-  captions.forEach((c, i) => { const nx = captions[i + 1]; c.end = nx ? Math.min(nx.at, Math.max(c.at + 1500, c.sceneTo + 300)) : Math.min(duration, c.sceneTo + 300); if (c.end - c.at > 9000) c.end = c.at + 9000; });
+  captions.forEach((c, i) => { const nx = captions[i + 1]; c.end = nx ? Math.min(nx.at, Math.max(c.at + 1500, c.sceneTo)) : duration; if (c.end - c.at > 9000) c.end = c.at + 9000; });
   const esc = s => s.replace(/[&<>]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[ch]));
   const capHtml = c => { let h = esc(c.text); [...c.hl].sort((a, b) => b.length - a.length).forEach(w => { h = h.replace(esc(w), `<b>${esc(w)}</b>`); }); return h; };
 
@@ -270,12 +270,16 @@ const P = (() => {
     }
     if (cur !== lastScene) {
       lastScene = cur;
-      pitch.dataset.world = cur.world;
       pitch.dataset.scene = cur.id;
       if (cur.chip) { chip.dataset.empty = '0'; chipN.textContent = cur.n; chipK.textContent = cur.kicker; chipT.textContent = cur.chip; } else chip.dataset.empty = '1';
       pitch.style.setProperty('--chip-t0', cur.from);
     }
-    pitch.style.setProperty('--paper-k', worldK(T).toFixed(3));
+    const wk = worldK(T);
+    pitch.style.setProperty('--paper-k', wk.toFixed(3));
+    /* a moldura (marca, chip) segue a luz de verdade, não o mundo final da cena: uma cena que abre a luz no meio
+       fica com a marca da noite até a luz passar da metade */
+    const wName = wk > .5 ? 'paper' : 'night';
+    if (pitch.dataset.world !== wName) pitch.dataset.world = wName;
     const wc = worldC(T); pitch.style.setProperty('--paper-cx', wc[0]); pitch.style.setProperty('--paper-cy', wc[1]);
     pitch.style.setProperty('--field-k', fieldK(T).toFixed(3));
     /* legenda */

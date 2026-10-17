@@ -67,8 +67,9 @@ svg { display: block; }
 .scenes { position: absolute; inset: 0; }
 .scene {
   position: absolute; inset: 0; display: none;
-  /* entra em --fi ms depois de --t0 e some nos últimos --fo ms antes de --t1: nunca duas cenas cheias ao mesmo tempo */
-  opacity: min(clamp(0, calc((var(--t) - var(--t0)) / var(--fi, 350)), 1), clamp(0, calc((var(--t1) - var(--t)) / var(--fo, 300)), 1));
+  /* entra em --fi ms depois de --t0 e some nos últimos --fo ms antes de --t1: nunca duas cenas cheias ao mesmo tempo.
+     A entrada começa um quadro antes (34 ms) para um corte seco (data-fi/fo curtos) nunca passar por um quadro vazio. */
+  opacity: min(clamp(0, calc((var(--t) - var(--t0) + 34) / var(--fi, 350)), 1), clamp(0, calc((var(--t1) - var(--t)) / var(--fo, 300)), 1));
 }
 .scene.on { display: block; }
 .scene > * { position: absolute; }

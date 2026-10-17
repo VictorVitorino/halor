@@ -197,7 +197,7 @@
 /* rastro do pulo */
 .s4-trail { left: 0; top: 0; width: 1920px; height: 1080px; overflow: visible; pointer-events: none; filter: drop-shadow(0 0 10px rgba(201, 166, 255, .9)); }
 .k.s4-trk { animation-name: s4-trk; animation-timing-function: linear; stroke-dasharray: 1; }
-@keyframes s4-trk { 0% { stroke-dashoffset: 1; opacity: 1; animation-timing-function: cubic-bezier(.3, 0, .6, 1); } 42.86% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: linear; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@keyframes s4-trk { 0% { stroke-dashoffset: 1; opacity: 1; animation-timing-function: cubic-bezier(.3, 0, .6, 1); } 53.57% { stroke-dashoffset: 0; opacity: 1; animation-timing-function: linear; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 /* a mini Bia em voo: o pé segue o arco (offset-path em coordenadas do palco), com brilho violeta */
 .s4-flw { width: 0; height: 0; }
 .s4-flw > div { position: absolute; left: 0; top: 0; width: 0; height: 0; }
