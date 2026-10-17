@@ -999,6 +999,7 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
 /* ---------- CENA 1 · Da proposta ao negócio ---------- */
 .s1-star { width: 120px; height: 120px; color: var(--halor-violet); }
 .s1-star svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.s1-star g.l { transform-box: fill-box; transform-origin: center; }
 .s1-star b { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--f-display); font-weight: 700; font-size: 60px; color: var(--halor-violet); text-shadow: 0 0 20px rgba(139, 61, 255, .4); }
 .s1-walker { width: 280px; height: 340px; }
 .s1-doc { position: absolute; left: 0; top: 0; width: 280px; height: 340px; border-radius: 16px; background: #fff; box-shadow: var(--sh-paper-3), 0 0 0 1.5px var(--line-strong); padding: 30px 28px; color: var(--ink); display: flex; flex-direction: column; gap: 12px; transform-origin: bottom center; }
@@ -1012,23 +1013,23 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
 .s1-doc .df { position: absolute; left: 50%; top: 150px; width: 120px; height: 70px; margin-left: -60px; }
 .s1-doc .legs { position: absolute; left: 50%; bottom: -24px; width: 90px; height: 26px; margin-left: -45px; }
 .s1-doc .legs i { position: absolute; bottom: 0; width: 26px; height: 26px; border-radius: 13px 13px 6px 6px; background: var(--ink); transform-origin: top center; }
-.s1-doc .legs i.l { left: 8px; } .s1-doc .legs i.r { right: 8px; }
-.s1-doc .legs i.l { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms); }
-.s1-doc .legs i.r { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms - 220ms); }
+.s1-doc .legs i.fl { left: 8px; } .s1-doc .legs i.fr { right: 8px; }
+.s1-doc .legs i.fl { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms); }
+.s1-doc .legs i.fr { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms - 220ms); }
 @keyframes s1-step { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(14deg); } }
 .k.s1-walk { animation-name: s1-walk; animation-timing-function: linear; }
 @keyframes s1-walk {
   0% { transform: translate(0, 0) rotate(0); } 10% { transform: translate(60px, -10px) rotate(-2deg); } 20% { transform: translate(130px, 0) rotate(2deg); }
   30% { transform: translate(210px, -12px) rotate(-2deg); } 40% { transform: translate(300px, 0) rotate(2deg); }
   48% { transform: translate(360px, -24px) rotate(-4deg); } 56% { transform: translate(430px, -130px) rotate(-8deg); } 64% { transform: translate(520px, -30px) rotate(6deg); }
-  72% { transform: translate(580px, 0) rotate(0); } 86% { transform: translate(700px, -10px) rotate(-2deg); } 100% { transform: translate(790px, 0) rotate(0); }
+  72% { transform: translate(580px, 0) rotate(0); } 86% { transform: translate(710px, -10px) rotate(-2deg); } 100% { transform: translate(810px, 0) rotate(0); }
 }
 .s1-path { height: 60px; border-radius: 30px; background: linear-gradient(180deg, var(--lilac-100), var(--lilac-200)); box-shadow: inset 0 0 0 3px #fff, var(--sh-paper-2); transform-origin: left center; }
 .s1-path::after { content: ""; position: absolute; left: 24px; right: 24px; top: 50%; height: 0; border-top: 4px dashed #fff; margin-top: -2px; }
 .s1-coin { width: 76px; height: 76px; border-radius: 50%; background: #fff; color: var(--halor-violet); font-family: var(--f-display); font-weight: 700; font-size: 44px; display: grid; place-items: center; box-shadow: 0 0 0 5px var(--halor-violet), var(--sh-paper-2); }
 .s1-wall { width: 120px; height: 90px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
 .s1-wall i { border-radius: 4px; background: linear-gradient(180deg, var(--lilac-300), var(--halor-neon)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5); }
-.s1-wall i:nth-child(3n + 2) { transform: translateX(14px); }
+.s1-wall i:nth-child(n + 4):nth-child(-n + 6) { transform: translateX(12px); }
 .s1-door { width: 220px; height: 400px; }
 .s1-door-sign { position: absolute; left: 50%; top: -74px; transform: translateX(-50%); font-family: var(--f-mono); font-size: 22px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--ink); padding: 10px 24px; border: 3px dashed var(--line-strong); border-radius: 999px; background: rgba(255, 255, 255, .6); white-space: nowrap; }
 .s1-door-sign.lit { border-style: solid; border-color: var(--halor-violet); background: var(--halor-violet); color: #fff; box-shadow: var(--glow-sm); }
@@ -1039,15 +1040,17 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
 /* ---------- CENA 2 · Halor e a Bia ---------- */
 .s2-beam { width: 880px; height: 34px; border-radius: 17px; background: linear-gradient(90deg, var(--halor-violet), var(--halor-neon), var(--halor-violet)); box-shadow: var(--glow-sm), inset 0 0 0 3px rgba(255, 255, 255, .55); }
 .s2-beam::after { content: ""; position: absolute; left: 24px; right: 24px; top: 50%; height: 6px; margin-top: -3px; background-image: radial-gradient(circle, #fff 2.5px, transparent 3px); background-size: 36px 6px; background-repeat: repeat-x; }
-.s2-hook { position: absolute; left: 50%; top: -74px; width: 60px; height: 76px; margin-left: -30px; }
-.s2-hook::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 50px; margin-left: -3px; background: var(--ink); border-radius: 3px; }
-.s2-hook::after { content: ""; position: absolute; left: 10px; top: 40px; width: 40px; height: 34px; border-radius: 12px; background: var(--ink); }
+.s2-hook { position: absolute; left: 50%; top: -150px; width: 60px; height: 152px; margin-left: -30px; }
+.s2-hook::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 126px; margin-left: -3px; background: var(--ink); border-radius: 0 0 3px 3px; }
+.s2-hook::after { content: ""; position: absolute; left: 12px; top: 112px; width: 36px; height: 36px; border-radius: 50%; border: 7px solid var(--ink); border-top-color: transparent; transform: rotate(-45deg); }
+.s2-rail { position: absolute; left: 0; right: 0; top: 0; height: 10px; background: linear-gradient(90deg, transparent, var(--lilac-300) 15%, var(--lilac-300) 85%, transparent); }
+.s2 .s2-beamwrap { z-index: 3; }
 .s2-str { position: absolute; width: 3px; background: var(--ink); opacity: .55; transform-origin: top; }
 .s2-str::after { content: ""; position: absolute; left: -6px; bottom: -8px; width: 11px; height: 11px; border-radius: 50%; border: 3px solid var(--ink); background: #fff; }
 .s2-word { font-family: var(--f-display); font-weight: 600; font-size: 220px; letter-spacing: -.045em; line-height: 1; color: var(--ink); display: flex; }
 .s2-word span { display: inline-block; }
 .k.s2-hang { animation-name: s2-hang; animation-timing-function: var(--ease-spark); }
-@keyframes s2-hang { 0% { opacity: 0; transform: translateY(-420px) rotate(-3deg); } 60% { opacity: 1; transform: translateY(14px) rotate(1deg); } 80% { transform: translateY(-6px) rotate(-.5deg); } 100% { opacity: 1; transform: translateY(0) rotate(0); } }
+@keyframes s2-hang { 0% { opacity: 0; transform: translateY(-140px) rotate(-3deg); } 60% { opacity: 1; transform: translateY(14px) rotate(1deg); } 80% { transform: translateY(-6px) rotate(-.5deg); } 100% { opacity: 1; transform: translateY(0) rotate(0); } }
 .s2-mk { width: 150px; height: 150px; overflow: visible; filter: drop-shadow(0 10px 24px rgba(139, 61, 255, .35)); }
 .s2-sub { font-family: var(--f-mono); font-size: 26px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
 .s2-sub em { font-style: normal; color: var(--halor-violet-700); }
@@ -2548,8 +2551,7 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
     <svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round"><g class="l twinkle"><path d="M60 4v20M60 96v20M4 60h20M96 60h20M20 20l14 14M86 86l14 14M100 20L86 34M34 86L20 100"/></g></svg>
     <b>O</b>
   </div>
-  <i class="ring k ring-x" style="--in: calc(var(--w-oportunidade) + 100); --dur: 900; left: 800px; top: 690px"></i>
-
+  
   <!-- trilha, moeda "?", muro e a porta NEGÓCIO -->
   <div class="s1-path k grow-x" style="--in: var(--w-o); --dur: 900; left: 600px; top: 850px; width: 1000px"></div>
   <div class="s1-coin k pop" style="--in: var(--w-dificil); --dur: 400; left: 900px; top: 842px">?</div>
@@ -2562,9 +2564,9 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
   </div>
 
   <!-- a Proposta: nasce em "oportunidade", ganha carinha e pezinhos em "O difícil" e caminha até a porta -->
-  <div class="kx" style="--out: calc(var(--w-negocio) + 700); --xdur: 500; left: 0; top: 0">
+  <div class="kx x-shrink" style="--out: calc(var(--w-negocio) + 700); --xdur: 450; left: 0; top: 0">
     <div class="s1-walker k s1-walk" style="--in: var(--w-o); --dur: calc(var(--w-negocio) - var(--w-o) + 600); left: 660px; top: 520px">
-      <div class="s1-doc k pop" style="--in: calc(var(--w-oportunidade) - 150); --dur: 600">
+      <div class="s1-doc k pop" style="--in: calc(var(--w-apresentacao) - 100); --dur: 600">
         <p class="dt">Proposta</p><i class="dl"></i><i class="dl s"></i>
         <div class="db"><i style="--v:.45"></i><i style="--v:.7"></i><i class="hot" style="--v:1"></i></div>
         <svg class="df k fade" style="--in: var(--w-o); --dur: 300" viewBox="0 0 120 70" aria-hidden="true">
@@ -2578,12 +2580,14 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
       </div>
     </div>
   </div>
+  <i class="ring k ring-x" style="--in: var(--w-oportunidade); --dur: 900; left: 800px; top: 640px"></i>
 </section>
 
 <!-- CENA 2 · Halor e a Bia · o logotipo desce pendurado numa viga de luz; a Bia entra pela esquerda em "Bia" -->
 <section class="scene s2" id="s2" data-world="paper">
   <!-- viga de luz com gancho e fios: desce, segura as letras e vai embora depois de "Halor!" -->
-  <div class="kx" style="--out: calc(var(--w-halor) + 1300); --xdur: 700; left: 0; top: 0">
+  <div class="kx s2-beamwrap" style="--out: calc(var(--w-halor) + 1300); --xdur: 700; left: 0; top: 0">
+    <i class="s2-rail k fade" style="--in: 0; --dur: 400"></i>
     <div class="s2-beam k down" style="--in: 100; --dur: 700; left: 520px; top: 150px"><i class="s2-hook"></i></div>
     <div class="s2-strings" style="--stag: 110">
       <i class="s2-str k grow-y" style="--in: 700; --i: 0; left: 664px; top: 184px; height: 120px"></i>
@@ -2606,7 +2610,7 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
   <i class="s2-line k grow-x" style="--in: calc(var(--w-halor) + 700); --dur: 700; left: 606px; top: 584px"></i>
 
   <!-- a Bia entra pela esquerda, acena, se apresenta -->
-  <div class="k walk-in-l" style="--in: calc(var(--w-bia) - 700); --dur: 1000; left: 330px; top: 960px">
+  <div class="k walk-in-l" style="--in: calc(var(--w-bia) - 250); --dur: 650; left: 330px; top: 960px">
     <div class="bia" data-pose="walk" data-face="happy" data-props="tablet" data-keys="@bia+300:pose=idle,face=happy;@bia+900:pose=wave,face=laugh;@nossa:pose=present,face=proud;@inteligencia:pose=look-up,face=wow;@artificial+400:pose=bow,face=wink;@artificial+1100:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: 1.1"></div>
   </div>
   <i class="s2-bia-ring k fade" style="--in: calc(var(--w-bia) + 300); --dur: 500; left: 330px; top: 790px"></i>
@@ -3278,6 +3282,92 @@ const ROTEIRO = {"title": "Pitch Halor", "subtitle": "Apresentações vivas em H
 </script>
 <script>
 /* ==========================================================================
+   BIA · tabelas de pose e rosto da mascote · rig v2 (valores numéricos, sem unidade)
+   O motor interpola valor a valor (350 ms, --ease-halo) e escreve as variáveis no .bia; o CSS (20-bia.css) converte.
+   Convenções em 20-bia.css. Lados = lados do ESPECTADOR (l = lupa / palmas, r = tablet / clicker / varinha).
+   Skins: data-skin="cliente" no host (mesmas poses e rostos; corpo lilás, óculos, gravatinha, sem halo).
+   ========================================================================== */
+const BIA = {
+  poseVars: ['--arm-l', '--arm-r', '--fore-l', '--fore-r', '--lean', '--hop', '--squash',
+             '--wave', '--sway', '--point-l', '--point-r', '--stamp-press', '--ring-y',
+             '--carry', '--face-x', '--face-y', '--squint', '--halo-y'],
+  faceVars: ['--brow-l', '--brow-r', '--brow-ang', '--eye-x', '--eye-y', '--eye-open', '--eye-happy', '--wink', '--eye-glow',
+             '--mouth-smile', '--mouth-open', '--mouth-flat', '--mouth-o', '--mouth-sad', '--cheek', '--glow', '--eye-scale'],
+  propVars: ['--p-stamp', '--p-tablet', '--p-clicker', '--p-lens', '--p-wand', '--p-ring', '--p-bubble'],
+  /* data-props="tablet clicker" → --p-tablet:1 --p-clicker:1 (os outros 0).
+     "stamp"/"carimbo" e "clipboard"/"prancheta" continuam aceitos: o carimbo não existe mais (nada aparece) e a prancheta virou o tablet. */
+  props: {
+    stamp: '--p-stamp', carimbo: '--p-stamp',
+    tablet: '--p-tablet', clipboard: '--p-tablet', prancheta: '--p-tablet',
+    clicker: '--p-clicker', controle: '--p-clicker',
+    lens: '--p-lens', lupa: '--p-lens',
+    wand: '--p-wand', varinha: '--p-wand',
+    ring: '--p-ring', anel: '--p-ring',
+    bubble: '--p-bubble', balao: '--p-bubble', 'balão': '--p-bubble',
+  },
+
+  /*                 arm-l  arm-r  fore-l fore-r lean  hop  squash wave sway pt-l pt-r press ring-y carry face-x face-y squint halo-y */
+  poses: {
+    idle:        biaPose(  -18,   -10,    80,   100,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    wave:        biaPose(  -18,  -150,    80,   -20,   -3,    0,    0,    1,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    'point-left':biaPose(  -88,   -10,     2,   100,   -4,    0,    0,    0,   0,   1,   0,   0,   90,   0,   -2,    0,    0,   42),
+    'point-right':biaPose( -18,   -88,    80,     2,    4,    0,    0,    0,   0,   0,   1,   0,   90,   0,    2,    0,    0,   42),
+    present:     biaPose(  -66,   -66,   -24,   -24,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    /* stamp = ergue a mão (anticipação) · stamp-down = bate palmas na frente do corpo, com onda de luz (--stamp-press) */
+    stamp:       biaPose( -160,   -10,    40,   100,    3,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    'stamp-down':biaPose(   16,    16,    78,    78,    0,    0,  .18,    0,   0,   0,   0,   1,   90,   0,    0,    2,    0,   44),
+    'hold-ring': biaPose( -165,  -165,   -15,   -15,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    cheer:       biaPose( -145,  -145,   -25,   -25,    0,  -26,    0,    0,   0,   0,   0,   0,   90,   0,    0,   -2,    0,   40),
+    think:       biaPose(  -18,    40,    80,   115,    3,    0,    0,    0,   0,   0,   0,   0,   90,   0,    2,    0,    0,   42),
+    peek:        biaPose(  -30,   -10,    64,    96,  -14,    0,    0,    0,   0,   0,   0,   0,   90,   0,   -3,    0,    0,   42),
+    walk:        biaPose(  -18,   -18,    50,    50,    0,   -4,    0,    0,   1,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    /* novas */
+    carry:       biaPose(   10,    10,    75,    75,    0,    0,    0,    0,   0,   0,   0,   0,   90,   1,    0,    0,    0,   42),
+    'look-up':   biaPose(  -30,   -30,    60,    60,    0,    0, -.08,    0,   0,   0,   0,   0,   90,   0,    0,   -8,    0,   34),
+    jump:        biaPose( -120,  -120,   -40,   -40,    0,  -60, -.14,    0,   0,   0,   0,   0,   90,   0,    0,   -3,    0,   38),
+    bow:         biaPose(  -40,   -40,    10,    10,    0,    0,  .22,    0,   0,   0,   0,   0,   90,   0,    0,   14,    0,   52),
+    celebrate:   biaPose( -150,  -150,   -30,   -30,    0,  -40, -.08,    0,   0,   0,   0,   0,   90,   0,    0,   -6,    0,   36),
+    'hands-hips':biaPose(  -55,   -55,   105,   105,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
+    'lens-look': biaPose( -126,   -10,   229,   100,    2,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    1,   42),
+  },
+
+  /*               brow-l brow-r ang   eye-x eye-y open happy wink glow-eye smile open flat  o   sad  cheek glow eye-scale */
+  faces: {
+    happy:     biaFace(   0,    0,    4,    0,    0,   1,   0,   0,  0,    1,   0,   0,   0,   0,  .6,  0,   1),
+    wow:       biaFace(   1,    1,   -2,    0,  -.2,   1,   0,   0,  0,    0,   0,   0,   1,   0,  .4,  0,   1.06),
+    proud:     biaFace(  .3,   .3,    2,    0,    0,   1,   1,   0,  0,    0,   1,   0,   0,   0,  .9,  0,   1),
+    think:     biaFace(  .9, -.15,   -6,   .7,  -.7,   1,   0,   0,  0,    0,   0,  .8,   0,   0,  .2,  0,   1),
+    oops:      biaFace( -.3,   .7,  -14,  -.6,   .2,   1,   0,   0,  0,    0,   0,   0,  .7,  .4,  .7,  0,   1),
+    wink:      biaFace(   0,   .4,    4,   .2,    0,   1,   0,   1,  0,    1,   0,   0,   0,   0,  .8,  0,   1),
+    focus:     biaFace(   0,    0,   16,    0,    0,  .9,   0,   0,  1,   .6,   0,  .3,   0,   0,  .3,  1,   1),
+    sleepy:    biaFace( -.5,  -.5,   -6,   .1,   .3,  .4,   0,   0,  0,    0,   0,  .6,  .3,   0,  .3,  0,   1),
+    /* novos */
+    laugh:     biaFace(  .6,   .6,    2,    0,    0,   1,   1,   0,  0,    0,   1,   0,   0,   0,   1,  0,   1),
+    surprised: biaFace(   1,    1,   -4,    0,  -.1,   1,   0,   0,  0,    0,   0,   0,  .6,   0,  .3,  0,   1.28),
+  },
+
+  /* · utilidades (o motor pode usar ou não) · */
+  get vars() { return this.poseVars.concat(this.faceVars, this.propVars); },
+  noProps() { const o = {}; this.propVars.forEach(v => { o[v] = 0; }); return o; },
+  defaults() { return Object.assign({}, this.poses.idle, this.faces.happy, this.noProps()); },
+  lerp(a, b, k) { const o = {}; for (const n in a) o[n] = n in b ? a[n] + (b[n] - a[n]) * k : a[n]; for (const n in b) if (!(n in o)) o[n] = b[n]; return o; },
+  apply(el, vars) { for (const n in vars) el.style.setProperty(n, String(+vars[n].toFixed ? +vars[n].toFixed(4) : vars[n])); },
+  propsOf(str) { const o = this.noProps(); (str || '').split(/\s+/).forEach(w => { const v = this.props[w.toLowerCase()]; if (v) o[v] = 1; }); return o; },
+  /* clona o template dentro do host (idempotente) */
+  mount(el) { if (!el.querySelector('.bia-svg')) { const t = document.getElementById('bia-tpl'); if (t) el.appendChild(t.content.firstElementChild.cloneNode(true)); } return el; },
+};
+function biaPose(al, ar, fl, fr, lean, hop, squash, wave, sway, ptl, ptr, press, ringy, carry, fx, fy, squint, haloy) {
+  return { '--arm-l': al, '--arm-r': ar, '--fore-l': fl, '--fore-r': fr, '--lean': lean, '--hop': hop, '--squash': squash,
+           '--wave': wave, '--sway': sway, '--point-l': ptl, '--point-r': ptr, '--stamp-press': press, '--ring-y': ringy,
+           '--carry': carry, '--face-x': fx, '--face-y': fy, '--squint': squint, '--halo-y': haloy };
+}
+function biaFace(bl, br, ang, ex, ey, open, happy, wink, eglow, smile, mopen, flat, o, sad, cheek, glow, escale) {
+  return { '--brow-l': bl, '--brow-r': br, '--brow-ang': ang, '--eye-x': ex, '--eye-y': ey, '--eye-open': open, '--eye-happy': happy, '--wink': wink, '--eye-glow': eglow,
+           '--mouth-smile': smile, '--mouth-open': mopen, '--mouth-flat': flat, '--mouth-o': o, '--mouth-sad': sad, '--cheek': cheek, '--glow': glow, '--eye-scale': escale };
+}
+if (typeof window !== 'undefined') window.BIA = BIA;
+
+/* ==========================================================================
    PITCH HALOR · motor
    Um relógio só (--t em ms). Ao vivo, o relógio anda com o rAF (ou com o áudio da narração,
    que vira o mestre quando está tocando). No render (?render=1), quem chama seek(T) manda.
@@ -3419,6 +3509,7 @@ function parseKeys(s, w) {
 
 function makeBia(el, scene) {
   const B = window.BIA || { poses: {}, faces: {} };
+  if (!window.BIA) console.error('BIA: tabelas da mascote não carregadas antes do motor (src/js/05-bia.js precisa vir antes de 10-engine.js)');
   const tpl = $('#bia-tpl');
   if (tpl && !el.querySelector('.bia-svg')) el.appendChild(tpl.content.cloneNode(true));
   /* as tabelas BIA usam nomes com prefixo (--arm-l…); propsOf vem de lá quando existe */
@@ -3633,92 +3724,6 @@ const P = (() => {
   return { get t() { return T; }, duration, ready, seek, play, pause, toggle, replay, next, prev, setMuted, scenes, captions, field };
 })();
 window.HALOR_PITCH = P;
-
-/* ==========================================================================
-   BIA · tabelas de pose e rosto da mascote · rig v2 (valores numéricos, sem unidade)
-   O motor interpola valor a valor (350 ms, --ease-halo) e escreve as variáveis no .bia; o CSS (20-bia.css) converte.
-   Convenções em 20-bia.css. Lados = lados do ESPECTADOR (l = lupa / palmas, r = tablet / clicker / varinha).
-   Skins: data-skin="cliente" no host (mesmas poses e rostos; corpo lilás, óculos, gravatinha, sem halo).
-   ========================================================================== */
-const BIA = {
-  poseVars: ['--arm-l', '--arm-r', '--fore-l', '--fore-r', '--lean', '--hop', '--squash',
-             '--wave', '--sway', '--point-l', '--point-r', '--stamp-press', '--ring-y',
-             '--carry', '--face-x', '--face-y', '--squint', '--halo-y'],
-  faceVars: ['--brow-l', '--brow-r', '--brow-ang', '--eye-x', '--eye-y', '--eye-open', '--eye-happy', '--wink', '--eye-glow',
-             '--mouth-smile', '--mouth-open', '--mouth-flat', '--mouth-o', '--mouth-sad', '--cheek', '--glow', '--eye-scale'],
-  propVars: ['--p-stamp', '--p-tablet', '--p-clicker', '--p-lens', '--p-wand', '--p-ring', '--p-bubble'],
-  /* data-props="tablet clicker" → --p-tablet:1 --p-clicker:1 (os outros 0).
-     "stamp"/"carimbo" e "clipboard"/"prancheta" continuam aceitos: o carimbo não existe mais (nada aparece) e a prancheta virou o tablet. */
-  props: {
-    stamp: '--p-stamp', carimbo: '--p-stamp',
-    tablet: '--p-tablet', clipboard: '--p-tablet', prancheta: '--p-tablet',
-    clicker: '--p-clicker', controle: '--p-clicker',
-    lens: '--p-lens', lupa: '--p-lens',
-    wand: '--p-wand', varinha: '--p-wand',
-    ring: '--p-ring', anel: '--p-ring',
-    bubble: '--p-bubble', balao: '--p-bubble', 'balão': '--p-bubble',
-  },
-
-  /*                 arm-l  arm-r  fore-l fore-r lean  hop  squash wave sway pt-l pt-r press ring-y carry face-x face-y squint halo-y */
-  poses: {
-    idle:        biaPose(  -18,   -10,    80,   100,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    wave:        biaPose(  -18,  -150,    80,   -20,   -3,    0,    0,    1,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    'point-left':biaPose(  -88,   -10,     2,   100,   -4,    0,    0,    0,   0,   1,   0,   0,   90,   0,   -2,    0,    0,   42),
-    'point-right':biaPose( -18,   -88,    80,     2,    4,    0,    0,    0,   0,   0,   1,   0,   90,   0,    2,    0,    0,   42),
-    present:     biaPose(  -66,   -66,   -24,   -24,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    /* stamp = ergue a mão (anticipação) · stamp-down = bate palmas na frente do corpo, com onda de luz (--stamp-press) */
-    stamp:       biaPose( -160,   -10,    40,   100,    3,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    'stamp-down':biaPose(   16,    16,    78,    78,    0,    0,  .18,    0,   0,   0,   0,   1,   90,   0,    0,    2,    0,   44),
-    'hold-ring': biaPose( -165,  -165,   -15,   -15,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    cheer:       biaPose( -145,  -145,   -25,   -25,    0,  -26,    0,    0,   0,   0,   0,   0,   90,   0,    0,   -2,    0,   40),
-    think:       biaPose(  -18,    40,    80,   115,    3,    0,    0,    0,   0,   0,   0,   0,   90,   0,    2,    0,    0,   42),
-    peek:        biaPose(  -30,   -10,    64,    96,  -14,    0,    0,    0,   0,   0,   0,   0,   90,   0,   -3,    0,    0,   42),
-    walk:        biaPose(  -18,   -18,    50,    50,    0,   -4,    0,    0,   1,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    /* novas */
-    carry:       biaPose(   10,    10,    75,    75,    0,    0,    0,    0,   0,   0,   0,   0,   90,   1,    0,    0,    0,   42),
-    'look-up':   biaPose(  -30,   -30,    60,    60,    0,    0, -.08,    0,   0,   0,   0,   0,   90,   0,    0,   -8,    0,   34),
-    jump:        biaPose( -120,  -120,   -40,   -40,    0,  -60, -.14,    0,   0,   0,   0,   0,   90,   0,    0,   -3,    0,   38),
-    bow:         biaPose(  -40,   -40,    10,    10,    0,    0,  .22,    0,   0,   0,   0,   0,   90,   0,    0,   14,    0,   52),
-    celebrate:   biaPose( -150,  -150,   -30,   -30,    0,  -40, -.08,    0,   0,   0,   0,   0,   90,   0,    0,   -6,    0,   36),
-    'hands-hips':biaPose(  -55,   -55,   105,   105,    0,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    0,   42),
-    'lens-look': biaPose( -126,   -10,   229,   100,    2,    0,    0,    0,   0,   0,   0,   0,   90,   0,    0,    0,    1,   42),
-  },
-
-  /*               brow-l brow-r ang   eye-x eye-y open happy wink glow-eye smile open flat  o   sad  cheek glow eye-scale */
-  faces: {
-    happy:     biaFace(   0,    0,    4,    0,    0,   1,   0,   0,  0,    1,   0,   0,   0,   0,  .6,  0,   1),
-    wow:       biaFace(   1,    1,   -2,    0,  -.2,   1,   0,   0,  0,    0,   0,   0,   1,   0,  .4,  0,   1.06),
-    proud:     biaFace(  .3,   .3,    2,    0,    0,   1,   1,   0,  0,    0,   1,   0,   0,   0,  .9,  0,   1),
-    think:     biaFace(  .9, -.15,   -6,   .7,  -.7,   1,   0,   0,  0,    0,   0,  .8,   0,   0,  .2,  0,   1),
-    oops:      biaFace( -.3,   .7,  -14,  -.6,   .2,   1,   0,   0,  0,    0,   0,   0,  .7,  .4,  .7,  0,   1),
-    wink:      biaFace(   0,   .4,    4,   .2,    0,   1,   0,   1,  0,    1,   0,   0,   0,   0,  .8,  0,   1),
-    focus:     biaFace(   0,    0,   16,    0,    0,  .9,   0,   0,  1,   .6,   0,  .3,   0,   0,  .3,  1,   1),
-    sleepy:    biaFace( -.5,  -.5,   -6,   .1,   .3,  .4,   0,   0,  0,    0,   0,  .6,  .3,   0,  .3,  0,   1),
-    /* novos */
-    laugh:     biaFace(  .6,   .6,    2,    0,    0,   1,   1,   0,  0,    0,   1,   0,   0,   0,   1,  0,   1),
-    surprised: biaFace(   1,    1,   -4,    0,  -.1,   1,   0,   0,  0,    0,   0,   0,  .6,   0,  .3,  0,   1.28),
-  },
-
-  /* · utilidades (o motor pode usar ou não) · */
-  get vars() { return this.poseVars.concat(this.faceVars, this.propVars); },
-  noProps() { const o = {}; this.propVars.forEach(v => { o[v] = 0; }); return o; },
-  defaults() { return Object.assign({}, this.poses.idle, this.faces.happy, this.noProps()); },
-  lerp(a, b, k) { const o = {}; for (const n in a) o[n] = n in b ? a[n] + (b[n] - a[n]) * k : a[n]; for (const n in b) if (!(n in o)) o[n] = b[n]; return o; },
-  apply(el, vars) { for (const n in vars) el.style.setProperty(n, String(+vars[n].toFixed ? +vars[n].toFixed(4) : vars[n])); },
-  propsOf(str) { const o = this.noProps(); (str || '').split(/\s+/).forEach(w => { const v = this.props[w.toLowerCase()]; if (v) o[v] = 1; }); return o; },
-  /* clona o template dentro do host (idempotente) */
-  mount(el) { if (!el.querySelector('.bia-svg')) { const t = document.getElementById('bia-tpl'); if (t) el.appendChild(t.content.firstElementChild.cloneNode(true)); } return el; },
-};
-function biaPose(al, ar, fl, fr, lean, hop, squash, wave, sway, ptl, ptr, press, ringy, carry, fx, fy, squint, haloy) {
-  return { '--arm-l': al, '--arm-r': ar, '--fore-l': fl, '--fore-r': fr, '--lean': lean, '--hop': hop, '--squash': squash,
-           '--wave': wave, '--sway': sway, '--point-l': ptl, '--point-r': ptr, '--stamp-press': press, '--ring-y': ringy,
-           '--carry': carry, '--face-x': fx, '--face-y': fy, '--squint': squint, '--halo-y': haloy };
-}
-function biaFace(bl, br, ang, ex, ey, open, happy, wink, eglow, smile, mopen, flat, o, sad, cheek, glow, escale) {
-  return { '--brow-l': bl, '--brow-r': br, '--brow-ang': ang, '--eye-x': ex, '--eye-y': ey, '--eye-open': open, '--eye-happy': happy, '--wink': wink, '--eye-glow': eglow,
-           '--mouth-smile': smile, '--mouth-open': mopen, '--mouth-flat': flat, '--mouth-o': o, '--mouth-sad': sad, '--cheek': cheek, '--glow': glow, '--eye-scale': escale };
-}
-if (typeof window !== 'undefined') window.BIA = BIA;
 
 </script>
 </body>

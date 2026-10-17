@@ -15,7 +15,7 @@ pitch/
 │  ├─ roteiro.json       Roteiro: cenas, chips, falas com tempos, visual previsto
 │  ├─ css/               00 tokens da marca · 10 motor · 20 Bia · 30 componentes · 40 cenas
 │  ├─ html/              00 sprite · 01 Bia (template SVG) · 02 props · 03/90 palco · 10 a 22 cenas 1 a 13
-│  └─ js/                10 motor · 20 tabelas de pose e rosto da Bia
+│  └─ js/                05 tabelas de pose e rosto da Bia (carregam antes do motor) · 10 motor
 ├─ audio/
 │  ├─ take1-raw.mp3      Narração gravada (ElevenLabs, voz Dani, carioca, eleven_v4)
 │  ├─ words.json         Palavras com tempo (ElevenLabs Scribe)

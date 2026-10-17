@@ -50,6 +50,7 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
 /* ---------- CENA 1 · Da proposta ao negócio ---------- */
 .s1-star { width: 120px; height: 120px; color: var(--halor-violet); }
 .s1-star svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.s1-star g.l { transform-box: fill-box; transform-origin: center; }
 .s1-star b { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-family: var(--f-display); font-weight: 700; font-size: 60px; color: var(--halor-violet); text-shadow: 0 0 20px rgba(139, 61, 255, .4); }
 .s1-walker { width: 280px; height: 340px; }
 .s1-doc { position: absolute; left: 0; top: 0; width: 280px; height: 340px; border-radius: 16px; background: #fff; box-shadow: var(--sh-paper-3), 0 0 0 1.5px var(--line-strong); padding: 30px 28px; color: var(--ink); display: flex; flex-direction: column; gap: 12px; transform-origin: bottom center; }
@@ -63,23 +64,23 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
 .s1-doc .df { position: absolute; left: 50%; top: 150px; width: 120px; height: 70px; margin-left: -60px; }
 .s1-doc .legs { position: absolute; left: 50%; bottom: -24px; width: 90px; height: 26px; margin-left: -45px; }
 .s1-doc .legs i { position: absolute; bottom: 0; width: 26px; height: 26px; border-radius: 13px 13px 6px 6px; background: var(--ink); transform-origin: top center; }
-.s1-doc .legs i.l { left: 8px; } .s1-doc .legs i.r { right: 8px; }
-.s1-doc .legs i.l { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms); }
-.s1-doc .legs i.r { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms - 220ms); }
+.s1-doc .legs i.fl { left: 8px; } .s1-doc .legs i.fr { right: 8px; }
+.s1-doc .legs i.fl { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms); }
+.s1-doc .legs i.fr { animation: s1-step 440ms ease-in-out infinite; animation-play-state: paused; animation-delay: calc(var(--t) * -1ms - 220ms); }
 @keyframes s1-step { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(14deg); } }
 .k.s1-walk { animation-name: s1-walk; animation-timing-function: linear; }
 @keyframes s1-walk {
   0% { transform: translate(0, 0) rotate(0); } 10% { transform: translate(60px, -10px) rotate(-2deg); } 20% { transform: translate(130px, 0) rotate(2deg); }
   30% { transform: translate(210px, -12px) rotate(-2deg); } 40% { transform: translate(300px, 0) rotate(2deg); }
   48% { transform: translate(360px, -24px) rotate(-4deg); } 56% { transform: translate(430px, -130px) rotate(-8deg); } 64% { transform: translate(520px, -30px) rotate(6deg); }
-  72% { transform: translate(580px, 0) rotate(0); } 86% { transform: translate(700px, -10px) rotate(-2deg); } 100% { transform: translate(790px, 0) rotate(0); }
+  72% { transform: translate(580px, 0) rotate(0); } 86% { transform: translate(710px, -10px) rotate(-2deg); } 100% { transform: translate(810px, 0) rotate(0); }
 }
 .s1-path { height: 60px; border-radius: 30px; background: linear-gradient(180deg, var(--lilac-100), var(--lilac-200)); box-shadow: inset 0 0 0 3px #fff, var(--sh-paper-2); transform-origin: left center; }
 .s1-path::after { content: ""; position: absolute; left: 24px; right: 24px; top: 50%; height: 0; border-top: 4px dashed #fff; margin-top: -2px; }
 .s1-coin { width: 76px; height: 76px; border-radius: 50%; background: #fff; color: var(--halor-violet); font-family: var(--f-display); font-weight: 700; font-size: 44px; display: grid; place-items: center; box-shadow: 0 0 0 5px var(--halor-violet), var(--sh-paper-2); }
 .s1-wall { width: 120px; height: 90px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
 .s1-wall i { border-radius: 4px; background: linear-gradient(180deg, var(--lilac-300), var(--halor-neon)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5); }
-.s1-wall i:nth-child(3n + 2) { transform: translateX(14px); }
+.s1-wall i:nth-child(n + 4):nth-child(-n + 6) { transform: translateX(12px); }
 .s1-door { width: 220px; height: 400px; }
 .s1-door-sign { position: absolute; left: 50%; top: -74px; transform: translateX(-50%); font-family: var(--f-mono); font-size: 22px; font-weight: 600; letter-spacing: .3em; text-transform: uppercase; color: var(--ink); padding: 10px 24px; border: 3px dashed var(--line-strong); border-radius: 999px; background: rgba(255, 255, 255, .6); white-space: nowrap; }
 .s1-door-sign.lit { border-style: solid; border-color: var(--halor-violet); background: var(--halor-violet); color: #fff; box-shadow: var(--glow-sm); }
@@ -90,15 +91,17 @@ svg use.l { transform-box: fill-box; transform-origin: center; }
 /* ---------- CENA 2 · Halor e a Bia ---------- */
 .s2-beam { width: 880px; height: 34px; border-radius: 17px; background: linear-gradient(90deg, var(--halor-violet), var(--halor-neon), var(--halor-violet)); box-shadow: var(--glow-sm), inset 0 0 0 3px rgba(255, 255, 255, .55); }
 .s2-beam::after { content: ""; position: absolute; left: 24px; right: 24px; top: 50%; height: 6px; margin-top: -3px; background-image: radial-gradient(circle, #fff 2.5px, transparent 3px); background-size: 36px 6px; background-repeat: repeat-x; }
-.s2-hook { position: absolute; left: 50%; top: -74px; width: 60px; height: 76px; margin-left: -30px; }
-.s2-hook::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 50px; margin-left: -3px; background: var(--ink); border-radius: 3px; }
-.s2-hook::after { content: ""; position: absolute; left: 10px; top: 40px; width: 40px; height: 34px; border-radius: 12px; background: var(--ink); }
+.s2-hook { position: absolute; left: 50%; top: -150px; width: 60px; height: 152px; margin-left: -30px; }
+.s2-hook::before { content: ""; position: absolute; left: 50%; top: 0; width: 6px; height: 126px; margin-left: -3px; background: var(--ink); border-radius: 0 0 3px 3px; }
+.s2-hook::after { content: ""; position: absolute; left: 12px; top: 112px; width: 36px; height: 36px; border-radius: 50%; border: 7px solid var(--ink); border-top-color: transparent; transform: rotate(-45deg); }
+.s2-rail { position: absolute; left: 0; right: 0; top: 0; height: 10px; background: linear-gradient(90deg, transparent, var(--lilac-300) 15%, var(--lilac-300) 85%, transparent); }
+.s2 .s2-beamwrap { z-index: 3; }
 .s2-str { position: absolute; width: 3px; background: var(--ink); opacity: .55; transform-origin: top; }
 .s2-str::after { content: ""; position: absolute; left: -6px; bottom: -8px; width: 11px; height: 11px; border-radius: 50%; border: 3px solid var(--ink); background: #fff; }
 .s2-word { font-family: var(--f-display); font-weight: 600; font-size: 220px; letter-spacing: -.045em; line-height: 1; color: var(--ink); display: flex; }
 .s2-word span { display: inline-block; }
 .k.s2-hang { animation-name: s2-hang; animation-timing-function: var(--ease-spark); }
-@keyframes s2-hang { 0% { opacity: 0; transform: translateY(-420px) rotate(-3deg); } 60% { opacity: 1; transform: translateY(14px) rotate(1deg); } 80% { transform: translateY(-6px) rotate(-.5deg); } 100% { opacity: 1; transform: translateY(0) rotate(0); } }
+@keyframes s2-hang { 0% { opacity: 0; transform: translateY(-140px) rotate(-3deg); } 60% { opacity: 1; transform: translateY(14px) rotate(1deg); } 80% { transform: translateY(-6px) rotate(-.5deg); } 100% { opacity: 1; transform: translateY(0) rotate(0); } }
 .s2-mk { width: 150px; height: 150px; overflow: visible; filter: drop-shadow(0 10px 24px rgba(139, 61, 255, .35)); }
 .s2-sub { font-family: var(--f-mono); font-size: 26px; font-weight: 600; letter-spacing: .34em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
 .s2-sub em { font-style: normal; color: var(--halor-violet-700); }

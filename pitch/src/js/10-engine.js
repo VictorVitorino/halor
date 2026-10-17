@@ -140,6 +140,7 @@ function parseKeys(s, w) {
 
 function makeBia(el, scene) {
   const B = window.BIA || { poses: {}, faces: {} };
+  if (!window.BIA) console.error('BIA: tabelas da mascote não carregadas antes do motor (src/js/05-bia.js precisa vir antes de 10-engine.js)');
   const tpl = $('#bia-tpl');
   if (tpl && !el.querySelector('.bia-svg')) el.appendChild(tpl.content.cloneNode(true));
   /* as tabelas BIA usam nomes com prefixo (--arm-l…); propsOf vem de lá quando existe */

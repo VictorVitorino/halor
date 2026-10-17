@@ -1,7 +1,8 @@
 <!-- CENA 2 · Halor e a Bia · o logotipo desce pendurado numa viga de luz; a Bia entra pela esquerda em "Bia" -->
 <section class="scene s2" id="s2" data-world="paper">
   <!-- viga de luz com gancho e fios: desce, segura as letras e vai embora depois de "Halor!" -->
-  <div class="kx" style="--out: calc(var(--w-halor) + 1300); --xdur: 700; left: 0; top: 0">
+  <div class="kx s2-beamwrap" style="--out: calc(var(--w-halor) + 1300); --xdur: 700; left: 0; top: 0">
+    <i class="s2-rail k fade" style="--in: 0; --dur: 400"></i>
     <div class="s2-beam k down" style="--in: 100; --dur: 700; left: 520px; top: 150px"><i class="s2-hook"></i></div>
     <div class="s2-strings" style="--stag: 110">
       <i class="s2-str k grow-y" style="--in: 700; --i: 0; left: 664px; top: 184px; height: 120px"></i>
@@ -24,7 +25,7 @@
   <i class="s2-line k grow-x" style="--in: calc(var(--w-halor) + 700); --dur: 700; left: 606px; top: 584px"></i>
 
   <!-- a Bia entra pela esquerda, acena, se apresenta -->
-  <div class="k walk-in-l" style="--in: calc(var(--w-bia) - 700); --dur: 1000; left: 330px; top: 960px">
+  <div class="k walk-in-l" style="--in: calc(var(--w-bia) - 250); --dur: 650; left: 330px; top: 960px">
     <div class="bia" data-pose="walk" data-face="happy" data-props="tablet" data-keys="@bia+300:pose=idle,face=happy;@bia+900:pose=wave,face=laugh;@nossa:pose=present,face=proud;@inteligencia:pose=look-up,face=wow;@artificial+400:pose=bow,face=wink;@artificial+1100:pose=idle,face=happy" style="--x: 0px; --y: 0px; --s: 1.1"></div>
   </div>
   <i class="s2-bia-ring k fade" style="--in: calc(var(--w-bia) + 300); --dur: 500; left: 330px; top: 790px"></i>
