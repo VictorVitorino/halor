@@ -91,7 +91,7 @@
   --sh-paper-2: 0 10px 30px -12px rgba(23, 17, 43, .18), 0 2px 6px rgba(23, 17, 43, .05);
   --sh-paper-3: 0 30px 70px -20px rgba(58, 20, 120, .28), 0 4px 12px rgba(23, 17, 43, .06);
 
-  /* · Movimento · herda a curva do Canteiro, agora com nome · */
+  /* · Movimento · a curva da marca, com nome · */
   --ease-halo: cubic-bezier(.22, .61, .36, 1);
   --ease-spark: cubic-bezier(.34, 1.56, .64, 1);
   --t-fast: 120ms; --t-base: 240ms; --t-slow: 480ms; --t-cine: 900ms;
@@ -1354,10 +1354,6 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 .pd-fx { display: flex; gap: 6px; flex-wrap: wrap; }
 .pd-feats { margin-top: clamp(48px, 6vw, 80px); }
 
-.tl-ahead { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(36px, 5vw, 56px); }
-@media (max-width: 860px) { .tl-ahead { grid-template-columns: 1fr; } }
-.tl-ahead article { background: #fff; border: 1px solid var(--line-c); border-radius: var(--r-lg); padding: 20px 22px; display: grid; gap: 8px; box-shadow: 0 10px 30px -18px rgba(58, 20, 120, .35); }
-.tl-ahead p:not(.pd-k) { font-size: 15px; color: var(--text-2); }
 
 /* ==========================================================================
    PRODUTO v4 · brilho no ganho principal, passos, upload mágico e carrossel
@@ -1530,6 +1526,25 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
   .rec-steps small { white-space: nowrap; }
 }
 
+/* barra da gravação: o ponto ao vivo não é cortado e, no celular, fica só o ponto */
+.pd-rec-frame .pf-bar .rec-live { overflow: visible; margin-left: 8px; }
+.pd-rec-frame .pf-bar .rec-live .dot { width: 8px; height: 8px; background: currentColor; }
+@media (max-width: 600px) { .pd-rec-frame .pf-bar .rec-live { font-size: 0; gap: 0; } }
+/* equação no celular: um termo por linha, operadores centralizados entre eles */
+@media (max-width: 560px) { #efeito .equation { flex-direction: column; gap: 6px; } #efeito .eq-op { line-height: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  /* os loops do carrossel terminam no quadro vazio: com uma única volta instantânea a miniatura sumia */
+  .pd-carousel.run .slide *, .pd-carousel.run .slide *::before, .pd-carousel.run .slide *::after { animation: none !important; }
+}
+
+/* ==========================================================================
+   LINHA DO TEMPO · separada do Produto (antes vivia em 28-produto.css)
+   ========================================================================== */
+.tl-ahead { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(36px, 5vw, 56px); }
+@media (max-width: 860px) { .tl-ahead { grid-template-columns: 1fr; } }
+.tl-ahead article { background: #fff; border: 1px solid var(--line-c); border-radius: var(--r-lg); padding: 20px 22px; display: grid; gap: 8px; box-shadow: 0 10px 30px -18px rgba(58, 20, 120, .35); }
+.tl-ahead p:not(.pd-k) { font-size: 15px; color: var(--text-2); }
 /* ==========================================================================
    v6 · Linha do tempo como viagem no tempo: palco da época + trilho que avança
    ========================================================================== */
@@ -1775,12 +1790,139 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
   .ev-scene *, .ev-scene *::before, .ev-scene *::after, .ev-info.swap > * { animation: none !important; }
   .ev-att b, .ev-fill { transition: none; }
 }
-/* barra da gravação: o ponto ao vivo não é cortado e, no celular, fica só o ponto */
-.pd-rec-frame .pf-bar .rec-live { overflow: visible; margin-left: 8px; }
-.pd-rec-frame .pf-bar .rec-live .dot { width: 8px; height: 8px; background: currentColor; }
-@media (max-width: 600px) { .pd-rec-frame .pf-bar .rec-live { font-size: 0; gap: 0; } .ev-stop span em { display: none; } }
-/* equação no celular: um termo por linha, operadores centralizados entre eles */
-@media (max-width: 560px) { #efeito .equation { flex-direction: column; gap: 6px; } #efeito .eq-op { line-height: 1; } }
+@media (max-width: 600px) { .ev-stop span em { display: none; } }
+
+/* ==========================================================================
+   SITE · camada de movimento
+   Barra fixa com progresso de leitura, menu com Glow / Light Sweep,
+   neon no plano em destaque e Scroll Reveal reversível: o conteúdo se monta
+   ao descer e se desmonta ao subir. Quem pede menos movimento vê tudo pronto.
+   ========================================================================== */
+
+/* · Barra fixa · (#v-site > * ganha position: relative; a barra precisa vencer essa regra) */
+#v-site > .s-nav { position: sticky; top: 0; z-index: 60; }
+.s-nav.scrolled { box-shadow: 0 22px 44px -30px rgba(139, 61, 255, .55); }
+.s-nav-prog {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none;
+  transform-origin: left; transform: scaleX(var(--p, 0));
+  background: linear-gradient(90deg, rgba(139, 61, 255, 0), var(--halor-violet) 30%, var(--halor-glow) 80%, #fff);
+  box-shadow: 0 0 10px rgba(169, 112, 255, .9), 0 0 22px rgba(139, 61, 255, .6);
+  opacity: 0; transition: opacity var(--t-base) var(--ease-halo);
+}
+.s-nav.scrolled .s-nav-prog { opacity: 1; }
+
+/* · Menu: Glow / Light Sweep · */
+.s-links a { position: relative; overflow: hidden; isolation: isolate; transition: color var(--t-base), background var(--t-base), box-shadow var(--t-base), text-shadow var(--t-base); }
+.s-links a::before {
+  /* a faixa de luz que atravessa o item */
+  content: ""; position: absolute; inset: -2px; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 28%, rgba(201, 166, 255, .08) 38%, rgba(255, 255, 255, .55) 50%, rgba(201, 166, 255, .08) 62%, transparent 72%);
+  transform: translateX(-140%);
+}
+.s-links a::after {
+  /* o fio de luz embaixo do item */
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 3px; height: 2px; border-radius: 2px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--halor-glow) 20%, #fff 50%, var(--halor-glow) 80%, transparent);
+  box-shadow: 0 0 8px rgba(169, 112, 255, .95), 0 0 18px rgba(139, 61, 255, .7);
+  transform: scaleX(0); opacity: 0; transition: transform .5s var(--ease-halo), opacity .3s;
+}
+.s-links a:hover, .s-links a:focus-visible {
+  color: #fff; background: rgba(139, 61, 255, .14);
+  text-shadow: 0 0 14px rgba(169, 112, 255, .9);
+  box-shadow: inset 0 0 0 1px rgba(201, 166, 255, .22), 0 0 26px -6px rgba(139, 61, 255, .8);
+}
+.s-links a:hover::before, .s-links a:focus-visible::before { animation: navSweep .9s var(--ease-halo) both; }
+.s-links a:hover::after, .s-links a:focus-visible::after, .s-links a.is-on::after { transform: scaleX(1); opacity: 1; }
+.s-links a.is-on { color: #fff; text-shadow: 0 0 12px rgba(169, 112, 255, .85); }
+/* entrada: a luz passa pelos itens um depois do outro; depois volta de tempos em tempos */
+.s-links.nav-intro a::before { animation: navSweep 1.2s var(--ease-halo) calc(.5s + var(--i, 0) * .14s) both; }
+.s-links.nav-idle a:not(:hover)::before { animation: navSweep 1.3s var(--ease-halo) calc(var(--i, 0) * .12s) both; }
+@keyframes navSweep { from { transform: translateX(-140%); } to { transform: translateX(140%); } }
+
+/* Planos no menu: neon que chama atenção */
+.s-links a.nav-neon {
+  color: #fff;
+  text-shadow: 0 0 6px #e6d6ff, 0 0 14px var(--halor-glow), 0 0 26px var(--halor-violet);
+  box-shadow: inset 0 0 0 1px rgba(214, 190, 255, .75), inset 0 0 14px rgba(169, 112, 255, .35), 0 0 12px rgba(169, 112, 255, .55), 0 0 30px rgba(139, 61, 255, .45);
+  animation: neonBreath 2.8s ease-in-out infinite, neonFlicker 9s steps(1, end) infinite;
+}
+.s-links a.nav-neon::after { opacity: 1; transform: scaleX(1); left: 18px; right: 18px; }
+@keyframes neonBreath {
+  50% { box-shadow: inset 0 0 0 1px rgba(232, 218, 255, .95), inset 0 0 18px rgba(169, 112, 255, .5), 0 0 18px rgba(169, 112, 255, .8), 0 0 44px rgba(139, 61, 255, .65); }
+}
+@keyframes neonFlicker { 0%, 100% { opacity: 1; } 61% { opacity: .55; } 62% { opacity: 1; } 64% { opacity: .7; } 65% { opacity: 1; } }
+
+/* · Plano em destaque: borda de neon que corre e brilho que respira · */
+@property --neon-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.plan.hot, .ent-card.hot { isolation: isolate; }
+.plan.hot::before, .ent-card.hot::before {
+  content: ""; position: absolute; inset: -1px; border-radius: inherit; padding: 1.5px; pointer-events: none; z-index: 2;
+  background: conic-gradient(from var(--neon-a), rgba(139, 61, 255, .25), #c9a6ff 9%, #fff 13%, #a970ff 17%, rgba(139, 61, 255, .25) 28%, rgba(139, 61, 255, .25) 50%, #ff9ad5 59%, #fff 63%, #a970ff 67%, rgba(139, 61, 255, .25) 78%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  filter: drop-shadow(0 0 6px rgba(169, 112, 255, .9));
+  animation: neonSpin 5.5s linear infinite;
+}
+.plan.hot::after, .ent-card.hot::after {
+  content: ""; position: absolute; inset: -18px; border-radius: calc(var(--r-lg) + 18px); pointer-events: none; z-index: -1;
+  background: radial-gradient(60% 50% at 50% 0%, rgba(169, 112, 255, .45), transparent 70%), radial-gradient(70% 60% at 50% 100%, rgba(139, 61, 255, .35), transparent 72%);
+  filter: blur(16px); animation: neonHalo 3.2s ease-in-out infinite;
+}
+.plan.hot .plan-flag { z-index: 3; }
+.plan.hot .plan-flag .chip { box-shadow: 0 0 0 1px rgba(232, 218, 255, .8), 0 0 14px rgba(169, 112, 255, .9), 0 0 32px rgba(139, 61, 255, .7); text-shadow: 0 0 8px rgba(255, 255, 255, .8); animation: neonFlicker 7s steps(1, end) 1.5s infinite; }
+.plan.hot .plan-name { text-shadow: 0 0 14px rgba(169, 112, 255, .85), 0 0 34px rgba(139, 61, 255, .55); }
+.plan.hot .plan-name svg { filter: drop-shadow(0 0 8px rgba(169, 112, 255, 1)); }
+.plan.hot .btn-primary, .ent-card.hot .btn-primary { position: relative; overflow: hidden; isolation: isolate; box-shadow: 0 0 0 1px rgba(232, 218, 255, .5), 0 0 22px rgba(169, 112, 255, .75), 0 10px 36px -8px rgba(139, 61, 255, .9); }
+.plan.hot .btn-primary::after, .ent-card.hot .btn-primary::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%);
+  transform: translateX(-140%); animation: btnSweep 3.6s var(--ease-halo) 1s infinite;
+}
+@keyframes neonSpin { to { --neon-a: 360deg; } }
+@keyframes neonHalo { 50% { opacity: .55; transform: scale(.985); } }
+@keyframes btnSweep { 0% { transform: translateX(-140%); } 38%, 100% { transform: translateX(140%); } }
+
+/* · Scroll Reveal reversível ·
+   O JS marca os blocos com data-rv (o tipo) e --rv-i (a ordem no grupo).
+   Ao entrar na tela o bloco ganha .rv-in; ao sair perde, e data-rv-out
+   diz por onde saiu (up/down) para ele voltar pelo mesmo lado. */
+.rv-on [data-rv] {
+  transition: opacity .85s var(--ease-halo), transform 1.05s var(--ease-halo), filter .85s var(--ease-halo), clip-path 1.05s var(--ease-halo), letter-spacing 1s var(--ease-halo);
+  transition-delay: calc(var(--rv-i, 0) * 90ms);
+}
+.rv-on [data-rv]:not(.rv-in) { opacity: 0; transition-duration: .5s; transition-delay: 0s; }
+.rv-on [data-rv="up"]:not(.rv-in) { transform: translateY(56px); filter: blur(8px); }
+.rv-on [data-rv="up"][data-rv-out="up"]:not(.rv-in) { transform: translateY(-56px); }
+.rv-on [data-rv="card"]:not(.rv-in) { transform: perspective(1000px) translateY(80px) rotateX(16deg) scale(.95); filter: blur(6px); }
+.rv-on [data-rv="card"][data-rv-out="up"]:not(.rv-in) { transform: perspective(1000px) translateY(-80px) rotateX(-16deg) scale(.95); }
+.rv-on [data-rv="scale"]:not(.rv-in) { transform: translateY(60px) scale(.9); filter: blur(12px); }
+.rv-on [data-rv="scale"][data-rv-out="up"]:not(.rv-in) { transform: translateY(-60px) scale(.9); }
+.rv-on [data-rv="line"]:not(.rv-in) { clip-path: inset(0 100% 0 0); transform: translateX(-24px); }
+.rv-on [data-rv="line"][data-rv-out="up"]:not(.rv-in) { clip-path: inset(0 0 0 100%); transform: translateX(24px); }
+.rv-on [data-rv="line"].rv-in { clip-path: inset(0 0 0 0); }
+.rv-on [data-rv="eyebrow"]:not(.rv-in) { letter-spacing: .6em; filter: blur(4px); }
+/* título: as palavras sobem de dentro de uma máscara, uma a uma */
+.rv-w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .14em; margin-bottom: -.14em; }
+.rv-w > span { display: inline-block; transition: transform 1s var(--ease-halo), opacity .6s var(--ease-halo); transition-delay: calc(var(--wi, 0) * 70ms + var(--rv-i, 0) * 90ms); }
+.rv-on [data-rv="words"]:not(.rv-in) { opacity: 1; }
+.rv-on [data-rv="words"]:not(.rv-in) .rv-w > span { transform: translateY(112%); opacity: 0; transition-duration: .45s; transition-delay: 0s; }
+.rv-on [data-rv="words"][data-rv-out="up"]:not(.rv-in) .rv-w > span { transform: translateY(-112%); }
+/* um fio de luz acompanha o título quando ele termina de montar */
+.rv-on [data-rv="words"] { position: relative; }
+.rv-on .s-head [data-rv="words"]::after {
+  content: ""; position: absolute; left: 0; bottom: -10px; width: min(220px, 40%); height: 2px; border-radius: 2px; pointer-events: none;
+  background: linear-gradient(90deg, var(--halor-violet), var(--halor-glow), transparent);
+  box-shadow: 0 0 12px rgba(169, 112, 255, .8);
+  transform-origin: left; transform: scaleX(0); transition: transform 1.1s var(--ease-halo) .35s;
+}
+.rv-on .s-head-c [data-rv="words"]::after { left: 50%; translate: -50% 0; transform-origin: center; background: linear-gradient(90deg, transparent, var(--halor-glow), transparent); }
+.rv-on .s-head [data-rv="words"].rv-in::after { transform: scaleX(1); }
+.theme-lilac .rv-on .s-head [data-rv="words"]::after, .rv-on .theme-lilac .s-head [data-rv="words"]::after { box-shadow: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .s-links a::before, .s-links a.nav-neon, .plan.hot::before, .plan.hot::after, .ent-card.hot::before, .ent-card.hot::after,
+  .plan.hot .btn-primary::after, .ent-card.hot .btn-primary::after, .plan.hot .plan-flag .chip { animation: none !important; }
+}
 
 /* ==========================================================================
    FILME · Conheça o Halor, 88 s: uma gravação de tela editada do Estúdio Halor.
@@ -3803,6 +3945,10 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
   <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
   <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
   <symbol id="i-restore" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9"/><path d="M4.5 4.5V9H9"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24" fill="currentColor"><ellipse cx="6.2" cy="10.2" rx="1.9" ry="2.4"/><ellipse cx="10" cy="6.6" rx="2" ry="2.6"/><ellipse cx="14.4" cy="6.6" rx="2" ry="2.6"/><ellipse cx="18" cy="10.4" rx="1.9" ry="2.4"/><path d="M12.2 11.4c2.4 0 5.4 3.6 5.4 5.8 0 1.8-1.4 2.6-3 2.3-1-.2-1.6-.6-2.4-.6s-1.4.4-2.4.6c-1.6.3-3-.5-3-2.3 0-2.2 3-5.8 5.4-5.8z"/></symbol>
+  <symbol id="i-token" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="10" cy="7" rx="6.5" ry="3"/><path d="M3.5 7v5c0 1.7 2.9 3 6.5 3s6.5-1.3 6.5-3V7"/><path d="M3.5 12v5c0 1.7 2.9 3 6.5 3 1.3 0 2.6-.2 3.6-.5"/><path d="M19 13v6M16 16h6"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9l-4-4L4 16v4z"/><path d="M13.5 6.5l4 4"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
 </svg>
 
 <!-- Navegador do protótipo: atravessa todas as telas -->
@@ -3849,7 +3995,7 @@ code { font-family: var(--f-mono); font-size: .88em; background: var(--lilac-50)
         <div class="wrap s-hero-in s-hero-copy">
           <p class="eyebrow no-rule s-in" style="--d:.25s">Programa de Apresentações Lúdicas</p>
           <h1 class="display s-h1"><span class="w" style="--i:0">Faça</span> <span class="w" style="--i:1">cada</span> <span class="w" style="--i:2">olhar</span> <span class="w lux" style="--i:3">render.</span></h1>
-          <p class="s-sub s-in" style="--d:1.05s">O que exigia código agora é <span class="neon-band">de todo mundo</span>.</p>
+          <p class="s-sub s-in" style="--d:1.05s">O que antes exigia código, agora é <span class="neon-band">de todo mundo!</span></p>
           <p class="lede s-lede s-in" style="--d:1.3s">Apresentações vivas, que prendem o olhar do começo ao fim.</p>
           <div class="s-cta s-in" style="--d:1.5s">
             <a class="btn btn-primary btn-lg" href="#assinar" data-plan="faisca" data-attract>Começar grátis <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
@@ -7404,6 +7550,105 @@ document.addEventListener('click', e => {
 });
 
 /* ==========================================================================
+   SITE · movimento de rolagem
+   Barra fixa com o progresso da leitura, menu que acende a seção à vista
+   (com Glow / Light Sweep e neon em Planos) e Scroll Reveal reversível:
+   os blocos se montam ao descer e se desmontam ao subir, saindo e voltando
+   pelo mesmo lado. Blocos novos podem pedir o efeito direto na marcação com
+   data-rv="up|card|scale|line|words|eyebrow" e style="--rv-i: N".
+   ========================================================================== */
+const RV_MAP = [
+  ['.s-head > .eyebrow, .s-head-row .eyebrow, .faq-grid .eyebrow', 'eyebrow'],
+  ['.s-head h2, .s-head-row h2, .faq-grid h2, .s-final h2', 'words'],
+  ['.s-head > .lede, .s-head-row .lede, .s-head > .seg', 'up'],
+  ['.sci-grid > .sci', 'line'], ['.equation > *', 'scale'],
+  ['.pd-what > article', 'card'], ['.pd-rec', 'scale'], ['.pd-sub', 'up'], ['.pd-carousel', 'up'],
+  ['.feat-grid > li', 'line'], ['.p-cta', 'up'],
+  ['.tl-ahead > article', 'card'],
+  ['.vt-filter', 'up'], ['.vt-cat-head', 'up'], ['.vt-stats > li', 'line'], ['.vt-prin > li', 'card'],
+  ['.plans > .plan', 'card'], ['.ent', 'up'], ['.plans-note', 'up'],
+  ['.faq details', 'line'], ['.s-final-in > *:not(h2)', 'up'], ['.s-foot-in > *', 'up']
+];
+
+/* título: cada palavra vira uma máscara com a palavra dentro (o espaço duro mantém pares juntos) */
+function rvWords(h) {
+  if (h.dataset.rvSplit) return;
+  h.dataset.rvSplit = '1';
+  let k = 0;
+  const wrap = node => { const w = el('span', 'rv-w'), i = el('span'); i.style.setProperty('--wi', k++); w.appendChild(i); node.replaceWith(w); i.appendChild(node); };
+  [...h.childNodes].forEach(n => {
+    if (n.nodeType === 3) {
+      const parts = n.textContent.split(/([ \t\n]+)/);
+      const frag = document.createDocumentFragment();
+      parts.forEach(p => {
+        if (!p) return;
+        if (/^[ \t\n]+$/.test(p)) { frag.appendChild(document.createTextNode(' ')); return; }
+        const w = el('span', 'rv-w'), i = el('span', null, p); i.style.setProperty('--wi', k++); w.appendChild(i); frag.appendChild(w);
+      });
+      n.replaceWith(frag);
+    } else if (n.nodeType === 1 && n.tagName !== 'BR') wrap(n);
+  });
+}
+
+function bootReveal() {
+  const site = $('#v-site'); if (!site || REDUCED || !('IntersectionObserver' in window)) return;
+  const scope = [...$$('main > section:not(.s-hero)', site), ...$$('footer', site)];
+  scope.forEach(sec => RV_MAP.forEach(([q, kind]) => {
+    const groups = new Map();
+    $$(q, sec).forEach(n => {
+      if (n.closest('.vt-card') || n.hasAttribute('data-rv')) return;
+      const g = groups.get(n.parentNode) || 0; groups.set(n.parentNode, g + 1);
+      n.dataset.rv = kind;
+      if (!n.style.getPropertyValue('--rv-i')) n.style.setProperty('--rv-i', g % 6);
+    });
+  }));
+  $$('[data-rv="words"]', site).forEach(rvWords);
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    const t = e.target;
+    if (e.isIntersecting) { t.removeAttribute('data-rv-out'); t.classList.add('rv-in'); }
+    else { t.dataset.rvOut = e.boundingClientRect.top < 0 ? 'up' : 'down'; t.classList.remove('rv-in'); }
+  }), { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+  $$('[data-rv]', site).forEach(n => io.observe(n));
+  site.classList.add('rv-on');
+  /* blocos que nascem depois (planos, vitrine) entram no mesmo observador */
+  new MutationObserver(ms => ms.forEach(m => m.addedNodes.forEach(n => {
+    if (n.nodeType !== 1) return;
+    [n, ...$$('[data-rv]', n)].forEach(x => { if (x.dataset && x.dataset.rv) { if (x.dataset.rv === 'words') rvWords(x); io.observe(x); } });
+  }))).observe(site, { childList: true, subtree: true });
+}
+
+function bootNavMotion() {
+  const nav = $('#s-nav'); if (!nav) return;
+  const links = $$('.s-links a[href^="#"]', nav), list = $('.s-links', nav);
+  const prog = el('span', 's-nav-prog'); prog.setAttribute('aria-hidden', 'true'); nav.appendChild(prog);
+  let raf = 0;
+  const paint = () => { raf = 0; const max = document.documentElement.scrollHeight - innerHeight; prog.style.setProperty('--p', max > 0 ? Math.min(1, scrollY / max).toFixed(4) : 0); };
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(paint); }, { passive: true }); paint();
+  const map = new Map();
+  links.forEach((a, i) => {
+    a.style.setProperty('--i', i);
+    if (a.getAttribute('href') === '#planos') a.classList.add('nav-neon');
+    const s = document.getElementById(a.getAttribute('href').slice(1)); if (s) map.set(s, a);
+  });
+  if ('IntersectionObserver' in window) {
+    const spy = new IntersectionObserver(es => es.forEach(e => {
+      const a = map.get(e.target); if (!a) return;
+      a.classList.toggle('is-on', e.isIntersecting);
+      if (e.isIntersecting) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    }), { rootMargin: '-45% 0px -50% 0px' });
+    map.forEach((a, s) => spy.observe(s));
+  }
+  if (REDUCED || !list) return;
+  list.classList.add('nav-intro');
+  setTimeout(() => list.classList.remove('nav-intro'), 3200);
+  /* de tempos em tempos a luz volta a passar pelo menu */
+  setInterval(() => {
+    if (document.hidden || currentView !== 'v-site') return;
+    list.classList.remove('nav-idle'); void list.offsetWidth; list.classList.add('nav-idle');
+  }, 9000);
+}
+
+/* ==========================================================================
    PRODUTO · gravação do Estúdio em loop (montar, baixar HTML, apresentar)
    e vitrine de modelos prontos
    ========================================================================== */
@@ -7463,6 +7708,13 @@ function bootProduto() {
   new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); loop(); } else clearTimeout(timer); }).observe(stage);
   document.addEventListener('halor:view', loop);
   set(0);
+}
+
+/* O efeito Halor · dispara o desenho dos ícones e a tipografia quando a seção aparece */
+function bootEfeitoFx() {
+  const sec = $('#efeito'); if (!sec || REDUCED) return;
+  sec.classList.add('fx-pre');
+  new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; sec.classList.add('fx-go'); sec.classList.remove('fx-pre'); o.disconnect(); }, { threshold: .25 }).observe($('.sci-grid', sec));
 }
 
 /* Linha do tempo · viagem no tempo: um palco mostra como a apresentação era em cada
@@ -7538,13 +7790,6 @@ function bootEvo() {
   document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); ev.classList.remove('ticking'); } else schedule(); });
   new ResizeObserver(layout).observe(inner);
   go(0); clearTimeout(timer);
-}
-
-/* O efeito Halor · dispara o desenho dos ícones e a tipografia quando a seção aparece */
-function bootEfeitoFx() {
-  const sec = $('#efeito'); if (!sec || REDUCED) return;
-  sec.classList.add('fx-pre');
-  new IntersectionObserver((es, o) => { if (!es[0].isIntersecting) return; sec.classList.add('fx-go'); sec.classList.remove('fx-pre'); o.disconnect(); }, { threshold: .25 }).observe($('.sci-grid', sec));
 }
 
 /* ==========================================================================
@@ -10065,6 +10310,8 @@ function boot() {
   route();
   bootHalos();
   bootFields();
+  bootNavMotion();
+  bootReveal();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 

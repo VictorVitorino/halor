@@ -327,6 +327,18 @@ export default function HalorSprite() {
         <path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9" />
         <path d="M4.5 4.5V9H9" />
       </symbol>
+      <symbol id="i-paw" viewBox="0 0 24 24" fill="currentColor">
+        <ellipse cx="6.2" cy="10.2" rx="1.9" ry="2.4" /><ellipse cx="10" cy="6.6" rx="2" ry="2.6" /><ellipse cx="14.4" cy="6.6" rx="2" ry="2.6" /><ellipse cx="18" cy="10.4" rx="1.9" ry="2.4" /><path d="M12.2 11.4c2.4 0 5.4 3.6 5.4 5.8 0 1.8-1.4 2.6-3 2.3-1-.2-1.6-.6-2.4-.6s-1.4.4-2.4.6c-1.6.3-3-.5-3-2.3 0-2.2 3-5.8 5.4-5.8z" />
+      </symbol>
+      <symbol id="i-token" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+        <ellipse cx="10" cy="7" rx="6.5" ry="3" /><path d="M3.5 7v5c0 1.7 2.9 3 6.5 3s6.5-1.3 6.5-3V7" /><path d="M3.5 12v5c0 1.7 2.9 3 6.5 3 1.3 0 2.6-.2 3.6-.5" /><path d="M19 13v6M16 16h6" />
+      </symbol>
+      <symbol id="i-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 20h4L19 9l-4-4L4 16v4z" /><path d="M13.5 6.5l4 4" />
+      </symbol>
+      <symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round">
+        <path d="M4 7h9M17 7h3M4 17h3M11 17h9" /><circle cx="15" cy="7" r="2" /><circle cx="9" cy="17" r="2" />
+      </symbol>
     </svg>
   );
 }

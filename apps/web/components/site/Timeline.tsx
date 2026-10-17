@@ -2,7 +2,7 @@
    A marcação é idêntica à do protótipo; o comportamento é ligado pelos motores em lib/engines/site.
    As abas do trilho nascem de EVO já no estado da primeira época (o protótipo montava por JS). */
 import type { CSSProperties } from 'react';
-import { EVO } from '@/lib/engines/site/data';
+import { EVO } from '@/lib/engines/site/evo-data';
 
 export default function Timeline() {
   return (

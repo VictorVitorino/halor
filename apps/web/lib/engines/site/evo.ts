@@ -6,7 +6,7 @@
    chegam pré-renderizadas (Timeline.tsx).
    ========================================================================== */
 import { $, $$, REDUCED } from '@/lib/core';
-import { EVO } from './data';
+import { EVO } from './evo-data';
 import type { Dispose } from './produto';
 
 const noop: Dispose = () => {};
