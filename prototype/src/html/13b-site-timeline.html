@@ -1,105 +1,348 @@
-    <!-- LINHA DO TEMPO · faixa Lavanda -->
-    <section class="s-sec theme-lilac s-tl" id="linha-do-tempo">
+    <!-- LINHA DO TEMPO · faixa Lavanda que ganha cor a cada época: do cinza de 2016 ao neon do Halor.
+         Sete painéis lado a lado (acordeão horizontal); no celular viram um acordeão vertical. -->
+    <section class="s-sec theme-lilac s-tl" id="linha-do-tempo" aria-labelledby="tl-h" data-era="0">
+      <div class="tl-amb" aria-hidden="true">
+        <div class="tl-glow">
+          <svg class="tl-spk tl-spk-1" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+          <svg class="tl-spk tl-spk-2" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+          <svg class="tl-spk tl-spk-3" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+          <svg class="tl-spk tl-spk-4" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+          <svg class="tl-spk tl-spk-5" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+          <svg class="tl-spk tl-spk-6" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+        </div>
+      </div>
       <div class="wrap">
-        <div class="s-head">
+        <div class="s-head" data-rv-stagger>
           <p class="eyebrow">Linha do tempo</p>
-          <h2 class="display">Dez anos de apresentações, e para onde vamos.</h2>
+          <h2 class="display" id="tl-h">Dez anos de apresentações, e para onde vamos.</h2>
           <p class="lede">O slide deixou de ser papel na tela. Agora ele se move, responde e chama quem assiste para dentro da conversa.</p>
         </div>
-        <div class="ev" id="ev" data-i="0">
-          <div class="ev-main" id="ev-panel" role="tabpanel">
-            <div class="ev-stage">
-              <!-- 2016 · slides estáticos -->
-              <div class="ev-scene ev-s0" aria-hidden="true">
-                <div class="e0-app">
-                  <div class="e0-bar"><i></i><i></i><i></i><span>apresentacao_final_v3.ppt</span></div>
-                  <div class="e0-body">
-                    <div class="e0-rail"><i></i><i class="on"></i><i></i><i></i></div>
-                    <div class="e0-slide">
-                      <p class="e0-t">Resultados do 3º trimestre</p>
-                      <ul><li>Receita cresceu em relação ao trimestre anterior</li><li>Custos operacionais dentro do previsto</li><li>Três novos clientes no período</li><li>Próximos passos para o 4º trimestre</li></ul>
-                      <span class="e0-n">7 / 48</span>
-                    </div>
-                  </div>
-                  <div class="e0-notes">Clique para adicionar anotações</div>
-                </div>
-                <div class="e0-mail"><svg aria-hidden="true"><use href="#i-file"/></svg><span><b>Segue a apresentação em anexo</b><em>apresentacao_final_v3.pdf · 14 MB</em></span></div>
-              </div>
-              <!-- 2018 · na nuvem -->
-              <div class="ev-scene ev-s1" aria-hidden="true">
-                <div class="e1-app">
-                  <div class="e1-top"><span class="e1-doc">Resultados T3</span><span class="e1-av"><i style="--h:205">A</i><i style="--h:150">R</i><i style="--h:28">L</i></span><span class="e1-share">Compartilhar</span></div>
-                  <div class="e1-slide">
-                    <p class="e1-t">Resultados do trimestre</p>
-                    <div class="e1-cols"><div class="e1-chart"><i style="--v:.45"></i><i style="--v:.6"></i><i style="--v:.78"></i></div><ul><li></li><li></li><li></li></ul></div>
-                    <span class="e1-cur e1-cur-a" style="--h:205"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1 1l10 9.2-4.6.4 2.6 5.2-2 .9-2.6-5.3L1 14.6z"/></svg><em>Ana</em></span>
-                    <span class="e1-cur e1-cur-b" style="--h:150"><svg viewBox="0 0 12 16" aria-hidden="true"><path d="M1 1l10 9.2-4.6.4 2.6 5.2-2 .9-2.6-5.3L1 14.6z"/></svg><em>Rui</em></span>
-                    <span class="e1-com"><b>Lia</b> Pode trocar o gráfico?</span>
-                  </div>
-                  <span class="e1-link">Link copiado</span>
-                </div>
-              </div>
-              <!-- 2020 · tela compartilhada -->
-              <div class="ev-scene ev-s2" aria-hidden="true">
-                <div class="e2-call">
-                  <div class="e2-tabs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><b>10 abas abertas</b></div>
-                  <div class="e2-main"><span class="e2-rec">Você está apresentando</span><div class="e2-slide"><p>Resultados do trimestre</p><ul><li></li><li></li><li></li></ul></div></div>
-                  <div class="e2-side"><i style="--h:205" data-n="A"></i><i style="--h:150" data-n="R"></i><i style="--h:28" data-n="L"></i><i style="--h:300" data-n="M"></i></div>
-                  <div class="e2-dock"><i></i><i></i><i class="r"></i><i></i></div>
-                </div>
-                <div class="e2-notif"><p style="--k:0"><b>Nova mensagem</b>Viu o e-mail de ontem?</p><p style="--k:1"><b>Calendário</b>Outra reunião em 5 min</p><p style="--k:2"><b>Chat do time</b>3 novas menções</p></div>
-              </div>
-              <!-- 2022 · modelos prontos -->
-              <div class="ev-scene ev-s3" aria-hidden="true">
-                <div class="e3-row">
-                  <figure style="--k:0"><div class="e3-sl"><i class="e3-band"></i><p>Nossa estratégia</p><i class="e3-l"></i><i class="e3-l s"></i><i class="e3-img"></i></div><figcaption>Empresa A</figcaption></figure>
-                  <figure style="--k:1"><div class="e3-sl"><i class="e3-band"></i><p>Nossa estratégia</p><i class="e3-l"></i><i class="e3-l s"></i><i class="e3-img"></i></div><figcaption>Empresa B</figcaption></figure>
-                  <figure style="--k:2"><div class="e3-sl"><i class="e3-band"></i><p>Nossa estratégia</p><i class="e3-l"></i><i class="e3-l s"></i><i class="e3-img"></i></div><figcaption>Empresa C</figcaption></figure>
-                </div>
-                <span class="e3-stamp">Modelo 12 · usado 2,4 mil vezes</span>
-              </div>
-              <!-- 2024 · gerado por IA -->
-              <div class="ev-scene ev-s4" aria-hidden="true">
-                <div class="e4-prompt"><svg aria-hidden="true"><use href="#i-wand"/></svg><span class="e4-type">Crie slides sobre o plano 2027</span><b class="e4-go">Gerar</b></div>
-                <div class="e4-slide"><p class="e4-t">Plano 2027</p><ul><li>Objetivos estratégicos</li><li>Cronograma em quatro fases</li><li>Indicadores de sucesso</li></ul><i class="e4-img"></i></div>
-                <span class="e4-chip">Pronto em 8 s · 12 slides parados</span>
-              </div>
-              <!-- 2026 · Halor, HTML vivo e lúdico -->
-              <div class="ev-scene ev-s5" aria-hidden="true">
-                <span class="e5-p" style="--x:8;--y:18;--d:0"></span><span class="e5-p" style="--x:22;--y:72;--d:1.4"></span><span class="e5-p" style="--x:38;--y:30;--d:2.6"></span><span class="e5-p" style="--x:55;--y:12;--d:.8"></span><span class="e5-p" style="--x:63;--y:48;--d:3.3"></span><span class="e5-p" style="--x:78;--y:24;--d:1.9"></span><span class="e5-p" style="--x:90;--y:64;--d:4.1"></span><span class="e5-p" style="--x:47;--y:86;--d:2.2"></span><span class="e5-p" style="--x:84;--y:88;--d:.4"></span><span class="e5-p" style="--x:14;--y:44;--d:3.7"></span>
-                <svg class="e5-mark" aria-hidden="true"><use href="#hl-mark"/></svg>
-                <p class="e5-k">Kickoff 2027</p>
-                <p class="e5-t">Plano 2027 em <span>12 semanas.</span></p>
-                <div class="e5-chart"><i style="--v:.42"></i><i style="--v:.58"></i><i style="--v:.74"></i><i style="--v:.94"></i></div>
-                <div class="e5-vote"><p>Qual frente começa primeiro?</p><div><span>Produto</span><i style="--v:.62"></i><b>62%</b></div><div><span>Design</span><i style="--v:.28"></i><b>28%</b></div><div><span>Operação</span><i style="--v:.1"></i><b>10%</b></div><em>87% da sala votou</em></div>
-                <span class="e5-spark" style="--k:0"></span><span class="e5-spark" style="--k:1"></span><span class="e5-spark" style="--k:2"></span>
-              </div>
-              <!-- próximos anos · apresentação que conversa -->
-              <div class="ev-scene ev-s6" aria-hidden="true">
-                <div class="e6-slide">
-                  <span class="e6-heat" style="--x:22;--y:58"></span><span class="e6-heat e6-heat-b" style="--x:38;--y:62"></span>
-                  <p class="e6-t">Resultados do T3</p>
-                  <div class="e6-chart"><i style="--v:.4"></i><i style="--v:.55"></i><i class="hot" style="--v:.9"></i><i style="--v:.66"></i></div>
-                  <div class="e6-chat"><p class="e6-q"><svg aria-hidden="true"><use href="#hl-mark"/></svg><span>Notei que o T3 prendeu a sala. Quer ver o detalhe?</span></p><p class="e6-a">Sim, mostra</p></div>
-                  <div class="e6-live"><span>Atenção ao vivo</span><b>92%</b><svg viewBox="0 0 60 16" aria-hidden="true"><path pathLength="1" d="M1 13 L9 11 L17 12 L25 7 L33 9 L41 4 L49 5 L59 2"/></svg></div>
-                </div>
-              </div>
-            </div>
-            <div class="ev-info" aria-live="polite">
-              <p class="ev-y display"><span id="ev-y">2016</span><em class="ev-now">hoje</em></p>
-              <h3 class="ev-t" id="ev-t">Slides estáticos</h3>
-              <p class="ev-d" id="ev-d">Tópicos em sequência e PDF por e-mail. Quem recebe lê sozinho.</p>
-              <p class="ev-who"><span class="mono">Quem assiste</span><b id="ev-who">Lê sozinho</b></p>
-              <div class="ev-att"><span class="mono">Atenção da plateia</span><i><b></b></i></div>
-            </div>
+
+        <div class="tl" id="tl" data-mode="idle" data-rv>
+          <div class="tl-bar">
+            <button class="tl-play" id="tl-play" type="button" aria-controls="tl-row">
+              <span class="tl-play-ic" aria-hidden="true">
+                <svg class="tl-ring" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18.5"/><circle class="tl-ring-f" cx="20" cy="20" r="18.5" pathLength="1"/></svg>
+                <svg class="tl-ico"><use href="#i-play"/></svg>
+              </span>
+              <span class="tl-play-l">Assistir a linha do tempo</span>
+              <span class="tl-play-t mono" aria-hidden="true">40 s</span>
+            </button>
+            <p class="tl-hint">Ou escolha uma época.</p>
+            <p class="tl-count mono" aria-hidden="true"><b id="tl-cur">01</b><span> / 07</span></p>
+            <p class="sr-only" id="tl-live" aria-live="polite"></p>
           </div>
-          <div class="ev-rail"><div class="ev-rail-in" role="tablist" aria-label="Dez anos de apresentações"><span class="ev-track"></span><span class="ev-fut"></span><span class="ev-fill"></span><span class="ev-prog"></span></div></div>
+
+          <div class="tl-row" id="tl-row">
+            <!-- 2016 -->
+            <article class="tl-p is-on">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b0" type="button" aria-expanded="true" aria-disabled="true" aria-controls="tl-r0">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-present"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>2016</b><em>Slides estáticos</em></span>
+                  <span class="tl-idx mono" aria-hidden="true">01</span>
+                  <span class="tl-meta mono" aria-hidden="true">01</span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">2016</span>
+                    <span class="sr-only">2016:</span>
+                    <span class="tl-t">Slides estáticos</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r0" role="region" aria-labelledby="tl-b0">
+                <div class="tl-rin">
+                  <p class="tl-d">Tópicos em sequência e PDF por <span class="nw">e-mail</span>. Quem recebe lê sozinho.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Lê sozinho</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a0" viewBox="0 0 240 180">
+                      <g class="ln">
+                        <rect class="a0-back" x="44" y="20" width="136" height="96" rx="6"/>
+                        <rect class="a0-mid" x="34" y="30" width="136" height="96" rx="6"/>
+                        <rect class="bgf" x="24" y="40" width="136" height="96" rx="6"/>
+                        <path d="M40 60h58" stroke-width="3"/>
+                      </g>
+                      <g class="ln a0-b">
+                        <path d="M42 78h.01M52 78h72"/>
+                        <path d="M42 91h.01M52 91h58"/>
+                        <path d="M42 104h.01M52 104h80"/>
+                        <path d="M42 117h.01M52 117h46"/>
+                      </g>
+                      <text class="a-mono" x="150" y="129" text-anchor="end">7 / 48</text>
+                      <g class="ln a0-mail">
+                        <g class="a0-pdf"><rect class="bgf" x="181" y="86" width="34" height="42" rx="3"/><path d="M188 96h20M188 103h14"/></g>
+                        <rect class="bgf" x="166" y="116" width="64" height="44" rx="4"/>
+                        <path d="M169 119l29 20 29-20"/>
+                      </g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2018 -->
+            <article class="tl-p">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b1" type="button" aria-expanded="false" aria-controls="tl-r1">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M7 18.5h10a4 4 0 0 0 .7-7.94A5.6 5.6 0 0 0 6.9 9.7 4.4 4.4 0 0 0 7 18.5z"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>2018</b><em>Na nuvem</em></span>
+                  <span class="tl-idx mono" aria-hidden="true">02</span>
+                  <span class="tl-meta mono" aria-hidden="true">02</span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">2018</span>
+                    <span class="sr-only">2018:</span>
+                    <span class="tl-t">Na nuvem</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r1" role="region" aria-labelledby="tl-b1">
+                <div class="tl-rin">
+                  <p class="tl-d">Várias pessoas editam ao mesmo tempo. O arquivo vira link.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Comenta</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a1" viewBox="0 0 240 180">
+                      <g class="ln">
+                        <path d="M88 64h62a15 15 0 0 0 0-30 21 21 0 0 0-40-5 17 17 0 0 0-22 35z"/>
+                        <path class="a1-sync" d="M119 70v16"/>
+                        <rect class="bgf" x="70" y="92" width="100" height="68" rx="5"/>
+                        <path d="M84 108h40M84 120h70M84 132h56M84 144h62"/>
+                      </g>
+                      <g class="a1-cur a1-c1"><path d="M0 0v13l3.4-3.1 2.6 5.5 2.2-1-2.6-5.4 4.7-.5z"/><rect x="10" y="12" width="24" height="9" rx="4.5"/></g>
+                      <g class="a1-cur a1-c2"><path d="M0 0v13l3.4-3.1 2.6 5.5 2.2-1-2.6-5.4 4.7-.5z"/><rect x="10" y="12" width="18" height="9" rx="4.5"/></g>
+                      <g class="ln a1-note"><path class="bgf" d="M176 78h30v18h-20l-6 6v-6h-4z"/><path d="M182 85h18M182 90h10"/></g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2020 -->
+            <article class="tl-p">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b2" type="button" aria-expanded="false" aria-controls="tl-r2">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12" rx="1.5"/><path d="M12 13.5v-6M9.5 10 12 7.5l2.5 2.5M8.5 20h7"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>2020</b><em>Tela compartilhada</em></span>
+                  <span class="tl-idx mono" aria-hidden="true">03</span>
+                  <span class="tl-meta mono" aria-hidden="true">03</span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">2020</span>
+                    <span class="sr-only">2020:</span>
+                    <span class="tl-t">Tela compartilhada</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r2" role="region" aria-labelledby="tl-b2">
+                <div class="tl-rin">
+                  <p class="tl-d">Tudo por vídeo. A atenção disputa espaço com dez abas abertas.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Divide a atenção</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a2" viewBox="0 0 240 180">
+                      <g class="ln a2-tabs">
+                        <rect x="28" y="20" width="15" height="10" rx="3"/><rect x="46" y="20" width="15" height="10" rx="3"/><rect x="64" y="20" width="15" height="10" rx="3"/><rect x="82" y="20" width="15" height="10" rx="3"/><rect x="100" y="20" width="15" height="10" rx="3"/>
+                        <rect x="118" y="20" width="15" height="10" rx="3"/><rect x="136" y="20" width="15" height="10" rx="3"/><rect x="154" y="20" width="15" height="10" rx="3"/><rect x="172" y="20" width="15" height="10" rx="3"/><rect x="190" y="20" width="15" height="10" rx="3"/>
+                      </g>
+                      <g class="ln">
+                        <rect class="bgf" x="22" y="32" width="196" height="128" rx="8"/>
+                        <rect x="34" y="44" width="82" height="50" rx="5"/><circle cx="75" cy="62" r="7"/><path d="M62 86a13 9 0 0 1 26 0"/>
+                        <rect x="124" y="44" width="82" height="50" rx="5"/><circle cx="165" cy="62" r="7"/><path d="M152 86a13 9 0 0 1 26 0"/>
+                        <rect x="34" y="100" width="82" height="50" rx="5"/><circle cx="75" cy="118" r="7"/><path d="M62 142a13 9 0 0 1 26 0"/>
+                        <rect x="124" y="100" width="82" height="50" rx="5"/><circle cx="165" cy="118" r="7"/><path d="M152 142a13 9 0 0 1 26 0"/>
+                      </g>
+                      <rect class="a2-talk" x="31" y="41" width="88" height="56" rx="7"/>
+                      <g class="a2-wave"><rect x="102" y="82" width="2.4" height="6" rx="1.2"/><rect x="106" y="80" width="2.4" height="8" rx="1.2"/><rect x="110" y="83" width="2.4" height="5" rx="1.2"/></g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2022 -->
+            <article class="tl-p">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b3" type="button" aria-expanded="false" aria-controls="tl-r3">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><use href="#i-layers"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>2022</b><em>Modelos prontos</em></span>
+                  <span class="tl-idx mono" aria-hidden="true">04</span>
+                  <span class="tl-meta mono" aria-hidden="true">04</span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">2022</span>
+                    <span class="sr-only">2022:</span>
+                    <span class="tl-t">Modelos prontos</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r3" role="region" aria-labelledby="tl-b3">
+                <div class="tl-rin">
+                  <p class="tl-d">Design em minutos, mas muita apresentação com a mesma cara.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Reconhece o modelo</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a3" viewBox="0 0 240 180">
+                      <defs><g id="tl-tpl"><rect width="60" height="40" rx="4"/><path fill="none" d="M8 9h22" stroke-width="2.6"/><path fill="none" d="M8 18h20M8 24h14"/><circle cx="45" cy="22" r="8"/><path fill="none" d="M8 32h44" opacity=".5"/></g></defs>
+                      <use class="a3-t" href="#tl-tpl" x="22" y="38"/><use class="a3-t" href="#tl-tpl" x="90" y="38"/><use class="a3-t" href="#tl-tpl" x="158" y="38"/>
+                      <use class="a3-t" href="#tl-tpl" x="22" y="96"/><use class="a3-t" href="#tl-tpl" x="90" y="96"/><use class="a3-t" href="#tl-tpl" x="158" y="96"/>
+                      <g class="a3-eq"><path d="M84 56h4M84 60h4M152 56h4M152 60h4M84 114h4M84 118h4M152 114h4M152 118h4"/></g>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2024 · IA, com o custo escondido embaixo -->
+            <article class="tl-p tl-ai">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b4" type="button" aria-expanded="false" aria-controls="tl-r4">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M11 3.5c.6 4.6 2.6 6.8 7.5 7.5-4.9.7-6.9 2.9-7.5 7.5-.6-4.6-2.6-6.8-7.5-7.5 4.9-.7 6.9-2.9 7.5-7.5z"/><path d="M18.5 15.5c.2 1.6.9 2.3 2.5 2.5-1.6.2-2.3.9-2.5 2.5-.2-1.6-.9-2.3-2.5-2.5 1.6-.2 2.3-.9 2.5-2.5z"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>2024</b><em>Gerado por IA</em></span>
+                  <span class="tl-idx mono" aria-hidden="true">05</span>
+                  <span class="tl-meta mono" aria-hidden="true">05</span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">2024</span>
+                    <span class="sr-only">2024:</span>
+                    <span class="tl-t">Gerado por IA</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r4" role="region" aria-labelledby="tl-b4">
+                <div class="tl-rin">
+                  <p class="tl-d">Slides a partir de um texto. Rápido, porém ainda parado.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Recebe pronto</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a4" viewBox="0 0 240 180">
+                      <g class="ln">
+                        <rect class="bgf" x="24" y="18" width="192" height="30" rx="15"/>
+                        <path class="a4-type" d="M42 33h112" pathLength="1"/>
+                      </g>
+                      <path class="a4-spark" d="M194 23c.5 4.6 2.4 6.5 7 7-4.6.5-6.5 2.4-7 7-.5-4.6-2.4-6.5-7-7 4.6-.5 6.5-2.4 7-7z"/>
+                      <g class="ln"><path class="a4-flow" d="M120 54v18"/><path d="M115 68l5 5 5-5"/></g>
+                      <g class="ln a4-slide">
+                        <rect class="bgf" x="54" y="80" width="132" height="82" rx="6"/>
+                        <path class="a4-i a4-i1" d="M68 97h52" stroke-width="2.6"/>
+                        <rect class="a4-i a4-i2 lf" x="68" y="107" width="44" height="40" rx="3"/>
+                        <path class="a4-i a4-i3" d="M122 112h50M122 122h42M122 132h46"/>
+                      </g>
+                      <rect class="a4-scan" x="56" y="82" width="128" height="3" rx="1.5"/>
+                    </svg>
+                  </div>
+                  <div class="tl-cost">
+                    <p class="sr-only">Custo escondido: cerca de 18.240 tokens em três tentativas, cerca de 6.080 tokens por tentativa. Resultados que não serviram: saiu genérico, fora da marca, texto inventado.</p>
+                    <div class="tl-cost-h" aria-hidden="true">
+                      <span class="tl-cost-k mono"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>Custo escondido</span>
+                      <span class="tl-try" id="tl-try">3ª tentativa</span>
+                    </div>
+                    <div class="tl-meter" aria-hidden="true">
+                      <p class="tl-tok"><b class="num" id="tl-tok">18.240</b><span>tokens</span></p>
+                      <span class="tl-mtr"><i></i></span>
+                      <p class="tl-per mono">≈ 6.080 por tentativa</p>
+                    </div>
+                    <ul class="tl-miss" aria-hidden="true">
+                      <li>
+                        <svg viewBox="0 0 64 40"><rect class="m-bg" x=".75" y=".75" width="62.5" height="38.5" rx="4"/><path class="m-g" d="M8 9h26" stroke-width="2.6"/><rect class="m-gf" x="8" y="15" width="22" height="17" rx="2"/><path class="m-g" d="M36 17h20M36 23h16M36 29h18"/></svg>
+                        <span><i></i>Saiu genérico</span>
+                      </li>
+                      <li>
+                        <svg viewBox="0 0 64 40"><rect class="m-bg" x=".75" y=".75" width="62.5" height="38.5" rx="4"/><rect x="1" y="1" width="62" height="10" rx="3.5" fill="#f08a3c"/><circle cx="46" cy="25" r="8" fill="#22b3a1"/><path class="m-g" d="M8 20h20M8 26h14M8 32h18"/></svg>
+                        <span><i></i>Fora da marca</span>
+                      </li>
+                      <li>
+                        <svg viewBox="0 0 64 40"><rect class="m-bg" x=".75" y=".75" width="62.5" height="38.5" rx="4"/><path class="m-g" d="M8 9h30" stroke-width="2.6"/><path class="m-g" d="M8 18h48M8 30h40"/><path class="m-x" d="M8 24h44"/><path class="m-w" d="M8 27.4q2.2-2 4.4 0t4.4 0 4.4 0 4.4 0 4.4 0 4.4 0 4.4 0 4.4 0 4.4 0 4.4 0"/></svg>
+                        <span><i></i>Texto inventado</span>
+                      </li>
+                    </ul>
+                    <p class="tl-cost-f">Cada tentativa consome tokens e nem sempre sai como esperado.</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2026 · hoje, com o Halor -->
+            <article class="tl-p tl-now">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b5" type="button" aria-expanded="false" aria-controls="tl-r5">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 64 64"><use href="#hl-mark"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>2026</b><em>HTML vivo e lúdico</em></span>
+                  <span class="tl-idx tl-today mono" aria-hidden="true">hoje</span>
+                  <span class="tl-meta mono" aria-hidden="true">06 <em>hoje</em></span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">2026</span>
+                    <span class="sr-only">2026, hoje:</span>
+                    <span class="tl-t">HTML vivo e lúdico</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r5" role="region" aria-labelledby="tl-b5">
+                <div class="tl-rin">
+                  <p class="tl-d">Com o Halor, a apresentação se move, responde e convida a participar. Sem código.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Participa</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a5" viewBox="0 0 240 180">
+                      <rect class="ln a5-frame" x="20" y="20" width="200" height="136" rx="10"/>
+                      <circle class="ln a5-ring0" cx="74" cy="88" r="30"/>
+                      <path class="ln a5-ring" d="M101.2 77.6A30 30 0 1 1 87.4 61.4" stroke-width="3"/>
+                      <circle class="a5-core" cx="74" cy="88" r="9"/>
+                      <path class="ln" d="M126 136h76" opacity=".5"/>
+                      <rect class="a5-bar a5-bar1" x="132" y="76" width="14" height="60" rx="3"/>
+                      <rect class="a5-bar a5-bar2" x="156" y="76" width="14" height="60" rx="3"/>
+                      <rect class="a5-bar a5-bar3" x="180" y="76" width="14" height="60" rx="3"/>
+                      <g class="a5-up"><circle cx="150" cy="128" r="3"/><circle cx="174" cy="128" r="2.4"/><circle cx="192" cy="128" r="2.8"/></g>
+                      <g class="a5-tap"><circle class="a5-rip" cx="196" cy="52" r="10"/><path class="a5-cur" d="M196 52v13l3.4-3.1 2.6 5.5 2.2-1-2.6-5.4 4.7-.5z"/></g>
+                      <path class="a5-st a5-st1" d="M40 36c.4 3 1.6 4.2 4.6 4.6-3 .4-4.2 1.6-4.6 4.6-.4-3-1.6-4.2-4.6-4.6 3-.4 4.2-1.6 4.6-4.6z"/>
+                      <path class="a5-st a5-st2" d="M118 34c.3 2.2 1.2 3.1 3.4 3.4-2.2.3-3.1 1.2-3.4 3.4-.3-2.2-1.2-3.1-3.4-3.4 2.2-.3 3.1-1.2 3.4-3.4z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- Próximos anos -->
+            <article class="tl-p tl-next">
+              <span class="tl-line" aria-hidden="true"><i></i></span>
+              <h3 class="tl-h">
+                <button class="tl-btn" id="tl-b6" type="button" aria-expanded="false" aria-controls="tl-r6">
+                  <span class="tl-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 5h11.5v8H8.5L5 16v-3H3.5z"/><path d="M18 9h2.5v8H19v3l-3.5-3H10v-1.5"/></svg></span>
+                  <span class="tl-v" aria-hidden="true"><b>Próximos</b><em>Apresentação que conversa</em></span>
+                  <span class="tl-idx mono" aria-hidden="true">07</span>
+                  <span class="tl-meta mono" aria-hidden="true">07</span>
+                  <span class="tl-big">
+                    <span class="tl-y" aria-hidden="true">Próximos anos</span>
+                    <span class="sr-only">Próximos anos:</span>
+                    <span class="tl-t">Apresentação que conversa</span>
+                  </span>
+                  <span class="tl-chev" aria-hidden="true"></span>
+                </button>
+              </h3>
+              <div class="tl-r" id="tl-r6" role="region" aria-labelledby="tl-b6">
+                <div class="tl-rin">
+                  <p class="tl-d">Ela se adapta a quem assiste, tira dúvidas e mede a atenção ao vivo.</p>
+                  <p class="tl-who"><span class="mono">Quem assiste</span><b>Conversa</b></p>
+                  <div class="tl-art" aria-hidden="true">
+                    <svg class="tl-svg a6" viewBox="0 0 240 180">
+                      <g class="ln a6-b1"><path class="bgf" d="M38 24h96a14 14 0 0 1 14 14v18a14 14 0 0 1-14 14H58l-14 12V70h-6a14 14 0 0 1-14-14V38a14 14 0 0 1 14-14z"/><path d="M42 40h72M42 52h52"/></g>
+                      <g class="ln a6-b2"><path class="bgf" d="M106 84h96a14 14 0 0 1 14 14v12a14 14 0 0 1-14 14h-6v12l-14-12h-76a14 14 0 0 1-14-14V98a14 14 0 0 1 14-14z"/></g>
+                      <g class="a6-dots"><circle cx="140" cy="104" r="3.2"/><circle cx="154" cy="104" r="3.2"/><circle cx="168" cy="104" r="3.2"/></g>
+                      <path class="ln a6-wave" d="M22 158c10 0 12-12 22-12s12 18 24 18 12-24 24-24 12 30 26 30 12-22 24-22 12 12 22 12 10-6 20-6 10 4 14 4"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
-        <div class="tl-ahead">
+
+        <div class="tl-ahead" data-rv-stagger>
           <article><p class="pd-k mono">Do estático ao vivo</p><p>Cada slide ganha movimento com propósito: guiar o olhar, dar ritmo e destacar o que importa.</p></article>
           <article><p class="pd-k mono">Da plateia ao participante</p><p>Quem assiste vota, escreve e responde. Participar é a forma mais forte de prestar atenção.</p></article>
           <article><p class="pd-k mono">Do arquivo ao link que responde</p><p>Um HTML leve que abre em qualquer tela e continua trabalhando depois que você sai da sala.</p></article>
         </div>
       </div>
     </section>
-

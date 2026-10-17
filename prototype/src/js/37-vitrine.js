@@ -4,6 +4,8 @@
    Cada demo é uma fábrica que devolve { start, resume, pause, replay, still }.
    start: primeira entrada na tela · resume/pause: entra e sai da tela
    replay: botão Repetir · still: quadro final para quem pede menos movimento.
+   Cada demo também monta o seu editor (vtEdit): o botão Editar abre, dentro do
+   card, os parâmetros do efeito, e a própria demo responde a clique e arraste.
    ========================================================================== */
 const VT_INTENT = {
   abertura: 'Abrir com impacto', ritmo: 'Dar ritmo', foco: 'Focar o olhar', detalhe: 'Mostrar detalhe', relacao: 'Relacionar',
@@ -73,6 +75,198 @@ function vtTween(dur, fn, done) {
   return () => cancelAnimationFrame(raf);
 }
 
+/* ==========================================================================
+   EDITOR POR CARD · "Editar" abre, dentro do card, os parâmetros que importam
+   para aquele efeito. Tudo vale na hora; "Restaurar padrão" volta ao começo.
+   vtEdit(card, controles, aplicar, { S, reset }) devolve E:
+   E.S estado · E.set(k, v, quieto) · E.touch() marca mudança feita direto na demo
+   E.say(texto) anuncia para leitor de tela · E.opts[k](lista) troca opções de um select
+   aplicar(k, v, S, fase): fase 'init' na montagem, 'reset' ao restaurar, vazia quando a pessoa mexe.
+   ========================================================================== */
+/* cores de destaque das demos: violeta Halor, neon, uma quente e uma fria (ink = texto sobre a cor) */
+const VT_ACC = {
+  violeta: { name: 'Violeta Halor', c: '139, 61, 255', hi: '201, 166, 255', ink: '#ffffff' },
+  neon: { name: 'Neon', c: '169, 112, 255', hi: '228, 212, 255', ink: '#14072b' },
+  ambar: { name: 'Âmbar', c: '255, 150, 64', hi: '255, 214, 168', ink: '#1f1000' },
+  ciano: { name: 'Ciano', c: '40, 196, 232', hi: '178, 238, 252', ink: '#03181e' }
+};
+function vtAcc(card, k) {
+  const a = VT_ACC[k] || VT_ACC.violeta;
+  card.style.setProperty('--acc', a.c); card.style.setProperty('--acc-hi', a.hi); card.style.setProperty('--acc-ink', a.ink);
+}
+const vtPct = v => Math.round(v * 100) + '%';
+const vtX = v => fmtNum(+v, 1) + '×';
+const vtNb = s => s.replace(/ (\S+)$/, ' $1');
+/* número digitado em pt-BR ("12,8", "1.240", "−12%", "45 d") */
+function vtParse(s) {
+  let t = String(s).replace(/−/g, '-').replace(/[^\d,.\-]/g, '');
+  if (!/\d/.test(t)) return NaN;
+  if (t.includes(',')) t = t.replace(/\./g, '').replace(',', '.');
+  else if (/^-?\d{1,3}(\.\d{3})+$/.test(t)) t = t.replace(/\./g, '');
+  return parseFloat(t);
+}
+const VT_ICON_EDIT = '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h8.5M18.5 7H20M4 17h1.5M11.5 17H20"/><circle cx="15.5" cy="7" r="2.5"/><circle cx="8.5" cy="17" r="2.5"/></svg>';
+let vtUid = 0;
+
+/* grupo de opções com setas (padrão radiogroup): devolve a função que marca o valor */
+function vtRadios(wrap, pick) {
+  const bs = $$('[role="radio"]', wrap);
+  bs.forEach((b, i) => {
+    b.addEventListener('click', () => pick(b.dataset.v));
+    b.addEventListener('keydown', e => {
+      const d = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]; if (!d) return;
+      e.preventDefault();
+      const n = bs[(i + d + bs.length) % bs.length]; n.focus(); pick(n.dataset.v);
+    });
+  });
+  return v => bs.forEach(b => { const on = b.dataset.v === String(v); b.setAttribute('aria-checked', String(on)); b.tabIndex = on ? 0 : -1; });
+}
+
+function vtEdit(card, spec, apply, opt = {}) {
+  const name = $('h3', card).textContent.trim();
+  const S = opt.S || {}, D = {}, show = {}, track = {};
+  const E = { S, D, act: {}, opts: {}, touched: false };
+  /* leitura para leitor de tela: valores e consequências das mudanças */
+  const live = el('p', 'sr-only vt-live'); live.setAttribute('aria-live', 'polite'); card.append(live);
+  let sayT = 0;
+  E.say = t => { clearTimeout(sayT); live.textContent = ''; sayT = setTimeout(() => { live.textContent = t; }, 60); };
+
+  const btn = el('button', 'btn btn-ghost btn-xs vt-edit'); btn.type = 'button';
+  btn.innerHTML = VT_ICON_EDIT + '<span>Editar</span>';
+  btn.setAttribute('aria-label', 'Editar efeito ' + name); btn.title = 'Editar efeito';
+  const row = $('.vt-meta-row', card), rep = $('.vt-replay', row), acts = el('div', 'vt-acts');
+  acts.append(btn); if (rep) acts.append(rep); row.append(acts);
+
+  const panel = el('div', 'vt-ed'); panel.id = card.id + '-ed'; panel.hidden = true;
+  panel.setAttribute('role', 'group'); panel.setAttribute('aria-label', 'Controles do efeito ' + name);
+  btn.setAttribute('aria-controls', panel.id); btn.setAttribute('aria-expanded', 'false');
+  const grid = el('div', 'vt-ed-grid'); panel.append(grid);
+
+  const mod = () => btn.classList.toggle('is-mod', E.touched || Object.keys(D).some(k => track[k] && S[k] !== D[k]));
+  const commit = (k, v) => { S[k] = v; show[k]?.(v); apply(k, v, S); mod(); };
+
+  const mk = c => {
+    const uid = 'vtc' + (++vtUid);
+    const w = el('div', 'vt-c vt-ct-' + c.t + (c.wide ? ' is-wide' : ''));
+    if (c.t === 'acts') {
+      if (c.items.length > 1) w.classList.add('is-wide');
+      c.items.forEach(a => {
+        const b = el('button', 'btn btn-ghost btn-xs vt-c-act', a.label); b.type = 'button';
+        if (a.motion && REDUCED) b.hidden = true;
+        b.addEventListener('click', () => a.fn(b));
+        if (a.id) E.act[a.id] = b;
+        w.append(b);
+      });
+      if (c.items.every(a => a.motion) && REDUCED) w.hidden = true;
+      return w;
+    }
+    const grp = c.t === 'acc' || c.t === 'seg';
+    if (c.t === 'seg' && c.opts.length > 2) w.classList.add('is-3');
+    const h = el('div', 'vt-c-h'), lab = el(grp ? 'span' : 'label', 'vt-c-l', c.label);
+    lab.id = uid + 'l'; h.append(lab); w.append(h);
+    const out = el('span', 'vt-c-o'); out.setAttribute('aria-hidden', 'true');
+    if (c.t === 'range') {
+      const i = el('input', 'vt-range vt-c-slider'); i.type = 'range'; i.id = uid; lab.htmlFor = uid;
+      i.min = c.min; i.max = c.max; i.step = c.step; h.append(out); w.append(i);
+      show[c.k] = v => {
+        i.value = v; const t = c.fmt ? c.fmt(+v) : String(v);
+        out.textContent = t; i.setAttribute('aria-valuetext', t);
+        i.style.setProperty('--v', (v - c.min) / (c.max - c.min) * 100 + '%');
+      };
+      i.addEventListener('input', () => commit(c.k, +i.value));
+    } else if (grp) {
+      const g = el('div', c.t === 'acc' ? 'vt-sw' : 'vt-seg');
+      g.setAttribute('role', 'radiogroup'); g.setAttribute('aria-labelledby', lab.id);
+      const opts = c.t === 'acc' ? Object.entries(VT_ACC).map(([v, a]) => [v, a.name]) : c.opts;
+      opts.forEach(([v, t]) => {
+        const b = el('button', c.t === 'acc' ? 'vt-sw-b' : '', c.t === 'acc' ? null : t);
+        b.type = 'button'; b.setAttribute('role', 'radio'); b.dataset.v = v;
+        if (c.t === 'acc') { b.style.setProperty('--sw', `rgb(${VT_ACC[v].c})`); b.setAttribute('aria-label', t); b.title = t; }
+        g.append(b);
+      });
+      const sel = vtRadios(g, v => commit(c.k, v));
+      show[c.k] = sel;
+      w.append(g);
+    } else if (c.t === 'tog') {
+      const sw = el('span', 'switch'), i = el('input');
+      i.type = 'checkbox'; i.id = uid; i.setAttribute('role', 'switch'); lab.htmlFor = uid;
+      sw.append(i, el('span')); w.append(sw);
+      show[c.k] = v => { i.checked = !!v; };
+      i.addEventListener('change', () => commit(c.k, i.checked));
+    } else if (c.t === 'text' || c.t === 'num') {
+      const i = el('input', 'input vt-c-in'); i.type = 'text'; i.id = uid; lab.htmlFor = uid;
+      i.maxLength = c.max || 40; i.autocomplete = 'off'; i.spellcheck = false;
+      if (c.t === 'num') i.inputMode = 'decimal';
+      if (c.ph) i.placeholder = c.ph;
+      w.append(i);
+      show[c.k] = v => { if (document.activeElement !== i) i.value = c.t === 'num' ? fmtNum(+v, Number.isInteger(+v) ? 0 : 1) : v; };
+      if (c.t === 'text') i.addEventListener('input', () => commit(c.k, i.value));
+      else {
+        let t = 0, lastV = null;
+        const fire = force => {
+          clearTimeout(t);
+          const n = vtParse(i.value);
+          if (!isFinite(n)) { i.setAttribute('aria-invalid', 'true'); return; }
+          i.removeAttribute('aria-invalid');
+          const v = Math.round(vtClamp(n, c.min, c.max) * 10) / 10;
+          if (v === lastV && !force) return;
+          lastV = v; commit(c.k, v);
+        };
+        i.addEventListener('input', () => { clearTimeout(t); t = setTimeout(() => fire(false), 600); });
+        i.addEventListener('change', () => fire(false));
+        i.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); fire(true); } });
+        i.addEventListener('blur', () => { i.removeAttribute('aria-invalid'); show[c.k](S[c.k]); });
+      }
+    } else if (c.t === 'sel') {
+      const s = el('select', 'select vt-c-sel'); s.id = uid; lab.htmlFor = uid; w.append(s);
+      const fill = list => { s.textContent = ''; list.forEach(([v, t]) => { const o = el('option', '', t); o.value = v; s.append(o); }); };
+      fill(c.opts);
+      E.opts[c.k] = list => { fill(list); s.value = S[c.k]; };
+      show[c.k] = v => { s.value = v; };
+      s.addEventListener('change', () => commit(c.k, s.value));
+    } else if (c.t === 'add') {
+      w.classList.add('is-wide');
+      const r = el('div', 'vt-c-add'), i = el('input', 'input vt-c-in');
+      i.type = 'text'; i.id = uid; lab.htmlFor = uid; i.maxLength = c.max || 16; i.placeholder = c.ph || ''; i.autocomplete = 'off';
+      const b = el('button', 'btn btn-ghost btn-xs vt-c-act', c.btn || 'Adicionar'); b.type = 'button';
+      const go = () => { const v = i.value.trim(); if (!v) { i.focus(); return; } if (c.fn(v) !== false) i.value = ''; };
+      b.addEventListener('click', go);
+      i.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); go(); } });
+      r.append(i, b); w.append(r);
+    }
+    return w;
+  };
+
+  spec.forEach(c => { if (c.k && 'v' in c) { S[c.k] = D[c.k] = c.v; track[c.k] = c.track !== false; } });
+  spec.forEach(c => grid.append(mk(c)));
+
+  const foot = el('div', 'vt-ed-foot');
+  const rst = el('button', 'btn btn-quiet btn-xs vt-ed-reset'); rst.type = 'button';
+  rst.innerHTML = '<svg aria-hidden="true"><use href="#i-restore"/></svg>Restaurar padrão';
+  const how = $('.vt-how', card);
+  foot.append(rst, el('p', 'vt-ed-tip', how ? how.textContent.trim() : 'As mudanças valem na hora'));
+  panel.append(foot);
+  $('h3', card).after(panel);
+
+  E.touch = () => { E.touched = true; mod(); };
+  E.set = (k, v, quiet) => { S[k] = v; show[k]?.(v); if (!quiet) apply(k, v, S); mod(); };
+  E.reset = () => {
+    E.touched = false;
+    Object.keys(D).forEach(k => { S[k] = D[k]; show[k]?.(D[k]); });
+    opt.reset?.();
+    Object.keys(D).forEach(k => apply(k, D[k], S, 'reset'));
+    mod(); E.say('Efeito de volta ao padrão.');
+  };
+  const open = on => { panel.hidden = !on; btn.setAttribute('aria-expanded', String(on)); card.classList.toggle('is-edit', on); };
+  btn.addEventListener('click', () => open(panel.hidden));
+  panel.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); open(false); btn.focus(); } });
+  rst.addEventListener('click', E.reset);
+
+  Object.keys(D).forEach(k => { show[k]?.(D[k]); });
+  Object.keys(D).forEach(k => apply(k, D[k], S, 'init'));
+  return E;
+}
+
 function bootVitrine() {
   const sec = document.getElementById('vitrine');
   if (!sec || sec.dataset.vtBoot) return;
@@ -130,12 +324,13 @@ function vtFilter(sec) {
   const chips = $$('.vt-chip', sec), wrap = $('#vt-chips', sec), stage = $('#vt-stage', sec);
   const cards = $$('.vt-card', sec), items = $$('#vt-cat li', sec);
   const empty = $('#vt-empty', sec), count = $('#vt-count', sec), status = $('#vt-status', sec);
-  const cat = $('#vt-cat', sec), more = $('#vt-more', sec);
-  /* no celular o catálogo abre com 8 itens e um botão para ver todos */
+  const more = $('#vt-more', sec);
   const SHOW = 8, plusP = $('.vt-plus-pill', sec), plusT = $('b', plusP);
   more.hidden = true;
   const moreSync = n => { plusP.hidden = n <= SHOW; plusT.textContent = `${n - SHOW} efeitos`; plusP.setAttribute('aria-label', `Mais ${n - SHOW} efeitos: escolha um plano para liberar todos`); };
-  const pop = n => { if (REDUCED) return; n.classList.remove('is-in'); void n.offsetWidth; n.classList.add('is-in'); };
+  /* o pulo de entrada só vale quando a pessoa troca o filtro (a entrada ao rolar é do revelar do site) */
+  let first = true;
+  const pop = n => { if (REDUCED || first) return; n.classList.remove('is-in'); void n.offsetWidth; n.classList.add('is-in'); };
   const apply = k => {
     chips.forEach(c => c.setAttribute('aria-pressed', String(c.dataset.intent === k)));
     const ok = n => k === 'todos' || n.dataset.intents.split(' ').includes(k);
@@ -157,6 +352,7 @@ function vtFilter(sec) {
   window.addEventListener('resize', edge, { passive: true });
   edge();
   apply('todos');
+  first = false;
 }
 
 /* · Palco: liga cada demo à tela · */
@@ -185,8 +381,9 @@ function vtDemos(sec) {
 
 /* ---------------------------------------------------------------- 30 · Particle System */
 VT_DEMO.particle = card => {
-  const box = $('.vt-pa', card), cv = $('canvas', box), ctx = cv.getContext('2d');
-  let W = 0, H = 0, P = [], pulses = [], running = false, raf = 0, last = 0;
+  const box = $('.vt-pa', card), cv = $('canvas', box), ctx = cv.getContext('2d'), title = $('.vt-pa-t', box);
+  const S = {};
+  let W = 0, H = 0, P = [], pulses = [], running = false, raf = 0, last = 0, col = VT_ACC.violeta;
   const m = { x: 0, y: 0, on: false };
   const size = () => {
     const r = box.getBoundingClientRect(); if (!r.width || !r.height) return false;
@@ -198,25 +395,31 @@ VT_DEMO.particle = card => {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     return true;
   };
+  const want = () => Math.round(vtClamp(W * H / 3600 * (S.dens || 1), 16, 260));
+  const one = () => ({ x: Math.random() * W, y: Math.random() * H, vx: 0, vy: 0, bx: (Math.random() - .5) * .34, by: (Math.random() - .5) * .34, r: .7 + Math.random() * 1.7 });
   const seed = burst => {
-    const n = Math.round(vtClamp(W * H / 3600, 40, 120));
-    P = Array.from({ length: n }, () => {
-      const tx = Math.random() * W, ty = Math.random() * H;
-      const p = { x: tx, y: ty, vx: 0, vy: 0, bx: (Math.random() - .5) * .34, by: (Math.random() - .5) * .34, r: .7 + Math.random() * 1.7 };
-      if (burst) { p.x = W / 2 + (Math.random() - .5) * 10; p.y = H / 2 + (Math.random() - .5) * 10; p.vx = (tx - p.x) * .05; p.vy = (ty - p.y) * .05; }
+    P = Array.from({ length: want() }, () => {
+      const p = one();
+      if (burst) { const tx = p.x, ty = p.y; p.x = W / 2 + (Math.random() - .5) * 10; p.y = H / 2 + (Math.random() - .5) * 10; p.vx = (tx - p.x) * .05; p.vy = (ty - p.y) * .05; }
       return p;
     });
   };
-  const pulse = (x, y) => { pulses.push({ x, y, t: 0 }); if (!running) draw(); };
+  /* densidade nova: entram ou saem partículas sem reiniciar o campo */
+  const fit = () => { if (!W) return; const n = want(); while (P.length < n) P.push(one()); P.length = n; };
+  const pulse = (x, y) => { if (REDUCED) return; pulses.push({ x, y, t: 0 }); if (!running) draw(); };
   const step = dt => {
-    const k = dt / 16.67, fr = Math.pow(.95, k), R = 120;
-    pulses.forEach(q => { q.t += dt / 1100; });
+    const sp = S.speed || 1, k = dt / 16.67 * sp, fr = Math.pow(.95, k), R = 120, pull = S.mode === 'atrai';
+    pulses.forEach(q => { q.t += dt * Math.sqrt(sp) / 1100; });
     pulses = pulses.filter(q => q.t < 1);
     const maxR = Math.hypot(W, H) * .6;
     for (const p of P) {
       if (m.on) {
         const dx = p.x - m.x, dy = p.y - m.y, d2 = dx * dx + dy * dy;
-        if (d2 < R * R && d2 > 1) { const d = Math.sqrt(d2), f = (1 - d / R) * .9 * k; p.vx += dx / d * f; p.vy += dy / d * f; }
+        if (d2 < R * R && d2 > 1) {
+          const d = Math.sqrt(d2), fall = 1 - d / R;
+          if (pull) { const f = fall * .42 * k; p.vx -= dx / d * f; p.vy -= dy / d * f; p.vx += -dy / d * fall * .3 * k; p.vy += dx / d * fall * .3 * k; }
+          else { const f = fall * .9 * k; p.vx += dx / d * f; p.vy += dy / d * f; }
+        }
       }
       for (const q of pulses) {
         const dx = p.x - q.x, dy = p.y - q.y, d = Math.hypot(dx, dy) || 1, band = Math.abs(d - q.t * maxR);
@@ -229,38 +432,41 @@ VT_DEMO.particle = card => {
     }
   };
   const draw = () => {
+    if (!W) return;
     ctx.clearRect(0, 0, W, H);
-    const L = vtClamp(W / 7, 80, 128), L2 = L * L, B = [[], [], [], []];
-    for (let i = 0; i < P.length; i++) {
-      const a = P[i];
-      for (let j = i + 1; j < P.length; j++) {
-        const b = P[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
-        if (d2 < L2) B[Math.min(3, Math.floor((1 - d2 / L2) * 4))].push(a.x, a.y, b.x, b.y);
+    if (S.links !== false) {
+      const L = vtClamp(W / 7, 80, 128), L2 = L * L, B = [[], [], [], []];
+      for (let i = 0; i < P.length; i++) {
+        const a = P[i];
+        for (let j = i + 1; j < P.length; j++) {
+          const b = P[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
+          if (d2 < L2) B[Math.min(3, Math.floor((1 - d2 / L2) * 4))].push(a.x, a.y, b.x, b.y);
+        }
       }
+      ctx.lineWidth = 1;
+      B.forEach((s, bi) => {
+        if (!s.length) return;
+        ctx.strokeStyle = `rgba(${col.c}, ${.1 + bi * .14})`;
+        ctx.beginPath();
+        for (let i = 0; i < s.length; i += 4) { ctx.moveTo(s[i], s[i + 1]); ctx.lineTo(s[i + 2], s[i + 3]); }
+        ctx.stroke();
+      });
     }
-    ctx.lineWidth = 1;
-    B.forEach((s, bi) => {
-      if (!s.length) return;
-      ctx.strokeStyle = `rgba(169, 112, 255, ${.08 + bi * .13})`;
-      ctx.beginPath();
-      for (let i = 0; i < s.length; i += 4) { ctx.moveTo(s[i], s[i + 1]); ctx.lineTo(s[i + 2], s[i + 3]); }
-      ctx.stroke();
-    });
     if (m.on) {
       ctx.beginPath();
       for (const p of P) { const d = Math.hypot(p.x - m.x, p.y - m.y); if (d < 170) { ctx.moveTo(m.x, m.y); ctx.lineTo(p.x, p.y); } }
-      ctx.strokeStyle = 'rgba(244, 238, 255, .16)'; ctx.stroke();
+      ctx.strokeStyle = 'rgba(244, 238, 255, .16)'; ctx.lineWidth = 1; ctx.stroke();
       ctx.beginPath(); ctx.arc(m.x, m.y, 118, 0, Math.PI * 2);
-      ctx.strokeStyle = 'rgba(201, 166, 255, .22)'; ctx.lineWidth = 1.5; ctx.stroke();
+      ctx.strokeStyle = `rgba(${col.hi}, .24)`; ctx.lineWidth = 1.5; ctx.stroke();
     }
     for (const p of P) {
-      if (p.r > 2) { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2); ctx.fillStyle = 'rgba(139, 61, 255, .22)'; ctx.fill(); }
+      if (p.r > 2) { ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, Math.PI * 2); ctx.fillStyle = `rgba(${col.c}, .24)`; ctx.fill(); }
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = p.r > 1.9 ? '#ffffff' : 'rgba(201, 166, 255, .85)'; ctx.fill();
+      ctx.fillStyle = p.r > 1.9 ? '#ffffff' : `rgba(${col.hi}, .88)`; ctx.fill();
     }
     for (const q of pulses) {
       ctx.beginPath(); ctx.arc(q.x, q.y, q.t * Math.hypot(W, H) * .6, 0, Math.PI * 2);
-      ctx.strokeStyle = `rgba(244, 238, 255, ${(1 - q.t) * .7})`; ctx.lineWidth = 2; ctx.stroke();
+      ctx.strokeStyle = `rgba(${col.hi}, ${(1 - q.t) * .75})`; ctx.lineWidth = 2; ctx.stroke();
     }
   };
   const frame = t => {
@@ -274,9 +480,23 @@ VT_DEMO.particle = card => {
   const at = e => { const r = box.getBoundingClientRect(); m.x = e.clientX - r.left; m.y = e.clientY - r.top; };
   box.addEventListener('pointermove', e => { if (e.pointerType === 'touch') return; at(e); m.on = true; });
   box.addEventListener('pointerleave', () => { m.on = false; });
-  box.addEventListener('pointerdown', e => { at(e); if (!REDUCED) pulse(m.x, m.y); });
-  box.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!REDUCED) pulse(W / 2, H / 2); } });
+  box.addEventListener('pointerdown', e => { at(e); pulse(m.x, m.y); });
+  box.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pulse(W / 2, H / 2); } });
   new ResizeObserver(() => { if (!P.length) return; if (size()) { if (!running) draw(); } }).observe(box);
+  vtEdit(card, [
+    { k: 'dens', t: 'range', label: 'Densidade', min: .4, max: 2, step: .1, v: 1, fmt: vtPct },
+    { k: 'speed', t: 'range', label: 'Velocidade', min: .2, max: 2.5, step: .1, v: 1, fmt: vtX },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' },
+    { k: 'mode', t: 'seg', label: 'Cursor', opts: [['repele', 'Afasta'], ['atrai', 'Atrai']], v: 'repele' },
+    { k: 'links', t: 'tog', label: 'Ligações', v: true },
+    { t: 'acts', items: [{ label: 'Soltar pulso', motion: true, fn: () => pulse(W / 2, H / 2) }] },
+    { k: 'title', t: 'text', label: 'Título da capa', v: 'A virada começa aqui.', max: 44, wide: true }
+  ], (k, v) => {
+    if (k === 'acc') { col = VT_ACC[v]; vtAcc(card, v); }
+    if (k === 'dens') fit();
+    if (k === 'title') title.textContent = vtNb(v.trim()) || ' ';
+    if (!running && P.length) draw();
+  }, { S });
   return {
     start() { if (!size()) return; seed(true); resume(); },
     resume, pause,
@@ -287,8 +507,10 @@ VT_DEMO.particle = card => {
 
 /* ---------------------------------------------------------------- 03 · 04 · Tilt / Hologram */
 VT_DEMO.tilt = card => {
-  const box = $('.vt-ti', card), c = $('.vt-ti-card', box), MAX = 16;
-  let tx = 0, ty = 0, rx = 0, ry = 0, mx = 50, my = 50, tmx = 50, tmy = 50, manual = false, running = false, raf = 0, t0 = performance.now(), hold = 0;
+  const box = $('.vt-ti', card), c = $('.vt-ti-card', box), big = $('.vt-ti-l2 b', c);
+  const S = {};
+  let tx = 0, ty = 0, rx = 0, ry = 0, mx = 50, my = 50, tmx = 50, tmy = 50, manual = false, running = false, raf = 0, t0 = performance.now(), hold = 0, ft = 0;
+  const MAX = () => S.max || 16;
   const apply = () => {
     c.style.setProperty('--rx', rx.toFixed(2) + 'deg'); c.style.setProperty('--ry', ry.toFixed(2) + 'deg');
     c.style.setProperty('--mx', mx.toFixed(1) + '%'); c.style.setProperty('--my', my.toFixed(1) + '%');
@@ -296,8 +518,10 @@ VT_DEMO.tilt = card => {
   const frame = t => {
     if (!running) return;
     if (!manual) {
-      const s = (t - t0) / 1000;
-      ty = Math.sin(s * .8) * 11; tx = Math.cos(s * .6) * 6;
+      if (S.auto) {
+        const s = (t - t0) / 1000, a = MAX() / 16;
+        ty = Math.sin(s * .8) * 11 * a; tx = Math.cos(s * .6) * 6 * a;
+      } else { tx = ty = 0; }
       tmx = 50 + ty * 3.2; tmy = 50 - tx * 3.2;
     }
     rx += (tx - rx) * .09; ry += (ty - ry) * .09; mx += (tmx - mx) * .09; my += (tmy - my) * .09;
@@ -306,21 +530,44 @@ VT_DEMO.tilt = card => {
   };
   box.addEventListener('pointermove', e => {
     if (REDUCED) return;
-    const r = c.getBoundingClientRect();
+    const r = c.getBoundingClientRect(), M = MAX();
     const px = vtClamp((e.clientX - r.left) / r.width, -.15, 1.15), py = vtClamp((e.clientY - r.top) / r.height, -.15, 1.15);
     manual = true; clearTimeout(hold);
-    ty = vtClamp((px - .5) * 2 * MAX, -MAX, MAX); tx = vtClamp(-(py - .5) * 2 * MAX, -MAX, MAX);
+    ty = vtClamp((px - .5) * 2 * M, -M, M); tx = vtClamp(-(py - .5) * 2 * M, -M, M);
     tmx = px * 100; tmy = py * 100;
   });
   box.addEventListener('pointerleave', () => { tx = ty = 0; tmx = tmy = 50; hold = setTimeout(() => { manual = false; t0 = performance.now(); }, 900); });
+  /* clique ou Enter: um reflexo holográfico varre o cartão */
+  const flash = () => {
+    c.classList.remove('is-flash'); void c.offsetWidth; c.classList.add('is-flash');
+    clearTimeout(ft); ft = setTimeout(() => c.classList.remove('is-flash'), 1000);
+  };
+  c.addEventListener('click', flash);
   c.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flash(); return; }
     const k = { ArrowLeft: [0, -5], ArrowRight: [0, 5], ArrowUp: [5, 0], ArrowDown: [-5, 0] }[e.key];
     if (!k || REDUCED) return;
     e.preventDefault(); manual = true; clearTimeout(hold);
-    tx = vtClamp(tx + k[0], -MAX, MAX); ty = vtClamp(ty + k[1], -MAX, MAX);
+    const M = MAX();
+    tx = vtClamp(tx + k[0], -M, M); ty = vtClamp(ty + k[1], -M, M);
     tmx = 50 + ty * 3; tmy = 50 - tx * 3;
     hold = setTimeout(() => { manual = false; t0 = performance.now(); }, 2500);
   });
+  const label = () => c.setAttribute('aria-label', `Cartão holográfico com a marca do cliente: ${S.val.trim() || '+38%'} de crescimento no ano. Ele inclina com o cursor; setas inclinam e Enter solta um reflexo.`);
+  vtEdit(card, [
+    { k: 'max', t: 'range', label: 'Inclinação', min: 4, max: 28, step: 1, v: 16, fmt: v => v + '°' },
+    { k: 'sheen', t: 'range', label: 'Reflexo', min: 0, max: 1.6, step: .1, v: 1, fmt: vtPct },
+    { k: 'depth', t: 'range', label: 'Profundidade', min: 0, max: 2, step: .1, v: 1, fmt: vtPct },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' },
+    { k: 'val', t: 'text', label: 'Número do cartão', v: '+38%', max: 7 },
+    { k: 'auto', t: 'tog', label: 'Balanço sozinho', v: true }
+  ], (k, v) => {
+    if (k === 'sheen') c.style.setProperty('--sheen', v);
+    if (k === 'depth') c.style.setProperty('--dz', v);
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'val') { big.textContent = v.trim() || ' '; label(); }
+    if (k === 'max' && REDUCED) { rx = 6 * v / 16; ry = -12 * v / 16; apply(); }
+  }, { S });
   const resume = () => { if (running || REDUCED) return; running = true; raf = requestAnimationFrame(frame); };
   const pause = () => { running = false; cancelAnimationFrame(raf); };
   return {
@@ -330,48 +577,189 @@ VT_DEMO.tilt = card => {
   };
 };
 
+/* ---------------------------------------------------------------- 11 · Animated Typography */
+VT_DEMO.type = card => {
+  const box = $('.vt-ty', card), h = $('.vt-ty-h', box), sr = $('.vt-ty-in .sr-only', box);
+  const S = {};
+  let rt = 0, E = null;
+  const norm = w => w.toLowerCase().replace(/[^\p{L}\p{N}%]/gu, '');
+  const words = () => (S.text || '').trim().split(/\s+/).filter(Boolean);
+  const render = () => {
+    const ws = words(), ki = S.key ? ws.findIndex(w => norm(w) === S.key) : -1;
+    h.textContent = '';
+    ws.forEach((w, i) => {
+      const s = el('span', 'w', w);
+      s.style.setProperty('--i', i); s.dataset.n = norm(w);
+      if (/\d/.test(w)) s.classList.add('vt-ty-n');
+      if (i === ki) s.classList.add('vt-ty-u');
+      h.append(s, document.createTextNode(' '));
+    });
+    h.style.setProperty('--n', ws.length);
+    h.style.setProperty('--fit', Math.min(1, Math.sqrt(46 / Math.max((S.text || '').length, 1))).toFixed(3));
+    sr.textContent = (S.text || '').trim();
+  };
+  const keys = () => {
+    const seen = new Set(), o = [['', 'Nenhuma']];
+    words().forEach(w => { const n = norm(w); if (n && !seen.has(n)) { seen.add(n); o.push([n, w.replace(/[.,;:!?]+$/, '')]); } });
+    return o;
+  };
+  /* a frase entra de novo para mostrar a mudança (no teclado, espera a pessoa parar de digitar) */
+  const replay = delay => {
+    if (REDUCED || !card.classList.contains('is-on')) return;
+    clearTimeout(rt); rt = setTimeout(() => vtRestart(card), delay);
+  };
+  h.addEventListener('click', e => {
+    const w = e.target.closest('.w'); if (!w || !E) return;
+    const n = S.key === w.dataset.n ? '' : w.dataset.n;
+    E.set('key', n);
+    E.say(n ? `Palavra em destaque: ${w.textContent.replace(/[.,;:!?]+$/, '')}.` : 'Sem palavra em destaque.');
+  });
+  E = vtEdit(card, [
+    { k: 'text', t: 'text', label: 'Frase', v: 'Receita recorrente cresceu 38% em doze meses.', max: 70, wide: true },
+    { k: 'key', t: 'sel', label: 'Palavra em destaque', opts: [], v: 'cresceu' },
+    { k: 'style', t: 'seg', label: 'Entrada', opts: [['sobe', 'Subir'], ['foco', 'Foco'], ['escala', 'Escala']], v: 'sobe' },
+    { k: 'speed', t: 'range', label: 'Ritmo', min: .4, max: 2.5, step: .1, v: 1, fmt: vtX },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' }
+  ], (k, v, s, phase) => {
+    if (k === 'text' || k === 'key') render();
+    if (k === 'text' && E) {
+      E.opts.key(keys());
+      if (S.key && !words().some(w => norm(w) === S.key)) { E.set('key', '', true); render(); }
+    }
+    if (k === 'style') box.dataset.style = v;
+    if (k === 'speed') box.style.setProperty('--sp', v);
+    if (k === 'acc') vtAcc(card, v);
+    if (!phase) replay(k === 'text' ? 700 : k === 'speed' ? 350 : 0);
+  }, { S });
+  E.opts.key(keys());
+  return {};
+};
+
 /* ---------------------------------------------------------------- 12 · Counter Animation */
 VT_DEMO.count = card => {
-  const vals = $$('.vt-co-v', card), bars = $$('.vt-co-bar', card);
-  let raf = 0;
-  const render = (v, i, e) => {
-    const d = +(v.dataset.dec || 0);
-    v.textContent = (v.dataset.pre || '') + (+v.dataset.to * e).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d }) + (v.dataset.suf || '');
-    bars[i].style.setProperty('--p', e.toFixed(3));
+  const tiles = $$('.vt-co-tile', card), vals = tiles.map(t => $('.vt-co-v', t)), bars = tiles.map(t => $('.vt-co-bar', t));
+  const MT = [
+    { k: 'Receita no ano', v: 12.8, dec: 1, pre: 'R$ ', suf: ' mi', w: .86 },
+    { k: 'Crescimento', v: 38, dec: 0, pre: '+', suf: '%', w: .64, sign: true },
+    { k: 'Novos clientes', v: 1240, dec: 0, pre: '', suf: '', w: 1 }
+  ];
+  MT.forEach(m => { m.ref = m.v / m.w; });
+  const S = {}, cur = [0, 0, 0], jobs = new Map();
+  let raf = 0, E = null;
+  const target = i => +S['v' + i];
+  const text = (i, v) => {
+    const m = MT[i], d = Number.isInteger(target(i)) ? m.dec : Math.max(m.dec, 1);
+    const n = Math.abs(v).toLocaleString('pt-BR', { minimumFractionDigits: d, maximumFractionDigits: d });
+    return (m.sign ? (v < 0 ? '−' : '+') : (v < 0 ? '−' : '') + m.pre) + n + m.suf;
   };
-  const run = () => {
-    cancelAnimationFrame(raf);
-    const t0 = performance.now();
-    const tick = t => {
-      let done = true;
-      vals.forEach((v, i) => {
-        const p = vtClamp((t - t0 - 250 - i * 180) / 1800);
-        if (p < 1) done = false;
-        render(v, i, p >= 1 ? 1 : 1 - Math.pow(2, -10 * p));
-      });
-      if (!done) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
+  const paint = i => { vals[i].textContent = text(i, cur[i]); bars[i].style.setProperty('--p', vtClamp(Math.abs(cur[i]) / MT[i].ref).toFixed(3)); };
+  const label = i => tiles[i].setAttribute('aria-label', `${MT[i].k}: ${text(i, target(i))}. Clique para contar de novo.`);
+  const EASE = {
+    suave: p => 1 - Math.pow(2, -10 * p),
+    linear: p => p,
+    mola: p => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(p - 1, 3) + c1 * Math.pow(p - 1, 2); }
   };
-  if (!REDUCED) vals.forEach((v, i) => render(v, i, 0));
-  return { start: run, replay: run, still: () => vals.forEach((v, i) => render(v, i, 1)) };
+  const tick = t => {
+    let busy = false;
+    jobs.forEach((j, i) => {
+      const p = vtClamp((t - j.t0 - j.delay) / ((S.dur || 1.8) * 1000));
+      cur[i] = j.a + (j.b - j.a) * (p >= 1 ? 1 : EASE[S.ease || 'suave'](p)); paint(i);
+      if (p < 1) busy = true;
+      else { jobs.delete(i); label(i); if (j.say && E) E.say(`${MT[i].k}: ${text(i, cur[i])}.`); }
+    });
+    raf = busy ? requestAnimationFrame(tick) : 0;
+  };
+  /* conta de onde está (ou do zero) até o alvo atual */
+  const go = (i, from, delay = 0, say = false) => {
+    if (REDUCED) { cur[i] = target(i); paint(i); label(i); if (say && E) E.say(`${MT[i].k}: ${text(i, cur[i])}.`); return; }
+    jobs.set(i, { a: from == null ? cur[i] : from, b: target(i), t0: performance.now(), delay, say });
+    if (!raf) raf = requestAnimationFrame(tick);
+  };
+  const run = () => MT.forEach((_, i) => go(i, 0, 250 + i * 180));
+  tiles.forEach((t, i) => t.addEventListener('click', () => go(i, 0, 0, true)));
+  E = vtEdit(card, [
+    { k: 'v0', t: 'num', label: 'Receita (R$ mi)', v: 12.8, min: 0, max: 9999 },
+    { k: 'v1', t: 'num', label: 'Crescimento (%)', v: 38, min: -99, max: 9999 },
+    { k: 'v2', t: 'num', label: 'Novos clientes', v: 1240, min: 0, max: 9999999 },
+    { k: 'dur', t: 'range', label: 'Duração', min: .4, max: 4, step: .1, v: 1.8, fmt: v => fmtNum(v, 1) + ' s' },
+    { k: 'ease', t: 'seg', label: 'Curva', opts: [['suave', 'Suave'], ['linear', 'Linear'], ['mola', 'Mola']], v: 'suave' },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' }
+  ], (k, v, s, phase) => {
+    if (k === 'acc') vtAcc(card, v);
+    if (/^v\d$/.test(k)) {
+      const i = +k[1];
+      if (phase === 'init') { cur[i] = REDUCED ? v : 0; paint(i); label(i); }
+      else go(i, null, 0, true);
+    }
+  }, { S });
+  return { start: run, replay: run, still: () => MT.forEach((_, i) => { cur[i] = target(i); paint(i); }) };
+};
+
+/* ---------------------------------------------------------------- 06 · Glow / Light Sweep */
+VT_DEMO.glow = card => {
+  const box = $('.vt-gl', card), main = $('.vt-gl-main', box), inner = $('.vt-gl-in', main);
+  const mk = $('.vt-gl-k', main), mv = $('.vt-gl-v', main), md = $('.vt-gl-d', main), sides = $$('.vt-gl-s', box);
+  const K0 = [
+    { k: 'Margem bruta', v: '41%', d: '+6 p.p. no ano' },
+    { k: 'Custo', v: '−12%', d: '12% menor que em 2025' },
+    { k: 'Prazo', v: '18 dias', d: '9 dias mais rápido' }
+  ];
+  const S = {};
+  let K = K0.map(o => ({ ...o })), order = [0, 1, 2], E = null;
+  const paint = () => {
+    const a = K[order[0]];
+    mk.textContent = a.k; mv.textContent = a.v; md.textContent = a.d;
+    main.setAttribute('aria-label', `Indicador em destaque: ${a.k}, ${a.v}. ${a.d}.`);
+    sides.forEach((b, j) => {
+      const o = K[order[j + 1]];
+      $('span', b).textContent = o.k; $('b', b).textContent = o.v;
+      b.setAttribute('aria-label', `${o.k}: ${o.v}. Trazer para o destaque.`);
+    });
+  };
+  const pop = () => { if (REDUCED) return; inner.classList.remove('is-swap'); void inner.offsetWidth; inner.classList.add('is-swap'); };
+  /* tocar um indicador secundário troca de lugar com o principal: a luz vai junto */
+  sides.forEach((b, j) => b.addEventListener('click', () => {
+    [order[0], order[j + 1]] = [order[j + 1], order[0]];
+    paint(); pop();
+    E.set('val', K[order[0]].v, true); E.touch();
+    E.say(`${K[order[0]].k} em destaque: ${K[order[0]].v}.`);
+  }));
+  E = vtEdit(card, [
+    { k: 'int', t: 'range', label: 'Intensidade', min: 0, max: 2.5, step: .1, v: 1, fmt: vtPct },
+    { k: 'spin', t: 'range', label: 'Giro do anel', min: .2, max: 3, step: .1, v: 1, fmt: vtX },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' },
+    { k: 'sweep', t: 'tog', label: 'Varredura', v: true },
+    { k: 'val', t: 'text', label: 'Valor em destaque', v: '41%', max: 9, wide: true }
+  ], (k, v) => {
+    if (k === 'int') main.style.setProperty('--int-b', v);
+    if (k === 'spin') main.style.setProperty('--spin', v);
+    if (k === 'sweep') box.classList.toggle('no-sweep', !v);
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'val') { K[order[0]].v = v.trim() || ' '; paint(); }
+  }, { S, reset: () => { K = K0.map(o => ({ ...o })); order = [0, 1, 2]; paint(); } });
+  paint();
+  return {};
 };
 
 /* ---------------------------------------------------------------- 24 · Spotlight / Focus */
 VT_DEMO.spot = card => {
-  const box = $('.vt-sp', card), cap = $('.vt-sp-cap', box), btns = $$('.vt-sp-ctl button', box);
+  const box = $('.vt-sp', card), slide = $('.vt-sp-slide', box), cap = $('.vt-sp-cap', box), btns = $$('.vt-sp-ctl button', box);
   const CAPS = {
     1: 'Passo 1 · Tudo começa na compra: 100.',
     2: 'Passo 2 · O estoque leva 4 pontos.',
     3: 'Passo 3 · O frete leva 9. É aqui que a margem vaza.',
-    free: 'Livre · o foco segue o seu cursor.'
+    4: 'Passo 4 · Sobram 87 na venda.',
+    free: 'Livre · arraste o foco ou use as setas.'
   };
-  let step = 0, timer = 0, auto = false;
+  const S = {};
+  let step = 0, timer = 0, auto = false, baseR = 74, fx = 0, fy = 0, drag = false;
+  const radius = () => box.style.setProperty('--vt-sr', baseR * (S.size || 1) + 'px');
   const place = (x, y, r, instant) => {
-    if (instant) box.classList.add('is-free');
+    if (instant) box.classList.add('is-jump');
+    fx = x; fy = y;
     box.style.setProperty('--vt-sx', x + 'px'); box.style.setProperty('--vt-sy', y + 'px');
-    if (r) box.style.setProperty('--vt-sr', r + 'px');
-    if (instant && step !== 'free') { void box.offsetWidth; box.classList.remove('is-free'); }
+    if (r) { baseR = r; radius(); }
+    if (instant) { void box.offsetWidth; box.classList.remove('is-jump'); }
   };
   const toNode = (k, instant) => {
     const n = $(`.vt-sp-node[data-step="${k}"]`, box); if (!n) return;
@@ -379,53 +767,103 @@ VT_DEMO.spot = card => {
     place(r.left + r.width / 2 - b.left, r.top + r.height / 2 - b.top, Math.max(r.width, r.height) * 1.25, instant);
   };
   const go = (k, fromUser) => {
-    if (fromUser) { auto = false; clearTimeout(timer); }
+    if (fromUser) { auto = false; clearTimeout(timer); timer = 0; }
     const first = box.classList.contains('is-off');
     step = k;
     btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.go === String(k))));
+    $$('.vt-sp-node', box).forEach(n => n.classList.toggle('is-lit', n.dataset.step === String(k)));
     box.classList.toggle('is-free', k === 'free');
     cap.textContent = CAPS[k];
-    if (k === 'free') { const b = box.getBoundingClientRect(); if (first) place(b.width / 2, b.height * .4, 84, true); else box.style.setProperty('--vt-sr', '84px'); }
+    if (k === 'free') { const b = box.getBoundingClientRect(); if (first) place(b.width / 2, b.height * .4, 84, true); else { baseR = 84; radius(); } }
     else toNode(k, first);
     box.classList.remove('is-off');
   };
   const next = () => {
     if (!auto) return;
     const s = typeof step === 'number' ? step : 0;
-    if (s >= 3) { auto = false; return; }
-    timer = setTimeout(() => { go(s + 1); next(); }, s === 0 ? 350 : 2300);
+    if (s >= 4) { auto = false; return; }
+    timer = setTimeout(() => { go(s + 1); next(); }, s === 0 ? 350 : (S.pace || 2.3) * 1000);
   };
+  const tour = () => { clearTimeout(timer); box.classList.add('is-off'); auto = true; step = 0; next(); };
   btns.forEach(b => b.addEventListener('click', () => go(b.dataset.go === 'free' ? 'free' : +b.dataset.go, true)));
-  box.addEventListener('pointermove', e => {
+  /* tocar uma etapa leva o foco até ela */
+  slide.addEventListener('click', e => {
+    if (step === 'free') return;
+    const n = e.target.closest('.vt-sp-node'); if (n) go(+n.dataset.step, true);
+  });
+  const at = e => { const b = box.getBoundingClientRect(); place(vtClamp(e.clientX - b.left, 0, b.width), vtClamp(e.clientY - b.top, 0, b.height)); };
+  box.addEventListener('pointerdown', e => {
+    if (step !== 'free' || !slide.contains(e.target)) return;
+    e.preventDefault(); drag = true; box.setPointerCapture(e.pointerId); at(e);
+  });
+  box.addEventListener('pointermove', e => { if (step === 'free' && (drag || e.pointerType === 'mouse')) at(e); });
+  const end = () => { drag = false; };
+  box.addEventListener('pointerup', end); box.addEventListener('pointercancel', end);
+  box.addEventListener('keydown', e => {
     if (step !== 'free') return;
+    const s = e.shiftKey ? 42 : 14;
+    const d = { ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, -s], ArrowDown: [0, s] }[e.key]; if (!d) return;
+    e.preventDefault();
     const b = box.getBoundingClientRect();
-    place(e.clientX - b.left, e.clientY - b.top);
+    place(vtClamp(fx + d[0], 0, b.width), vtClamp(fy + d[1], 0, b.height));
   });
   new ResizeObserver(() => { if (typeof step === 'number' && step > 0) toNode(step, true); }).observe(box);
   box.classList.add('is-off');
+  vtEdit(card, [
+    { k: 'size', t: 'range', label: 'Tamanho do foco', min: .6, max: 1.8, step: .05, v: 1, fmt: vtPct },
+    { k: 'dark', t: 'range', label: 'Escurecer', min: .3, max: .96, step: .02, v: .84, fmt: vtPct },
+    { k: 'pace', t: 'range', label: 'Ritmo do tour', min: 1, max: 5, step: .1, v: 2.3, fmt: v => fmtNum(v, 1) + ' s' },
+    { k: 'acc', t: 'acc', label: 'Cor da borda', v: 'violeta' },
+    { k: 'ring', t: 'tog', label: 'Borda de luz', v: true },
+    { t: 'acts', items: [{ label: 'Tocar o tour', motion: true, fn: tour }] }
+  ], (k, v) => {
+    if (k === 'size') radius();
+    if (k === 'dark') box.style.setProperty('--dark', v);
+    if (k === 'ring') box.style.setProperty('--ring', v ? 1 : 0);
+    if (k === 'acc') vtAcc(card, v);
+  }, { S });
   return {
     start() { auto = true; step = 0; next(); },
     resume() { if (auto && !timer) next(); },
     pause() { clearTimeout(timer); timer = 0; },
-    replay() { clearTimeout(timer); box.classList.add('is-off'); auto = true; step = 0; next(); },
+    replay: tour,
     still() { go(3); }
   };
 };
 
 /* ---------------------------------------------------------------- 33 · Card Stack */
 VT_DEMO.stack = card => {
-  const pile = $('.vt-st-pile', card), cards = $$('.vt-st-card', pile), live = $('.vt-st-live', card);
-  let order = cards.map((_, i) => i), busy = false;
+  const box = $('.vt-st', card), pile = $('.vt-st-pile', card), cards = $$('.vt-st-card', pile), live = $('.vt-st-live', card);
+  const T0 = cards.map(c => $('b', c).textContent);
+  const S = {};
+  let order = cards.map((_, i) => i), busy = false, E = null;
   const label = c => `Capítulo ${c.querySelector('span').textContent.replace(' / ', ' de ')}: ${c.querySelector('b').textContent}. ${c.querySelector('p').textContent}`;
-  const layout = () => order.forEach((ci, o) => {
-    const c = cards[ci];
-    c.style.setProperty('--o', o);
-    c.classList.toggle('is-top', o === 0);
-    c.tabIndex = o === 0 ? 0 : -1;
-    c.setAttribute('aria-hidden', String(o !== 0));
+  /* pontos de navegação: um por capítulo, pulam direto para ele */
+  const dots = el('div', 'vt-st-dots'); dots.setAttribute('role', 'group'); dots.setAttribute('aria-label', 'Capítulos da pilha');
+  const db = cards.map((c, i) => {
+    const b = el('button', 'vt-st-dot'); b.type = 'button';
+    b.addEventListener('click', () => jump(i));
+    dots.append(b); return b;
   });
-  cards.forEach(c => { c.setAttribute('role', 'button'); c.setAttribute('aria-label', label(c) + ' Pressione Enter para o próximo.'); });
-  const next = (dir = 1) => {
+  box.append(dots);
+  const layout = () => {
+    order.forEach((ci, o) => {
+      const c = cards[ci];
+      c.style.setProperty('--o', o);
+      c.classList.toggle('is-top', o === 0);
+      c.tabIndex = o === 0 ? 0 : -1;
+      c.setAttribute('aria-hidden', String(o !== 0));
+      c.setAttribute('aria-label', label(c) + ' Pressione Enter para o próximo.');
+    });
+    db.forEach((b, i) => {
+      const top = order[0] === i;
+      b.setAttribute('aria-label', `Ir para o capítulo ${i + 1}: ${$('b', cards[i]).textContent}`);
+      if (top) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current');
+    });
+    if (E) E.set('title', $('b', cards[order[0]]).textContent, true);
+  };
+  const announce = () => { live.textContent = label(cards[order[0]]); };
+  const next = (dir = +(S.dir || 1)) => {
     if (busy) return; busy = true;
     const c = cards[order[0]], had = document.activeElement === c;
     c.classList.remove('is-drag');
@@ -434,11 +872,27 @@ VT_DEMO.stack = card => {
     setTimeout(() => {
       order.push(order.shift());
       c.style.removeProperty('--dx'); c.style.removeProperty('--dr');
-      layout();
-      live.textContent = label(cards[order[0]]);
+      layout(); announce();
       if (had) cards[order[0]].focus({ preventScroll: true });
       busy = false;
     }, REDUCED ? 0 : 260);
+  };
+  const jump = i => {
+    if (busy || order[0] === i) return;
+    const at = order.indexOf(i);
+    order = order.slice(at).concat(order.slice(0, at));
+    layout(); announce();
+  };
+  const prev = () => { if (busy) return; order.unshift(order.pop()); layout(); announce(); };
+  const shuffle = () => {
+    if (busy) return; busy = true;
+    if (!REDUCED) cards.forEach(c => { c.style.setProperty('--dx', (Math.random() - .5) * 120 + 'px'); c.style.setProperty('--dr', (Math.random() - .5) * 26 + 'deg'); });
+    setTimeout(() => {
+      const top = order[0];
+      do { order.sort(() => Math.random() - .5); } while (order[0] === top);
+      cards.forEach(c => { c.style.removeProperty('--dx'); c.style.removeProperty('--dr'); });
+      layout(); announce(); busy = false;
+    }, REDUCED ? 0 : 280);
   };
   let sx = 0, dx = 0, drag = null;
   pile.addEventListener('pointerdown', e => {
@@ -457,16 +911,35 @@ VT_DEMO.stack = card => {
     if (!drag) return;
     const c = drag; drag = null;
     if (e.type === 'pointercancel') { c.classList.remove('is-drag'); c.style.removeProperty('--dx'); c.style.removeProperty('--dr'); return; }
-    if (Math.abs(dx) > 70 || Math.abs(dx) < 5) next(dx < -70 ? -1 : 1);
+    if (Math.abs(dx) < 5) next();
+    else if (Math.abs(dx) > 70) next(dx < 0 ? -1 : 1);
     else { c.classList.remove('is-drag'); c.style.removeProperty('--dx'); c.style.removeProperty('--dr'); }
   };
   pile.addEventListener('pointerup', up);
   pile.addEventListener('pointercancel', up);
   pile.addEventListener('keydown', e => {
     if (!e.target.classList.contains('is-top')) return;
-    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowRight') { e.preventDefault(); next(1); }
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); next(1); }
     else if (e.key === 'ArrowLeft') { e.preventDefault(); next(-1); }
   });
+  E = vtEdit(card, [
+    { k: 'depth', t: 'range', label: 'Profundidade', min: 0, max: 2.2, step: .1, v: 1, fmt: vtPct },
+    { k: 'fan', t: 'range', label: 'Leque', min: 0, max: 14, step: 1, v: 0, fmt: v => v + '°' },
+    { k: 'dir', t: 'seg', label: 'Saída', opts: [['1', 'Direita'], ['-1', 'Esquerda']], v: '1' },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' },
+    { k: 'title', t: 'text', label: 'Título do card do topo', v: T0[0], max: 26, wide: true, track: false },
+    { t: 'acts', items: [{ label: 'Embaralhar', fn: shuffle }, { label: 'Anterior', fn: prev }] }
+  ], (k, v, s, phase) => {
+    if (k === 'depth') pile.style.setProperty('--depth', v);
+    if (k === 'fan') pile.style.setProperty('--fan', v);
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'title' && !phase) {
+      const c = cards[order[0]]; $('b', c).textContent = v.trim() || ' ';
+      c.setAttribute('aria-label', label(c) + ' Pressione Enter para o próximo.');
+      E.touch();
+    }
+  }, { S, reset: () => { cards.forEach((c, i) => { $('b', c).textContent = T0[i]; }); order = cards.map((_, i) => i); layout(); } });
   layout();
   return {
     replay() { order = cards.map((_, i) => i); layout(); },
@@ -476,17 +949,33 @@ VT_DEMO.stack = card => {
 
 /* ---------------------------------------------------------------- 16 · Chart Build */
 VT_DEMO.chart = card => {
-  const plot = $('.vt-ch-plot', card), svg = $('.vt-ch-svg', card), tip = $('.vt-ch-tip', card), range = $('.vt-range', card);
+  const plot = $('.vt-ch-plot', card), svg = $('.vt-ch-svg', card), desc = $('title', svg), tip = $('.vt-ch-tip', card), range = $('.vt-ch-scrub .vt-range', card);
+  const det = $('.vt-ch-det', card), detQ = $('.vt-ch-det-q', det), detV = $('.vt-ch-det-v b', det), detM = $('.vt-ch-det-m', det), detP = $('.vt-ch-det-p', det);
+  const legR = $('.vt-ch-lb', card), legM = $('.vt-ch-ll', card), bMax = $('[data-act="max"]', card), bSort = $('[data-act="sort"]', card);
   const Q = ['1T25', '2T25', '3T25', '4T25', '1T26', '2T26', '3T26', '4T26'];
-  const R = [42, 48, 51, 57, 63, 70, 76, 84], M = [45, 48, 52, 55, 58, 62, 66, 70];
-  let g = null, prog = REDUCED ? 1 : 0, stop = null;
+  const R = [42, 48, 51, 57, 63, 70, 76, 84], M0 = [45, 48, 52, 55, 58, 62, 66, 70];
+  const MAXI = R.indexOf(Math.max(...R)), LAST = R.length - 1;
+  const S = {};
+  const ST0 = { sorted: false, max: false, pin: -1, showR: true, showM: true };
+  let st = { ...ST0 }, M = M0.slice(), g = null, prog = REDUCED ? 1 : 0, stop = null, mv = null, pos = Q.map((_, i) => i), E = null;
+  const f1 = v => fmtNum(v, Number.isInteger(v) ? 0 : 1);
+  const signed = v => (v > 0 ? '+' : v < 0 ? '−' : '') + f1(Math.abs(v));
+  const slots = () => {
+    const idx = Q.map((_, i) => i);
+    if (st.sorted) idx.sort((a, b) => R[b] - R[a] || a - b);
+    const s = []; idx.forEach((bi, k) => { s[bi] = k; }); return s;
+  };
   const ns = (t, a, parent) => { const n = svgEl(t, a); (parent || svg).append(n); return n; };
+  const summary = i => {
+    const d = R[i] - M[i];
+    return `${Q[i]}: receita ${R[i]}, meta ${f1(M[i])}, ${d >= 0 ? signed(d) + ' acima' : signed(d) + ' abaixo'} da meta.`;
+  };
   const build = () => {
     const W = plot.clientWidth, H = plot.clientHeight; if (!W || !H) return;
     [...svg.querySelectorAll(':scope > :not(title)')].forEach(n => n.remove());
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
     const L = 30, Rt = W - 58, T = 20, B = H - 22, band = (Rt - L) / Q.length, bw = Math.min(46, band * .58);
-    const y = v => B - (v / 100) * (B - T), xc = i => L + band * i + band / 2;
+    const y = v => B - (v / 100) * (B - T), xc = s => L + band * s + band / 2;
     const uid = card.id + '-c';
     const defs = ns('defs');
     const clip = ns('clipPath', { id: uid }, defs); ns('rect', { x: 0, y: 0, width: W, height: B }, clip);
@@ -494,69 +983,189 @@ VT_DEMO.chart = card => {
     const lineD = M.map((v, i) => `${i ? 'L' : 'M'}${xc(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
     const mPath = ns('path', { d: lineD, fill: 'none', stroke: '#fff', 'stroke-width': 8, 'stroke-linecap': 'round' }, mask);
     const gridG = ns('g');
-    [0, 25, 50, 75, 100].forEach(v => {
-      ns('line', { x1: L, x2: Rt, y1: y(v), y2: y(v), class: v ? 'vt-ch-grid' : 'vt-ch-base' }, gridG);
-    });
+    [0, 25, 50, 75, 100].forEach(v => ns('line', { x1: L, x2: Rt, y1: y(v), y2: y(v), class: v ? 'vt-ch-grid' : 'vt-ch-base' }, gridG));
     const yl = ns('g', { class: 'vt-ch-axis' });
     [0, 50, 100].forEach(v => { const t = ns('text', { x: L - 8, y: y(v) + 4, 'text-anchor': 'end', class: 'vt-ch-lbl' }, yl); t.textContent = v; });
     const xl = ns('g', { class: 'vt-ch-axis' });
-    Q.forEach((q, i) => { if (band < 44 && i % 2 === 0) return; const t = ns('text', { x: xc(i), y: H - 4, 'text-anchor': 'middle', class: 'vt-ch-lbl' }, xl); t.textContent = q; });
-    const barsG = ns('g', { 'clip-path': `url(#${uid})` });
-    const bars = R.map((v, i) => {
-      const hit = ns('rect', { x: xc(i) - band / 2, y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'img', 'aria-label': `${Q[i]}: receita ${v}, meta ${M[i]}` });
-      const r = ns('rect', { x: xc(i) - bw / 2, width: bw, rx: 4, y: B, height: 0, class: 'vt-ch-bar' + (i === R.length - 1 ? ' is-hi' : '') }, barsG);
-      const show = () => {
-        r.classList.add('is-hov');
-        tip.hidden = false;
-        tip.textContent = `${Q[i]} · Receita ${v} · Meta ${M[i]}`;
-        tip.style.left = vtClamp(xc(i), 80, W - 80) + 'px'; tip.style.top = y(Math.max(v, M[i])) + 'px';
-      };
-      const hide = () => { r.classList.remove('is-hov'); tip.hidden = true; };
-      hit.addEventListener('pointerenter', show); hit.addEventListener('pointerleave', hide);
-      hit.addEventListener('focus', show); hit.addEventListener('blur', hide);
-      return r;
-    });
-    const line = ns('path', { d: lineD, class: 'vt-ch-meta', mask: `url(#${uid}m)` });
+    const xLabels = Q.map(q => { const t = ns('text', { y: H - 4, 'text-anchor': 'middle', class: 'vt-ch-lbl' }, xl); t.textContent = q; return t; });
+    const barsG = ns('g', { 'clip-path': `url(#${uid})`, class: 'vt-ch-bars' });
+    const bars = R.map((v, i) => ns('rect', { width: bw, rx: 4, y: B, height: 0, class: 'vt-ch-bar' + (i === LAST ? ' is-hi' : '') + (i === MAXI ? ' is-top' : '') }, barsG));
+    const valsG = ns('g', { class: 'vt-ch-vals' });
+    const vals = R.map(v => { const t = ns('text', { 'text-anchor': 'middle', class: 'vt-ch-val' }, valsG); t.textContent = v; return t; });
+    const metaG = ns('g', { class: 'vt-ch-metaG' });
+    const line = ns('path', { d: lineD, class: 'vt-ch-meta', mask: `url(#${uid}m)` }, metaG);
     const len = line.getTotalLength();
     mPath.setAttribute('stroke-dasharray', len);
-    const dots = M.map((v, i) => ns('circle', { cx: xc(i), cy: y(v), r: 4.5, class: 'vt-ch-dot' }));
-    const labs = ns('g');
-    const v0 = ns('text', { x: xc(R.length - 1), y: y(R[R.length - 1]) - 8, 'text-anchor': 'middle', class: 'vt-ch-val' }, labs); v0.textContent = R[R.length - 1];
-    const v2 = ns('text', { x: xc(M.length - 1) + bw / 2 + 8, y: y(M[M.length - 1]) + 4, 'text-anchor': 'start', class: 'vt-ch-lbl' }, labs); v2.textContent = 'Meta ' + M[M.length - 1];
-    g = { bars, mPath, len, dots, labs, xl, yl, y, B };
-    render(prog);
+    const dots = M.map((v, i) => ns('circle', { cy: y(v), r: 4.5, class: 'vt-ch-dot' }, metaG));
+    const labs = ns('text', { x: xc(LAST) + bw / 2 + 8, y: y(M[LAST]) + 4, 'text-anchor': 'start', class: 'vt-ch-lbl vt-ch-mlbl' }, metaG);
+    labs.textContent = 'Meta ' + f1(M[LAST]);
+    const hitsG = ns('g');
+    const hits = R.map((v, i) => {
+      const hit = ns('rect', { y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'button', 'aria-pressed': 'false', 'aria-label': summary(i) + ' Enter fixa o detalhe.' }, hitsG);
+      const show = () => {
+        bars[i].classList.add('is-hov');
+        tip.hidden = false;
+        tip.textContent = `${Q[i]} · Receita ${v} · Meta ${f1(M[i])}`;
+        tip.style.left = vtClamp(xc(pos[i]), 80, W - 80) + 'px'; tip.style.top = y(Math.max(v, M[i])) + 'px';
+      };
+      const hide = () => { bars[i].classList.remove('is-hov', 'is-foc'); tip.hidden = true; };
+      hit.addEventListener('pointerenter', show); hit.addEventListener('pointerleave', hide);
+      hit.addEventListener('focus', () => { show(); bars[i].classList.add('is-foc'); }); hit.addEventListener('blur', hide);
+      hit.addEventListener('click', () => pin(i));
+      hit.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pin(i); return; }
+        const d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!d) return;
+        e.preventDefault();
+        const s = slots(), want = s[i] + d, j = s.indexOf(want);
+        if (j >= 0) g.hits[j].focus();
+      });
+      return hit;
+    });
+    g = { bars, vals, valsG, hits, dots, xLabels, mPath, len, line, labs, xl, yl, y, B, T, xc, band, bw, W, H };
+    place(); render(prog); paint();
+  };
+  const place = () => {
+    if (!g) return;
+    R.forEach((v, i) => {
+      const x = g.xc(pos[i]);
+      g.bars[i].setAttribute('x', x - g.bw / 2); g.hits[i].setAttribute('x', x - g.band / 2);
+      g.vals[i].setAttribute('x', x); g.dots[i].setAttribute('cx', x); g.xLabels[i].setAttribute('x', x);
+      g.xLabels[i].style.visibility = g.band < 44 && Math.round(pos[i]) % 2 === 0 ? 'hidden' : '';
+    });
   };
   const render = p => {
     prog = p; if (!g) return;
     const pb = vtClamp(p / .45);
-    g.bars.forEach((r, i) => { const e = vtEase(vtClamp((pb - i * .07) / .51)); const h = (g.B - g.y(R[i])) * e; r.setAttribute('y', g.B - h); r.setAttribute('height', h + (h > 0 ? 4 : 0)); });
+    g.bars.forEach((r, i) => {
+      const e = vtEase(vtClamp((pb - i * .07) / .51)), h = (g.B - g.y(R[i])) * e;
+      r.setAttribute('y', g.B - h); r.setAttribute('height', h + (h > 0 ? 4 : 0));
+      g.vals[i].setAttribute('y', g.B - h - 8);
+    });
     g.mPath.setAttribute('stroke-dashoffset', g.len * (1 - vtEase(vtClamp((p - .45) / .3))));
     const pd = vtClamp((p - .68) / .17);
-    g.dots.forEach((d, i) => { const e = vtClamp(pd * g.dots.length - i); d.setAttribute('r', (4.5 * vtEase(e)).toFixed(2)); d.style.opacity = e > 0 ? 1 : 0; });
+    g.dots.forEach((d, i) => { const e = vtClamp(pd * g.dots.length - i); d.setAttribute('r', (4.5 * vtEase(e)).toFixed(2)); d.style.opacity = e > 0 ? '' : 0; });
     const pl = vtClamp((p - .84) / .16);
-    [g.labs, g.xl, g.yl].forEach(n => { n.style.opacity = pl; });
+    [g.labs, g.xl, g.yl, g.valsG].forEach(n => { n.style.opacity = pl; });
     range.value = Math.round(p * 100);
     range.style.setProperty('--v', p * 100 + '%');
     range.setAttribute('aria-valuetext', p < .45 ? 'Barras crescendo' : p < .75 ? 'Meta se desenhando' : p < .9 ? 'Pontos surgindo' : 'Gráfico completo');
   };
-  const play = () => { stop?.(); render(0); stop = vtTween(2800, p => render(p), () => { stop = null; }); };
+  const detail = () => {
+    const i = st.pin;
+    if (i < 0) { det.hidden = true; return; }
+    const d = R[i] - M[i], pv = i ? (R[i] / R[i - 1] - 1) * 100 : null;
+    detQ.textContent = Q[i]; detV.textContent = R[i];
+    detM.innerHTML = '';
+    detM.append(`Meta ${f1(M[i])} · `, el('em', d >= 0 ? 'is-up' : 'is-down', `${signed(d)} ${d >= 0 ? 'acima' : 'abaixo'}`));
+    detP.textContent = pv == null ? 'Primeiro trimestre da série' : `${pv >= 0 ? '+' : '−'}${fmtNum(Math.abs(pv), 1)}% sobre ${Q[i - 1]}`;
+    det.classList.toggle('is-right', st.sorted);
+    det.hidden = false;
+  };
+  const paint = () => {
+    svg.classList.toggle('no-r', !st.showR); svg.classList.toggle('no-m', !st.showM);
+    svg.classList.toggle('is-sorted', st.sorted); svg.classList.toggle('is-max', st.max);
+    legR.setAttribute('aria-pressed', String(st.showR)); legM.setAttribute('aria-pressed', String(st.showM));
+    bMax.setAttribute('aria-pressed', String(st.max)); bSort.setAttribute('aria-pressed', String(st.sorted));
+    if (g) {
+      g.bars.forEach((r, i) => r.classList.toggle('is-pin', i === st.pin));
+      g.vals.forEach((t, i) => t.classList.toggle('is-on', !!S.all || i === LAST || i === st.pin || (st.max && i === MAXI)));
+      g.hits.forEach((h, i) => h.setAttribute('aria-pressed', String(i === st.pin)));
+    }
+    detail();
+  };
+  /* clique numa barra fixa o detalhe; outro clique na mesma solta */
+  const pin = i => {
+    st.pin = st.pin === i ? -1 : i; paint(); E.touch();
+    E.say(st.pin < 0 ? 'Detalhe fechado.' : `${summary(i)} ${detP.textContent}.`);
+  };
+  $('.vt-ch-x', det).addEventListener('click', () => { const i = st.pin; st.pin = -1; paint(); if (g && i >= 0) g.hits[i].focus(); E.say('Detalhe fechado.'); });
+  legR.addEventListener('click', () => { st.showR = !st.showR; paint(); E.touch(); E.say(st.showR ? 'Receita visível.' : 'Receita oculta.'); });
+  legM.addEventListener('click', () => { st.showM = !st.showM; paint(); E.touch(); E.say(st.showM ? 'Meta visível.' : 'Meta oculta.'); });
+  bMax.addEventListener('click', () => {
+    st.max = !st.max; paint(); E.touch();
+    E.say(st.max ? `Maior receita em destaque: ${R[MAXI]} no ${Q[MAXI]}.` : 'Destaque desligado.');
+  });
+  /* ordenar: as barras trocam de lugar deslizando, da maior para a menor */
+  const reorder = () => {
+    const from = pos.slice(), to = slots();
+    mv?.();
+    if (REDUCED) { pos = to; place(); return; }
+    mv = vtTween(720, q => { const e = vtEase(q); pos = from.map((a, i) => a + (to[i] - a) * e); place(); }, () => { mv = null; });
+  };
+  bSort.addEventListener('click', () => {
+    st.sorted = !st.sorted; reorder(); paint(); E.touch();
+    E.say(st.sorted ? 'Barras ordenadas da maior para a menor.' : 'Barras de volta à ordem do tempo.');
+  });
+  const play = () => { stop?.(); render(0); stop = vtTween(2800 / (S.speed || 1), p => render(p), () => { stop = null; }); };
   range.addEventListener('input', () => { stop?.(); stop = null; render(range.value / 100); });
   new ResizeObserver(() => build()).observe(plot);
+  const describe = () => {
+    const n = R.filter((v, i) => v >= M[i]).length;
+    desc.textContent = `Receita trimestral sobe de 42 para 84 milhões de reais entre o 1º trimestre de 2025 e o 4º de 2026, acima ou na meta em ${n} de 8 trimestres.`;
+  };
+  E = vtEdit(card, [
+    { k: 'speed', t: 'range', label: 'Montagem', min: .4, max: 2.5, step: .1, v: 1, fmt: vtX },
+    { k: 'meta', t: 'range', label: 'Ajuste da meta', min: -20, max: 20, step: 1, v: 0, fmt: v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '%' },
+    { k: 'acc', t: 'acc', label: 'Cor das barras', v: 'violeta' },
+    { k: 'all', t: 'tog', label: 'Valor em todas', v: false }
+  ], (k, v, s, phase) => {
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'meta') { M = M0.map(x => Math.round(x * (1 + v / 100) * 10) / 10); describe(); if (phase !== 'init') build(); }
+    if (k === 'all') paint();
+  }, { S, reset: () => { st = { ...ST0 }; mv?.(); pos = Q.map((_, i) => i); } });
   return { start: play, replay: play, still: () => render(1) };
 };
 
 /* ---------------------------------------------------------------- 21 · Flip Card */
 VT_DEMO.flip = card => {
-  const cs = $$('.vt-fl-card', card), all = $('.vt-fl-all', card);
-  let timers = [];
+  const box = $('.vt-fl', card), cs = $$('.vt-fl-card', card), all = $('.vt-fl-all', card);
+  const D0 = cs.map(c => ({ k: c.dataset.k, a: $('.vt-fl-f b', c).textContent, b: $('.vt-fl-b b', c).textContent }));
+  const S = {};
+  let data = D0.map(o => ({ ...o })), timers = [], E = null;
+  const pct = (a, b) => {
+    const na = vtParse(a), nb = vtParse(b);
+    if (!isFinite(na) || !isFinite(nb) || na === 0) return '';
+    const p = Math.round((nb - na) / Math.abs(na) * 100);
+    return p === 0 ? 'igual' : (p > 0 ? '+' : '−') + Math.abs(p) + '%';
+  };
   const set = (c, on) => {
+    const d = data[cs.indexOf(c)], p = pct(d.a, d.b);
     c.setAttribute('aria-pressed', String(on));
-    c.setAttribute('aria-label', `${c.dataset.k}. ${on ? 'Depois' : 'Antes'}: ${on ? c.dataset.b : c.dataset.a}`);
+    c.setAttribute('aria-label', `${d.k}. ${on ? 'Depois' : 'Antes'}: ${on ? d.b : d.a}${on && p ? ', ' + p : ''}`);
+  };
+  const paint = i => {
+    const c = cs[i], d = data[i];
+    $('.vt-fl-f b', c).textContent = d.a || ' '; $('.vt-fl-b b', c).textContent = d.b || ' ';
+    $('.vt-fl-b em span', c).textContent = pct(d.a, d.b);
+    set(c, c.getAttribute('aria-pressed') === 'true');
   };
   const clear = () => { timers.forEach(clearTimeout); timers = []; };
-  cs.forEach(c => { set(c, false); c.addEventListener('click', () => { clear(); set(c, c.getAttribute('aria-pressed') !== 'true'); }); });
+  cs.forEach((c, i) => {
+    set(c, false);
+    c.addEventListener('click', () => {
+      clear(); set(c, c.getAttribute('aria-pressed') !== 'true');
+      if (card.classList.contains('is-edit') && S.card !== String(i)) E.set('card', String(i));
+    });
+  });
   all.addEventListener('click', () => { clear(); const on = cs.some(c => c.getAttribute('aria-pressed') !== 'true'); cs.forEach((c, i) => timers.push(setTimeout(() => set(c, on), i * 120))); });
   const intro = delay => { clear(); cs.forEach((c, i) => timers.push(setTimeout(() => set(c, true), delay + i * 260))); };
+  E = vtEdit(card, [
+    { k: 'axis', t: 'seg', label: 'Giro', opts: [['y', 'Lateral'], ['x', 'Vertical']], v: 'y' },
+    { k: 'dur', t: 'range', label: 'Duração', min: .3, max: 1.6, step: .05, v: .75, fmt: v => fmtNum(v, 2) + ' s' },
+    { k: 'acc', t: 'acc', label: 'Cor do verso', v: 'violeta' },
+    { k: 'card', t: 'sel', label: 'Card para editar', opts: D0.map((d, i) => [String(i), d.k]), v: '0', track: false },
+    { k: 'a', t: 'text', label: 'Antes', v: D0[0].a, max: 9, track: false },
+    { k: 'b', t: 'text', label: 'Depois', v: D0[0].b, max: 9, track: false }
+  ], (k, v, s, phase) => {
+    if (k === 'axis') box.dataset.axis = v;
+    if (k === 'dur') box.style.setProperty('--fl-dur', v + 's');
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'card' && E) { const d = data[+v]; E.set('a', d.a, true); E.set('b', d.b, true); }
+    if ((k === 'a' || k === 'b') && !phase) {
+      const i = +S.card; data[i][k] = v.trim(); paint(i);
+      clear(); set(cs[i], k === 'b'); E.touch();
+    }
+  }, { S, reset: () => { data = D0.map(o => ({ ...o })); cs.forEach((c, i) => paint(i)); } });
   return {
     start: () => intro(600),
     replay() { clear(); cs.forEach(c => set(c, false)); intro(900); },
@@ -566,8 +1175,9 @@ VT_DEMO.flip = card => {
 
 /* ---------------------------------------------------------------- 37 · Before / After */
 VT_DEMO.ba = card => {
-  const box = $('.vt-ba-box', card), knob = $('.vt-ba-knob', box);
-  let p = 50, stop = null, drag = false;
+  const box = $('.vt-ba-box', card), knob = $('.vt-ba-knob', box), big = $('.vt-ba-big', box), tags = $$('.vt-ba-tag', box);
+  const S = {};
+  let p = 50, stop = null, drag = false, E = null;
   const set = v => {
     p = vtClamp(v, 0, 100);
     box.style.setProperty('--p', p.toFixed(2) + '%');
@@ -575,77 +1185,172 @@ VT_DEMO.ba = card => {
     knob.setAttribute('aria-valuenow', r);
     knob.setAttribute('aria-valuetext', r >= 100 ? 'Só o antes' : r <= 0 ? 'Só o depois' : `${r}% antes, ${100 - r}% depois`);
   };
-  const fromX = x => { const r = box.getBoundingClientRect(); return (x - r.left) / r.width * 100; };
+  const fromPt = e => { const r = box.getBoundingClientRect(); return S.dir === 'v' ? (e.clientY - r.top) / r.height * 100 : (e.clientX - r.left) / r.width * 100; };
+  const tweenTo = t => {
+    stop?.(); stop = null;
+    if (REDUCED) return set(t);
+    const a = p; stop = vtTween(650, q => set(a + (t - a) * vtEase(q)), () => { stop = null; });
+  };
   box.addEventListener('pointerdown', e => {
+    if (e.target.closest('.vt-ba-tag')) return;
     if (e.pointerType === 'touch' && !e.target.closest('.vt-ba-knob')) return;
     stop?.(); stop = null; drag = true;
-    box.setPointerCapture(e.pointerId); set(fromX(e.clientX));
+    box.setPointerCapture(e.pointerId); set(fromPt(e));
   });
-  box.addEventListener('pointermove', e => { if (drag) set(fromX(e.clientX)); });
+  box.addEventListener('pointermove', e => { if (drag) set(fromPt(e)); });
   box.addEventListener('pointerup', () => { drag = false; });
   box.addEventListener('pointercancel', () => { drag = false; });
   knob.addEventListener('keydown', e => {
     const s = e.shiftKey ? 10 : 5;
-    const v = { ArrowLeft: p - s, ArrowDown: p - s, ArrowRight: p + s, ArrowUp: p + s, Home: 0, End: 100 }[e.key];
+    const v = { ArrowLeft: p - s, ArrowUp: p - s, ArrowRight: p + s, ArrowDown: p + s, Home: 0, End: 100 }[e.key];
     if (v == null) return;
     e.preventDefault(); stop?.(); stop = null; set(v);
   });
+  /* as etiquetas são atalhos: Antes mostra só o antes, Depois mostra só o depois */
+  tags.forEach(t => t.addEventListener('click', () => { tweenTo(+t.dataset.to); E.say(+t.dataset.to ? 'Só o antes.' : 'Só o depois.'); }));
   const sweep = () => {
     stop?.(); set(100);
     stop = vtTween(1200, q => set(100 - 72 * vtEase(q)), () => { stop = vtTween(700, q => set(28 + 22 * vtEase(q)), () => { stop = null; }); });
   };
+  E = vtEdit(card, [
+    { k: 'dir', t: 'seg', label: 'Divisão', opts: [['h', 'Lado a lado'], ['v', 'Empilhado']], v: 'h', wide: true },
+    { k: 'acc', t: 'acc', label: 'Cor do divisor', v: 'violeta' },
+    { k: 'tags', t: 'tog', label: 'Etiquetas', v: true },
+    { k: 'big', t: 'text', label: 'Número do depois', v: '+38%', max: 7 },
+    { t: 'acts', items: [{ label: 'Varrer de novo', motion: true, fn: sweep }] }
+  ], (k, v) => {
+    if (k === 'dir') { box.dataset.dir = v; knob.setAttribute('aria-orientation', v === 'v' ? 'vertical' : 'horizontal'); }
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'tags') box.classList.toggle('no-tags', !v);
+    if (k === 'big') big.textContent = v.trim() || ' ';
+  }, { S });
   set(REDUCED ? 50 : 100);
   return { start: sweep, replay: sweep, still: () => set(50) };
 };
 
 /* ---------------------------------------------------------------- 35 · Interactive Matrix */
 VT_DEMO.matrix = card => {
-  const plot = $('.vt-mx-plot', card), leg = $('.vt-mx-leg', card), qs = $$('.vt-mx-q', plot);
+  const plot = $('.vt-mx-plot', card), legW = $('.vt-mx-leg', card), qs = $$('.vt-mx-q', plot);
   const QN = ['Ganhos rápidos', 'Grandes apostas', 'Ajustes finos', 'Evitar'];
   const START = [['Painel', 22, 26], ['Capa nova', 36, 40], ['Treino', 72, 30], ['Migração', 78, 76], ['Relatório', 30, 74]];
+  const S = {};
+  let bs = [], drag = null, sel = null, fq = 0, moved = false, sx = 0, sy = 0, q0 = 0, E = null;
   const quad = (x, y) => (x >= 50 ? 1 : 0) + (y >= 50 ? 2 : 0);
-  const bs = START.map(([name, x, y], i) => {
-    const b = el('button', 'vt-mx-b', name);
-    b.type = 'button'; b.dataset.x = x; b.dataset.y = y; b.style.setProperty('--d', i * 90 + 'ms');
-    plot.append(b); return b;
+  const qOf = b => quad(+b.dataset.x, +b.dataset.y);
+  const score = b => ({ imp: Math.round((92 - b.dataset.y) / 84 * 100), eff: Math.round((b.dataset.x - 6) / 88 * 100) });
+  const tipEl = el('span', 'vt-mx-tip'); tipEl.setAttribute('aria-hidden', 'true'); tipEl.hidden = true; plot.append(tipEl);
+  /* legenda: quadrante e contagem; tocar foca o quadrante */
+  const lb = QN.map((q, i) => {
+    const b = el('button', 'vt-mx-lb'); b.type = 'button';
+    b.append(el('span', '', q), el('b', '', '0'));
+    b.addEventListener('click', () => focusQ(i));
+    legW.append(b); return b;
   });
-  const place = b => {
-    const x = +b.dataset.x, y = +b.dataset.y, q = quad(x, y);
-    b.style.left = x + '%'; b.style.top = y + '%';
-    b.classList.toggle('is-q0', q === 0);
-    b.setAttribute('aria-label', `${b.textContent}: ${QN[q]}. Use as setas para mover.`);
+  const tip = () => {
+    if (!sel) { tipEl.hidden = true; return; }
+    const s = score(sel);
+    tipEl.textContent = `Impacto ${s.imp} · Esforço ${s.eff}`;
+    tipEl.style.left = sel.dataset.x + '%'; tipEl.style.top = sel.dataset.y + '%';
+    tipEl.hidden = false;
   };
-  const tally = () => {
-    const n = [0, 0, 0, 0];
-    bs.forEach(b => n[quad(+b.dataset.x, +b.dataset.y)]++);
-    leg.innerHTML = '';
-    QN.forEach((q, i) => { const s = el('span', '', q + ' '); s.append(el('b', '', String(n[i]))); leg.append(s); });
+  const place = b => {
+    const q = qOf(b), s = score(b);
+    b.style.left = b.dataset.x + '%'; b.style.top = b.dataset.y + '%';
+    b.classList.toggle('is-f', q === fq);
+    b.setAttribute('aria-label', `${b.textContent}: ${QN[q]}, impacto ${s.imp}, esforço ${s.eff}. Setas movem, Delete remove.`);
+    if (b === sel) tip();
+  };
+  const counts = () => { const n = [0, 0, 0, 0]; bs.forEach(b => n[qOf(b)]++); return n; };
+  const tally = () => { const n = counts(); lb.forEach((b, i) => { $('b', b).textContent = n[i]; b.setAttribute('aria-pressed', String(i === fq)); }); };
+  const sayMove = (b, before) => {
+    const q = qOf(b); if (q === before) return;
+    const n = counts();
+    E.say(`${b.textContent} foi para ${QN[q]}. ${QN.map((x, i) => `${x} ${n[i]}`).join(', ')}.`);
   };
   const hot = q => qs.forEach((d, i) => d.classList.toggle('is-hot', i === q));
-  let drag = null;
-  bs.forEach(b => {
-    b.addEventListener('pointerdown', e => { drag = b; b.setPointerCapture(e.pointerId); b.classList.add('is-drag'); b.style.setProperty('--d', '0ms'); });
+  const select = b => { if (sel) sel.classList.remove('is-sel'); sel = b; if (b) b.classList.add('is-sel'); tip(); };
+  const focusQ = i => {
+    fq = i; qs.forEach((d, j) => d.classList.toggle('is-f', j === i));
+    bs.forEach(place); tally(); E.touch();
+    E.say(`Foco em ${QN[i]}: ${counts()[i]} iniciativas.`);
+  };
+  /* ímã: cada bolha vai para o centro do seu quadrante, empilhada sem se sobrepor */
+  const snap = () => {
+    [0, 1, 2, 3].forEach(q => {
+      const list = bs.filter(b => qOf(b) === q).sort((a, b) => a.dataset.y - b.dataset.y);
+      const n = list.length, stp = n > 1 ? Math.min(13, 34 / (n - 1)) : 0;
+      list.forEach((b, k) => { b.dataset.x = q % 2 ? 72 : 28; b.dataset.y = (q > 1 ? 72 : 28) + (k - (n - 1) / 2) * stp; place(b); });
+    });
+  };
+  const mkB = (name, x, y, i) => {
+    const b = el('button', 'vt-mx-b', name);
+    b.type = 'button'; b.dataset.x = x; b.dataset.y = y; b.style.setProperty('--d', i * 90 + 'ms');
+    b.addEventListener('pointerdown', e => {
+      drag = b; moved = false; sx = e.clientX; sy = e.clientY; q0 = qOf(b);
+      b.setPointerCapture(e.pointerId); b.style.setProperty('--d', '0ms'); select(b);
+    });
     b.addEventListener('pointermove', e => {
       if (drag !== b) return;
+      if (!moved && Math.hypot(e.clientX - sx, e.clientY - sy) < 4) return;
+      moved = true; b.classList.add('is-drag');
       const r = plot.getBoundingClientRect();
       b.dataset.x = vtClamp((e.clientX - r.left) / r.width * 100, 6, 94).toFixed(1);
       b.dataset.y = vtClamp((e.clientY - r.top) / r.height * 100, 8, 92).toFixed(1);
-      place(b); hot(quad(+b.dataset.x, +b.dataset.y));
+      place(b); hot(qOf(b));
     });
-    const end = () => { if (drag !== b) return; drag = null; b.classList.remove('is-drag'); hot(-1); tally(); };
+    const end = () => {
+      if (drag !== b) return;
+      drag = null; b.classList.remove('is-drag'); hot(-1);
+      if (moved) { if (S.snap) snap(); tally(); sayMove(b, q0); E.touch(); }
+      else { const s = score(b); E.say(`${name}: impacto ${s.imp}, esforço ${s.eff}, em ${QN[qOf(b)]}.`); }
+    };
     b.addEventListener('pointerup', end); b.addEventListener('pointercancel', end);
+    b.addEventListener('focus', () => select(b));
     b.addEventListener('keydown', e => {
+      if (e.key === 'Delete' || e.key === 'Backspace') { e.preventDefault(); remove(b); return; }
       const s = e.shiftKey ? 15 : 5;
       const d = { ArrowLeft: [-s, 0], ArrowRight: [s, 0], ArrowUp: [0, -s], ArrowDown: [0, s] }[e.key];
       if (!d) return;
       e.preventDefault(); b.style.setProperty('--d', '0ms');
+      const before = qOf(b);
       b.dataset.x = vtClamp(+b.dataset.x + d[0], 6, 94); b.dataset.y = vtClamp(+b.dataset.y + d[1], 8, 92);
-      place(b); tally();
+      place(b); tally(); sayMove(b, before); E.touch();
     });
-  });
-  const reset = () => { bs.forEach((b, i) => { b.dataset.x = START[i][1]; b.dataset.y = START[i][2]; b.style.setProperty('--d', i * 90 + 'ms'); place(b); }); tally(); };
-  reset();
-  return { replay: reset, still: reset };
+    plot.append(b); bs.push(b); place(b);
+    return b;
+  };
+  const remove = b => {
+    if (bs.length <= 1) { E.say('A matriz precisa de pelo menos uma iniciativa.'); return; }
+    const i = bs.indexOf(b); bs.splice(i, 1); b.remove();
+    if (sel === b) select(null);
+    tally(); E.touch(); E.say(`${b.textContent} saiu da matriz.`);
+    (bs[i] || bs[i - 1])?.focus();
+  };
+  plot.addEventListener('pointerdown', e => { if (!e.target.closest('.vt-mx-b')) select(null); });
+  const build = () => { bs.forEach(b => b.remove()); bs = []; select(null); START.forEach(([n, x, y], i) => mkB(n, x, y, i)); fq = 0; qs.forEach((d, j) => d.classList.toggle('is-f', j === 0)); bs.forEach(place); tally(); };
+  build();
+  E = vtEdit(card, [
+    { t: 'add', label: 'Nova iniciativa', ph: 'Ex.: Webinar', max: 14, fn: name => {
+      if (bs.length >= 8) { E.say('A matriz aceita até 8 iniciativas.'); return false; }
+      const b = mkB(name, 50 + (Math.random() - .5) * 18, 50 + (Math.random() - .5) * 18, 0);
+      if (S.snap) snap();
+      select(b); tally(); E.touch();
+      E.say(`${name} entrou em ${QN[qOf(b)]}. Arraste ou use as setas para levar ao quadrante certo.`);
+    } },
+    { k: 'size', t: 'range', label: 'Tamanho', min: .8, max: 1.3, step: .05, v: 1, fmt: vtPct },
+    { k: 'acc', t: 'acc', label: 'Cor do foco', v: 'violeta' },
+    { k: 'snap', t: 'tog', label: 'Ímã nos quadrantes', v: false },
+    { t: 'acts', items: [
+      { label: 'Remover selecionada', fn: () => { if (sel) remove(sel); else E.say('Toque numa bolha para selecionar.'); } },
+      { label: 'Embaralhar', fn: () => { bs.forEach(b => { b.style.setProperty('--d', '0ms'); b.dataset.x = (10 + Math.random() * 80).toFixed(1); b.dataset.y = (12 + Math.random() * 76).toFixed(1); place(b); }); if (S.snap) snap(); tally(); E.touch(); E.say('Bolhas embaralhadas. ' + QN.map((x, i) => `${x} ${counts()[i]}`).join(', ') + '.'); } }
+    ] }
+  ], (k, v, s, phase) => {
+    if (k === 'size') plot.style.setProperty('--bs', v);
+    if (k === 'acc') vtAcc(card, v);
+    if (k === 'snap' && v && !phase) { snap(); tally(); }
+  }, { S, reset: build });
+  const replay = () => bs.forEach((b, i) => b.style.setProperty('--d', i * 90 + 'ms'));
+  return { replay, still: () => {} };
 };
 
 /* ---------------------------------------------------------------- 18 · Connector / Flow Line */
@@ -658,43 +1363,72 @@ VT_DEMO.flow = card => {
     painel: [342, 50, 'Painel', 'O Painel recebe do Motor e mostra à Plateia.'],
     sala: [342, 190, 'Plateia', 'A Plateia recebe do Motor e do Painel.']
   };
-  const E = [['dados', 'motor'], ['crm', 'motor'], ['motor', 'painel'], ['motor', 'sala'], ['painel', 'sala']];
-  const DEF = 'Toque num nó para ver as ligações';
-  const links = E.map(([a, b]) => {
+  const ORDER = ['dados', 'crm', 'motor', 'painel', 'sala'];
+  const EDGES = [['dados', 'motor'], ['crm', 'motor'], ['motor', 'painel'], ['motor', 'sala'], ['painel', 'sala']];
+  const S = {}, on = {};
+  ORDER.forEach(k => { on[k] = true; });
+  let hov = null, timers = [], E = null;
+  const pathD = (a, b) => {
     const [ax, ay] = N[a], [bx, by] = N[b];
-    const d = ax === bx ? `M${ax} ${ay} C${ax + 46} ${ay + 40}, ${bx + 46} ${by - 40}, ${bx} ${by}` : `M${ax} ${ay} C${(ax + bx) / 2} ${ay}, ${(ax + bx) / 2} ${by}, ${bx} ${by}`;
-    const base = svgEl('path', { d, class: 'vt-fw-base' }), flow = svgEl('path', { d, class: 'vt-fw-flow' });
+    if (S.shape === 'reta') return `M${ax} ${ay} L${bx} ${by}`;
+    return ax === bx ? `M${ax} ${ay} C${ax + 46} ${ay + 40}, ${bx + 46} ${by - 40}, ${bx} ${by}` : `M${ax} ${ay} C${(ax + bx) / 2} ${ay}, ${(ax + bx) / 2} ${by}, ${bx} ${by}`;
+  };
+  const links = EDGES.map(([a, b]) => {
+    const base = svgEl('path', { class: 'vt-fw-base' }), flow = svgEl('path', { class: 'vt-fw-flow' });
     svg.append(base, flow);
     return { a, b, base, flow, len: 0 };
   });
-  let pinned = null, timers = [];
+  const setPaths = () => links.forEach(l => { const d = pathD(l.a, l.b); l.base.setAttribute('d', d); l.flow.setAttribute('d', d); l.len = 0; });
+  setPaths();
+  /* um nó desligado corta o sinal: quem depende só dele fica sem sinal */
+  const power = () => {
+    const p = {};
+    ORDER.forEach(k => { if (!on[k]) { p[k] = false; return; } const ins = EDGES.filter(e => e[1] === k); p[k] = !ins.length || ins.some(e => p[e[0]]); });
+    return p;
+  };
+  const list = a => a.length < 2 ? a.join('') : a.slice(0, -1).join(', ') + ' e ' + a[a.length - 1];
+  const status = pw => {
+    const off = ORDER.filter(k => !on[k]).map(k => N[k][2]), dark = ORDER.filter(k => on[k] && !pw[k]).map(k => N[k][2]);
+    if (!off.length) return 'Tudo ligado. Toque num nó para desligar e ver o efeito.';
+    return `${list(off)} ${off.length > 1 ? 'desligados' : 'desligado'}. ` + (dark.length ? `${list(dark)} ${dark.length > 1 ? 'ficaram' : 'ficou'} sem sinal.` : 'O resto segue fluindo.');
+  };
   const btns = {};
   Object.entries(N).forEach(([k, [x, y, name]], i) => {
     const b = el('button', 'vt-fw-n' + (k === 'motor' ? ' is-core' : ''), name);
     b.type = 'button'; b.style.left = x / 4 + '%'; b.style.top = y / 2.4 + '%'; b.style.setProperty('--i', i);
-    b.setAttribute('aria-pressed', 'false');
     btns[k] = b; box.append(b);
   });
+  const paint = () => {
+    const pw = power();
+    Object.entries(btns).forEach(([k, b]) => {
+      b.setAttribute('aria-pressed', String(on[k]));
+      b.classList.toggle('is-off', !on[k]); b.classList.toggle('is-dark', on[k] && !pw[k]);
+    });
+    links.forEach(l => { const f = pw[l.a] && on[l.b]; l.base.classList.toggle('is-off', !f); l.flow.classList.toggle('is-off', !f); });
+    if (!hov) cap.textContent = status(pw);
+    return pw;
+  };
   const hi = k => {
-    const on = !!k;
-    svg.classList.toggle('is-dim', on); box.classList.toggle('is-dim', on);
+    hov = k; const lit = !!k;
+    svg.classList.toggle('is-dim', lit); box.classList.toggle('is-dim', lit);
     Object.entries(btns).forEach(([n, b]) => { b.classList.toggle('is-hi', n === k); b.classList.remove('is-nb'); });
     links.forEach(l => {
-      const t = on && (l.a === k || l.b === k);
+      const t = lit && (l.a === k || l.b === k);
       l.base.classList.toggle('is-hi', t); l.flow.classList.toggle('is-hi', t);
       if (t) btns[l.a === k ? l.b : l.a].classList.add('is-nb');
     });
-    cap.textContent = on ? N[k][3] : DEF;
+    if (lit) cap.textContent = N[k][3] + (on[k] ? '' : ' Agora está desligado.');
+    else paint();
   };
   Object.entries(btns).forEach(([k, b]) => {
-    b.addEventListener('pointerenter', () => { if (!pinned) hi(k); });
-    b.addEventListener('pointerleave', () => { if (!pinned) hi(null); });
-    b.addEventListener('focus', () => { if (!pinned) hi(k); });
-    b.addEventListener('blur', () => { if (!pinned) hi(null); });
+    b.addEventListener('pointerenter', () => hi(k));
+    b.addEventListener('pointerleave', () => hi(null));
+    b.addEventListener('focus', () => hi(k));
+    b.addEventListener('blur', () => hi(null));
     b.addEventListener('click', () => {
-      pinned = pinned === k ? null : k;
-      Object.entries(btns).forEach(([n, x]) => x.setAttribute('aria-pressed', String(n === pinned)));
-      hi(pinned || k);
+      on[k] = !on[k]; hov = null;
+      cap.textContent = status(paint());
+      E.touch();
     });
   });
   const draw = () => {
@@ -714,5 +1448,20 @@ VT_DEMO.flow = card => {
     timers.push(setTimeout(() => links.forEach(l => { l.base.style.transition = ''; l.base.style.strokeDasharray = ''; l.base.style.strokeDashoffset = ''; l.flow.style.transition = ''; }), 2400));
   };
   if (!REDUCED) links.forEach(l => { l.len = l.base.getTotalLength(); l.base.style.strokeDasharray = l.len; l.base.style.strokeDashoffset = l.len; l.flow.style.opacity = '0'; });
-  return { start: draw, replay() { pinned = null; Object.values(btns).forEach(x => x.setAttribute('aria-pressed', 'false')); hi(null); draw(); } };
+  E = vtEdit(card, [
+    { k: 'speed', t: 'range', label: 'Velocidade do fluxo', min: .3, max: 3, step: .1, v: 1, fmt: vtX },
+    { k: 'gap', t: 'range', label: 'Espaço entre pontos', min: 6, max: 30, step: 1, v: 14, fmt: v => v + ' px' },
+    { k: 'dir', t: 'seg', label: 'Direção', opts: [['ida', 'Ida'], ['volta', 'Volta']], v: 'ida' },
+    { k: 'shape', t: 'seg', label: 'Traço', opts: [['curva', 'Curva'], ['reta', 'Reta']], v: 'curva' },
+    { k: 'acc', t: 'acc', label: 'Cor', v: 'violeta' },
+    { t: 'acts', items: [{ label: 'Ligar todos', fn: () => { ORDER.forEach(k => { on[k] = true; }); hov = null; paint(); E.say('Todos os nós ligados.'); } }] }
+  ], (k, v, s, phase) => {
+    if (k === 'speed') svg.style.setProperty('--fsp', v);
+    if (k === 'gap') svg.style.setProperty('--gap', v + 'px');
+    if (k === 'dir') svg.classList.toggle('is-rev', v === 'volta');
+    if (k === 'shape' && phase !== 'init') setPaths();
+    if (k === 'acc') vtAcc(card, v);
+  }, { S, reset: () => { ORDER.forEach(k => { on[k] = true; }); hov = null; paint(); } });
+  paint();
+  return { start: draw, replay() { hi(null); draw(); } };
 };
