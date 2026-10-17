@@ -259,7 +259,9 @@ function vtEdit(card, spec, apply, opt = {}) {
   };
   const open = on => { panel.hidden = !on; btn.setAttribute('aria-expanded', String(on)); card.classList.toggle('is-edit', on); };
   btn.addEventListener('click', () => open(panel.hidden));
-  panel.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); open(false); btn.focus(); } });
+  /* Esc recolhe os controles (dentro da prévia, Esc fecha a própria prévia) */
+  panel.addEventListener('keydown', e => { if (e.key === 'Escape' && !card.closest('.modal')) { e.preventDefault(); open(false); btn.focus(); } });
+  E.open = open;
   rst.addEventListener('click', E.reset);
 
   Object.keys(D).forEach(k => { show[k]?.(D[k]); });
@@ -280,21 +282,24 @@ function bootVitrine() {
   if (REDUCED) sec.classList.add('vt-reduced');
   const live = {};
   $$('.vt-card', sec).forEach(c => c.dataset.fx.split(' ').forEach(n => { live[n] = c; }));
-  vtCatalog(sec, live);
+  const preview = vtPreview();
+  vtCatalog(sec, live, preview);
   vtFilter(sec);
   vtDemos(sec);
 }
 
 /* · Catálogo · */
-function vtCatalog(sec, live) {
+function vtCatalog(sec, live, preview) {
   const ul = $('#vt-cat', sec);
   VT_FX.forEach(([n, name, fam, ints, dose, sum]) => {
     const li = el('li'); li.dataset.intents = ints;
     const card = live[n];
-    const it = el(card ? 'button' : 'div', 'vt-item');
+    const pv = !card && preview && VT_PREV[n];
+    const it = el(card || pv ? 'button' : 'div', 'vt-item');
     const top = el('div', 'vt-item-top');
     top.append(el('span', 'vt-item-n', String(n).padStart(2, '0')), el('span', 'vt-item-c', fam));
     if (card) top.append(el('span', 'vt-live', 'Ao vivo'));
+    else if (pv) top.append(el('span', 'vt-pvchip', 'Prévia'));
     const d = el('span', 'vt-dose');
     d.setAttribute('role', 'img'); d.setAttribute('aria-label', `Dose de movimento ${dose} de 3`);
     for (let i = 1; i <= 3; i++) d.append(el('i', i <= dose ? 'on' : ''));
@@ -310,6 +315,11 @@ function vtCatalog(sec, live) {
         card.classList.remove('is-ping'); void card.offsetWidth; card.classList.add('is-ping');
         clearTimeout(card._ping); card._ping = setTimeout(() => card.classList.remove('is-ping'), 1800);
       });
+    }
+    if (pv) {
+      it.type = 'button';
+      it.append(el('span', 'sr-only', 'Abrir prévia interativa.'));
+      it.addEventListener('click', () => preview(n));
     }
     li.append(it); ul.append(li);
   });

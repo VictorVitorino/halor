@@ -551,8 +551,10 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 .vt-dose i { width: 3px; border-radius: 1px; background: rgba(201, 166, 255, .2); }
 .vt-dose i:nth-child(1) { height: 4px; } .vt-dose i:nth-child(2) { height: 7px; } .vt-dose i:nth-child(3) { height: 10px; }
 .vt-dose i.on { background: var(--halor-glow); }
-.vt-item-top .vt-live { margin-left: auto; }
-.vt-live + .vt-dose { margin-left: 4px; }
+.vt-item-top .vt-live, .vt-item-top .vt-pvchip { margin-left: auto; }
+.vt-live + .vt-dose, .vt-pvchip + .vt-dose { margin-left: 4px; }
+.vt-pvchip { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: var(--r-pill); border: 1px solid var(--line-c-2); color: var(--text-2); font-size: 10.5px; font-weight: 700; letter-spacing: .02em; flex: none; transition: background var(--t-base), color var(--t-base), border-color var(--t-base); }
+button.vt-item:hover .vt-pvchip, button.vt-item:focus-visible .vt-pvchip { background: var(--accent); border-color: transparent; color: #fff; }
 .vt-live { display: inline-flex; align-items: center; gap: 6px; height: 20px; padding: 0 8px; border-radius: var(--r-pill); background: var(--accent); color: #fff; font-size: 10.5px; font-weight: 700; letter-spacing: .02em; flex: none; box-shadow: var(--glow-sm); }
 .vt-live::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #fff; animation: vt-blink 1.6s ease-in-out infinite; }
 @keyframes vt-blink { 50% { opacity: .3; } }
