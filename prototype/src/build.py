@@ -7,6 +7,9 @@
     python3 src/build.py --fragment CAMINHO
                                     -> também grava uma versão sem <html>/<head>/<body>
                                        (para hospedagens que já envolvem a página)
+    python3 src/build.py --inline-media --out CAMINHO
+                                    -> embute o vídeo e o pôster de media/ na própria página
+                                       (um arquivo só, para enviar ou abrir sem servidor)
 
 Ordem: css/*.css, html/*.html e js/*.js em ordem alfabética (o prefixo numérico manda).
 O build não faz chamadas de rede; as fontes vêm do Google Fonts no navegador.
@@ -29,6 +32,25 @@ FAVICON = ("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox
            "%3Cpath d='M50.4 6.4Q50.4 13.6 57.6 13.6Q50.4 13.6 50.4 20.8Q50.4 13.6 43.2 13.6Q50.4 13.6 50.4 6.4Z' fill='%23fff'/%3E%3C/svg%3E")
 
 
+MEDIA = ROOT / "media"
+
+
+def inline_media(html):
+    """Troca src/poster="media/…" por data URIs: a página vira um arquivo só, com o vídeo dentro."""
+    import base64
+    import mimetypes
+    import re
+
+    def rep(m):
+        f = MEDIA / m.group(2)
+        if not f.exists():
+            return m.group(0)
+        mime = mimetypes.guess_type(f.name)[0] or "application/octet-stream"
+        return f'{m.group(1)}="data:{mime};base64,{base64.b64encode(f.read_bytes()).decode()}"'
+
+    return re.sub(r'(src|poster)="media/([^"]+)"', rep, html)
+
+
 def read_all(folder, ext):
     return "\n".join(p.read_text(encoding="utf-8") for p in sorted((SRC / folder).glob("*" + ext)))
 
@@ -36,6 +58,8 @@ def read_all(folder, ext):
 def main():
     css = read_all("css", ".css")
     html = read_all("html", ".html")
+    if "--inline-media" in sys.argv:
+        html = inline_media(html)
     js = read_all("js", ".js")
 
     head = (

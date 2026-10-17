@@ -12,3 +12,6 @@ next-env.d.ts
 !pitch/out/
 pitch/out/.*.segs/
 pitch/dist/
+
+# Protótipo: a página única com o vídeo embutido (--inline-media) não vai para o repositório
+prototype/dist/
