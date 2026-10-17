@@ -1,8 +1,9 @@
-/* 37 · Before / After Slider · divisor arrastável (ponteiro e teclado) entre o slide de antes e o de depois. */
-import { q, vtClamp, vtEase, type VtCtx, type VtDemo } from '../ctx';
+/* 37 · Before / After Slider · divisor arrastável (ponteiro e teclado) entre o slide de antes e o de depois.
+   Editável: número e legenda do depois, cor e etiquetas. */
+import { q, vtAccent, vtClamp, vtEase, type VtCtx, type VtDemo } from '../ctx';
 
 export function baDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
-  const box = q('.vt-ba-box', card), knob = q('.vt-ba-knob', box);
+  const box = q('.vt-ba-box', card), knob = q('.vt-ba-knob', box), big = q('.vt-ba-big', box), kk = q('.vt-ba-k', box);
   let p = 50, stop: (() => void) | null = null, drag = false;
   const set = (v: number) => {
     p = vtClamp(v, 0, 100);
@@ -30,10 +31,22 @@ export function baDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     stop?.(); set(100);
     stop = ctx.tween(1200, t => set(100 - 72 * vtEase(t)), () => { stop = ctx.tween(700, t => set(28 + 22 * vtEase(t)), () => { stop = null; }); });
   };
+  /* ao editar o depois, o divisor abre espaço para ele aparecer */
+  const reveal = () => { if (p > 45) { stop?.(); const a = p; stop = ctx.tween(500, t => set(a + (35 - a) * vtEase(t)), () => { stop = null; }); } };
   set(ctx.reduced ? 50 : 100);
-  ctx.defer(() => {
-    box.style.removeProperty('--p');
-    knob.setAttribute('aria-valuenow', '50'); knob.setAttribute('aria-valuetext', 'Metade antes, metade depois');
-  });
-  return { start: sweep, replay: sweep, still: () => set(50) };
+  return {
+    start: sweep, replay: sweep, still: () => set(50),
+    fields: [
+      { k: 'num', t: 'text', l: 'Número', v: big.textContent || '', max: 8 },
+      { k: 'cap', t: 'text', l: 'Legenda', v: kk.textContent || '', max: 24 },
+      { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
+      { k: 'tags', t: 'toggle', l: 'Etiquetas', v: true }
+    ],
+    set(k, v) {
+      if (k === 'num') { big.textContent = String(v) || ' '; reveal(); }
+      else if (k === 'cap') { kk.textContent = String(v) || ' '; reveal(); }
+      else if (k === 'acc') { vtAccent(card, String(v)); reveal(); }
+      else if (k === 'tags') card.classList.toggle('no-tags', !v);
+    }
+  };
 }

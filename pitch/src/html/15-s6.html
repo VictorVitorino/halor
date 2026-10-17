@@ -1,3 +1,251 @@
-<!-- CENA 6 · v4 (em produção) -->
+<!-- CENA 6 · Tudo num estúdio só
+     A janela do Estúdio se desenha (Motion Graphics) com 6 vagas; em cada palavra o cursor clica (Ripple 20) e um cartão de vidro (Glassmorphism 07)
+     nasce do clique, sobe (Hover Elevation 05) e acende, com ícone desenhado (Icon Motion 02) e mini demo viva:
+     kit de marca · votação ao vivo · notas · cronômetro (Progress Motion 13) · Raio Halor (Heatmap 14 + trilha do olhar) · Painel (linha + 92%).
+     Microinteractions (26): voto clicado, cadeado que trava, abas que acendem. Fecho: varredura holográfica (31) em todo o Estúdio. -->
 <section class="scene s6" id="s6" data-world="night">
+
+  <!-- luz de fundo para o vidro -->
+  <div class="s6-bg">
+    <i class="s6-orb o1 l float" style="--ldur: 7600"></i>
+    <i class="s6-orb o2 l float" style="--ldur: 8800; --lph: -3000"></i>
+    <i class="s6-orb o3 l float" style="--ldur: 6400; --lph: -1400"></i>
+    <i class="s6-orb o4 l float" style="--ldur: 9800; --lph: -5200"></i>
+  </div>
+
+  <div class="cam k cam-in" style="--in: 0; --dur: 1400">
+  <div class="s6-cam k cam-push" style="--in: 1000; --dur: 8960; --cz: 1.025; --cy: -4px">
+
+    <!-- ================= a janela do Estúdio ================= -->
+    <div class="s6-win k fade" style="--in: 80; --dur: 600">
+      <svg class="s6-wbd" viewBox="0 0 1400 796" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 60; --dur: 900" pathLength="1" x="1" y="1" width="1398" height="794" rx="26"/><path class="k draw" style="--in: 400; --dur: 700" pathLength="1" d="M1 48H1399"/></svg>
+      <div class="s6-top">
+        <span class="s6-dots k fade" style="--in: 300; --dur: 300"><i></i><i></i><i></i></span>
+        <span class="s6-ttl k left" style="--in: 380; --dur: 500"><svg viewBox="0 0 64 64"><use href="#hl-mark"/></svg>Estúdio Halor <em>· Plano 2027</em></span>
+        <span class="s6-tabs">
+          <b class="k fade" style="--in: 420; --dur: 300"><span class="k s6-tab" style="--in: var(--w-kit)">Marca</span></b>
+          <b class="k fade" style="--in: 470; --dur: 300"><span class="k s6-tab" style="--in: var(--w-votacao)">Votação</span></b>
+          <b class="k fade" style="--in: 520; --dur: 300"><span class="k s6-tab" style="--in: var(--w-notas)">Notas</span></b>
+          <b class="k fade" style="--in: 570; --dur: 300"><span class="k s6-tab" style="--in: var(--w-cronometro)">Tempo</span></b>
+          <b class="k fade" style="--in: 620; --dur: 300"><span class="k s6-tab" style="--in: var(--w-raio)">Raio</span></b>
+          <b class="k fade" style="--in: 670; --dur: 300"><span class="k s6-tab" style="--in: var(--w-painel)">Painel</span></b>
+        </span>
+      </div>
+      <div class="s6-done k pop" style="--in: 8760; --dur: 520"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg>6 recursos · 1 estúdio</div>
+    </div>
+
+    <!-- ================= 1 · KIT DE MARCA ================= -->
+    <div class="s6-c" style="left: 284px; top: 184px; width: 420px; height: 336px; --ox: 210px; --oy: 168px; --i: 0">
+      <svg class="s6-slot" viewBox="0 0 420 336" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 520; --dur: 700" pathLength="1" x="1" y="1" width="418" height="334" rx="22"/></svg>
+      <div class="s6-plw kx x-shrink" style="--out: var(--w-kit); --xdur: 200"><i class="s6-plus k pop" style="--in: 640"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></i></div>
+      <div class="s6-born k" style="--in: var(--w-kit); --dur: 620">
+        <div class="s6-lift k" style="--in: var(--w-kit); --dur: 940">
+          <div class="s6-g glass">
+            <i class="s6-on k s6-lit" style="--in: var(--w-kit); --dur: 940"></i>
+            <div class="s6-hd"><i class="s6-ti"><svg class="k icon-in" style="--in: calc(var(--w-kit) + 120); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M12 3.5a8.5 8.5 0 1 0 0 17c1.1 0 1.7-.8 1.7-1.6 0-.5-.2-.8-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.8-1.6 1.7-1.6h1.9a4.7 4.7 0 0 0 4.7-4.7c0-3.7-4-6.7-9-6.7z"/><circle pathLength="1" cx="7.6" cy="11.8" r="1.3"/><circle pathLength="1" cx="10.2" cy="7.6" r="1.3"/><circle pathLength="1" cx="15" cy="7.8" r="1.3"/></svg></i><h3 class="k mask-up" style="--in: calc(var(--w-kit) + 140); --dur: 500">Kit de marca</h3><small class="k fade" style="--in: calc(var(--w-kit) + 300); --dur: 400">cores · fontes · logo</small></div>
+            <div class="s6-sw" style="--stag: 70">
+              <i class="k pop on" style="--in: calc(var(--w-kit) + 240); --i: 0; background: #8b3dff"></i><i class="k pop" style="--in: calc(var(--w-kit) + 240); --i: 1; background: #a970ff"></i><i class="k pop" style="--in: calc(var(--w-kit) + 240); --i: 2; background: #c9a6ff"></i><i class="k pop" style="--in: calc(var(--w-kit) + 240); --i: 3; background: #ff9ad5"></i><i class="k pop" style="--in: calc(var(--w-kit) + 240); --i: 4; background: #f4eeff"></i>
+            </div>
+            <p class="s6-aa k mask-up" style="--in: var(--w-de); --dur: 520">Aa</p>
+            <p class="s6-fnt k fade" style="--in: calc(var(--w-de) + 200); --dur: 400"><b>Sora</b><span>Instrument Sans</span></p>
+            <div class="s6-logo k pop" style="--in: var(--w-marca); --dur: 520">
+              <svg viewBox="0 0 64 64"><use class="l pulse" style="--ldur: 2400" href="#hl-mark"/></svg>
+              <i class="s6-lock k s6-snap" style="--in: calc(var(--w-marca) + 320); --dur: 520"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5.5" y="11" width="13" height="9" rx="2.2"/><path class="k s6-shk" style="--in: calc(var(--w-marca) + 320); --dur: 520" d="M8.5 11V8a3.5 3.5 0 0 1 7 0v3"/></svg></i>
+              <i class="ring k ring-x" style="--in: calc(var(--w-marca) + 420); --dur: 700; left: 54px; top: 54px; width: 130px; height: 130px; margin: -65px 0 0 -65px; border-width: 3px"></i>
+            </div>
+            <p class="s6-note k up" style="--in: calc(var(--w-marca) + 560); --dur: 420"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg>marca travada em 24 slides</p>
+            <i class="s6-veil kx s6-xo" style="--out: 8640; --xdur: 400"><b class="k fade" style="--in: var(--w-votacao); --dur: 400"></b></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 2 · VOTAÇÃO AO VIVO ================= -->
+    <div class="s6-c" style="left: 724px; top: 184px; width: 504px; height: 336px; --ox: 252px; --oy: 168px; --i: 1">
+      <svg class="s6-slot" viewBox="0 0 504 336" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 600; --dur: 700" pathLength="1" x="1" y="1" width="502" height="334" rx="22"/></svg>
+      <div class="s6-plw kx x-shrink" style="--out: var(--w-votacao); --xdur: 200"><i class="s6-plus k pop" style="--in: 720"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></i></div>
+      <div class="s6-born k" style="--in: var(--w-votacao); --dur: 620">
+        <div class="s6-lift k" style="--in: var(--w-votacao); --dur: 1320">
+          <div class="s6-g glass">
+            <i class="s6-on k s6-lit" style="--in: var(--w-votacao); --dur: 1320"></i>
+            <div class="s6-hd"><i class="s6-ti"><svg class="k icon-in" style="--in: calc(var(--w-votacao) + 120); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M4 20.5h16"/><path pathLength="1" d="M6.5 17v-5M12 17V6.5M17.5 17v-3.5"/><path pathLength="1" d="M15.5 6.5l1.6 1.6 3.2-3.4"/></svg></i><h3 class="k mask-up" style="--in: calc(var(--w-votacao) + 140); --dur: 500">Votação ao vivo</h3><small class="k fade" style="--in: calc(var(--w-votacao) + 300); --dur: 400">a plateia responde pelo celular</small></div>
+            <span class="s6-live k pop" style="--in: var(--w-vivo); --dur: 420"><i class="l s6-rec" style="--ldur: 1000"></i>ao vivo</span>
+            <p class="s6-q k fade" style="--in: calc(var(--w-votacao) + 260); --dur: 400">Qual onda priorizar em 2027?</p>
+            <div class="s6-opts">
+              <p class="on k left" style="--in: calc(var(--w-votacao) + 320); --dur: 420"><span>Fundação</span><i><b class="k grow-l" style="--in: calc(var(--w-votacao) + 450); --dur: 1500; --v: .54"></b></i><em><span class="num-n k counter" style="--n0: 0; --n1: 54; --in: calc(var(--w-votacao) + 450); --dur: 1500"></span>%</em></p>
+              <p class="k left" style="--in: calc(var(--w-votacao) + 420); --dur: 420"><span>Aceleração</span><i><b class="k grow-l" style="--in: calc(var(--w-votacao) + 600); --dur: 1400; --v: .31"></b></i><em><span class="num-n k counter" style="--n0: 0; --n1: 31; --in: calc(var(--w-votacao) + 600); --dur: 1400"></span>%</em></p>
+              <p class="k left" style="--in: calc(var(--w-votacao) + 520); --dur: 420"><span>Escala</span><i><b class="k grow-l" style="--in: calc(var(--w-votacao) + 750); --dur: 1300; --v: .15"></b></i><em><span class="num-n k counter" style="--n0: 0; --n1: 15; --in: calc(var(--w-votacao) + 750); --dur: 1300"></span>%</em></p>
+            </div>
+            <div class="s6-avs" style="--stag: 70">
+              <i class="k pop" style="--in: var(--w-ao); --i: 0">AL</i><i class="k pop" style="--in: var(--w-ao); --i: 1">JP</i><i class="k pop" style="--in: var(--w-ao); --i: 2">MR</i><i class="k pop" style="--in: var(--w-ao); --i: 3">CS</i><i class="k pop" style="--in: var(--w-ao); --i: 4">TV</i><b class="k pop" style="--in: var(--w-ao); --i: 5">+123</b>
+            </div>
+            <p class="s6-votes k fade" style="--in: calc(var(--w-votacao) + 450); --dur: 300"><b class="num-n k counter" style="--n0: 0; --n1: 128; --in: calc(var(--w-votacao) + 450); --dur: 1700"></b> votos</p>
+            <i class="s6-plus1 k s6-up1" style="--in: var(--w-vivo); --dur: 900">+1</i>
+            <i class="s6-veil kx s6-xo" style="--out: 8640; --xdur: 400"><b class="k fade" style="--in: var(--w-notas); --dur: 400"></b></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 3 · NOTAS ================= -->
+    <div class="s6-c" style="left: 1248px; top: 184px; width: 388px; height: 336px; --ox: 194px; --oy: 168px; --i: 2">
+      <svg class="s6-slot" viewBox="0 0 388 336" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 680; --dur: 700" pathLength="1" x="1" y="1" width="386" height="334" rx="22"/></svg>
+      <div class="s6-plw kx x-shrink" style="--out: var(--w-notas); --xdur: 200"><i class="s6-plus k pop" style="--in: 800"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></i></div>
+      <div class="s6-born k" style="--in: var(--w-notas); --dur: 620">
+        <div class="s6-lift k" style="--in: var(--w-notas); --dur: 680">
+          <div class="s6-g glass">
+            <i class="s6-on k s6-lit" style="--in: var(--w-notas); --dur: 680"></i>
+            <div class="s6-hd"><i class="s6-ti"><svg class="k icon-in" style="--in: calc(var(--w-notas) + 100); --dur: 600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M5 4.5h14v9.5l-5.5 5.5H5z"/><path pathLength="1" d="M13.5 19.5V14H19"/><path pathLength="1" d="M8.5 9h7M8.5 12.5h3.5"/></svg></i><h3 class="k mask-up" style="--in: calc(var(--w-notas) + 120); --dur: 480">Notas</h3><small class="k fade" style="--in: calc(var(--w-notas) + 260); --dur: 400">do apresentador</small></div>
+            <div class="s6-pn" style="left: 22px; top: 100px; --r: -6deg; --r0: -26deg">
+              <div class="k s6-drop" style="--in: calc(var(--w-notas) + 160); --dur: 700"><div class="s6-pi l s6-flt" style="--ldur: 3200; background: #d9c7ff"><b></b>Abrir com o KPI do T3</div></div>
+            </div>
+            <div class="s6-pn" style="left: 200px; top: 112px; --r: 5deg; --r0: 24deg">
+              <div class="k s6-drop" style="--in: calc(var(--w-notas) + 330); --dur: 700"><div class="s6-pi l s6-flt" style="--ldur: 3600; --lph: -900; background: #ffc9e7"><b></b>Citar o case do cliente</div></div>
+            </div>
+            <div class="s6-pn" style="left: 104px; top: 200px; --r: -2deg; --r0: -18deg">
+              <div class="k s6-drop" style="--in: calc(var(--w-notas) + 500); --dur: 700"><div class="s6-pi l s6-flt" style="--ldur: 3400; --lph: -1700; background: #ffe2a3"><b></b>Pausa para perguntas · 2 min</div></div>
+            </div>
+            <i class="s6-veil kx s6-xo" style="--out: 8640; --xdur: 400"><b class="k fade" style="--in: var(--w-cronometro); --dur: 400"></b></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 4 · CRONÔMETRO ================= -->
+    <div class="s6-c" style="left: 284px; top: 540px; width: 360px; height: 364px; --ox: 180px; --oy: 182px; --i: 3">
+      <svg class="s6-slot" viewBox="0 0 360 364" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 560; --dur: 700" pathLength="1" x="1" y="1" width="358" height="362" rx="22"/></svg>
+      <div class="s6-plw kx x-shrink" style="--out: var(--w-cronometro); --xdur: 200"><i class="s6-plus k pop" style="--in: 680"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></i></div>
+      <div class="s6-born k" style="--in: var(--w-cronometro); --dur: 620">
+        <div class="s6-lift k" style="--in: var(--w-cronometro); --dur: 1240">
+          <div class="s6-g glass">
+            <i class="s6-on k s6-lit" style="--in: var(--w-cronometro); --dur: 1240"></i>
+            <div class="s6-hd"><i class="s6-ti"><svg class="k icon-in" style="--in: calc(var(--w-cronometro) + 100); --dur: 650" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle pathLength="1" cx="12" cy="13.5" r="7.5"/><path pathLength="1" d="M12 13.5V9.5"/><path pathLength="1" d="M9.5 2.5h5M12 2.5V6M18.4 6.6l1.4-1.4"/></svg></i><h3 class="k mask-up" style="--in: calc(var(--w-cronometro) + 120); --dur: 480">Cronômetro</h3><small class="k fade" style="--in: calc(var(--w-cronometro) + 260); --dur: 400">o ritmo da fala</small></div>
+            <div class="s6-tm k pop" style="--in: calc(var(--w-cronometro) + 120); --dur: 560">
+              <svg viewBox="0 0 200 200" fill="none" aria-hidden="true">
+                <circle cx="100" cy="100" r="84" stroke="rgba(201,166,255,.16)" stroke-width="12"/>
+                <circle cx="100" cy="100" r="84" stroke="rgba(201,166,255,.35)" stroke-width="2" stroke-dasharray="2 9.2" transform="rotate(-90 100 100)"/>
+                <circle class="k s6-arc" style="--in: calc(var(--w-cronometro) + 150); --dur: 5900" pathLength="1" cx="100" cy="100" r="84" stroke="url(#hl-g-ring)" stroke-width="12" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+              </svg>
+              <p class="s6-clk">02:<span class="s6-ss k s6-tick" style="--in: calc(var(--w-cronometro) + 150); --dur: 5900"></span></p>
+              <small>restante</small>
+              <i class="s6-rd l pulse" style="--ldur: 1000"></i>
+            </div>
+            <p class="s6-chips k up" style="--in: calc(var(--w-cronometro) + 500); --dur: 420"><span>slide 3 / 12</span><span class="ok"><i></i>no ritmo</span></p>
+            <i class="s6-veil kx s6-xo" style="--out: 8640; --xdur: 400"><b class="k fade" style="--in: var(--w-raio); --dur: 400"></b></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 5 · RAIO HALOR ================= -->
+    <div class="s6-c" style="left: 664px; top: 540px; width: 620px; height: 364px; --ox: 310px; --oy: 182px; --i: 4">
+      <svg class="s6-slot" viewBox="0 0 620 364" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 640; --dur: 700" pathLength="1" x="1" y="1" width="618" height="362" rx="22"/></svg>
+      <div class="s6-plw kx x-shrink" style="--out: var(--w-raio); --xdur: 200"><i class="s6-plus k pop" style="--in: 760"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></i></div>
+      <div class="s6-born k" style="--in: var(--w-raio); --dur: 620">
+        <div class="s6-lift k" style="--in: var(--w-raio); --dur: 2140">
+          <div class="s6-g glass s6-star">
+            <i class="s6-on k s6-lit" style="--in: var(--w-raio); --dur: 2140"></i>
+            <div class="s6-hd"><i class="s6-ti"><svg class="k icon-in" style="--in: calc(var(--w-raio) + 120); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M2.5 13.5s3.5-6.5 9.5-6.5 9.5 6.5 9.5 6.5-3.5 6.5-9.5 6.5-9.5-6.5-9.5-6.5z"/><circle pathLength="1" cx="12" cy="13.5" r="3"/><path pathLength="1" d="M12 1.8v2.6M5 4l1.6 1.9M19 4l-1.6 1.9"/></svg></i><h3 class="k mask-up" style="--in: calc(var(--w-raio) + 140); --dur: 500">Raio Halor</h3><small class="k fade" style="--in: calc(var(--w-raio) + 300); --dur: 400">prevê o olhar antes de você apresentar</small></div>
+            <!-- mini slide com mapa de calor -->
+            <div class="s6-ms k zoom" style="--in: calc(var(--w-raio) + 200); --dur: 520">
+              <p class="s6-msk">Resultados do T3</p>
+              <p class="s6-mst">Receita cresceu</p>
+              <p class="s6-msn">+32%</p>
+              <div class="s6-msb"><i style="--v: .4"></i><i style="--v: .58"></i><i style="--v: .5"></i><i class="hot" style="--v: .95"></i></div>
+              <p class="s6-msc">Ver o plano</p>
+              <i class="s6-scan k s6-scn" style="--in: var(--w-halor); --dur: 700"></i>
+              <div class="s6-heat">
+                <i class="k s6-bloom" style="--in: var(--w-preve); --dur: 700; left: 96px; top: 94px; --hs: 190px"></i>
+                <i class="k s6-bloom" style="--in: calc(var(--w-preve) + 120); --dur: 700; left: 104px; top: 42px; --hs: 170px; --ha: .85"></i>
+                <i class="k s6-bloom" style="--in: calc(var(--w-preve) + 240); --dur: 700; left: 262px; top: 112px; --hs: 150px; --ha: .7"></i>
+                <i class="k s6-bloom" style="--in: calc(var(--w-preve) + 360); --dur: 700; left: 62px; top: 172px; --hs: 110px; --ha: .5"></i>
+              </div>
+              <svg class="s6-gz" viewBox="0 0 340 192" fill="none" aria-hidden="true"><path class="k draw" style="--in: var(--w-olhar); --dur: 900" pathLength="1" d="M190 70Q204 48 222 38Q256 52 296 70Q220 160 128 172" stroke="#fff" stroke-width="2.5" stroke-dasharray="1" stroke-linecap="round"/></svg>
+              <b class="s6-gn k pop" style="--in: var(--w-o2); left: 190px; top: 70px">1</b>
+              <b class="s6-gn k pop" style="--in: calc(var(--w-olhar) + 220); left: 222px; top: 38px">2</b>
+              <b class="s6-gn k pop" style="--in: calc(var(--w-olhar) + 470); left: 296px; top: 70px">3</b>
+              <b class="s6-gn k pop" style="--in: calc(var(--w-olhar) + 700); left: 128px; top: 172px">4</b>
+            </div>
+            <div class="s6-ord">
+              <p class="s6-oh k fade" style="--in: calc(var(--w-raio) + 400); --dur: 400">ordem do olhar</p>
+              <span class="s6-an kx" style="--out: var(--w-preve); --xdur: 200"><span class="k fade" style="--in: var(--w-halor); --dur: 240"><i class="l spinf"></i>analisando o slide…</span></span>
+              <p class="k left" style="--in: var(--w-o2); --dur: 400"><b>1</b>Número<em>0,3 s</em></p>
+              <p class="k left" style="--in: calc(var(--w-olhar) + 220); --dur: 400"><b>2</b>Título<em>0,8 s</em></p>
+              <p class="k left" style="--in: calc(var(--w-olhar) + 470); --dur: 400"><b>3</b>Gráfico<em>1,4 s</em></p>
+              <p class="k left" style="--in: calc(var(--w-olhar) + 700); --dur: 400"><b>4</b>Botão<em>2,1 s</em></p>
+              <div class="s6-scale k fade" style="--in: var(--w-preve); --dur: 500"><i></i><span>frio</span><span>quente</span></div>
+            </div>
+            <i class="s6-veil kx s6-xo" style="--out: 8640; --xdur: 400"><b class="k fade" style="--in: var(--w-painel); --dur: 400"></b></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= 6 · PAINEL ================= -->
+    <div class="s6-c" style="left: 1304px; top: 540px; width: 332px; height: 364px; --ox: 166px; --oy: 182px; --i: 5">
+      <svg class="s6-slot" viewBox="0 0 332 364" fill="none" aria-hidden="true"><rect class="k draw" style="--in: 720; --dur: 700" pathLength="1" x="1" y="1" width="330" height="362" rx="22"/></svg>
+      <div class="s6-plw kx x-shrink" style="--out: var(--w-painel); --xdur: 200"><i class="s6-plus k pop" style="--in: 840"><svg viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></svg></i></div>
+      <div class="s6-born k" style="--in: var(--w-painel); --dur: 620">
+        <div class="s6-lift k" style="--in: var(--w-painel); --dur: 1360">
+          <div class="s6-g glass">
+            <i class="s6-on k s6-lit" style="--in: var(--w-painel); --dur: 1360"></i>
+            <div class="s6-hd"><i class="s6-ti"><svg class="k icon-in" style="--in: calc(var(--w-painel) + 120); --dur: 700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M3.5 20.5h17"/><path pathLength="1" d="M4.5 16l4.5-4.5 3.5 3 6.5-7"/><path pathLength="1" d="M15 7.5h4v4"/></svg></i><h3 class="k mask-up" style="--in: calc(var(--w-painel) + 140); --dur: 500">Painel</h3><small class="k fade" style="--in: calc(var(--w-painel) + 300); --dur: 400">mede a atenção da plateia</small></div>
+            <div class="s6-big k pop" style="--in: var(--w-mede); --dur: 480"><div class="k s6-bump" style="--in: var(--w-atencao); --dur: 600"><b class="l s6-shine" style="--ldur: 2600"><span class="num-n k counter" style="--n0: 0; --n1: 92; --in: var(--w-mede); --dur: 1100; animation-timing-function: cubic-bezier(.3, .4, .3, 1)"></span>%</b><small>atenção média <em class="k pop" style="--in: var(--w-atencao); --dur: 420">+18 pts</em></small></div></div>
+            <svg class="s6-ln" viewBox="0 0 284 100" fill="none" aria-hidden="true">
+              <path class="k fade" style="--in: calc(var(--w-painel) + 400); --dur: 400" d="M0 25H284M0 50H284M0 75H284" stroke="rgba(201,166,255,.12)" stroke-width="1"/>
+              <path class="k fade" style="--in: calc(var(--w-painel) + 900); --dur: 600" d="M0 80C30 70 45 52 70 56S110 38 140 34 190 46 215 26 260 14 284 10V100H0Z" fill="url(#s6-area)"/>
+              <path class="k draw" style="--in: calc(var(--w-painel) + 300); --dur: 1000" pathLength="1" d="M0 80C30 70 45 52 70 56S110 38 140 34 190 46 215 26 260 14 284 10" stroke="#e9deff" stroke-width="3" stroke-linecap="round"/>
+              <defs><linearGradient id="s6-area" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a970ff" stop-opacity=".5"/><stop offset="1" stop-color="#a970ff" stop-opacity="0"/></linearGradient></defs>
+            </svg>
+            <i class="s6-dot k pop" style="--in: calc(var(--w-painel) + 1240)"><b class="l beat" style="--ldur: 1300"></b></i>
+            <div class="s6-sb" style="--stag: 45">
+              <i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 0; --v: .55"></i><i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 1; --v: .7"></i><i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 2; --v: .62"></i><i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 3; --v: .86"></i><i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 4; --v: .78"></i><i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 5; --v: .92"></i><i class="hot k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 6; --v: 1"></i><i class="k grow-y" style="--in: calc(var(--w-painel) + 500); --i: 7; --v: .88"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- finale: cada cartão pisca em sequência -->
+    <i class="s6-fl k s6-flash" style="--in: 8700; --dur: 700; left: 284px; top: 184px; width: 420px; height: 336px"></i>
+    <i class="s6-fl k s6-flash" style="--in: 8770; --dur: 700; left: 724px; top: 184px; width: 504px; height: 336px"></i>
+    <i class="s6-fl k s6-flash" style="--in: 8840; --dur: 700; left: 1248px; top: 184px; width: 388px; height: 336px"></i>
+    <i class="s6-fl k s6-flash" style="--in: 8740; --dur: 700; left: 284px; top: 540px; width: 360px; height: 364px"></i>
+    <i class="s6-fl k s6-flash" style="--in: 8810; --dur: 700; left: 664px; top: 540px; width: 620px; height: 364px"></i>
+    <i class="s6-fl k s6-flash" style="--in: 8880; --dur: 700; left: 1304px; top: 540px; width: 332px; height: 364px"></i>
+
+    <!-- varredura holográfica sobre todo o Estúdio -->
+    <div class="s6-holo"><i class="k s6-sweep" style="--in: 8600; --dur: 1150"></i></div>
+
+    <!-- cliques com brilho -->
+    <i class="click k" style="--in: var(--w-kit); left: 494px; top: 352px"></i>
+    <i class="click k" style="--in: var(--w-votacao); left: 976px; top: 352px"></i>
+    <i class="click k" style="--in: var(--w-vivo); left: 980px; top: 344px"></i>
+    <i class="click k" style="--in: var(--w-notas); left: 1442px; top: 352px"></i>
+    <i class="click k" style="--in: var(--w-cronometro); left: 464px; top: 722px"></i>
+    <i class="click k" style="--in: var(--w-raio); left: 974px; top: 722px"></i>
+    <i class="click k" style="--in: var(--w-painel); left: 1470px; top: 722px"></i>
+
+    <!-- o cursor com halo percorre o Estúdio -->
+    <div class="kx" style="--out: 8300; --xdur: 300; left: 0; top: 0">
+      <div class="k fade" style="--in: 420; --dur: 260">
+        <div class="k move-xy" style="--in: 560; --dur: 380; --dx: -226px; --dy: -248px">
+        <div class="k move-xy" style="--in: 1500; --dur: 380; --dx: 482px; --dy: 0px">
+        <div class="k move-xy" style="--in: 2360; --dur: 220; --dx: 4px; --dy: -8px">
+        <div class="k move-xy" style="--in: 2850; --dur: 360; --dx: 462px; --dy: 8px">
+        <div class="k move-xy" style="--in: 3420; --dur: 460; --dx: -978px; --dy: 370px">
+        <div class="k move-xy" style="--in: 4120; --dur: 420; --dx: 188px; --dy: 158px">
+        <div class="k move-xy" style="--in: 4720; --dur: 400; --dx: 322px; --dy: -158px">
+        <div class="k move-xy" style="--in: 5360; --dur: 460; --dx: 320px; --dy: 178px">
+        <div class="k move-xy" style="--in: 6950; --dur: 300; --dx: 176px; --dy: -178px">
+        <div class="k move-xy" style="--in: 7480; --dur: 460; --dx: 180px; --dy: 208px">
+          <svg class="gcur k s6-cur" style="--in: 0; --dur: 9960; left: 717px; top: 598px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+        </div></div></div></div></div></div></div></div></div></div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@kit:pose=point-right,face=wow;@kit+600:pose=idle,face=happy;@votacao:pose=present,face=happy;@vivo:pose=cheer,face=laugh;@notas:pose=idle,face=focus,props=tablet;@cronometro:pose=point-right,face=wow,props=clicker;@raio:pose=lens-look,face=focus,props=lens,dur=500;@olhar+300:pose=point-right,face=wow;@painel:pose=present,face=proud,props=clicker;@atencao:pose=celebrate,face=laugh;@atencao+1000:pose=hands-hips,face=proud" style="--x: 150px; --y: 968px; --s: .82"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@kit:face=wow;@votacao:pose=wave,face=happy;@vivo+300:pose=idle,face=laugh;@notas:pose=think,face=think;@cronometro:pose=look-up,face=surprised;@cronometro+600:pose=idle,face=happy;@raio:face=wow;@preve:pose=look-up,face=wow;@olhar+400:pose=idle,face=happy;@painel:pose=hands-hips,face=happy;@atencao:pose=jump,face=laugh;@atencao+500:pose=celebrate,face=laugh;@atencao+1300:pose=idle,face=happy" style="--x: 1770px; --y: 968px; --s: .8"></div>
 </section>

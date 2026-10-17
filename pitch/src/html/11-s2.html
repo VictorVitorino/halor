@@ -1,73 +1,249 @@
-<!-- CENA 2 · Edição ao vivo · clique, arraste, edite; o título ganha brilho, o gráfico cresce, o card vira -->
+<!-- CENA 2 · Edição ao vivo · noite
+     O Estúdio de verdade. A câmera abre em 0,9 (margem para os rótulos) e, em "título", empurra para 1,08 no centro do slide.
+     Cada verbo acontece no próprio slide, com brilho de clique (guia 20): "Clique" seleciona o título (alças, ripple),
+     "arraste" puxa o gráfico da faixa de inserção num arco com rastro e solta com ripple (Hover Elevation 05 na peça),
+     "edite" clica em "Aa" na barra flutuante (o título cresce de 42 para 48), "direto" estica a caixa pela alça,
+     "slide" liga "Animar ao vivo" no inspetor (Microinteractions 26: interruptor e slider).
+     Depois a seleção acompanha o substantivo falado: "brilho" = Glow / Light Sweep (06) no título com anel pulsante,
+     "gráfico … cresce" = Chart Build (16) com barras, linha e pontos, "card … vira" = Flip Card (21) mostrando +32%.
+     Tooltip (36) com o nome de cada efeito. "na hora" = varredura de luz no slide inteiro e selo "Ao vivo · sem código". -->
 <section class="scene s2" id="s2" data-world="night">
-  <div class="studio dark-frame k zoom" style="--in: 0; --dur: 600; left: 300px; top: 160px">
-    <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Proposta comercial</span><span class="su-saved">Salvo</span><span class="su-go">Apresentar</span></div>
-    <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span class="k rib-on" style="--in: var(--w-arraste)">Gráficos</span><span>Cards</span><span>Personagens</span><span class="k rib-on" style="--in: var(--w-edite)"><svg><use href="#i-wand"/></svg>Efeitos</span></div>
-    <div class="su-body">
-      <div class="su-rail"><i></i><i class="on"></i><i></i><i></i><i></i></div>
-      <div class="su-canvas">
-        <div class="ed-slide">
-          <p class="ed-k">Plano 2027</p>
-          <p class="ed-title sweep">Plano em 12 semanas<span class="glowt k fade" style="--in: var(--w-brilho); --dur: 300">Plano em 12 semanas</span><i class="k sweep-x" style="--in: var(--w-brilho); --dur: 1100"></i></p>
-          <div class="ed-chart k pop" style="--in: calc(var(--w-arraste) + 650); --dur: 400">
-            <i class="ax"></i>
-            <div class="bars" style="--stag: 110"><i class="k grow-y" style="--v:.42; --in: var(--w-cresce); --i: 0"></i><i class="k grow-y" style="--v:.6; --in: var(--w-cresce); --i: 1"></i><i class="k grow-y" style="--v:.5; --in: var(--w-cresce); --i: 2"></i><i class="k grow-y" style="--v:.78; --in: var(--w-cresce); --i: 3"></i><i class="hot k grow-y" style="--v:1; --in: var(--w-cresce); --i: 4"></i></div>
-          </div>
-          <div class="ed-card flip">
-            <div class="flip-in k flip-y" style="--in: var(--w-vira); --dur: 800">
-              <div class="flip-a"><small>Meta do ano</small><b>?</b><small>toque para ver</small></div>
-              <div class="flip-b"><small>Leitura completa</small><b>+32%</b><small>meta batida</small></div>
+  <i class="s2-floor k fade" style="--in: 0; --dur: 900"></i>
+
+  <div class="s2-cam k s2-enter" style="--in: 0; --dur: 560">
+    <div class="s2-push k s2-push" style="--in: var(--w-titulo); --dur: 700">
+      <i class="s2-halo"></i>
+      <div class="studio dark-frame s2-studio" style="left: 0; top: 0">
+        <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Proposta comercial</span><span class="su-saved s2-saved">Salvo<i class="k flash" style="--in: var(--w-hora); --dur: 700"></i></span><span class="su-go s2-go">Apresentar<i class="s2-gofx k flash" style="--in: calc(var(--w-hora) + 560); --dur: 800"></i></span></div>
+        <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span class="k rib-on" style="--in: var(--w-arraste)">Gráficos</span><span>Cards</span><span>Personagens</span><span class="k rib-on" style="--in: calc(var(--w-slide) + 140)"><svg><use href="#i-wand"/></svg>Efeitos</span></div>
+        <div class="su-body">
+          <div class="su-rail"><i></i><i></i><i class="on"></i><i></i><i></i></div>
+          <div class="su-canvas">
+            <!-- o slide -->
+            <div class="s2-slide">
+              <i class="s2-slglow k fade" style="--in: calc(var(--w-hora) + 100); --dur: 500"><b class="l s2-glowp"></b></i>
+              <p class="s2-k">Plano 2027 · resultados</p>
+
+              <!-- título: anel de brilho pulsante, cresce em "edite" (Aa), varredura em "brilho" -->
+              <div class="s2-glowbox k fade" style="--in: var(--w-brilho); --dur: 300"><b class="l s2-glowp"></b><i class="l s2-pring"></i><i class="l s2-pring" style="--lph: 650"></i></div>
+              <p class="s2-tt k s2-tsz" style="--in: calc(var(--w-edite) + 220); --dur: 420">Resultados do <em>T3</em><span class="s2-ttg k fade" style="--in: calc(var(--w-brilho) + 40); --dur: 260" aria-hidden="true">Resultados do <em>T3</em></span><i class="s2-ttsw k s2-ttsw" style="--in: calc(var(--w-brilho) + 80); --dur: 1000"></i><i class="s2-ttsw k s2-ttsw" style="--in: calc(var(--w-brilho) + 2600); --dur: 1000"></i></p>
+              <p class="s2-sub">Receita, margem e metas do trimestre</p>
+
+              <!-- seleção do título: entra no clique, estica pela alça em "direto", pulsa em "título", sai depois do brilho -->
+              <div class="kx" style="--out: calc(var(--w-brilho) + 300); --xdur: 300; left: 0; top: 0">
+                <div class="s2-selw k s2-selin" style="--in: var(--w-clique); --dur: 280"><div class="s2-sel k s2-stretch" style="--in: calc(var(--w-direto) + 60); --dur: 420"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+              </div>
+              <i class="s2-selp k s2-selpulse" style="--in: var(--w-titulo); --dur: 700"></i>
+              <i class="s2-selp k s2-selpulse" style="--in: calc(var(--w-titulo) + 200); --dur: 700"></i>
+              <!-- barra flutuante: "Aa" é clicado em "edite" -->
+              <div class="kx" style="--out: var(--w-titulo); --xdur: 320; left: 0; top: 0"><div class="s2-tb k pop" style="--in: calc(var(--w-clique) + 160); --dur: 380"><b>B</b><em>I</em><u>U</u><span></span><i></i><small>Aa<s class="s2-aahl k s2-aaon" style="--in: calc(var(--w-edite) + 200); --dur: 600"></s></small></div></div>
+
+              <!-- área do gráfico: alvo de soltura → gráfico que cresce -->
+              <div class="kx" style="--out: calc(var(--w-arraste) + 720); --xdur: 160; left: 0; top: 0"><div class="s2-drop k fade" style="--in: calc(var(--w-arraste) + 140); --dur: 220"><svg><use href="#i-arrow"/></svg>Solte aqui</div></div>
+              <div class="s2-chart k s2-land" style="--in: calc(var(--w-arraste) + 720); --dur: 520">
+                <p class="s2-chl">Receita · R$ mi</p>
+                <i class="s2-grid"></i>
+                <div class="s2-bars s2-ghosts"><i style="--v: .34"></i><i style="--v: .5"></i><i style="--v: .44"></i><i style="--v: .62"></i><i style="--v: .76"></i><i style="--v: 1"></i></div>
+                <div class="s2-bars" style="--stag: 80">
+                  <i class="k grow-y" style="--v: .34; --in: var(--w-cresce); --i: 0; --dur: 650"></i>
+                  <i class="k grow-y" style="--v: .5; --in: var(--w-cresce); --i: 1; --dur: 650"></i>
+                  <i class="k grow-y" style="--v: .44; --in: var(--w-cresce); --i: 2; --dur: 650"></i>
+                  <i class="k grow-y" style="--v: .62; --in: var(--w-cresce); --i: 3; --dur: 650"></i>
+                  <i class="k grow-y" style="--v: .76; --in: var(--w-cresce); --i: 4; --dur: 650"></i>
+                  <i class="hot k grow-y" style="--v: 1; --in: var(--w-cresce); --i: 5; --dur: 650"></i>
+                </div>
+                <svg class="s2-line" viewBox="0 0 360 205" fill="none" aria-hidden="true" style="--stag: 70">
+                  <polyline class="k draw" style="--in: calc(var(--w-cresce) + 380); --dur: 700" pathLength="1" points="39,119 96,96 152,105 208,80 264,60 321,26"/>
+                  <circle class="k pop" style="--in: calc(var(--w-cresce) + 420); --i: 0; --dur: 380" cx="39" cy="119" r="5"/>
+                  <circle class="k pop" style="--in: calc(var(--w-cresce) + 420); --i: 1; --dur: 380" cx="96" cy="96" r="5"/>
+                  <circle class="k pop" style="--in: calc(var(--w-cresce) + 420); --i: 2; --dur: 380" cx="152" cy="105" r="5"/>
+                  <circle class="k pop" style="--in: calc(var(--w-cresce) + 420); --i: 3; --dur: 380" cx="208" cy="80" r="5"/>
+                  <circle class="k pop" style="--in: calc(var(--w-cresce) + 420); --i: 4; --dur: 380" cx="264" cy="60" r="5"/>
+                  <circle class="hot k pop" style="--in: calc(var(--w-cresce) + 420); --i: 5; --dur: 380" cx="321" cy="26" r="7"/>
+                </svg>
+                <b class="s2-val k pop" style="--in: calc(var(--w-cresce) + 860); --dur: 420">R$ 4,8 mi</b>
+                <div class="s2-mo"><span>Abr</span><span>Mai</span><span>Jun</span><span>Jul</span><span>Ago</span><span>Set</span></div>
+              </div>
+
+              <!-- a seleção salta para o substantivo falado: gráfico, depois card -->
+              <div class="kx" style="--out: var(--w-card); --xdur: 220; left: 0; top: 0">
+                <div class="s2-sel s2-selc k s2-selin" style="--in: var(--w-grafico); --dur: 280"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+
+              <!-- selos de efeito no próprio slide ("direto no slide"); batem quando o efeito liga -->
+              <div class="s2-fxb k pop" style="--in: var(--w-slide); --dur: 420; left: 366px; top: 16px"><i class="k s2-beat" style="--in: var(--w-brilho); --dur: 600"><svg><use href="#i-spark"/></svg></i></div>
+              <div class="s2-fxb k pop" style="--in: calc(var(--w-slide) + 120); --dur: 420; left: 380px; top: 136px"><i class="k s2-beat" style="--in: var(--w-cresce); --dur: 600"><svg><use href="#i-spark"/></svg></i></div>
+              <div class="s2-fxb k pop" style="--in: calc(var(--w-slide) + 240); --dur: 420; left: 632px; top: 136px"><i class="k s2-beat" style="--in: var(--w-vira); --dur: 600"><svg><use href="#i-spark"/></svg></i></div>
+
+              <!-- 21 · Flip Card -->
+              <div class="s2-card flip">
+                <div class="flip-in k flip-y" style="--in: var(--w-vira); --dur: 820">
+                  <div class="flip-a s2-fa"><small>Meta do ano</small><b>?</b><small>clique para ver</small></div>
+                  <div class="flip-b s2-fb"><small>Meta do ano</small><b>+32%</b><small>acima da meta</small><i class="shim l sweep-x" style="--ldur: 2400; --lph: 300"></i></div>
+                </div>
+              </div>
+              <div class="s2-sel s2-selk k s2-selin" style="--in: var(--w-card); --dur: 280"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+
+              <!-- "na hora": varredura de luz atravessa o slide inteiro -->
+              <div class="s2-slsww"><i class="s2-slsw k s2-slsw" style="--in: var(--w-hora); --dur: 900"></i></div>
+            </div>
+
+            <!-- faixa de inserção -->
+            <div class="s2-dock">
+              <p>Inserir</p>
+              <div class="s2-tile s2-t1"><div class="k s2-lift" style="--in: var(--w-arraste); --dur: 480"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i><span>Barras</span></div></div>
+              <div class="s2-tile"><div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-6 4 3 8-9"/></svg></i><span>Linha</span></div></div>
+              <div class="s2-tile"><div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9h-9z"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"/></svg></i><span>Pizza</span></div></div>
+              <div class="s2-tile"><div><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 10h8M8 14h5"/></svg></i><span>Card</span></div></div>
+              <div class="s2-tile"><div><i><svg><use href="#i-spark"/></svg></i><span>Ícone</span></div></div>
             </div>
           </div>
-          <i class="sel k fade" style="--in: var(--w-clique); --dur: 200; left: 30px; top: 40px; width: 380px; height: 54px"></i>
+          <div class="su-insp s2-insp">
+            <p class="in-h s2-ihs"><span class="kx" style="--out: var(--w-grafico); --xdur: 220">Seleção · título</span><span class="k s2-ihin" style="--in: var(--w-grafico); --dur: 280"><span class="kx" style="--out: var(--w-card); --xdur: 220">Seleção · gráfico</span></span><span class="k s2-ihin" style="--in: var(--w-card); --dur: 280">Seleção · card</span></p>
+            <div class="in-row"><span>Fonte</span><b>Sora 600</b></div>
+            <div class="in-row s2-szrow"><i class="s2-rowhl k flash" style="--in: calc(var(--w-edite) + 220); --dur: 900"></i><span>Tamanho</span><b><span class="num-n k counter" style="--n0: 42; --n1: 48; --in: calc(var(--w-edite) + 240); --dur: 360"></span></b></div>
+            <p class="in-h s2-ih">Efeitos</p>
+            <div class="in-row s2-row s2-master"><span>Animar ao vivo</span><i class="s2-tg"><i class="s2-tgon k fade" style="--in: calc(var(--w-slide) + 140); --dur: 200"></i><b class="s2-knob k s2-knob" style="--in: calc(var(--w-slide) + 140); --dur: 380; --kx: 22px"></b></i></div>
+            <div class="s2-sl"><p><span>Intensidade</span><b><span class="num-n k counter" style="--n0: 30; --n1: 85; --in: calc(var(--w-slide) + 700); --dur: 480"></span>%</b></p><div class="s2-track"><i class="s2-fill k s2-fill" style="--in: calc(var(--w-slide) + 700); --dur: 480"></i><b class="s2-sknob k slide-x" style="--in: calc(var(--w-slide) + 700); --dur: 480; --from-x: 0px; --to-x: 117px"></b></div></div>
+            <div class="s2-fxl" style="--stag: 110">
+              <div class="s2-fx k s2-rowin" style="--in: calc(var(--w-slide) + 260); --i: 0; --dur: 420"><span><svg><use href="#i-spark"/></svg>Glow · Light Sweep</span><i class="s2-tg sm"><i class="s2-tgon k fade" style="--in: var(--w-brilho); --dur: 200"></i><b class="s2-knob k s2-knob" style="--in: var(--w-brilho); --dur: 360; --kx: 16px"></b></i></div>
+              <div class="s2-fx k s2-rowin" style="--in: calc(var(--w-slide) + 260); --i: 1; --dur: 420"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg>Chart Build</span><i class="s2-tg sm"><i class="s2-tgon k fade" style="--in: var(--w-cresce); --dur: 200"></i><b class="s2-knob k s2-knob" style="--in: var(--w-cresce); --dur: 360; --kx: 16px"></b></i></div>
+              <div class="s2-fx k s2-rowin" style="--in: calc(var(--w-slide) + 260); --i: 2; --dur: 420"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><rect x="5" y="4" width="14" height="16" rx="3"/><path d="M12 4v16"/></svg>Flip Card</span><i class="s2-tg sm"><i class="s2-tgon k fade" style="--in: var(--w-vira); --dur: 200"></i><b class="s2-knob k s2-knob" style="--in: var(--w-vira); --dur: 360; --kx: 16px"></b></i></div>
+            </div>
+            <div class="in-fx ok k pop" style="--in: var(--w-hora); --dur: 500; --i: 0"><svg><use href="#i-check"/></svg>3 efeitos ao vivo</div>
+          </div>
         </div>
       </div>
-      <div class="su-insp">
-        <p class="in-h">Seleção · título</p>
-        <div class="in-row"><span>Fonte</span><b>Sora 600</b></div>
-        <div class="in-row"><span>Tamanho</span><b>34</b></div>
-        <div class="in-row"><span>Cor</span><b>Violeta</b></div>
-        <div class="in-fx k pop" style="--in: var(--w-edite)"><svg><use href="#i-spark"/></svg>Efeito · Brilho</div>
-        <div class="in-fx k pop" style="--in: var(--w-grafico)"><svg><use href="#i-spark"/></svg>Barras crescendo</div>
-        <div class="in-fx ok k pop" style="--in: var(--w-hora)"><svg><use href="#i-check"/></svg>Ao vivo, sem código</div>
+
+      <!-- ===== sobreposições em coordenadas do Estúdio ===== -->
+      <!-- arraste: a peça sai da faixa num arco (sobe e vai para a direita, depois assenta) com rastro desfocado -->
+      <div class="s2-dragw kx" style="--out: calc(var(--w-arraste) + 700); --xdur: 140">
+        <div class="k fade" style="--in: calc(var(--w-arraste) + 40); --dur: 100">
+          <div class="s2-trail s2-tr2"><div class="k move-xy" style="--in: calc(var(--w-arraste) + 160); --dur: 400; --dx: 110px; --dy: -250px"><div class="k move-xy" style="--in: calc(var(--w-arraste) + 460); --dur: 320; --dx: -64px; --dy: -56px"><div class="s2-ghost"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i>Gráfico de barras</div></div></div></div>
+          <div class="s2-trail s2-tr1"><div class="k move-xy" style="--in: calc(var(--w-arraste) + 120); --dur: 400; --dx: 110px; --dy: -250px"><div class="k move-xy" style="--in: calc(var(--w-arraste) + 420); --dur: 320; --dx: -64px; --dy: -56px"><div class="s2-ghost"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i>Gráfico de barras</div></div></div></div>
+          <div class="s2-drag"><div class="k move-xy" style="--in: calc(var(--w-arraste) + 80); --dur: 400; --dx: 110px; --dy: -250px"><div class="k move-xy" style="--in: calc(var(--w-arraste) + 380); --dur: 320; --dx: -64px; --dy: -56px"><div class="s2-ghost s2-g0 k s2-grab" style="--in: calc(var(--w-arraste) + 20); --dur: 260"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i>Gráfico de barras</div></div></div></div>
+        </div>
       </div>
-    </div>
-  </div>
+      <i class="ring s2-ring k ring-x" style="--in: calc(var(--w-arraste) + 720); --dur: 800; left: 490px; top: 405px"></i>
+      <i class="ring s2-ring k ring-x" style="--in: calc(var(--w-vira) + 420); --dur: 900; left: 809px; top: 405px"></i>
+      <div class="confetti" style="left: 809px; top: 405px; --stag: 0">
+        <i class="k fly" style="--in: calc(var(--w-vira) + 380); --dur: 900; --dx: -150px; --dy: -120px"></i>
+        <i class="k fly" style="--in: calc(var(--w-vira) + 380); --dur: 900; --dx: 140px; --dy: -140px"></i>
+        <i class="k fly" style="--in: calc(var(--w-vira) + 380); --dur: 900; --dx: -60px; --dy: -190px"></i>
+        <i class="k fly" style="--in: calc(var(--w-vira) + 380); --dur: 900; --dx: 170px; --dy: 30px"></i>
+        <i class="k fly" style="--in: calc(var(--w-vira) + 380); --dur: 900; --dx: 60px; --dy: -200px"></i>
+        <i class="k fly" style="--in: calc(var(--w-vira) + 380); --dur: 900; --dx: -170px; --dy: 40px"></i>
+      </div>
 
-  <!-- arraste: o gráfico sai da faixa e cai no slide -->
-  <div class="kx" style="--out: calc(var(--w-arraste) + 650); --xdur: 150; left: 600px; top: 236px">
-    <div class="k fade" style="--in: calc(var(--w-arraste) - 60); --dur: 120">
-      <div class="ed-drag k move-xy" style="--in: var(--w-arraste); --dur: 650; --dx: 120px; --dy: 380px"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 19V13M10 19V6M15 19v-9M20 19v-4"/></svg></i>Gráfico de barras</div>
-    </div>
-  </div>
+      <!-- "na hora": selo grande no canvas, abaixo do slide -->
+      <div class="s2-live k pop-c" style="--in: calc(var(--w-hora) + 120); --dur: 520"><i class="s2-dot"><b class="l beat" style="--ldur: 1400"></b><b class="l beat" style="--ldur: 1400; --lph: 700"></b></i>Ao vivo · sem código</div>
 
-  <!-- cursor -->
-  <div style="left: 1000px; top: 820px">
-    <div class="k fade" style="--in: 0; --dur: 200">
-      <div class="k move-xy" style="--in: 0; --dur: 480; --dx: -240px; --dy: -335px">
-        <div class="k move-xy" style="--in: calc(var(--w-arraste) - 330); --dur: 300; --dx: -116px; --dy: -231px">
-          <div class="k move-xy" style="--in: var(--w-arraste); --dur: 650; --dx: 147px; --dy: 406px">
-            <div class="k move-xy" style="--in: calc(var(--w-edite) - 380); --dur: 420; --dx: 689px; --dy: -150px">
-              <div class="k move-xy" style="--in: calc(var(--w-card) - 400); --dur: 420; --dx: -368px; --dy: 150px">
-                <svg class="cursor" style="position: absolute; left: 0; top: 0" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+      <!-- cliques com brilho -->
+      <i class="click k" style="--in: var(--w-clique); left: 420px; top: 228px"></i>
+      <i class="click k" style="--in: var(--w-arraste); left: 444px; top: 711px"></i>
+      <i class="click k" style="--in: calc(var(--w-arraste) + 720); left: 490px; top: 405px"></i>
+      <i class="click k" style="--in: calc(var(--w-edite) + 200); left: 883px; top: 228px"></i>
+      <i class="click k" style="--in: calc(var(--w-direto) + 20); left: 676px; top: 230px"></i>
+      <i class="click k" style="--in: calc(var(--w-slide) + 140); left: 1260px; top: 334px"></i>
+      <i class="click k" style="--in: calc(var(--w-slide) + 660); left: 1137px; top: 418px"></i>
+      <i class="click k" style="--in: var(--w-brilho); left: 1268px; top: 469px"></i>
+      <i class="click k" style="--in: var(--w-cresce); left: 1268px; top: 519px"></i>
+      <i class="click k" style="--in: var(--w-vira); left: 870px; top: 470px"></i>
+      <i class="click k" style="--in: calc(var(--w-hora) + 560); left: 1234px; top: 32px"></i>
+
+      <!-- cursor com halo -->
+      <div class="s2-cur" style="left: 760px; top: 600px">
+        <div class="k fade" style="--in: 120; --dur: 200">
+          <div class="k move-xy" style="--in: 150; --dur: 330; --dx: -340px; --dy: -372px">
+            <div class="k move-xy" style="--in: 640; --dur: 400; --dx: 24px; --dy: 483px">
+              <div class="k move-xy" style="--in: calc(var(--w-arraste) + 80); --dur: 400; --dx: 110px; --dy: -250px">
+                <div class="k move-xy" style="--in: calc(var(--w-arraste) + 380); --dur: 320; --dx: -64px; --dy: -56px">
+                  <div class="k move-xy" style="--in: calc(var(--w-arraste) + 730); --dur: 220; --dx: 393px; --dy: -177px">
+                    <div class="k move-xy" style="--in: calc(var(--w-edite) + 240); --dur: 160; --dx: -207px; --dy: 2px">
+                      <div class="k move-xy" style="--in: calc(var(--w-direto) + 60); --dur: 420; --dx: 60px; --dy: 0px">
+                        <div class="k move-xy" style="--in: calc(var(--w-direto) + 520); --dur: 280; --dx: 524px; --dy: 104px">
+                          <div class="k move-xy" style="--in: calc(var(--w-slide) + 340); --dur: 300; --dx: -123px; --dy: 84px">
+                            <div class="k move-xy" style="--in: calc(var(--w-slide) + 700); --dur: 480; --dx: 117px; --dy: 0px">
+                              <div class="k move-xy" style="--in: calc(var(--w-brilho) - 400); --dur: 340; --dx: 14px; --dy: 51px">
+                                <div class="k move-xy" style="--in: calc(var(--w-cresce) - 420); --dur: 360; --dx: 0px; --dy: 50px">
+                                  <div class="k move-xy" style="--in: calc(var(--w-vira) - 560); --dur: 500; --dx: -398px; --dy: -49px">
+                                    <div class="k move-xy" style="--in: calc(var(--w-vira) + 180); --dur: 360; --dx: 110px; --dy: 70px">
+                                      <div class="k move-xy" style="--in: calc(var(--w-hora) + 120); --dur: 420; --dx: 254px; --dy: -508px">
+                                        <div class="s2-press k press" style="--in: var(--w-clique)">
+                                          <div class="s2-press k s2-hold" style="--in: var(--w-arraste); --dur: 720">
+                                            <div class="s2-press k press" style="--in: calc(var(--w-edite) + 190)">
+                                              <div class="s2-press k s2-hold" style="--in: calc(var(--w-direto) + 20); --dur: 520">
+                                                <div class="s2-press k press" style="--in: calc(var(--w-slide) + 120)">
+                                                  <div class="s2-press k s2-hold" style="--in: calc(var(--w-slide) + 660); --dur: 560">
+                                                    <div class="s2-press k press" style="--in: var(--w-brilho)">
+                                                      <div class="s2-press k press" style="--in: var(--w-cresce)">
+                                                        <div class="s2-press k press" style="--in: var(--w-vira)">
+                                                          <div class="s2-press k press" style="--in: calc(var(--w-hora) + 540)">
+                                                            <svg class="gcur" style="left: -3px; top: -2px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <!-- rótulos de motion graphics com linha de chamada: Clique / Arraste / Edite (fora do Estúdio, sem tocar nele) -->
+      <div class="s2-labs kx" style="--out: var(--w-titulo); --xdur: 320">
+        <svg class="s2-leads" viewBox="0 0 1920 1080" fill="none" aria-hidden="true">
+          <path class="k draw" style="--in: calc(var(--w-clique) + 60); --dur: 420" pathLength="1" d="M596 385H276"/>
+          <path class="k draw" style="--in: calc(var(--w-arraste) + 60); --dur: 480" pathLength="1" d="M744 831V810H550V586H276"/>
+          <path class="k draw" style="--in: calc(var(--w-edite) + 220); --dur: 420" pathLength="1" d="M1183 359V250H1644"/>
+        </svg>
+        <i class="mg-dot k pop" style="--in: var(--w-clique); --dur: 300; left: 296px; top: 235px"></i>
+        <i class="mg-dot k pop" style="--in: var(--w-arraste); --dur: 300; left: 444px; top: 681px"></i>
+        <i class="mg-dot k pop" style="--in: calc(var(--w-edite) + 200); --dur: 300; left: 883px; top: 209px"></i>
+        <div class="s2-lab s2-labr k s2-labin" style="--in: calc(var(--w-clique) + 200); --dur: 460; left: -282px; top: 197px"><i>01</i><b>Clique</b><small>seleciona o título</small></div>
+        <div class="s2-lab s2-labr k s2-labin" style="--in: calc(var(--w-arraste) + 260); --dur: 460; left: -282px; top: 398px"><i>02</i><b>Arraste</b><small>puxa o gráfico</small></div>
+        <div class="s2-lab k s2-labin" style="--in: calc(var(--w-edite) + 300); --dur: 460; left: 1344px; top: 62px"><i>03</i><b>Edite</b><small>direto no slide</small></div>
+      </div>
+
+      <!-- 36 · Tooltip com o nome do efeito aplicado (por cima de tudo, fora do card) -->
+      <div class="s2-tipw kx" style="--out: calc(var(--w-cresce) - 120); --xdur: 220">
+        <div class="s2-tip s2-tips k s2-tipin" style="--in: calc(var(--w-brilho) + 160); --dur: 420; left: 748px; top: 168px">
+          <p><b>Glow · Light Sweep</b><em>ativo</em></p><span>Varredura de luz e anel pulsante no título</span><small>efeito 06 · 1,0 s · a cada 3 s</small>
+        </div>
+      </div>
+      <div class="s2-tipw kx" style="--out: calc(var(--w-vira) - 100); --xdur: 220">
+        <div class="s2-tip k s2-tipin" style="--in: calc(var(--w-cresce) + 300); --dur: 420; left: 310px; top: 554px; --ax: 114px">
+          <p><b>Chart Build</b><em>ativo</em></p><span>Barras, linha e pontos entram em ordem</span><small>efeito 16 · por série</small>
+        </div>
+      </div>
+      <div class="s2-tipw">
+        <div class="s2-tip s2-tipd k s2-tipin" style="--in: calc(var(--w-vira) + 420); --dur: 420; left: 748px; top: 180px; --ax: 54px">
+          <p><b>Flip Card</b><em>ativo</em></p><span>O card vira e revela o resultado</span><small>efeito 21 · 0,8 s</small>
+        </div>
+      </div>
     </div>
   </div>
-  <i class="pingc k ping" style="--in: var(--w-clique); --dur: 600; left: 762px; top: 487px"></i>
-  <i class="pingc k ping" style="--in: calc(var(--w-arraste) - 20); --dur: 600; left: 646px; top: 256px"></i>
-  <i class="pingc k ping" style="--in: var(--w-edite); --dur: 600; left: 1482px; top: 522px"></i>
-  <i class="pingc k ping" style="--in: var(--w-vira); --dur: 600; left: 1114px; top: 672px"></i>
 
-  <div class="kx" style="--out: var(--w-titulo); --xdur: 300; left: 0; top: 0">
-    <div class="callout big tip-b k pop" style="--in: var(--w-clique); left: 690px; top: 345px">Clique</div>
-    <div class="callout big tip-t k pop" style="--in: var(--w-arraste); left: 560px; top: 300px">Arraste</div>
-    <div class="callout big tip-t k pop" style="--in: var(--w-edite); left: 1400px; top: 580px">Edite</div>
-  </div>
+  <i class="leak k leak-x" style="--in: 0; --dur: 1000"></i>
 
-  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@clique:pose=point-right,face=focus;@arraste:face=wow;@edite:face=focus;@brilho:pose=present,face=proud;@cresce:pose=cheer,face=wow;@vira:pose=jump,face=laugh;@hora:pose=idle,face=happy" style="--x: 150px; --y: 968px; --s: .8"></div>
-  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@clique:pose=look-up,face=think;@brilho:face=wow;@cresce:pose=hands-hips,face=surprised;@vira:pose=celebrate,face=laugh;@hora+500:pose=idle,face=happy" style="--x: 1770px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@clique:pose=point-right,face=focus;@arraste:pose=look-up,face=wow;@edite:pose=point-right,face=wink;@brilho:pose=present,face=proud;@cresce:pose=cheer,face=wow;@vira:pose=jump,face=laugh;@hora:pose=celebrate,face=laugh;@hora+700:pose=idle,face=happy" style="--x: 150px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@clique:pose=look-up,face=think;@arraste:face=surprised;@edite:pose=think,face=think;@brilho:pose=idle,face=wow;@cresce:pose=hands-hips,face=surprised;@vira:pose=celebrate,face=laugh;@hora+500:pose=idle,face=happy" style="--x: 1770px; --y: 968px; --s: .8"></div>
 </section>

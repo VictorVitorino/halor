@@ -1,65 +1,397 @@
-<!-- CENA 3 · Mais de 40 efeitos · seis efeitos ao vivo, um por família, acendendo na palavra -->
+<!-- CENA 3 · Mais de 40 efeitos · contador +40 (Motion Graphics + Counter), biblioteca em galeria 3D (Carousel) com demos vivas,
+     famílias acendendo na palavra e, em "prontos para usar", um cartão clicado voa para dentro de um slide -->
 <section class="scene s3" id="s3" data-world="night">
-  <div class="s3-head k up" style="--in: var(--w-sao)"><b><span class="num-n k counter" style="--n0: 0; --n1: 40; --in: var(--w-quarenta); --dur: 700"></span></b><span>efeitos e animações</span></div>
 
-  <div class="fx-grid" style="left: 0; top: 0; --stag: 90">
-    <!-- Glow / Light Sweep -->
-    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 0; left: 274px; top: 240px">
-      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-movimento); display: grid; place-items: center"><div class="fx-sw sweep">Receita <em>+32%</em><i class="l sweep-x" style="--lph: 0"></i></div></div></div>
-      <div class="fx-cap"><b>Glow · Light Sweep</b><em>movimento</em></div>
-      <i class="fx-on k fade" style="--in: var(--w-movimento)"></i>
+  <!-- ============ 1 · ABERTURA: o contador +40 ============ -->
+  <div class="s3-mg kx" style="--out: 2150; --xdur: 380; left: 0; top: 0; width: 1920px; height: 1080px">
+    <i class="mg-line k grow-x s3-mgl-l" style="--in: 120; --dur: 800; left: 300px; top: 440px; width: 380px"></i>
+    <i class="mg-line k grow-x" style="--in: 120; --dur: 800; left: 1240px; top: 440px; width: 380px"></i>
+    <i class="mg-dot k pop" style="--in: 700; left: 300px; top: 441px"></i>
+    <i class="mg-dot k pop" style="--in: 760; left: 1620px; top: 441px"></i>
+    <p class="s3-hud k fade" style="--in: 400; --dur: 400; left: 300px; top: 404px">biblioteca de efeitos</p>
+    <p class="s3-hud k fade" style="--in: 480; --dur: 400; left: 1620px; top: 404px; transform: translateX(-100%)">sem código</p>
+    <p class="s3-hud dim k fade" style="--in: 560; --dur: 400; left: 300px; top: 456px">demos ao vivo · em loop</p>
+    <p class="s3-hud dim k fade" style="--in: 640; --dur: 400; left: 1620px; top: 456px; transform: translateX(-100%)">4 famílias · 1 clique</p>
+  </div>
+
+  <div class="s3-hn k s3-dock-n" style="--in: 2120; --dur: 480; left: 700px; top: 180px; width: 520px; height: 520px">
+    <div class="s3-dial kx" style="--out: 2120; --xdur: 300">
+      <svg class="s3-dsvg" viewBox="0 0 520 520" fill="none" aria-hidden="true">
+        <circle class="k draw" style="--in: var(--w-sao); --dur: 900" pathLength="1" cx="260" cy="260" r="252" stroke="url(#hl-g-ring)" stroke-width="3" stroke-linecap="round" transform="rotate(-90 260 260)"/>
+        <g class="l spin" style="--ldur: 16000"><circle class="k fade" style="--in: 560; --dur: 500" cx="260" cy="260" r="196" stroke="rgba(201,166,255,.4)" stroke-width="2" stroke-dasharray="3 12"/></g>
+        <g class="l spin" style="--ldur: 11000; animation-direction: reverse"><circle class="k fade" style="--in: 700; --dur: 500" cx="260" cy="260" r="176" stroke="rgba(201,166,255,.22)" stroke-width="1.5" stroke-dasharray="40 14"/></g>
+        <path class="k draw" style="--in: 500; --dur: 500" pathLength="1" d="M260 0v22M260 498v22M0 260h22M498 260h22" stroke="#c9a6ff" stroke-width="2"/>
+      </svg>
+      <!-- 40 marcas acendendo junto com a contagem -->
+      <i class="s3-ticks k counter s3-cnt" style="--n0: 0; --n1: 40; --in: var(--w-quarenta); --dur: 650"></i>
+      <i class="s3-sq k pop" style="--in: var(--w-quarenta)"><b class="l pulse" style="--ldur: 1400"></b></i>
     </div>
-    <!-- Animated Typography -->
-    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 1; left: 740px; top: 240px">
-      <div class="fx-st"><div class="fx-live k fade" style="--in: calc(var(--w-movimento) + 250); display: grid; place-items: center"><div class="fx-ty"><span class="l rise" style="--lph: 0">Prenda</span><span class="l rise" style="--lph: 260">o</span><span class="hl l rise" style="--lph: 520">olhar</span></div></div></div>
-      <div class="fx-cap"><b>Animated Typography</b><em>movimento</em></div>
-      <i class="fx-on k fade" style="--in: calc(var(--w-movimento) + 250)"></i>
+    <i class="s3-core k fade" style="--in: var(--w-quarenta); --dur: 500"></i>
+    <div class="s3-big k pop" style="--in: var(--w-quarenta); --dur: 420">
+      <div class="s3-bt k s3-txsw" style="--in: 1520; --dur: 900"><span class="s3-plus">+</span><span class="num-n k counter s3-cnt" style="--n0: 0; --n1: 40; --in: var(--w-quarenta); --dur: 650"></span></div>
     </div>
-    <!-- Hologram 3D Card -->
-    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 2; left: 1206px; top: 240px">
-      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-profundidade); display: grid; place-items: center; perspective: 700px"><div class="fx-holo l tilt"><div class="card"><small>CARTÃO</small><b>3D</b><small style="margin-top: 26px">holograma</small></div></div></div></div>
-      <div class="fx-cap"><b>Hologram 3D Card</b><em>profundidade</em></div>
-      <i class="fx-on k fade" style="--in: var(--w-profundidade)"></i>
-    </div>
-    <!-- Counter -->
-    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 3; left: 274px; top: 516px">
-      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-dados); display: grid; place-items: center"><div class="fx-cnt">
-        <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="48" fill="none" stroke="rgba(201,166,255,.18)" stroke-width="12"/><circle class="k draw" style="--in: var(--w-dados); --dur: 1000" pathLength="1" cx="60" cy="60" r="48" fill="none" stroke="url(#hl-g-ring)" stroke-width="12" stroke-linecap="round" stroke-dasharray="1" transform="rotate(-90 60 60)"/></svg>
-        <b><span class="num-n k counter" style="--n0: 0; --n1: 87; --in: var(--w-dados); --dur: 1000"></span>%</b></div></div></div>
-      <div class="fx-cap"><b>Counter</b><em>dados</em></div>
-      <i class="fx-on k fade" style="--in: var(--w-dados)"></i>
-    </div>
-    <!-- Chart Build -->
-    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 4; left: 740px; top: 516px">
-      <div class="fx-st"><div class="fx-live k fade" style="--in: calc(var(--w-dados) + 250); display: grid; place-items: center"><div class="fx-chart">
-        <div class="bars" style="--stag: 120"><i class="k grow-y" style="--v:.35; --in: calc(var(--w-dados) + 250); --i: 0"></i><i class="k grow-y" style="--v:.55; --in: calc(var(--w-dados) + 250); --i: 1"></i><i class="k grow-y" style="--v:.45; --in: calc(var(--w-dados) + 250); --i: 2"></i><i class="k grow-y" style="--v:.8; --in: calc(var(--w-dados) + 250); --i: 3"></i><i class="k grow-y" style="--v:.95; --in: calc(var(--w-dados) + 250); --i: 4"></i></div>
-        <svg viewBox="0 0 320 140" aria-hidden="true"><path class="k draw" style="--in: calc(var(--w-dados) + 800); --dur: 900" pathLength="1" d="M30 100 L94 72 L158 84 L222 40 L290 18" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1"/></svg>
-      </div></div></div>
-      <div class="fx-cap"><b>Chart Build</b><em>dados</em></div>
-      <i class="fx-on k fade" style="--in: calc(var(--w-dados) + 250)"></i>
-    </div>
-    <!-- Connector / Flow Line -->
-    <div class="fx k pop" style="--in: var(--w-quarenta); --i: 5; left: 1206px; top: 516px">
-      <div class="fx-st"><div class="fx-live k fade" style="--in: var(--w-narrativa); display: grid; place-items: center"><div class="fx-flow">
-        <svg viewBox="0 0 360 140" aria-hidden="true">
-          <path class="k draw" style="--in: var(--w-narrativa); --dur: 800" pathLength="1" d="M40 100 C 110 100, 110 40, 180 40 S 250 100, 320 100" fill="none" stroke="rgba(201,166,255,.35)" stroke-width="4" stroke-dasharray="1"/>
-          <g class="k fade" style="--in: calc(var(--w-narrativa) + 700)"><path class="l dash" d="M40 100 C 110 100, 110 40, 180 40 S 250 100, 320 100" fill="none" stroke="#fff" stroke-width="4" stroke-dasharray="10 8" stroke-linecap="round"/></g>
-        </svg>
-        <span class="nd k pop" style="--in: var(--w-narrativa); left: 40px; top: 100px">1</span><span class="nd k pop" style="--in: calc(var(--w-narrativa) + 250); left: 180px; top: 40px">2</span><span class="nd k pop" style="--in: calc(var(--w-narrativa) + 500); left: 320px; top: 100px">3</span>
-      </div></div></div>
-      <div class="fx-cap"><b>Connector · Flow Line</b><em>narrativa</em></div>
-      <i class="fx-on k fade" style="--in: var(--w-narrativa)"></i>
+    <i class="ring k ring-x" style="--in: 1550; --dur: 900; left: 260px; top: 260px"></i>
+    <div class="s3-rays" style="left: 260px; top: 260px">
+      <i class="k s3-ray" style="--in: 1550; --r: 0deg"></i><i class="k s3-ray" style="--in: 1550; --r: 30deg"></i><i class="k s3-ray" style="--in: 1550; --r: 60deg"></i><i class="k s3-ray" style="--in: 1550; --r: 90deg"></i>
+      <i class="k s3-ray" style="--in: 1550; --r: 120deg"></i><i class="k s3-ray" style="--in: 1550; --r: 150deg"></i><i class="k s3-ray" style="--in: 1550; --r: 180deg"></i><i class="k s3-ray" style="--in: 1550; --r: 210deg"></i>
+      <i class="k s3-ray" style="--in: 1550; --r: 240deg"></i><i class="k s3-ray" style="--in: 1550; --r: 270deg"></i><i class="k s3-ray" style="--in: 1550; --r: 300deg"></i><i class="k s3-ray" style="--in: 1550; --r: 330deg"></i>
     </div>
   </div>
 
-  <div class="s3-cats k up" style="--in: var(--w-animacoes)">
-    <span class="pw"><span class="pill">Movimento</span><span class="pill on k fade" style="--in: var(--w-movimento); --dur: 250">Movimento</span></span>
-    <span class="pw"><span class="pill">Profundidade</span><span class="pill on k fade" style="--in: var(--w-profundidade); --dur: 250">Profundidade</span></span>
-    <span class="pw"><span class="pill">Dados</span><span class="pill on k fade" style="--in: var(--w-dados); --dur: 250">Dados</span></span>
-    <span class="pw"><span class="pill">Narrativa</span><span class="pill on k fade" style="--in: var(--w-narrativa); --dur: 250">Narrativa</span></span>
-    <span class="pw"><span class="pill">Interatividade</span><span class="pill on k fade" style="--in: var(--w-prontos); --dur: 250">Interatividade</span></span>
+  <div class="s3-hw k s3-dock-w" style="--in: 2200; --dur: 400; left: 560px; top: 722px; width: 800px">
+    <span class="wd k mask-up" style="--in: var(--w-efeitos); --dur: 500">efeitos</span> <span class="wd k mask-up" style="--in: var(--w-e); --dur: 400">e</span> <span class="wd k mask-up s3-ani" style="--in: var(--w-animacoes); --dur: 500">animações<i class="k grow-x" style="--in: calc(var(--w-animacoes) + 180); --dur: 500"></i></span>
   </div>
 
-  <div class="bia" data-pose="idle" data-face="happy" data-props="wand" data-keys="@quarenta:pose=present,face=wow;@movimento:pose=point-right,face=happy;@profundidade:pose=look-up,face=wow;@dados:pose=point-right,face=focus;@narrativa:pose=present,face=proud;@usar:pose=celebrate,face=laugh;@usar+900:pose=idle,face=happy" style="--x: 140px; --y: 968px; --s: .8"></div>
-  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@quarenta:face=surprised;@profundidade:pose=look-up,face=wow;@dados:pose=hands-hips,face=happy;@usar:pose=jump,face=laugh;@usar+700:pose=idle,face=happy" style="--x: 1780px; --y: 968px; --s: .78"></div>
+  <!-- ============ 3 · FINAL: o slide que recebe o efeito ============ -->
+  <!-- desenhado no espaço do slide da cena 4 (1240×698, reduzido a 960×540): termina só com o marco 1 aceso, e a s4 abre deste mesmo slide -->
+  <div class="s3-sl k s3-sl-in" style="--in: 6300; --dur: 520; left: 480px; top: 250px"><div class="s3-slz">
+    <p class="s3-sl-k k fade" style="--in: 6420; --dur: 400">Roadmap 2027 · quatro ondas</p>
+    <p class="s3-sl-t k mask-up" style="--in: 6460; --dur: 520">Da fundação ao valor em escala</p>
+    <div class="s3-drop kx" style="--out: 6700; --xdur: 140"><div class="k fade" style="--in: 6420; --dur: 300"><span>Solte aqui · Timeline Motion</span></div></div>
+    <div class="s3-tlw k mask-c" style="--in: 6800; --dur: 700; --mx: 13%; --my: 70%">
+      <i class="s3-tl-base k grow-x" style="--in: 6820; --dur: 760"></i>
+      <i class="s3-tl-n k pop" style="--in: 6880; left: 160px"><b>1</b><i class="on k pop" style="--in: 7240; --dur: 500">1</i></i>
+      <i class="s3-tl-n k pop" style="--in: 7000; left: 460px"><b>2</b></i>
+      <i class="s3-tl-n k pop" style="--in: 7120; left: 760px"><b>3</b></i>
+      <i class="s3-tl-n k pop" style="--in: 7240; left: 1060px"><b>4</b></i>
+      <p class="s3-tl-l k up" style="--in: 6940; left: 160px"><b>Fundação</b>Q1 2027</p>
+      <p class="s3-tl-l k up" style="--in: 7060; left: 460px"><b>Aceleração</b>Q2 2027</p>
+      <p class="s3-tl-l k up" style="--in: 7180; left: 760px"><b>Escala</b>Q3 2027</p>
+      <p class="s3-tl-l k up" style="--in: 7300; left: 1060px"><b>Valor</b>Q4 2027</p>
+      <i class="ring s3-ringv k ring-x" style="--in: 7240; --dur: 700; left: 160px; top: 490px; width: 220px; height: 220px; margin: -110px 0 0 -110px"></i>
+      <i class="beacon k fade" style="--in: 7420; --dur: 300; left: 160px; top: 490px"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i>
+    </div>
+    <p class="s3-hudr k fade" style="--in: 7000; --dur: 400">onda <b>01/04</b> · roadmap <em><span class="num-n k counter" style="--n0: 0; --n1: 25; --in: 7240; --dur: 600"></span>%</em></p>
+    <p class="s3-fxon k up" style="--in: 7150; --dur: 500"><i><svg viewBox="0 0 24 24"><use href="#i-wand"/></svg></i>Timeline Motion<span>· aplicado</span></p>
+  </div></div>
+  <div class="s3-done k pop" style="--in: 6920; --dur: 520; left: 1268px; top: 204px"><i><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i>Pronto para usar</div>
+  <svg class="spark k pop" style="--in: 7000; left: 1418px; top: 196px; width: 30px; height: 30px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: 7100; left: 1452px; top: 252px; width: 20px; height: 20px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 500" href="#i-spark"/></svg>
+  <svg class="spark k pop" style="--in: 7200; left: 452px; top: 760px; width: 26px; height: 26px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 300" href="#i-spark"/></svg>
+  <i class="leak k leak-x" style="--in: 6260; --dur: 1100"></i>
+
+  <!-- ============ 2 · A BIBLIOTECA: galeria 3D (Carousel / Horizontal Gallery) ============ -->
+  <div class="s3-lib k s3-drum" style="--in: 0; --dur: 8380; left: 0; top: 0; width: 1920px; height: 1080px">
+    <div class="s3-gal">
+
+      <!-- 02 · Icon Motion -->
+      <div class="s3-card" style="--ix: 0"><div class="s3-ci k s3-fm">
+        <div class="s3-ch"><b>02 <span>/ 40</span></b><span class="s3-tg" data-f="mov"><i></i>Movimento</span></div>
+        <div class="s3-st s3-dicn">
+          <div class="s3-icb l bob" style="--lph: 0; left: 30px"><svg viewBox="0 0 48 48"><path class="l s3-lpd" pathLength="1" d="M7 41h34"/><path class="l s3-lpd" pathLength="1" style="--lph: 250" d="M12 35V25M20 35V17M28 35V21M36 35V10"/></svg></div>
+          <div class="s3-icb on l bob" style="--lph: 500; left: 118px"><svg viewBox="0 0 48 48"><path class="l s3-lpd" pathLength="1" style="--lph: 600" d="M24 6q0 18 18 18q-18 0-18 18q0-18-18-18q18 0 18-18z"/></svg></div>
+          <div class="s3-icb l bob" style="--lph: 1000; left: 206px"><svg viewBox="0 0 48 48"><circle class="l s3-lpd" pathLength="1" style="--lph: 1100" cx="24" cy="24" r="17"/><path class="l s3-lpd" pathLength="1" style="--lph: 1400" d="M15.5 24.5l6 6L33 18.5"/></svg></div>
+          <p class="s3-icl"><span>gráfico</span><span>faísca</span><span>check</span></p>
+        </div>
+        <p class="s3-nm">Icon Motion</p>
+        <p class="s3-ds">Ícones desenhados traço a traço</p>
+        <p class="s3-tags"><i>Traço</i><i>Loop</i><i>Ícones</i></p>
+        <div class="s3-ft"><span>loop · 2,6 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 06 · Glow / Light Sweep -->
+      <div class="s3-card" style="--ix: 1"><div class="s3-ci k s3-fm">
+        <div class="s3-ch"><b>06 <span>/ 40</span></b><span class="s3-tg" data-f="mov"><i></i>Movimento</span></div>
+        <div class="s3-st s3-dglw">
+          <i class="s3-gring l pulse" style="--ldur: 2000"></i>
+          <div class="s3-kpi">
+            <small>índice de engajamento</small>
+            <div class="s3-kv"><b>4,6</b><span>/ 5</span><i class="shim l sweep-x" style="--ldur: 2200"></i></div>
+            <em>+0,8 vs. T2</em>
+            <p class="s3-kb"><i></i><i></i><i></i><i class="hot"></i></p>
+          </div>
+        </div>
+        <p class="s3-nm">Glow · Light Sweep</p>
+        <p class="s3-ds">Luz que varre e anel que pulsa</p>
+        <p class="s3-tags"><i>Brilho</i><i>Varredura</i><i>KPI</i></p>
+        <div class="s3-ft"><span>loop · 2,2 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 01 · Motion Graphics -->
+      <div class="s3-card" style="--ix: 2"><div class="s3-ci k s3-fm">
+        <div class="s3-ch"><b>01 <span>/ 40</span></b><span class="s3-tg" data-f="mov"><i></i>Movimento</span></div>
+        <div class="s3-st s3-dmg">
+          <svg class="s3-mgc" viewBox="0 0 120 120" fill="none" aria-hidden="true">
+            <circle class="l s3-lpd" style="--ldur: 3000" pathLength="1" cx="60" cy="60" r="52" stroke="#c9a6ff" stroke-width="3" transform="rotate(-90 60 60)"/>
+            <g class="l spin" style="--ldur: 9000"><circle cx="60" cy="60" r="40" stroke="rgba(201,166,255,.6)" stroke-width="2" stroke-dasharray="4 6"/></g>
+            <text x="60" y="66" text-anchor="middle">T3</text>
+          </svg>
+          <i class="s3-mgq l pulse" style="--ldur: 1400"></i>
+          <div class="s3-mgt"><small>capítulo 02 · plano</small><b>Onde o plano <em>acelera</em></b><i class="l s3-lpg" style="--ldur: 3000; --lph: 300"></i></div>
+          <div class="s3-mgs">
+            <span><b>38</b>processos<i class="l s3-lpg" style="--ldur: 3000; --lph: 500"></i></span>
+            <span><b>12</b>frentes<i class="l s3-lpg" style="--ldur: 3000; --lph: 650"></i></span>
+            <span><b>4,7</b>milhões<i class="l s3-lpg" style="--ldur: 3000; --lph: 800"></i></span>
+          </div>
+        </div>
+        <p class="s3-nm">Motion Graphics</p>
+        <p class="s3-ds">Formas, linhas e números em cena</p>
+        <p class="s3-tags"><i>Formas</i><i>Linhas</i><i>Dados</i></p>
+        <div class="s3-ft"><span>loop · 3 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 11 · Animated Typography -->
+      <div class="s3-card" style="--ix: 3"><div class="s3-ci k s3-fm">
+        <div class="s3-ch"><b>11 <span>/ 40</span></b><span class="s3-tg" data-f="mov"><i></i>Movimento</span></div>
+        <div class="s3-st s3-dtyp">
+          <small>resultado · T3</small>
+          <p class="s3-ty1"><span class="l s3-lpw">Prenda</span> <span class="l s3-lpw" style="--lph: 160">o</span></p>
+          <p class="s3-ty2"><span class="l s3-lpw" style="--lph: 320">olhar</span><i class="l s3-lpg" style="--ldur: 2800; --lph: 700"></i></p>
+        </div>
+        <p class="s3-nm">Animated Typography</p>
+        <p class="s3-ds">Palavra a palavra, com máscara</p>
+        <p class="s3-tags"><i>Palavra</i><i>Máscara</i><i>Destaque</i></p>
+        <div class="s3-ft"><span>loop · 2,8 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 03 · Hologram 3D Cards -->
+      <div class="s3-card" style="--ix: 4"><div class="s3-ci k s3-fp">
+        <div class="s3-ch"><b>03 <span>/ 40</span></b><span class="s3-tg" data-f="pro"><i></i>Profundidade</span></div>
+        <div class="s3-st s3-dholo">
+          <div class="s3-hp"><div class="s3-hc l tilt" style="--ldur: 4200">
+            <small>kickoff · 2027</small><b>Plano 2027</b>
+            <p><span><b>128</b>pessoas</span><span><b>14</b>times</span><span><b>6</b>ondas</span></p>
+            <i class="s3-hdot"></i><i class="s3-holo l sweep-x" style="--ldur: 2600"></i>
+          </div></div>
+        </div>
+        <p class="s3-nm">Hologram 3D Cards</p>
+        <p class="s3-ds">Cartão em 3D com brilho holográfico</p>
+        <p class="s3-tags"><i>Tilt 3D</i><i>Glow</i><i>Holograma</i></p>
+        <div class="s3-ft"><span>loop · 4,2 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 04 · 3D Tilt / Perspective -->
+      <div class="s3-card" style="--ix: 5"><div class="s3-ci k s3-fp">
+        <div class="s3-ch"><b>04 <span>/ 40</span></b><span class="s3-tg" data-f="pro"><i></i>Profundidade</span></div>
+        <div class="s3-st s3-dtilt">
+          <div class="s3-tp"><div class="s3-tk l s3-lpx" style="--ldur: 3600">
+            <i class="z0" style="--z: 0"></i><i class="z1" style="--z: 1"></i><i class="z2" style="--z: 2"></i>
+            <i class="z3" style="--z: 3"><b></b><b></b><b class="hot"></b><b></b></i>
+          </div></div>
+          <p class="s3-tl"><span>experiência</span><span>aplicações</span><span>integrações</span><span>base</span></p>
+        </div>
+        <p class="s3-nm">3D Tilt · Perspective</p>
+        <p class="s3-ds">Camadas que se abrem em 3D</p>
+        <p class="s3-tags"><i>Camadas</i><i>Perspectiva</i><i>Órbita</i></p>
+        <div class="s3-ft"><span>loop · 3,6 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 31 · Shimmer / Holographic Sweep -->
+      <div class="s3-card" style="--ix: 6"><div class="s3-ci k s3-fp">
+        <div class="s3-ch"><b>31 <span>/ 40</span></b><span class="s3-tg" data-f="pro"><i></i>Profundidade</span></div>
+        <div class="s3-st s3-dshim">
+          <div class="s3-sk"><i style="width: 72%"></i><p><b></b><b></b></p><i></i><i style="width: 58%"></i><i></i><i style="width: 80%"></i><i class="shim l sweep-x" style="--ldur: 1800"></i></div>
+          <div class="s3-seal">
+            <svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 4l24 14v28L32 60 8 46V18z" fill="rgba(139,61,255,.25)" stroke="#c9a6ff" stroke-width="2"/><use href="#hl-mark" x="17" y="17" width="30" height="30"/></svg>
+            <b>Selo Halor</b><small>nível 3 · 2027</small>
+            <i class="s3-holo l sweep-x" style="--ldur: 2600; --lph: 900"></i>
+          </div>
+        </div>
+        <p class="s3-nm">Shimmer · Holographic</p>
+        <p class="s3-ds">Esqueleto e selo com varredura</p>
+        <p class="s3-tags"><i>Esqueleto</i><i>Selo</i><i>Brilho</i></p>
+        <div class="s3-ft"><span>loop · 2,6 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 12 · Counter Animation -->
+      <div class="s3-card" style="--ix: 7"><div class="s3-ci k s3-fd">
+        <div class="s3-ch"><b>12 <span>/ 40</span></b><span class="s3-tg" data-f="dad"><i></i>Dados</span></div>
+        <div class="s3-st s3-dcnt">
+          <div class="s3-cm"><small>iniciativas concluídas</small><b><span class="num-n l s3-lpn" style="--n1: 127; --ldur: 3000"></span></b><em>+31 no trimestre</em><p class="s3-cb"><i class="l s3-lpg" style="--ldur: 3000"></i></p></div>
+          <div class="s3-cs"><small>adoção</small><b><span class="num-n l s3-lpn" style="--n1: 68; --ldur: 3000; --lph: 250"></span>%</b><p class="s3-cb"><i class="l s3-lpg" style="--ldur: 3000; --lph: 250; --w: .68"></i></p><small>horas livres</small><b><span class="num-n l s3-lpn" style="--n1: 12; --ldur: 3000; --lph: 400"></span> mil</b></div>
+        </div>
+        <p class="s3-nm">Counter Animation</p>
+        <p class="s3-ds">Números que contam até a meta</p>
+        <p class="s3-tags"><i>Contagem</i><i>Meta</i><i>Barra</i></p>
+        <div class="s3-ft"><span>loop · 3 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 16 · Chart Build -->
+      <div class="s3-card" style="--ix: 8"><div class="s3-ci k s3-fd">
+        <div class="s3-ch"><b>16 <span>/ 40</span></b><span class="s3-tg" data-f="dad"><i></i>Dados</span></div>
+        <div class="s3-st s3-dchart">
+          <small>entregas · 2027</small>
+          <p class="s3-bars"><i class="l s3-lpb" style="--v: .3"></i><i class="l s3-lpb" style="--v: .42; --lph: 90"></i><i class="l s3-lpb" style="--v: .38; --lph: 180"></i><i class="l s3-lpb" style="--v: .55; --lph: 270"></i><i class="l s3-lpb" style="--v: .62; --lph: 360"></i><i class="l s3-lpb" style="--v: .58; --lph: 450"></i><i class="l s3-lpb hot" style="--v: .86; --lph: 540"></i></p>
+          <svg viewBox="0 0 276 120" fill="none" aria-hidden="true"><path class="l s3-lpd" style="--ldur: 2800; --lph: 700" pathLength="1" d="M20 92L58 80L96 84L134 62L172 52L210 56L250 22" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><circle class="l s3-lpp" style="--lph: 1300" cx="250" cy="22" r="6" fill="#fff"/></svg>
+        </div>
+        <p class="s3-nm">Chart Build</p>
+        <p class="s3-ds">Barras, linha e pontos em cena</p>
+        <p class="s3-tags"><i>Barras</i><i>Linha</i><i>Pontos</i></p>
+        <div class="s3-ft"><span>loop · 2,8 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 14 · Heatmap Animation -->
+      <div class="s3-card" style="--ix: 9"><div class="s3-ci k s3-fd">
+        <div class="s3-ch"><b>14 <span>/ 40</span></b><span class="s3-tg" data-f="dad"><i></i>Dados</span></div>
+        <div class="s3-st s3-dheat">
+          <p class="s3-hm">
+            <i class="l s3-lph" style="--a: .9; --lph: 0"></i><i class="l s3-lph" style="--a: .25; --lph: 110"></i><i class="l s3-lph" style="--a: .5; --lph: 220"></i><i class="l s3-lph" style="--a: .15; --lph: 330"></i><i class="l s3-lph" style="--a: .7; --lph: 440"></i><i class="l s3-lph" style="--a: .35; --lph: 550"></i><i class="l s3-lph" style="--a: .6; --lph: 660"></i>
+            <i class="l s3-lph" style="--a: .3; --lph: 110"></i><i class="l s3-lph" style="--a: .55; --lph: 220"></i><i class="l s3-lph" style="--a: .2; --lph: 330"></i><i class="l s3-lph" style="--a: .8; --lph: 440"></i><i class="l s3-lph" style="--a: .4; --lph: 550"></i><i class="l s3-lph" style="--a: .15; --lph: 660"></i><i class="l s3-lph" style="--a: .75; --lph: 770"></i>
+            <i class="l s3-lph" style="--a: .65; --lph: 220"></i><i class="l s3-lph" style="--a: .45; --lph: 330"></i><i class="l s3-lph" style="--a: .85; --lph: 440"></i><i class="l s3-lph" style="--a: .3; --lph: 550"></i><i class="l s3-lph" style="--a: .6; --lph: 660"></i><i class="l s3-lph" style="--a: .2; --lph: 770"></i><i class="l s3-lph" style="--a: .7; --lph: 880"></i>
+            <i class="l s3-lph" style="--a: .2; --lph: 330"></i><i class="l s3-lph" style="--a: .7; --lph: 440"></i><i class="l s3-lph" style="--a: .35; --lph: 550"></i><i class="l s3-lph" style="--a: .55; --lph: 660"></i><i class="l s3-lph" style="--a: .25; --lph: 770"></i><i class="l s3-lph" style="--a: .5; --lph: 880"></i><i class="hot">92</i>
+          </p>
+          <span class="s3-htip">92 · prioridade alta</span>
+        </div>
+        <p class="s3-nm">Heatmap Animation</p>
+        <p class="s3-ds">A matriz acende onde há calor</p>
+        <p class="s3-tags"><i>Matriz</i><i>Calor</i><i>Dica</i></p>
+        <div class="s3-ft"><span>loop · 1,8 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 38 · Timeline Motion (o cartão escolhido em "prontos para usar") -->
+      <div class="s3-card s3-pick" style="--ix: 10; --s3-ns: 0"><div class="s3-fly k" style="--in: 6420; --dur: 380"><div class="s3-ci k s3-fn">
+        <div class="s3-ch"><b>38 <span>/ 40</span></b><span class="s3-tg" data-f="nar"><i></i>Narrativa</span></div>
+        <div class="s3-st s3-dtl">
+          <div class="s3-tc"><small>onda 02 · Q2</small><b>Aceleração</b></div>
+          <p class="s3-tline"><i class="l s3-lpt" style="--ldur: 3200"></i></p>
+          <i class="s3-tn l s3-lpo1" style="--ldur: 3200; left: 40px">1</i>
+          <i class="s3-tn l s3-lpo2" style="--ldur: 3200; left: 116px">2</i>
+          <i class="s3-tn l s3-lpo3" style="--ldur: 3200; left: 192px">3</i>
+          <i class="s3-tn l s3-lpo4" style="--ldur: 3200; left: 268px">4</i>
+          <p class="s3-tlb"><span>Fundação</span><span>Aceleração</span><span>Escala</span><span>Valor</span></p>
+        </div>
+        <p class="s3-nm">Timeline Motion</p>
+        <p class="s3-ds">Marcos que acendem onda a onda</p>
+        <p class="s3-tags"><i>Marcos</i><i>Ondas</i><i>Progresso</i></p>
+        <div class="s3-ft"><span>loop · 3,2 s</span><em class="s3-use"><b class="k s3-press" style="--in: 6180; --dur: 260">Usar</b></em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+        <i class="s3-picked k fade" style="--in: 6180; --dur: 200"></i>
+      </div></div></div>
+
+      <!-- 18 · Connector / Flow Line -->
+      <div class="s3-card" style="--ix: 11"><div class="s3-ci k s3-fn">
+        <div class="s3-ch"><b>18 <span>/ 40</span></b><span class="s3-tg" data-f="nar"><i></i>Narrativa</span></div>
+        <div class="s3-st s3-dflow">
+          <svg viewBox="0 0 308 196" fill="none" aria-hidden="true">
+            <path class="l dash" d="M84 52C118 52 112 98 140 98" stroke="#c9a6ff" stroke-width="2.5" stroke-dasharray="6 6"/>
+            <path class="l dash" d="M84 144C118 144 112 98 140 98" stroke="#c9a6ff" stroke-width="2.5" stroke-dasharray="6 6"/>
+            <path class="l dash" d="M196 98C226 98 220 52 230 52" stroke="#c9a6ff" stroke-width="2.5" stroke-dasharray="6 6"/>
+            <path class="l dash" d="M196 98C226 98 220 144 230 144" stroke="#c9a6ff" stroke-width="2.5" stroke-dasharray="6 6"/>
+          </svg>
+          <i class="s3-ride l" style="--ldur: 1600; offset-path: path('M84 52C118 52 112 98 140 98')"></i>
+          <i class="s3-ride l" style="--ldur: 1600; --lph: 800; offset-path: path('M84 144C118 144 112 98 140 98')"></i>
+          <i class="s3-ride l" style="--ldur: 1600; --lph: 400; offset-path: path('M196 98C226 98 220 52 230 52')"></i>
+          <i class="s3-ride l" style="--ldur: 1600; --lph: 1200; offset-path: path('M196 98C226 98 220 144 230 144')"></i>
+          <span class="s3-nd" style="left: 14px; top: 34px"><b>Fontes</b>dados</span>
+          <span class="s3-nd" style="left: 14px; top: 126px"><b>Pesquisa</b>clientes</span>
+          <span class="s3-nd hub" style="left: 140px; top: 78px"><b>Plano</b>2027</span>
+          <span class="s3-nd" style="left: 230px; top: 34px; width: 66px"><b>Metas</b>T1</span>
+          <span class="s3-nd" style="left: 230px; top: 126px; width: 66px"><b>Times</b>T2</span>
+        </div>
+        <p class="s3-nm">Connector · Flow Line</p>
+        <p class="s3-ds">A história flui de nó em nó</p>
+        <p class="s3-tags"><i>Nós</i><i>Fluxo</i><i>Pacotes</i></p>
+        <div class="s3-ft"><span>loop · 1,6 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 24 · Spotlight Focus -->
+      <div class="s3-card" style="--ix: 12"><div class="s3-ci k s3-fn">
+        <div class="s3-ch"><b>24 <span>/ 40</span></b><span class="s3-tg" data-f="nar"><i></i>Narrativa</span></div>
+        <div class="s3-st s3-dspot">
+          <p class="s3-sg"><span>Portal</span><span>Agenda</span><span>Painel</span><span>Dados</span><span>Times</span><span>Metas</span></p>
+          <i class="s3-sv l s3-lps" style="--ldur: 3600"></i>
+        </div>
+        <p class="s3-nm">Spotlight Focus</p>
+        <p class="s3-ds">Um foco de luz conduz o olhar</p>
+        <p class="s3-tags"><i>Foco</i><i>Passos</i><i>Penumbra</i></p>
+        <div class="s3-ft"><span>loop · 3,6 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+      <!-- 19 · Pulse / Beacon -->
+      <div class="s3-card" style="--ix: 13"><div class="s3-ci k s3-fn">
+        <div class="s3-ch"><b>19 <span>/ 40</span></b><span class="s3-tg" data-f="nar"><i></i>Narrativa</span></div>
+        <div class="s3-st s3-dbcn">
+          <svg viewBox="0 0 308 196" fill="none" aria-hidden="true"><path d="M70 60L150 110L240 56M150 110L210 160M70 60L60 150" stroke="rgba(201,166,255,.35)" stroke-width="2"/></svg>
+          <i class="beacon" style="left: 70px; top: 60px"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i>
+          <i class="beacon" style="left: 150px; top: 110px"><b class="l beat" style="--lph: 350"></b><b class="l beat" style="--lph: 1050"></b></i>
+          <span class="s3-bn hot" style="left: 70px; top: 60px">T1</span><span class="s3-bn hot" style="left: 150px; top: 110px">T2</span>
+          <span class="s3-bn" style="left: 240px; top: 56px">T3</span><span class="s3-bn" style="left: 210px; top: 160px">T4</span><span class="s3-bn" style="left: 60px; top: 150px">T5</span>
+        </div>
+        <p class="s3-nm">Pulse · Beacon</p>
+        <p class="s3-ds">Pulsa onde está a atenção</p>
+        <p class="s3-tags"><i>Anéis</i><i>Alerta</i><i>Rede</i></p>
+        <div class="s3-ft"><span>loop · 1,4 s</span><em>Usar</em></div>
+        <i class="s3-glow"></i><i class="s3-veil"></i>
+      </div></div>
+
+    </div>
+    <!-- trilho do carrossel (a posição segue a galeria) -->
+    <div class="s3-trk kx" style="--out: 6250; --xdur: 300"><div class="k fade" style="--in: 2500; --dur: 400"><i></i></div></div>
+  </div>
+
+  <!-- famílias: acendem na palavra (o cursor clica cada uma) -->
+  <div class="s3-fams kx x-down" style="--out: 6250; --xdur: 360; left: 0; top: 0; width: 1920px; height: 1080px">
+    <div class="s3-fam k up" style="--in: calc(var(--w-animacoes) + 320); --i: 0; --stag: 80; left: 473px" data-f="mov"><i class="s3-dot"></i><b>Movimento</b><em>12</em>
+      <span class="s3-fon k s3-chipon" style="--in: var(--w-movimento)"><i class="s3-dot"></i><b>Movimento</b><em>12</em></span>
+      <span class="s3-fvis k s3-chipoff" style="--in: var(--w-profundidade)"><i class="s3-dot"></i><b>Movimento</b><em>12</em></span></div>
+    <div class="s3-fam k up" style="--in: calc(var(--w-animacoes) + 320); --i: 1; --stag: 80; left: 721px" data-f="pro"><i class="s3-dot"></i><b>Profundidade</b><em>9</em>
+      <span class="s3-fon k s3-chipon" style="--in: var(--w-profundidade)"><i class="s3-dot"></i><b>Profundidade</b><em>9</em></span>
+      <span class="s3-fvis k s3-chipoff" style="--in: var(--w-dados)"><i class="s3-dot"></i><b>Profundidade</b><em>9</em></span></div>
+    <div class="s3-fam k up" style="--in: calc(var(--w-animacoes) + 320); --i: 2; --stag: 80; left: 969px" data-f="dad"><i class="s3-dot"></i><b>Dados</b><em>11</em>
+      <span class="s3-fon k s3-chipon" style="--in: var(--w-dados)"><i class="s3-dot"></i><b>Dados</b><em>11</em></span>
+      <span class="s3-fvis k s3-chipoff" style="--in: var(--w-narrativa)"><i class="s3-dot"></i><b>Dados</b><em>11</em></span></div>
+    <div class="s3-fam k up" style="--in: calc(var(--w-animacoes) + 320); --i: 3; --stag: 80; left: 1217px" data-f="nar"><i class="s3-dot"></i><b>Narrativa</b><em>8</em>
+      <span class="s3-fon k s3-chipon" style="--in: var(--w-narrativa)"><i class="s3-dot"></i><b>Narrativa</b><em>8</em></span></div>
+  </div>
+
+  <!-- cliques com brilho -->
+  <i class="click k" style="--in: var(--w-movimento); left: 664px; top: 810px"></i>
+  <i class="click k" style="--in: var(--w-profundidade); left: 926px; top: 810px"></i>
+  <i class="click k" style="--in: var(--w-dados); left: 1160px; top: 810px"></i>
+  <i class="click k" style="--in: var(--w-narrativa); left: 1413px; top: 810px"></i>
+  <i class="click k" style="--in: var(--w-prontos); left: 1082px; top: 687px"></i>
+  <i class="click k" style="--in: var(--w-usar); --dur: 900; left: 960px; top: 610px"></i>
+  <i class="ring s3-ringv k ring-x" style="--in: var(--w-usar); --dur: 900; left: 960px; top: 610px"></i>
+  <div class="s3-conf confetti" style="left: 960px; top: 610px">
+    <i class="k fly" style="--in: calc(var(--w-usar) + 0); --dx: -187px; --dy: 145px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 30); --dx: -303px; --dy: 165px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 60); --dx: -400px; --dy: 16px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 90); --dx: -248px; --dy: -4px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 0); --dx: -258px; --dy: -164px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 30); --dx: -206px; --dy: -214px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 60); --dx: -47px; --dy: -205px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 90); --dx: 59px; --dy: -200px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 0); --dx: 206px; --dy: -274px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 30); --dx: 204px; --dy: -69px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 60); --dx: 314px; --dy: -81px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 90); --dx: 400px; --dy: 76px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 0); --dx: 239px; --dy: 83px"></i>
+    <i class="k fly" style="--in: calc(var(--w-usar) + 30); --dx: 237px; --dy: 244px"></i>
+  </div>
+
+  <!-- cursor com halo: entra, clica cada família, clica "Usar" e arrasta o cartão para o slide -->
+  <div class="kx" style="--out: 7350; --xdur: 400; left: 0; top: 0">
+    <div class="k fade" style="--in: 2600; --dur: 300">
+      <div class="k move-xy" style="--in: 2640; --dur: 320; --dx: -36px; --dy: -90px">
+        <div class="k move-xy" style="--in: 3380; --dur: 320; --dx: 262px; --dy: 0px">
+          <div class="k move-xy" style="--in: 4460; --dur: 340; --dx: 234px; --dy: 0px">
+            <div class="k move-xy" style="--in: 5010; --dur: 270; --dx: 253px; --dy: 0px">
+              <div class="k move-xy" style="--in: 5640; --dur: 480; --dx: -331px; --dy: -123px">
+                <div class="k move-xy" style="--in: 6420; --dur: 340; --dx: -122px; --dy: -77px">
+                  <div class="k move-xy" style="--in: 7000; --dur: 500; --dx: 220px; --dy: 140px">
+                    <svg class="gcur k s3-cur" style="--in: 0; --dur: 8380; left: 715px; top: 916px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bia" data-pose="idle" data-face="happy" data-props="wand" data-keys="@sao:pose=wave;@quarenta:pose=present,face=wow;@efeitos+300:pose=cheer,face=laugh;@animacoes+200:pose=point-right,face=happy;@profundidade:pose=look-up,face=wow;@dados:pose=point-right,face=focus;@narrativa:pose=present,face=proud;@prontos:pose=point-right,face=wow;@usar:pose=celebrate,face=laugh;@usar+900:pose=cheer,face=happy" style="--x: 150px; --y: 968px; --s: .8"></div>
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@quarenta:pose=look-up,face=surprised;@animacoes+200:pose=idle,face=happy;@movimento:face=wow;@profundidade:pose=think,face=think;@dados:pose=hands-hips,face=happy;@narrativa:pose=idle,face=wow;@usar:pose=jump,face=laugh;@usar+600:pose=cheer,face=laugh" style="--x: 1770px; --y: 968px; --s: .78"></div>
 </section>

@@ -1,10 +1,14 @@
-/* 03 · 04 · 3D Tilt / Hologram Card · camadas que inclinam com o cursor e reflexo que segue a luz. */
-import { q, vtClamp, type VtCtx, type VtDemo } from '../ctx';
+/* 03 · 04 · 3D Tilt / Hologram Card · camadas que inclinam com o cursor e reflexo que segue a luz.
+   Clique (ou Enter) vira o cartão e mostra o verso com o detalhe. Editável: número, cor, inclinação e reflexo. */
+import { q, qa, vtAccent, vtClamp, type VtCtx, type VtDemo } from '../ctx';
 
 const KEYS: Record<string, [number, number]> = { ArrowLeft: [0, -5], ArrowRight: [0, 5], ArrowUp: [5, 0], ArrowDown: [-5, 0] };
+const SHARE = [.55, .29, .16];
 
 export function tiltDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
-  const box = q('.vt-ti', card), c = q('.vt-ti-card', box), MAX = 16;
+  const box = q('.vt-ti', card), c = q('.vt-ti-card', box), live = q('.vt-ti-live', box);
+  const num = q('.vt-ti-l2 b', c), bnum = q('.vt-ti-bt b', c), cap = q('.vt-ti-l2 span', c), parts = qa('.vt-ti-bl li', c);
+  let MAX = 16, flip = false;
   let tx = 0, ty = 0, rx = 0, ry = 0, mx = 50, my = 50, tmx = 50, tmy = 50;
   let manual = false, running = false, raf = 0, t0 = performance.now(), hold = 0;
 
@@ -15,8 +19,8 @@ export function tiltDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
   const frame = (t: number) => {
     if (!running) return;
     if (!manual) {
-      const s = (t - t0) / 1000;
-      ty = Math.sin(s * .8) * 11; tx = Math.cos(s * .6) * 6;
+      const s = (t - t0) / 1000, a = MAX / 16;
+      ty = Math.sin(s * .8) * 11 * a; tx = Math.cos(s * .6) * 6 * a;
       tmx = 50 + ty * 3.2; tmy = 50 - tx * 3.2;
     }
     rx += (tx - rx) * .09; ry += (ty - ry) * .09; mx += (tmx - mx) * .09; my += (tmy - my) * .09;
@@ -24,6 +28,16 @@ export function tiltDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     raf = ctx.frame(frame);
   };
   const release = (ms: number) => { hold = ctx.later(() => { manual = false; t0 = performance.now(); }, ms); };
+  const label = () => {
+    c.setAttribute('aria-label', `Cartão holográfico com a marca do cliente: ${num.textContent}, ${(cap.textContent || '').toLowerCase()}. ${flip ? 'Mostrando o verso. Enter volta para a frente.' : 'Enter vira o cartão e mostra o detalhe; as setas inclinam.'}`);
+  };
+  const turn = (on: boolean) => {
+    flip = on;
+    c.classList.toggle('is-flip', on);
+    c.setAttribute('aria-pressed', String(on));
+    label();
+    live.textContent = on ? `Verso: ${parts.map(p => `${p.querySelector('span')?.textContent} ${p.querySelector('b')?.textContent}`).join(', ')}.` : 'Frente do cartão.';
+  };
 
   ctx.on(box, 'pointermove', e => {
     if (ctx.reduced) return;
@@ -34,7 +48,9 @@ export function tiltDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     tmx = px * 100; tmy = py * 100;
   });
   ctx.on(box, 'pointerleave', () => { tx = ty = 0; tmx = tmy = 50; release(900); });
+  ctx.on(c, 'click', () => turn(!flip));
   ctx.on(c, 'keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.click(); return; }
     const k = KEYS[e.key];
     if (!k || ctx.reduced) return;
     e.preventDefault(); manual = true; ctx.cancel(hold);
@@ -42,13 +58,39 @@ export function tiltDemo(card: HTMLElement, ctx: VtCtx): VtDemo {
     tmx = 50 + ty * 3; tmy = 50 - tx * 3;
     release(2500);
   });
-  ctx.defer(() => { running = false; ['--rx', '--ry', '--mx', '--my'].forEach(p => c.style.removeProperty(p)); });
+  ctx.defer(() => { running = false; });
 
   const resume = () => { if (running || ctx.reduced) return; running = true; raf = ctx.frame(frame); };
   const pause = () => { running = false; ctx.unframe(raf); };
   return {
     start: resume, resume, pause,
-    replay() { manual = false; t0 = performance.now(); ry = -38; rx = 10; resume(); },
-    still() { rx = 6; ry = -12; mx = 30; my = 30; apply(); }
+    replay() { turn(false); manual = false; t0 = performance.now(); ry = -38; rx = 10; resume(); },
+    still() { rx = 6; ry = -12; mx = 30; my = 30; apply(); },
+    fields: [
+      { k: 'num', t: 'text', l: 'Número', v: '+38%', max: 8 },
+      { k: 'acc', t: 'color', l: 'Cor', v: '#a970ff' },
+      { k: 'tilt', t: 'range', l: 'Inclinação', v: 16, min: 0, max: 30, step: 1, fmt: v => v + '°' },
+      { k: 'sheen', t: 'toggle', l: 'Reflexo', v: true }
+    ],
+    set(k, v) {
+      if (k === 'num') {
+        const s = String(v);
+        num.textContent = bnum.textContent = s || ' ';
+        /* o verso reparte o número nas três origens, na mesma proporção */
+        const m = s.match(/^([^\d−-]*)([−-]?)(\d+(?:[.,]\d+)?)(.*)$/);
+        if (m) {
+          const n = parseFloat(m[3].replace(',', '.')), neg = !!m[2];
+          let left = Math.round(n);
+          parts.forEach((p, i) => {
+            const x = i < 2 ? Math.round(n * SHARE[i]) : left; left -= x;
+            const b = p.querySelector('b'); if (b) b.textContent = `${neg ? '−' : (m[1] || '+')}${x}${m[4] || '%'}`;
+          });
+        }
+        label();
+      } else if (k === 'acc') vtAccent(card, String(v));
+      else if (k === 'tilt') { MAX = Number(v); if (ctx.reduced) { rx = MAX * .4; ry = -MAX * .75; apply(); } }
+      else if (k === 'sheen') card.classList.toggle('no-sheen', !v);
+    },
+    reset() { turn(false); }
   };
 }

@@ -1,47 +1,242 @@
-<!-- CENA 4 · Personagens · a Bia pula para dentro do slide; ela e o cliente apontam, comemoram e conduzem -->
+<!-- CENA 4 · Personagens na apresentação · abre do slide de roadmap com que a cena 3 terminou (a câmera recua para dentro do Estúdio);
+     o painel de Personagens (Bia e Cliente) ganha vida; em "como a Bia" a Bia SAI do painel, voa em arco e pousa no slide; em modo apresentação
+     ela aponta um dado (Pulse / Beacon), comemora com confete e conduz a plateia de marco em marco levando um Spotlight, com o Cliente reagindo -->
 <section class="scene s4" id="s4" data-world="night">
-  <div class="studio dark-frame k zoom" style="--in: 0; --dur: 600; left: 300px; top: 160px">
-    <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Resultados do T3</span><span class="su-saved">Salvo</span><span class="su-go">Apresentar</span></div>
-    <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span>Gráficos</span><span>Cards</span><span class="k rib-on" style="--in: var(--w-personagens)">Personagens</span><span><svg><use href="#i-wand"/></svg>Efeitos</span></div>
-    <div class="su-body">
-      <div class="su-rail"><i></i><i></i><i class="on"></i><i></i><i></i></div>
-      <div class="su-canvas">
-        <div class="ch-slide">
-          <p class="ed-k">Resultados</p>
-          <p class="t">O T3 em um gráfico</p>
-          <div class="bars"><i style="--v:.42"></i><i style="--v:.6"></i><i class="hot" style="--v:.95"></i><i style="--v:.7"></i></div>
+
+  <!-- luz de palco atrás do slide (acende no modo apresentação; baixa durante o Spotlight) -->
+  <i class="s4-stage k s4-stagek" style="--in: 0; --dur: 9020"></i>
+  <i class="s4-dark k s4-darkk" style="--in: 0; --dur: 9020"></i>
+
+  <div class="s4-cam k s4-pull" style="--in: 0; --dur: 700">
+
+    <!-- ============ FASE A · o Estúdio ============ -->
+    <div class="s4-stw kx s4-out" style="--out: 4110; --xdur: 450">
+      <div class="studio dark-frame s4-studio" style="left: 300px; top: 160px">
+        <div class="su-top"><svg class="mk"><use href="#hl-mark-paper"/></svg><span class="su-doc">Roadmap 2027</span><span class="su-saved">Salvo</span><span class="su-go s4-go"><b class="k s4-press" style="--in: 4100; --dur: 280"><svg viewBox="0 0 24 24"><use href="#i-play"/></svg>Apresentar</b></span></div>
+        <div class="su-rib"><span>Texto</span><span>Formas</span><span>Imagem</span><span>Gráficos</span><span>Cards</span><span class="k rib-on s4-tab" style="--in: var(--w-personagens)"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>Personagens</span><span><svg viewBox="0 0 24 24"><use href="#i-wand"/></svg>Efeitos</span></div>
+        <div class="su-body">
+          <div class="su-rail"><i></i><i></i><i class="on"></i><i></i><i></i></div>
+          <div class="su-canvas"></div>
+          <div class="su-insp s4-insp">
+            <!-- propriedades do slide (saem rápido quando o painel de personagens abre) -->
+            <div class="s4-props kx" style="--out: var(--w-personagens); --xdur: 160">
+              <p class="in-h">Slide 3 · linha do tempo</p>
+              <div class="in-fx"><svg viewBox="0 0 24 24"><use href="#i-wand"/></svg>Timeline Motion</div>
+              <div class="in-row"><span>Duração</span><b>3,2 s</b></div>
+              <div class="in-row"><span>Marcos</span><b>4 ondas</b></div>
+              <div class="in-row"><span>Entrada</span><b>Na palavra</b></div>
+            </div>
+            <!-- painel de personagens -->
+            <div class="s4-chars">
+              <p class="s4-ph k fade" style="--in: calc(var(--w-personagens) + 180); --dur: 300"><span>Personagens</span><em>2 no projeto</em></p>
+              <div class="s4-cc k s4-cpop" style="--in: calc(var(--w-personagens) + 220); top: 34px">
+                <div class="s4-ccs l s4-float" style="--ldur: 3000">
+                  <!-- a mini Bia do painel: some em "como" (é ela que sai voando) -->
+                  <div class="kx s4-off" style="--out: var(--w-como); --xdur: 60">
+                    <div class="bia" data-pose="idle" data-face="happy" data-props="" data-keys="@personagens+400:pose=wave,face=happy;@vivem:pose=point-right,face=wow;@dentro:pose=celebrate,face=laugh;@apresentacao:pose=walk,face=happy;@apresentacao+500:pose=hands-hips,face=proud" style="--x: 58px; --y: 170px; --s: .44"></div>
+                  </div>
+                  <i class="s4-slot k fade" style="--in: calc(var(--w-como) + 40); --dur: 300"></i>
+                </div>
+                <b>Bia</b><small>guia do Halor</small><span class="s4-pc">6 poses</span>
+                <span class="s4-live k pop" style="--in: 3720"><i></i>em cena</span>
+                <i class="s4-ccon k s4-cconk" style="--in: var(--w-como); --dur: 700"></i>
+              </div>
+              <div class="s4-cc k s4-cpop" style="--in: calc(var(--w-personagens) + 340); top: 226px">
+                <div class="s4-ccs l s4-float" style="--ldur: 3400; --lph: 900">
+                  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@vivem+300:pose=wave,face=happy;@dentro+300:pose=jump,face=laugh;@apresentacao+300:pose=hands-hips,face=wow;@como:pose=look-up,face=surprised;@bia+100:pose=cheer,face=laugh" style="--x: 58px; --y: 170px; --s: .42"></div>
+                </div>
+                <b>Cliente</b><small>plateia</small><span class="s4-pc">6 poses</span>
+              </div>
+              <p class="s4-ph s4-ph2 k fade" style="--in: calc(var(--w-personagens) + 420); --dur: 300"><span>Poses</span><em>arraste</em></p>
+              <div class="s4-poses k up" style="--in: calc(var(--w-personagens) + 460); --dur: 400">
+                <span>Apontar<i class="k s4-pon" style="--in: var(--w-vivem); --dur: 900">Apontar</i></span>
+                <span>Comemorar<i class="k s4-pon" style="--in: var(--w-dentro); --dur: 900">Comemorar</i></span>
+                <span>Conduzir<i class="k s4-pon" style="--in: var(--w-apresentacao); --dur: 1000">Conduzir</i></span>
+                <span>Acenar</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="su-insp ch-panel">
-        <p class="in-h">Personagens</p>
-        <div class="ch-card k pop" style="--in: var(--w-personagens)">
-          <div class="bia" data-pose="wave" data-face="happy" data-props="" style="--x: 120px; --y: 138px; --s: .38"></div>
-          <span>Bia</span><small>guia</small>
-          <i class="on k fade" style="--in: var(--w-bia); --dur: 250"></i>
+    </div>
+
+    <!-- ============ o slide (o mesmo com que a cena 3 terminou; no Estúdio fica reduzido no canvas) ============ -->
+    <div class="s4-sl k s4-present" style="--in: 4120; --dur: 440">
+      <p class="s4-k">Roadmap 2027 · quatro ondas</p>
+      <p class="s4-t">Da fundação ao valor em escala</p>
+      <p class="s4-hud">onda <b>0<span class="num-n k s4-onda" style="--in: 0; --dur: 9020"></span>/04</b> · roadmap <em><span class="num-n k s4-pct" style="--in: 0; --dur: 9020"></span>%</em></p>
+
+      <!-- linha do tempo (Timeline Motion) -->
+      <i class="s4-base"></i>
+      <i class="s4-fill k s4-fillk" style="--in: 0; --dur: 9020"></i>
+      <i class="s4-n" style="left: 160px"><b>1</b><i class="on">1</i><i class="on k s4-non" style="--in: 4560"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i></i>
+      <i class="s4-n" style="left: 460px"><b>2</b><i class="on k s4-non" style="--in: var(--w-apontam)"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i></i>
+      <i class="s4-n" style="left: 760px"><b>3</b><i class="on k s4-non" style="--in: var(--w-plateia)"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i></i>
+      <i class="s4-n" style="left: 1060px"><b>4</b><i class="on k s4-non" style="--in: 7480"><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i></i>
+      <p class="s4-lb" style="left: 160px"><b>Fundação<i class="k fade" style="--in: 4560">Fundação</i></b>Q1 2027</p>
+      <p class="s4-lb" style="left: 460px"><b>Aceleração<i class="k fade" style="--in: var(--w-apontam)">Aceleração</i></b>Q2 2027</p>
+      <p class="s4-lb" style="left: 760px"><b>Escala<i class="k fade" style="--in: var(--w-plateia)">Escala</i></b>Q3 2027</p>
+      <p class="s4-lb" style="left: 1060px"><b>Valor<i class="k fade" style="--in: 7480">Valor</i></b>Q4 2027</p>
+
+      <!-- beacon do marco 1 (continua o da cena 3) e dos marcos seguintes -->
+      <div class="kx" style="--out: var(--w-dentro); --xdur: 300; left: 160px; top: 490px"><i class="beacon s4-bcn"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i></div>
+      <div class="kx" style="--out: var(--w-conduzem); --xdur: 300; left: 460px; top: 490px"><i class="beacon s4-bcn k fade" style="--in: var(--w-apontam); --dur: 200"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i></div>
+      <div class="kx" style="left: 760px; top: 490px"><i class="beacon s4-bcn k fade" style="--in: var(--w-plateia); --dur: 200"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i></div>
+      <div class="kx" style="left: 1060px; top: 490px"><i class="beacon s4-bcn k fade" style="--in: 7480; --dur: 200"><b class="l beat"></b><b class="l beat" style="--lph: 700"></b></i></div>
+
+      <!-- pista de pouso da Bia (acima da linha, com anel pulsando) -->
+      <div class="s4-pad kx" style="--out: 3700; --xdur: 250"><div class="k fade" style="--in: var(--w-dentro); --dur: 400"><em class="l beat" style="--ldur: 1500"></em><em class="l beat" style="--ldur: 1500; --lph: 750"></em><i class="l spin" style="--ldur: 6000"></i><b class="l pulse"></b></div></div>
+      <p class="s4-padl kx" style="--out: var(--w-como); --xdur: 250"><span class="k fade" style="--in: calc(var(--w-dentro) + 150); --dur: 400">a Bia entra aqui<i></i></span></p>
+
+      <!-- "apontam": o dado (+38%) à direita do marco 2 -->
+      <div class="s4-kpw kx x-shrink" style="--out: var(--w-comemoram); --xdur: 220"><div class="s4-kpi k s4-kpop" style="--in: var(--w-apontam); --dur: 450"><b>+<span class="num-n k counter" style="--n0: 0; --n1: 38; --in: var(--w-apontam); --dur: 600"></span>%</b><em>adoção na onda 2</em></div></div>
+
+      <!-- "comemoram": flash e anel no marco 2, confete ATRÁS do cartão, o cartão do marco abre à direita -->
+      <i class="s4-flash k flash" style="--in: var(--w-comemoram); --dur: 700; left: 460px; top: 490px"></i>
+      <i class="ring s4-ringv k ring-x" style="--in: var(--w-comemoram); --dur: 900; left: 460px; top: 490px"></i>
+      <i class="ring s4-ringw k ring-x" style="--in: calc(var(--w-comemoram) + 120); --dur: 800; left: 460px; top: 490px"></i>
+      <div class="s4-confw kx" style="--out: var(--w-conduzem); --xdur: 300"><div class="s4-rays" style="left: 460px; top: 490px"><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 0deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 30deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 60deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 90deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 120deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 150deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 180deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 210deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 240deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 270deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 300deg"></i><i class="k s4-ray" style="--in: var(--w-comemoram); --r: 330deg"></i></div><div class="s4-conf" style="left: 460px; top: 490px">
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 3); --dx: -361px; --dy: -56px; --fall: 207px; --r: 611deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 48); --dx: -520px; --dy: -67px; --fall: 157px; --r: -196deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 72); --dx: -487px; --dy: -73px; --fall: 111px; --r: -83deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 102); --dx: -314px; --dy: -79px; --fall: 189px; --r: -428deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 114); --dx: -363px; --dy: -97px; --fall: 188px; --r: 382deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 147); --dx: -334px; --dy: -103px; --fall: 129px; --r: 415deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 12); --dx: -241px; --dy: -107px; --fall: 238px; --r: 139deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 32); --dx: -419px; --dy: -109px; --fall: 177px; --r: -113deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 68); --dx: -215px; --dy: -118px; --fall: 224px; --r: -326deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 90); --dx: -340px; --dy: -131px; --fall: 156px; --r: -604deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 114); --dx: -333px; --dy: -133px; --fall: 201px; --r: 122deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 147); --dx: -196px; --dy: -142px; --fall: 127px; --r: -297deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 22); --dx: -111px; --dy: -145px; --fall: 183px; --r: -293deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 44); --dx: -174px; --dy: -147px; --fall: 141px; --r: -522deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 75); --dx: -138px; --dy: -150px; --fall: 153px; --r: -155deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 100); --dx: -53px; --dy: -150px; --fall: 136px; --r: -578deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 108); --dx: -33px; --dy: -150px; --fall: 205px; --r: -458deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 136); --dx: -4px; --dy: -150px; --fall: 205px; --r: 212deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 27); --dx: 5px; --dy: -150px; --fall: 155px; --r: -465deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 53); --dx: 48px; --dy: -150px; --fall: 142px; --r: 516deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 67); --dx: 90px; --dy: -150px; --fall: 179px; --r: -233deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 98); --dx: 133px; --dy: -150px; --fall: 173px; --r: -552deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 115); --dx: 166px; --dy: -150px; --fall: 127px; --r: 482deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 148); --dx: 149px; --dy: -145px; --fall: 242px; --r: -210deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 0); --dx: 192px; --dy: -143px; --fall: 176px; --r: 449deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 33); --dx: 173px; --dy: -139px; --fall: 166px; --r: 233deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 71); --dx: 279px; --dy: -132px; --fall: 212px; --r: 125deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 92); --dx: 208px; --dy: -121px; --fall: 152px; --r: 241deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 122); --dx: 427px; --dy: -113px; --fall: 170px; --r: -452deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 136); --dx: 219px; --dy: -108px; --fall: 189px; --r: -413deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 16); --dx: 442px; --dy: -105px; --fall: 131px; --r: 1deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 30); --dx: 283px; --dy: -91px; --fall: 191px; --r: 57deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 58); --dx: 426px; --dy: -86px; --fall: 156px; --r: 483deg"></i>
+        <i class="st k s4-cf" style="--in: calc(var(--w-comemoram) + 77); --dx: 456px; --dy: -75px; --fall: 124px; --r: 44deg"></i>
+        <i class="ci k s4-cf" style="--in: calc(var(--w-comemoram) + 117); --dx: 520px; --dy: -65px; --fall: 205px; --r: 516deg"></i>
+        <i class="sr k s4-cf" style="--in: calc(var(--w-comemoram) + 149); --dx: 332px; --dy: -55px; --fall: 143px; --r: -560deg"></i>
+      </div></div>
+      <div class="s4-mcw kx x-shrink" style="--out: var(--w-conduzem); --xdur: 300"><div class="s4-mc k s4-open" style="--in: var(--w-comemoram); --dur: 520">
+        <small>Onda 02 · Q2 2027</small><b>Aceleração</b>
+        <p><i><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i>12 entregas no prazo</p>
+        <p><i><svg viewBox="0 0 24 24"><use href="#i-check"/></svg></i>+38% de adoção</p>
+      </div></div>
+      <div class="s4-sps kx" style="--out: var(--w-conduzem); --xdur: 300">
+        <svg class="spark s4-sp k pop" style="--in: calc(var(--w-comemoram) + 260); left: 512px; top: 254px; width: 34px; height: 34px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
+        <svg class="spark s4-sp k pop" style="--in: calc(var(--w-comemoram) + 340); left: 700px; top: 238px; width: 24px; height: 24px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 400" href="#i-spark"/></svg>
+        <svg class="spark s4-sp k pop" style="--in: calc(var(--w-comemoram) + 420); left: 846px; top: 270px; width: 30px; height: 30px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 800" href="#i-spark"/></svg>
+        <svg class="spark s4-sp k pop" style="--in: calc(var(--w-comemoram) + 500); left: 858px; top: 398px; width: 22px; height: 22px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 1200" href="#i-spark"/></svg>
+        <svg class="spark s4-sp k pop" style="--in: calc(var(--w-comemoram) + 580); left: 770px; top: 448px; width: 26px; height: 26px" viewBox="0 0 24 24"><use class="l twinkle" style="--lph: 600" href="#i-spark"/></svg>
+      </div>
+
+      <!-- Spotlight (luz de palco) que acompanha a Bia em "conduzem": penumbra, feixe, poça de luz no chão; abre em "você" -->
+      <div class="s4-spw k s4-spotk" style="--in: 0; --dur: 9020">
+        <i class="s4-spot"></i>
+        <i class="s4-beam"></i>
+        <i class="s4-pool"></i>
+        <i class="s4-rim"></i>
+      </div>
+
+      <!-- pouso: brilho e anel na pista -->
+      <i class="s4-flash k flash" style="--in: 3690; --dur: 600; left: 290px; top: 440px"></i>
+      <i class="ring s4-ringv k ring-x" style="--in: 3700; --dur: 800; left: 290px; top: 455px"></i>
+      <!-- a Bia (a mesma que saiu do painel), agora dentro do slide -->
+      <div class="s4-in k fade" style="--in: 3690; --dur: 30">
+        <div class="bia" data-pose="stamp-down" data-face="focus" data-props="" data-keys="@bia+180:pose=wave,face=laugh,dur=300;@eles:pose=idle,face=happy,props=clicker;@apontam:pose=point-right,face=wow;@apontam+450:face=happy;@comemoram:pose=celebrate,face=laugh;@comemoram+450:pose=cheer,face=laugh;@conduzem:pose=walk,face=happy,dur=120;@conduzem+120:x=650,dur=560,ease=linear;@plateia:pose=present,face=proud,dur=200;@plateia+200:pose=walk,face=happy,dur=100;@plateia+300:x=950,dur=400,ease=linear;@voce+80:pose=wave,face=laugh,dur=250;@voce+800:pose=bow,face=proud,dur=350" style="--x: 290px; --y: 460px; --s: .6"></div>
+      </div>
+      <!-- etiqueta acima da cabeça: do pouso até "comemoram" -->
+      <div class="s4-tagw kx x-shrink" style="--out: var(--w-comemoram); --xdur: 240; left: 290px; top: 246px"><div class="tag-pill paper s4-tag k s4-tagin" style="--in: 3720; --dur: 450"><i><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></i>Bia · guia do Halor</div></div>
+
+      <!-- "você": varredura de luz no slide -->
+      <i class="s4-sweep k sweep-x" style="--in: var(--w-voce); --dur: 1100"></i>
+
+      <!-- controle do apresentador (modo apresentação) -->
+      <div class="s4-pres k up" style="--in: 4600; --dur: 450">
+        <span class="s4-live2"><i class="l pulse"></i>Apresentando<b class="s4-you k s4-youin" style="--in: calc(var(--w-voce) + 40); --dur: 500"><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg>Com você</b></span>
+        <span class="s4-pg">passo <b>0<span class="num-n k s4-onda" style="--in: 0; --dur: 9020"></span>/04</b></span>
+        <b class="s4-next k s4-press3" style="--in: 0; --dur: 9020">Próximo<svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></b>
+      </div>
+      <i class="click k" style="--in: var(--w-conduzem); left: 1122px; top: 640px"></i>
+      <i class="click k" style="--in: calc(var(--w-plateia) + 200); left: 1122px; top: 640px"></i>
+      <i class="click k" style="--in: var(--w-voce); left: 802px; top: 640px"></i>
+      <i class="ring s4-ringv s4-ringp k ring-x" style="--in: var(--w-voce); --dur: 800; left: 802px; top: 640px"></i>
+    </div>
+
+    <!-- "você": selo no topo do slide -->
+    <div class="s4-badw" style="left: 960px; top: 151px"><div class="s4-badge k s4-badgein" style="--in: calc(var(--w-voce) + 120); --dur: 560"><i><svg viewBox="0 0 24 24"><use href="#i-spark"/></svg></i>Você no comando</div></div>
+  </div>
+
+  <!-- luz vazada na virada para o modo apresentação -->
+  <i class="leak k leak-x" style="--in: 4120; --dur: 1200"></i>
+
+  <!-- a plateia: olhinhos no escuro que seguem a Bia (e pulam em "comemoram", "plateia" e "você") -->
+  <div class="s4-aud k s4-look" style="--in: 0; --dur: 9020; left: 0; top: 0; width: 1920px; height: 1080px">
+    <div class="s4-ey" style="--px: 220; left: 170px; top: 872px"><div class="k s4-eyin" style="--in: calc(var(--w-eles) + 0)"><div class="k s4-hop" style="--in: calc(var(--w-comemoram) + 0)"><div class="k s4-hop" style="--in: calc(var(--w-plateia) + 0)"><div class="k s4-hop" style="--in: calc(var(--w-voce) + 60)"><i></i><i></i></div></div></div></div></div>
+    <div class="s4-ey" style="--px: 440; left: 390px; top: 860px"><div class="k s4-eyin" style="--in: calc(var(--w-eles) + 80)"><div class="k s4-hop" style="--in: calc(var(--w-comemoram) + 60)"><div class="k s4-hop" style="--in: calc(var(--w-plateia) + 60)"><div class="k s4-hop" style="--in: calc(var(--w-voce) + 120)"><i></i><i></i></div></div></div></div></div>
+    <div class="s4-ey sm" style="--px: 640; left: 600px; top: 884px"><div class="k s4-eyin" style="--in: calc(var(--w-eles) + 160)"><div class="k s4-hop" style="--in: calc(var(--w-comemoram) + 120)"><div class="k s4-hop" style="--in: calc(var(--w-plateia) + 120)"><div class="k s4-hop" style="--in: calc(var(--w-voce) + 180)"><i></i><i></i></div></div></div></div></div>
+    <div class="s4-ey" style="--px: 1280; left: 1230px; top: 884px"><div class="k s4-eyin" style="--in: calc(var(--w-eles) + 120)"><div class="k s4-hop" style="--in: calc(var(--w-comemoram) + 90)"><div class="k s4-hop" style="--in: calc(var(--w-plateia) + 90)"><div class="k s4-hop" style="--in: calc(var(--w-voce) + 150)"><i></i><i></i></div></div></div></div></div>
+    <div class="s4-ey sm" style="--px: 1460; left: 1420px; top: 862px"><div class="k s4-eyin" style="--in: calc(var(--w-eles) + 200)"><div class="k s4-hop" style="--in: calc(var(--w-comemoram) + 150)"><div class="k s4-hop" style="--in: calc(var(--w-plateia) + 150)"><div class="k s4-hop" style="--in: calc(var(--w-voce) + 210)"><i></i><i></i></div></div></div></div></div>
+    <div class="s4-ey" style="--px: 1640; left: 1590px; top: 878px"><div class="k s4-eyin" style="--in: calc(var(--w-eles) + 40)"><div class="k s4-hop" style="--in: calc(var(--w-comemoram) + 30)"><div class="k s4-hop" style="--in: calc(var(--w-plateia) + 30)"><div class="k s4-hop" style="--in: calc(var(--w-voce) + 90)"><i></i><i></i></div></div></div></div></div>
+    <svg class="spark s4-hs k s4-rise" style="--in: calc(var(--w-voce) + 0); left: 208px; top: 820px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="spark s4-hs k s4-rise" style="--in: calc(var(--w-voce) + 70); left: 428px; top: 808px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="spark s4-hs k s4-rise" style="--in: calc(var(--w-voce) + 140); left: 638px; top: 832px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="spark s4-hs k s4-rise" style="--in: calc(var(--w-voce) + 210); left: 1268px; top: 832px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="spark s4-hs k s4-rise" style="--in: calc(var(--w-voce) + 280); left: 1458px; top: 810px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+    <svg class="spark s4-hs k s4-rise" style="--in: calc(var(--w-voce) + 350); left: 1628px; top: 826px" viewBox="0 0 24 24"><use href="#i-spark"/></svg>
+  </div>
+
+  <!-- cliques com brilho do Estúdio -->
+  <i class="click k" style="--in: var(--w-personagens); left: 863px; top: 254px"></i>
+  <i class="click k" style="--in: var(--w-como); left: 1530px; top: 440px"></i>
+  <i class="ring s4-ringv s4-ringc k ring-x" style="--in: var(--w-como); --dur: 700; left: 1480px; top: 428px"></i>
+  <i class="click k" style="--in: 4100; left: 1524px; top: 192px"></i>
+
+  <!-- cursor com halo no Estúdio -->
+  <div class="kx" style="--out: 4250; --xdur: 250; left: 0; top: 0">
+    <div class="k fade" style="--in: 120; --dur: 300">
+      <div class="k move-xy" style="--in: 160; --dur: 440; --dx: -137px; --dy: -306px">
+        <div class="k move-xy" style="--in: 2700; --dur: 560; --dx: 667px; --dy: 186px">
+          <div class="k move-xy" style="--in: 3700; --dur: 360; --dx: -6px; --dy: -248px">
+            <svg class="gcur k s4-cur" style="--in: 0; --dur: 9020; left: 997px; top: 558px" viewBox="0 0 34 44"><path d="M3 2l24 20-10 1.2 6 13-5 2.2-6-13.2L3 33z" fill="#fff" stroke="#17112b" stroke-width="2.4" stroke-linejoin="round"/></svg>
+          </div>
         </div>
-        <div class="ch-card k pop" style="--in: calc(var(--w-personagens) + 150)">
-          <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" style="--x: 120px; --y: 138px; --s: .36"></div>
-          <span>Cliente</span><small>plateia</small>
-          <i class="on k fade" style="--in: var(--w-eles); --dur: 250"></i>
-        </div>
-        <div class="ch-poses k fade" style="--in: var(--w-vivem)"><i>apontar</i><i>comemorar</i><i>conduzir</i><i>acenar</i><i>pensar</i></div>
       </div>
     </div>
   </div>
 
-  <!-- a Bia voa do painel para dentro do slide -->
-  <div class="k s4-fly" style="--in: calc(var(--w-bia) + 100); --dur: 900; --dx: 770px; --dy: -300px; left: 690px; top: 772px">
-    <div class="k sway-x" style="--in: var(--w-conduzem); --dur: 1000; --dx: 70px">
-      <div class="bia" data-pose="wave" data-face="laugh" data-props="" data-keys="@apontam:pose=point-right,face=wow;@comemoram:pose=celebrate,face=laugh;@conduzem:pose=walk,face=happy;@plateia:pose=wave,face=happy;@voce:pose=bow,face=proud" style="--x: 0px; --y: 0px; --s: .5"></div>
+  <!-- a Bia grande: aponta o painel em "como" e comemora o pouso; sai quando o slide vira apresentação -->
+  <div class="kx s4-off" style="--out: 4150; --xdur: 300; left: 0; top: 0">
+    <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@personagens:pose=present,face=happy;@vivem:pose=point-right,face=wow;@dentro+200:pose=hands-hips,face=proud;@como:pose=point-right,face=wow;@bia+100:pose=cheer,face=laugh;@bia+420:pose=wave,face=happy" style="--x: 150px; --y: 968px; --s: .8"></div>
+  </div>
+
+  <!-- rastro de luz do voo (sai do painel e pousa no slide) -->
+  <svg class="s4-trail" viewBox="0 0 1920 1080" fill="none" aria-hidden="true"><path class="k s4-trk" style="--in: 3400; --dur: 700" pathLength="1" d="M1426 447C1290 170 860 180 707 602" stroke="url(#hl-g-ring)" stroke-width="7" stroke-linecap="round"/></svg>
+  <!-- a mini Bia do painel voando em arco até a pista (a mesma figura; brilho violeta) -->
+  <div class="s4-flw kx s4-off" style="--out: 3690; --xdur: 30; left: 0; top: 0">
+    <div class="k fade" style="--in: var(--w-como); --dur: 40">
+      <div class="s4-fly k s4-flyk" style="--in: 3400; --dur: 300">
+        <div class="bia" data-pose="hands-hips" data-face="proud" data-props="" data-keys="@como:pose=cheer,face=laugh,s=.55,dur=80;@como+80:pose=jump,face=wow,s=.3774,dur=300,ease=linear" style="--x: 0px; --y: 0px; --s: .44"></div>
+      </div>
     </div>
   </div>
-  <div class="k pop" style="--in: var(--w-eles); --dur: 500; left: 1150px; top: 772px">
-    <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@apontam:pose=look-up,face=wow;@comemoram:pose=jump,face=laugh;@conduzem:pose=hands-hips,face=happy;@voce:pose=celebrate,face=laugh" style="--x: 0px; --y: 0px; --s: .46"></div>
-  </div>
-  <i class="ring k ring-x" style="--in: calc(var(--w-bia) + 950); --dur: 800; left: 690px; top: 700px"></i>
-  <svg class="spark k pop" style="--in: var(--w-comemoram); left: 640px; top: 560px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
-  <svg class="spark k pop" style="--in: calc(var(--w-comemoram) + 200); left: 1190px; top: 580px; width: 30px; height: 30px" viewBox="0 0 24 24"><use class="l twinkle" href="#i-spark"/></svg>
 
-  <div class="tag-pill paper k pop-c" style="--in: var(--w-bia); left: 150px; top: 610px"><i><svg><use href="#i-spark"/></svg></i>Bia · guia do Halor</div>
-  <div class="bia" data-pose="idle" data-face="happy" data-props="clicker" data-keys="@personagens:pose=present,face=happy;@bia:pose=jump,face=laugh;@bia+700:pose=point-right,face=happy;@comemoram:pose=celebrate,face=laugh;@voce:pose=idle,face=proud" style="--x: 150px; --y: 968px; --s: .8"></div>
+  <!-- o Cliente reage de fora -->
+  <div class="bia" data-skin="cliente" data-pose="idle" data-face="happy" data-props="" data-keys="@personagens:face=surprised;@vivem:pose=look-up,face=wow;@dentro+200:pose=idle,face=happy;@como:pose=look-up,face=surprised;@bia+100:pose=jump,face=laugh;@bia+500:pose=hands-hips,face=wow;@eles:pose=idle,face=happy;@apontam:pose=think,face=think;@comemoram:pose=celebrate,face=laugh;@comemoram+600:pose=cheer,face=laugh;@conduzem:pose=idle,face=happy;@plateia:pose=wave,face=happy;@voce:pose=celebrate,face=laugh;@voce+700:pose=cheer,face=laugh" style="--x: 1770px; --y: 968px; --s: .78"></div>
 </section>

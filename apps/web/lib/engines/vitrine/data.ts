@@ -50,7 +50,7 @@ export const VT_FX: readonly VtFx[] = [
   [29, 'Morphing Shapes', 'Movimento', 'ritmo comparacao', 2, 'Formas que se transformam: silos viram centro, o centro vira rede.'],
   [30, 'Particle System', '3D', 'abertura relacao', 3, 'Campo de partículas ligadas que reage ao cursor. Um fundo vivo de capa.'],
   [31, 'Shimmer / Holographic Sweep', 'Movimento', 'foco abertura', 1, 'Um brilho varre o espaço até o conteúdo chegar, com selo holográfico.'],
-  [32, 'Floating Elements', 'Movimento', 'abertura relacao', 2, 'Cards que flutuam em órbita ao redor de um núcleo. O cursor pausa.'],
+  [32, 'Floating Elements', 'Movimento', 'abertura relacao', 2, 'Cards que flutuam em órbita ao redor de um núcleo.'],
   [33, 'Card Stack', 'Interatividade', 'detalhe ritmo', 2, 'Uma pilha de cards: o do topo sai e vai para o fundo, um por vez.'],
   [34, 'Carousel / Horizontal Gallery', 'Interatividade', 'detalhe tempo', 1, 'Galeria horizontal em que cada card encaixa no centro.'],
   [35, 'Interactive Matrix', 'Interatividade', 'comparacao foco', 1, 'Matriz 2×2 com bolhas que você arrasta entre os quadrantes.'],
@@ -61,15 +61,15 @@ export const VT_FX: readonly VtFx[] = [
   [40, 'Animated Shader / Hero', '3D', 'abertura', 3, 'Capa com fundo vivo gerado em tempo real e um fio de luz atrás do título.']
 ];
 
-/** Itens do catálogo à mostra; o resto fica atrás da pílula que leva aos planos. */
+/** Itens do catálogo à mostra antes de abrir; o botão + mostra os outros ali mesmo. */
 export const VT_SHOW = 8;
 
 /**
- * Efeitos com demonstração ao vivo no palco. Espelha o `data-fx` dos cards em
- * components/site/Vitrine.tsx: o catálogo renderiza esses itens como botão com o selo "Ao vivo".
+ * Efeitos com demonstração ao vivo e editável no palco. Espelha o `data-fx` dos cards em
+ * components/site/Vitrine.tsx: no catálogo esses itens ganham o selo "Ao vivo" e levam até o card.
  */
-export const VT_LIVE: ReadonlySet<number> = new Set([30, 3, 4, 11, 12, 6, 24, 33, 16, 21, 37, 35, 18]);
+export const VT_LIVE: ReadonlySet<number> = new Set([30, 3, 4, 11, 12, 6, 24, 33, 16, 15, 21, 37, 35, 18]);
 
-/** Texto e rótulo da pílula "+ N efeitos" para N itens filtrados. */
-export const vtPlusText = (n: number) => `${n - VT_SHOW} efeitos`;
-export const vtPlusLabel = (n: number) => `Mais ${n - VT_SHOW} efeitos: escolha um plano para liberar todos`;
+/** Texto e rótulo do botão + do catálogo para N itens filtrados (aberto ou não). */
+export const vtMoreText = (n: number, open: boolean) => open ? 'Mostrar menos' : `${n - VT_SHOW} efeitos`;
+export const vtMoreLabel = (n: number, open: boolean) => open ? 'Mostrar menos efeitos no catálogo' : `Ver mais ${n - VT_SHOW} efeitos no catálogo`;
