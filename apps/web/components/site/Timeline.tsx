@@ -5,27 +5,8 @@ import type { CSSProperties } from 'react';
 
 export default function Timeline() {
   return (
-    <section className="s-sec theme-night s-tl" id="linha-do-tempo" data-era="0" aria-labelledby="tl-h">
-      <div className="tl-amb" aria-hidden="true">
-        <span className="tl-dust">
-          <i style={{ "--x": "6", "--y": "22", "--d": "0", "--s": "3px" } as CSSProperties} />
-          <i style={{ "--x": "14", "--y": "64", "--d": "2.1", "--s": "2px" } as CSSProperties} />
-          <i style={{ "--x": "23", "--y": "38", "--d": "4.4", "--s": "4px", "--o": ".5" } as CSSProperties} />
-          <i style={{ "--x": "31", "--y": "82", "--d": "1.2", "--s": "2px" } as CSSProperties} />
-          <i style={{ "--x": "44", "--y": "30", "--d": "5.3", "--s": "3px" } as CSSProperties} />
-          <i style={{ "--x": "52", "--y": "72", "--d": "3.1", "--s": "2px" } as CSSProperties} />
-          <i style={{ "--x": "58", "--y": "16", "--d": ".6", "--s": "3px", "--o": ".5" } as CSSProperties} />
-          <i style={{ "--x": "66", "--y": "58", "--d": "6.2", "--s": "2px" } as CSSProperties} />
-          <i style={{ "--x": "71", "--y": "34", "--d": "2.7", "--s": "4px" } as CSSProperties} />
-          <i style={{ "--x": "78", "--y": "88", "--d": "4.9", "--s": "3px" } as CSSProperties} />
-          <i style={{ "--x": "84", "--y": "46", "--d": "1.7", "--s": "2px" } as CSSProperties} />
-          <i style={{ "--x": "90", "--y": "24", "--d": "3.8", "--s": "3px", "--o": ".5" } as CSSProperties} />
-          <i style={{ "--x": "95", "--y": "68", "--d": "5.8", "--s": "2px" } as CSSProperties} />
-          <i style={{ "--x": "38", "--y": "56", "--d": "7.1", "--s": "2px", "--o": ".4" } as CSSProperties} />
-          <i style={{ "--x": "62", "--y": "92", "--d": ".9", "--s": "3px" } as CSSProperties} />
-          <i style={{ "--x": "18", "--y": "12", "--d": "6.6", "--s": "2px", "--o": ".4" } as CSSProperties} />
-        </span>
-      </div>
+    <section className="s-sec theme-night s-tl" id="linha-do-tempo" data-era="0" data-tok="closed" aria-labelledby="tl-h">
+      <div className="tl-amb" aria-hidden="true" />
       <div className="wrap">
         <div className="s-head">
           <p className="eyebrow">Linha do tempo</p>
@@ -129,7 +110,25 @@ export default function Timeline() {
               </button>
             </div>
           </div>
-          <div className="ev-panel" id="ev-panel" role="tabpanel" aria-labelledby="ev-tab-0">
+          {/* legenda da época acima do palco (celular) e controle fixo enquanto toca */}
+          <div className="ev-dock" id="ev-dock">
+            <div className="ev-dock-in">
+              <button className="ev-dock-play" id="ev-dock-play" type="button" aria-label="Pausar a linha do tempo">
+                <svg className="ic" aria-hidden="true">
+                  <use href="#i-pause" />
+                </svg>
+              </button>
+              <p className="ev-dock-tx" aria-hidden="true">
+                <span className="ev-dock-n mono" id="ev-dock-n">01 / 07</span>
+                <b id="ev-dock-y">2016</b>
+                <span className="ev-dock-t" id="ev-dock-t">Slides estáticos</span>
+              </p>
+              <i className="ev-dock-prog" aria-hidden="true">
+                <i />
+              </i>
+            </div>
+          </div>
+          <div className="ev-panel" id="ev-panel" role="tabpanel" aria-labelledby="ev-tab-0" tabIndex={0}>
             <div className="ev-main">
               <div className="ev-info" data-rv="up" style={{ "--rv-i": "1" } as CSSProperties}>
                 <p className="ev-k mono">
@@ -161,6 +160,24 @@ export default function Timeline() {
                 </dl>
               </div>
               <div className="ev-screen" data-rv="scale" style={{ "--rv-i": "2" } as CSSProperties}>
+                <span className="ev-dust" aria-hidden="true">
+                  <i style={{ "--x": "2", "--y": "22", "--d": "0", "--s": "3px" } as CSSProperties} />
+                  <i style={{ "--x": "4", "--y": "62", "--d": "2.1", "--s": "2px" } as CSSProperties} />
+                  <i style={{ "--x": "1", "--y": "86", "--d": "4.4", "--s": "3px", "--o": ".5" } as CSSProperties} />
+                  <i style={{ "--x": "97", "--y": "28", "--d": "1.2", "--s": "2px" } as CSSProperties} />
+                  <i style={{ "--x": "98", "--y": "60", "--d": "5.3", "--s": "3px" } as CSSProperties} />
+                  <i style={{ "--x": "95", "--y": "84", "--d": "3.1", "--s": "2px", "--o": ".6" } as CSSProperties} />
+                  <i style={{ "--x": "12", "--y": "4", "--d": ".6", "--s": "3px" } as CSSProperties} />
+                  <i style={{ "--x": "31", "--y": "6", "--d": "6.2", "--s": "2px", "--o": ".5" } as CSSProperties} />
+                  <i style={{ "--x": "52", "--y": "3", "--d": "2.7", "--s": "3px" } as CSSProperties} />
+                  <i style={{ "--x": "73", "--y": "5", "--d": "4.9", "--s": "2px" } as CSSProperties} />
+                  <i style={{ "--x": "89", "--y": "8", "--d": "1.7", "--s": "3px", "--o": ".5" } as CSSProperties} />
+                  <i style={{ "--x": "16", "--y": "95", "--d": "3.8", "--s": "2px" } as CSSProperties} />
+                  <i style={{ "--x": "42", "--y": "97", "--d": "5.8", "--s": "3px", "--o": ".6" } as CSSProperties} />
+                  <i style={{ "--x": "66", "--y": "94", "--d": "7.1", "--s": "2px" } as CSSProperties} />
+                  <i style={{ "--x": "86", "--y": "96", "--d": ".9", "--s": "3px" } as CSSProperties} />
+                  <i style={{ "--x": "60", "--y": "2", "--d": "6.6", "--s": "2px", "--o": ".4" } as CSSProperties} />
+                </span>
                 <div className="ev-stage" id="ev-stage">
                   {/* 2016 · slides estáticos */}
                   <div className="ev-scene ev-s0 on" aria-hidden="true">
@@ -346,7 +363,7 @@ export default function Timeline() {
                       <svg aria-hidden="true">
                         <use href="#i-wand" />
                       </svg>
-                      <span className="e4-type">Crie 12 slides sobre o plano 2027</span>
+                      <span className="e4-type">Crie 12 slides sobre o plano 2027, com a nossa marca…</span>
                       <b className="e4-go">Gerar</b>
                     </div>
                     <div className="e4-slide">
@@ -518,8 +535,8 @@ export default function Timeline() {
                     <p className="ev-tok-big">
                       <span className="ev-tok-lab">
                         <span className="mono ai-only">Tokens gastos</span>
-                        <span className="mono hl-only">Com o Halor</span>
-                        <span className="ev-tok-tag mono">valores ilustrativos</span>
+                        <span className="mono hl-only">Tokens com o Halor</span>
+                        <span className="ev-tok-tag mono ai-only">valores ilustrativos</span>
                       </span>
                       <b id="ev-tok-n">0</b>
                     </p>
@@ -555,19 +572,19 @@ export default function Timeline() {
         </div>
         <div className="tl-ahead">
           <article>
-            <p className="pd-k mono">Do estático ao vivo</p>
+            <p className="tl-k mono">Do estático ao vivo</p>
             <p>
               Cada slide ganha movimento com propósito: guiar o olhar, dar ritmo e destacar o que importa.
             </p>
           </article>
           <article>
-            <p className="pd-k mono">Da plateia ao participante</p>
+            <p className="tl-k mono">Da plateia ao participante</p>
             <p>
               Quem assiste vota, escreve e responde. Participar é a forma mais forte de prestar atenção.
             </p>
           </article>
           <article>
-            <p className="pd-k mono">Do arquivo ao link que responde</p>
+            <p className="tl-k mono">Do arquivo ao link que responde</p>
             <p>
               Um HTML leve que abre em qualquer tela e continua trabalhando depois que você sai da sala.
             </p>

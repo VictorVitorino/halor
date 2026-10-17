@@ -117,11 +117,17 @@
         </div>
 
         <div class="pd-models">
-          <div class="pd-sub"><h3>Modelos que entregamos prontos</h3><p class="muted">Cada modelo já sai no seu kit de marca e com um efeito que trabalha pela mensagem. Passe o cursor ou foque um modelo para ver o efeito de novo.</p></div>
+          <div class="pd-mhead">
+            <div class="pd-sub"><h3>Modelos que entregamos prontos</h3><p class="muted">Cada modelo já sai no seu kit de marca e com um efeito que trabalha pela mensagem. Passe o cursor, toque ou navegue com as setas para ver o efeito de novo.</p></div>
+            <div class="pd-ctl" data-rv="up">
+              <button class="pd-fxpause" type="button" aria-controls="pd-models"><svg aria-hidden="true"><use href="#i-pause"/></svg><span>Pausar efeitos</span></button>
+              <button class="pd-nav pd-prev" type="button" aria-label="Modelos anteriores" aria-controls="pd-models" disabled><svg aria-hidden="true"><use href="#i-back"/></svg></button>
+              <button class="pd-nav pd-next" type="button" aria-label="Próximos modelos" aria-controls="pd-models"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            </div>
+          </div>
           <div class="pd-carousel">
-            <button class="pd-nav pd-prev" type="button" aria-label="Modelos anteriores"><svg aria-hidden="true"><use href="#i-back"/></svg></button>
-            <div class="pd-track" id="pd-models" tabindex="0" role="region" aria-label="Modelos prontos. Use as setas para ver mais."></div>
-            <button class="pd-nav pd-next" type="button" aria-label="Próximos modelos"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <div class="pd-track" id="pd-models" tabindex="0" role="region" aria-label="Modelos prontos. Use as setas do teclado para percorrer os modelos."></div>
+            <p class="sr-only" id="pd-live" aria-live="polite"></p>
           </div>
         </div>
 

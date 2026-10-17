@@ -546,7 +546,7 @@
   .e0-mail svg { width: 14px; height: 14px; }
   .e1-com { font-size: max(8px, 1.2cqw); padding: 4px 7px; }
   .e2-tabs b { font-size: max(8px, 1.15cqw); padding: 2px 6px; }
-  .e2-notif { width: 40%; gap: 4px; }
+  .e2-notif { width: 41%; top: 15%; gap: 4px; }
   .e2-notif p { font-size: max(7.5px, 1.15cqw); padding: 5px 7px; }
   .e2-notif b { font-size: max(8px, 1.2cqw); }
   .e3-stamp { font-size: max(8.5px, 1.45cqw); padding: 5px 8px; }

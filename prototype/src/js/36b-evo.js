@@ -174,26 +174,28 @@ function bootEvo() {
   const dockTop = () => { const n = $('.s-nav'); return n ? n.offsetHeight : 72; };
   const narrow = () => innerWidth < 900;
   const below = () => dockTop() + dockIn.offsetHeight + 14; /* onde o palco fica, logo abaixo da faixa do dock */
+  /* posição na tela sem as transformações do scroll reveal (o trilho e o palco entram com translate/scale) */
+  const at = n => ev.getBoundingClientRect().top + n.offsetTop;
   const glideBy = y => { if (Math.abs(y) > 6) window.scrollBy({ top: y, behavior: REDUCED ? 'auto' : 'smooth' }); };
   /* enquadra: no desktop, o player inteiro; no celular, o palco logo abaixo do dock */
   const frame = () => {
     if (userScrolled) return;
-    if (narrow()) { glideBy(screen.getBoundingClientRect().top - below()); return; }
-    const r = ev.getBoundingClientRect(), s = screen.getBoundingClientRect();
-    if (r.top < 72 || s.bottom > innerHeight - 8) glideBy(r.top - 100);
+    if (narrow()) { glideBy(at(screen) - below()); return; }
+    const top = ev.getBoundingClientRect().top;
+    if (top < 72 || at(screen) + screen.offsetHeight > innerHeight - 8) glideBy(top - 100);
   };
   /* em 2024 o painel abre embaixo: a página sobe só o bastante para mostrá-lo, sem tirar o palco da tela */
   const follow = () => {
     if (state !== 'playing' || userScrolled) return;
     const over = tok.getBoundingClientRect().bottom - innerHeight + 16;
     if (over <= 0) return;
-    glideBy(Math.max(0, Math.min(over, screen.getBoundingClientRect().top - below())));
+    glideBy(Math.max(0, Math.min(over, at(screen) - below())));
   };
   /* preso: no celular, quando a legenda chega ao topo; no desktop, quando o botão de play some sob o menu */
   const paintDock = () => {
     dockRaf = 0;
     const top = dockTop();
-    const d = narrow() ? bar.getBoundingClientRect().bottom + 16 <= top + 1 : play.getBoundingClientRect().bottom < top + 4;
+    const d = narrow() ? at(bar) + bar.offsetHeight + 16 <= top + 1 : at(play) + play.offsetHeight < top + 4;
     if (d !== docked) { docked = d; ev.classList.toggle('docked', d); }
   };
   const queueDock = () => { if (!dockRaf) dockRaf = requestAnimationFrame(paintDock); };

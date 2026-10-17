@@ -3,7 +3,7 @@
    de verdade com o efeito vivo montado em CSS/SVG (Motion Graphics, Icon
    Motion, Glow / Light Sweep, Hologram 3D Cards, Reveal / Mask Reveal,
    Progress Motion, Data Highlight, BPMN Flow Motion, Connector / Flow Line e
-   Animated Shader). Renderizador próprio, independente de lib/slides.ts.
+   Animated Shader), e o mascote Halor na aula. Renderizador próprio, independente de lib/slides.ts.
    Porte literal de prototype/src/js/36-produto.js (pdThumbHTML): mesmas strings.
    Puro: sem DOM, roda no servidor (pré-renderização) e no cliente.
    ========================================================================== */
@@ -17,6 +17,19 @@ export const PD_SH_PATHS: readonly string[] = [
   'M337.7 92C332.9 99.4 318.4 105.2 311.2 110.6C304 116 298.6 118.6 294.5 124.4C290.5 130.3 291.7 139.1 287 145.6C282.3 152 274.9 159.8 266.4 163.4C257.9 166.9 246.1 166.7 236 166.7C225.9 166.6 215.4 165.3 205.8 163C196.2 160.6 185 157.8 178.5 152.4C171.9 147 168.3 137.8 166.5 130.5C164.6 123.3 169.1 115.4 167.3 109C165.6 102.6 160.8 98.9 156 92C151.1 85.1 139.8 76 138.3 67.8C136.9 59.6 140.5 48.7 147.5 43C154.5 37.2 169.7 35.3 180.2 33.4C190.7 31.5 200.9 32.4 210.2 31.6C219.5 30.7 227.4 28.1 236 28.1C244.6 28 253.7 29.1 261.9 31.1C270.1 33.2 276.7 37.3 285.3 40.3C293.9 43.2 304.3 44.7 313.5 49.1C322.6 53.4 336.1 59 340.2 66.2C344.2 73.3 342.5 84.6 337.7 92Z',
   'M349.8 92C347.2 100.6 338.3 108.8 331.8 115.8C325.4 122.7 316.4 126.2 311.3 133.7C306.3 141.2 307.1 151.3 301.5 160.8C296 170.3 289 185.5 278.1 190.9C267.2 196.3 248.6 196.7 236 193.3C223.4 189.9 212.1 177.3 202.6 170.4C193.1 163.6 187.4 157.2 178.9 152C170.4 146.7 159.3 144.5 151.5 138.8C143.6 133.1 136.5 125.6 131.7 117.8C127 110 125.8 101.2 123.2 92C120.6 82.8 115.6 72.3 116.4 62.4C117.2 52.4 119.4 39.1 128 32.2C136.7 25.3 155 21.9 168.4 21C181.7 20.1 196.8 26.6 208.1 26.5C219.4 26.5 225.3 23.9 236 20.5C246.7 17.1 259.9 7.5 272.6 6.1C285.3 4.7 301.7 7 312.1 12.2C322.4 17.4 328.9 28.6 334.8 37.3C340.6 46 344.7 55.3 347.2 64.4C349.7 73.6 352.3 83.4 349.8 92Z'
 ];
+
+/* mascote Halor (coruja com o brilho do halo) que vive no slide de aula: salta, aponta e acompanha a ideia da vez */
+export const PD_OWL: string = '<svg class="pd-owl" viewBox="0 0 64 68" aria-hidden="true"><ellipse class="pd-owl-halo" cx="32" cy="7" rx="13" ry="3.6"/>'
+  + '<g class="pd-owl-b"><path d="M17.5 23L15 12.5l9.5 6zM46.5 23L49 12.5l-9.5 6z" fill="#7a33eb"/>'
+  + '<path d="M32 16C20 16 13.5 25 13.5 37c0 14 8 23 18.5 23S50.5 51 50.5 37C50.5 25 44 16 32 16z" fill="#8b3dff"/>'
+  + '<path d="M21 23.5c-3.2 2.6-5 6.4-5.4 11" fill="none" stroke="#c9a6ff" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>'
+  + '<ellipse cx="32" cy="45.5" rx="11" ry="11.5" fill="#f4eeff"/><path d="M27 42.5q2 1.6 4 0M33 42.5q2 1.6 4 0M30 48q2 1.6 4 0" fill="none" stroke="#c9a6ff" stroke-width="1.3" stroke-linecap="round"/>'
+  + '<circle cx="25" cy="31" r="7" fill="#fff"/><circle cx="39" cy="31" r="7" fill="#fff"/>'
+  + '<g class="pd-owl-eye"><circle cx="25" cy="30.5" r="3.6" fill="#17112b"/><circle cx="39" cy="30.5" r="3.6" fill="#17112b"/><circle cx="26.2" cy="29.2" r="1.2" fill="#fff"/><circle cx="40.2" cy="29.2" r="1.2" fill="#fff"/></g>'
+  + '<ellipse cx="18.6" cy="38.6" rx="2.2" ry="1.3" fill="#ff9ad5" opacity=".8"/><ellipse cx="45.4" cy="38.6" rx="2.2" ry="1.3" fill="#ff9ad5" opacity=".8"/>'
+  + '<path d="M29.4 35.4h5.2L32 39.2z" fill="#f7bd55"/><path d="M27 60v2.6M30 60v2.6M34 60v2.6M37 60v2.6" stroke="#f7bd55" stroke-width="2" stroke-linecap="round"/>'
+  + '<path d="M49 36c3 3 4 8 3 13-3-2-4.5-6-4.5-9z" fill="#6421d1"/>'
+  + '<path class="pd-owl-w" d="M15.5 35c-6 .2-11 3.4-13.6 8.6 5.6 1 10.6-.6 14.2-4.2z" fill="#6421d1"/></g></svg>';
 
 /* miniatura de cada modelo: um slide 16:9 de verdade, com o efeito vivo */
 export function pdThumbHTML(id: PdThumbId): string {
@@ -34,7 +47,7 @@ export function pdThumbHTML(id: PdThumbId): string {
         ['Lembrar', 'A imagem fica na memória', '<path pathLength="1" d="M9 17.5h6M10 20.5h4"/><path pathLength="1" d="M12 3.5a5.5 5.5 0 0 0-3.2 10c.7.5 1.2 1.3 1.2 2.2v.3h4v-.3c0-.9.5-1.7 1.2-2.2A5.5 5.5 0 0 0 12 3.5z"/><path class="pd-ic-ray" pathLength="1" d="M3 9.5h1.5M19.5 9.5H21M5.2 3.6l1 1M18.8 3.6l-1 1"/>']
       ];
       return `<div class="pd-th pd-th-light pd-th-ic"><span class="pd-th-grid"></span><p class="pd-th-k">Aula 4 · Design de atenção</p><p class="pd-th-h">Três ideias para levar.</p>
-<div class="pd-ic-row">${ic.map((t, i) => `<div class="pd-ic-t" style="--i:${i}"><span class="pd-ic-i"><svg viewBox="0 0 24 24" aria-hidden="true">${t[2]}</svg></span><b>${t[0]}</b><small>${t[1]}</small></div>`).join('')}</div>${foot(0, '04')}</div>`;
+<div class="pd-ic-row">${ic.map((t, i) => `<div class="pd-ic-t" style="--i:${i}"><span class="pd-ic-i"><svg viewBox="0 0 24 24" aria-hidden="true">${t[2]}</svg></span><b>${t[0]}</b><small>${t[1]}</small></div>`).join('')}</div>${PD_OWL}${foot(0, '04')}</div>`;
     }
     case 'gl': return `<div class="pd-th pd-th-light pd-th-gl"><span class="pd-th-grid"></span><p class="pd-th-k">Relatório executivo · 3º trimestre</p><p class="pd-th-h">O trimestre em um número.</p>
 <div class="pd-gl-kpi"><small>Leitura completa</small><b class="pd-gl-n"><span class="pd-gl-cnt"></span>%</b><span class="pd-gl-sub">+32 pontos sobre o trimestre anterior</span><i class="pd-gl-bar"><i></i></i><span class="pd-gl-sweep"></span></div>
@@ -88,7 +101,7 @@ ${nodes.map((n, i) => `<g class="pd-cn-n${i === 4 ? ' end' : ''}" style="--i:${i
 </svg>${foot(1, '03')}</div>`;
     }
     case 'sh': return `<div class="pd-th pd-th-dark pd-th-sh"><div class="pd-sh-fx"><span class="pd-sh-blob a"></span><span class="pd-sh-blob b"></span><span class="pd-sh-blob c"></span>
-<svg class="pd-sh-lines" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g>${PD_SH_PATHS.map((d, i) => `<path class="pd-sh-base" d="${d}"/><path class="pd-sh-hot" style="--i:${i}" pathLength="1" d="${d}"/>`).join('')}</g></svg></div>
+<svg class="pd-sh-lines" viewBox="-36 -14 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g>${PD_SH_PATHS.map((d, i) => `<path class="pd-sh-base" d="${d}"/><path class="pd-sh-hot" style="--i:${i}" pathLength="1" d="${d}"/>`).join('')}</g></svg></div>
 <div class="pd-sh-copy"><p class="pd-th-k">Evento 2027 · Abertura</p><p class="pd-th-h">Bem-vindos ao próximo capítulo.</p><span class="pd-sh-rule"></span><p class="pd-sh-sub"><i></i>Auditório principal · 9h</p></div>${foot(1, '01')}</div>`;
   }
   return '';

@@ -7,7 +7,7 @@
    ========================================================================== */
 const PD_MODELS = [
   { id: 'mg', n: 'Kickoff de projeto', d: 'Escopo, prazo e time numa abertura que se monta diante da sala.', fx: ['Motion Graphics'], ac: '#8b3dff' },
-  { id: 'ic', n: 'Aula e treinamento', d: 'Cada ideia ganha um ícone que se desenha e reage.', fx: ['Icon Motion'], ac: '#a970ff' },
+  { id: 'ic', n: 'Aula e treinamento', d: 'Cada ideia ganha um ícone que se desenha e reage, e a coruja do halo aponta a da vez.', fx: ['Icon Motion', 'Mascote Halor'], ac: '#a970ff' },
   { id: 'gl', n: 'Relatório executivo', d: 'O número que importa, com brilho e contador.', fx: ['Glow / Light Sweep', 'Contador'], ac: '#7a33eb' },
   { id: 'ho', n: 'Workshop', d: 'Cartões em 3D que chamam a sala para participar.', fx: ['Hologram 3D Cards'], ac: '#b791ff' },
   { id: 'rv', n: 'Apresentação institucional', d: 'A história se revela em camadas, no tempo da fala.', fx: ['Reveal / Mask Reveal'], ac: '#9f70ff' },
@@ -27,6 +27,19 @@ const PD_SH_PATHS = [
   'M349.8 92C347.2 100.6 338.3 108.8 331.8 115.8C325.4 122.7 316.4 126.2 311.3 133.7C306.3 141.2 307.1 151.3 301.5 160.8C296 170.3 289 185.5 278.1 190.9C267.2 196.3 248.6 196.7 236 193.3C223.4 189.9 212.1 177.3 202.6 170.4C193.1 163.6 187.4 157.2 178.9 152C170.4 146.7 159.3 144.5 151.5 138.8C143.6 133.1 136.5 125.6 131.7 117.8C127 110 125.8 101.2 123.2 92C120.6 82.8 115.6 72.3 116.4 62.4C117.2 52.4 119.4 39.1 128 32.2C136.7 25.3 155 21.9 168.4 21C181.7 20.1 196.8 26.6 208.1 26.5C219.4 26.5 225.3 23.9 236 20.5C246.7 17.1 259.9 7.5 272.6 6.1C285.3 4.7 301.7 7 312.1 12.2C322.4 17.4 328.9 28.6 334.8 37.3C340.6 46 344.7 55.3 347.2 64.4C349.7 73.6 352.3 83.4 349.8 92Z'
 ];
 
+/* mascote Halor (coruja com o brilho do halo) que vive no slide de aula: salta, aponta e acompanha a ideia da vez */
+const PD_OWL = '<svg class="pd-owl" viewBox="0 0 64 68" aria-hidden="true"><ellipse class="pd-owl-halo" cx="32" cy="7" rx="13" ry="3.6"/>'
+  + '<g class="pd-owl-b"><path d="M17.5 23L15 12.5l9.5 6zM46.5 23L49 12.5l-9.5 6z" fill="#7a33eb"/>'
+  + '<path d="M32 16C20 16 13.5 25 13.5 37c0 14 8 23 18.5 23S50.5 51 50.5 37C50.5 25 44 16 32 16z" fill="#8b3dff"/>'
+  + '<path d="M21 23.5c-3.2 2.6-5 6.4-5.4 11" fill="none" stroke="#c9a6ff" stroke-width="1.8" stroke-linecap="round" opacity=".75"/>'
+  + '<ellipse cx="32" cy="45.5" rx="11" ry="11.5" fill="#f4eeff"/><path d="M27 42.5q2 1.6 4 0M33 42.5q2 1.6 4 0M30 48q2 1.6 4 0" fill="none" stroke="#c9a6ff" stroke-width="1.3" stroke-linecap="round"/>'
+  + '<circle cx="25" cy="31" r="7" fill="#fff"/><circle cx="39" cy="31" r="7" fill="#fff"/>'
+  + '<g class="pd-owl-eye"><circle cx="25" cy="30.5" r="3.6" fill="#17112b"/><circle cx="39" cy="30.5" r="3.6" fill="#17112b"/><circle cx="26.2" cy="29.2" r="1.2" fill="#fff"/><circle cx="40.2" cy="29.2" r="1.2" fill="#fff"/></g>'
+  + '<ellipse cx="18.6" cy="38.6" rx="2.2" ry="1.3" fill="#ff9ad5" opacity=".8"/><ellipse cx="45.4" cy="38.6" rx="2.2" ry="1.3" fill="#ff9ad5" opacity=".8"/>'
+  + '<path d="M29.4 35.4h5.2L32 39.2z" fill="#f7bd55"/><path d="M27 60v2.6M30 60v2.6M34 60v2.6M37 60v2.6" stroke="#f7bd55" stroke-width="2" stroke-linecap="round"/>'
+  + '<path d="M49 36c3 3 4 8 3 13-3-2-4.5-6-4.5-9z" fill="#6421d1"/>'
+  + '<path class="pd-owl-w" d="M15.5 35c-6 .2-11 3.4-13.6 8.6 5.6 1 10.6-.6 14.2-4.2z" fill="#6421d1"/></g></svg>';
+
 /* miniatura de cada modelo: um slide 16:9 de verdade, com o efeito vivo */
 function pdThumbHTML(id) {
   const foot = (dark, n) => `<div class="pd-th-ft"><b><svg aria-hidden="true"><use href="${dark ? '#hl-mark' : '#hl-mark-paper'}"/></svg>halor</b><span>${n}</span></div>`;
@@ -43,7 +56,7 @@ function pdThumbHTML(id) {
         ['Lembrar', 'A imagem fica na memória', '<path pathLength="1" d="M9 17.5h6M10 20.5h4"/><path pathLength="1" d="M12 3.5a5.5 5.5 0 0 0-3.2 10c.7.5 1.2 1.3 1.2 2.2v.3h4v-.3c0-.9.5-1.7 1.2-2.2A5.5 5.5 0 0 0 12 3.5z"/><path class="pd-ic-ray" pathLength="1" d="M3 9.5h1.5M19.5 9.5H21M5.2 3.6l1 1M18.8 3.6l-1 1"/>']
       ];
       return `<div class="pd-th pd-th-light pd-th-ic"><span class="pd-th-grid"></span><p class="pd-th-k">Aula 4 · Design de atenção</p><p class="pd-th-h">Três ideias para levar.</p>
-<div class="pd-ic-row">${ic.map((t, i) => `<div class="pd-ic-t" style="--i:${i}"><span class="pd-ic-i"><svg viewBox="0 0 24 24" aria-hidden="true">${t[2]}</svg></span><b>${t[0]}</b><small>${t[1]}</small></div>`).join('')}</div>${foot(0, '04')}</div>`;
+<div class="pd-ic-row">${ic.map((t, i) => `<div class="pd-ic-t" style="--i:${i}"><span class="pd-ic-i"><svg viewBox="0 0 24 24" aria-hidden="true">${t[2]}</svg></span><b>${t[0]}</b><small>${t[1]}</small></div>`).join('')}</div>${PD_OWL}${foot(0, '04')}</div>`;
     }
     case 'gl': return `<div class="pd-th pd-th-light pd-th-gl"><span class="pd-th-grid"></span><p class="pd-th-k">Relatório executivo · 3º trimestre</p><p class="pd-th-h">O trimestre em um número.</p>
 <div class="pd-gl-kpi"><small>Leitura completa</small><b class="pd-gl-n"><span class="pd-gl-cnt"></span>%</b><span class="pd-gl-sub">+32 pontos sobre o trimestre anterior</span><i class="pd-gl-bar"><i></i></i><span class="pd-gl-sweep"></span></div>
@@ -97,23 +110,23 @@ ${nodes.map((n, i) => `<g class="pd-cn-n${i === 4 ? ' end' : ''}" style="--i:${i
 </svg>${foot(1, '03')}</div>`;
     }
     case 'sh': return `<div class="pd-th pd-th-dark pd-th-sh"><div class="pd-sh-fx"><span class="pd-sh-blob a"></span><span class="pd-sh-blob b"></span><span class="pd-sh-blob c"></span>
-<svg class="pd-sh-lines" viewBox="0 0 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g>${PD_SH_PATHS.map((d, i) => `<path class="pd-sh-base" d="${d}"/><path class="pd-sh-hot" style="--i:${i}" pathLength="1" d="${d}"/>`).join('')}</g></svg></div>
+<svg class="pd-sh-lines" viewBox="-36 -14 320 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g>${PD_SH_PATHS.map((d, i) => `<path class="pd-sh-base" d="${d}"/><path class="pd-sh-hot" style="--i:${i}" pathLength="1" d="${d}"/>`).join('')}</g></svg></div>
 <div class="pd-sh-copy"><p class="pd-th-k">Evento 2027 · Abertura</p><p class="pd-th-h">Bem-vindos ao próximo capítulo.</p><span class="pd-sh-rule"></span><p class="pd-sh-sub"><i></i>Auditório principal · 9h</p></div>${foot(1, '01')}</div>`;
   }
   return '';
 }
 
-/* cartão do carrossel: miniatura viva, nome, uso e o chip com o nome do efeito */
+/* cartão do carrossel: miniatura viva, nome, uso e o chip com o nome do efeito (grupo nomeado pelo título) */
 function pdModelHTML(m) {
-  return `<article class="pd-model" tabindex="0" style="--ac:${m.ac}"><div class="pd-mthumb" aria-hidden="true">${pdThumbHTML(m.id)}</div>`
-    + `<div class="pd-mb"><b>${m.n}</b><p>${m.d}</p><div class="pd-fx">${m.fx.map((f, i) => `<span class="chip${i ? ' chip-line' : ' pd-fxchip'}">${i ? '' : '<svg aria-hidden="true"><use href="#i-spark"/></svg>'}${f}</span>`).join('')}</div></div></article>`;
+  return `<article class="pd-model" role="group" aria-labelledby="pd-m-${m.id}" style="--ac:${m.ac}"><div class="pd-mthumb" aria-hidden="true">${pdThumbHTML(m.id)}</div>`
+    + `<div class="pd-mb"><h4 id="pd-m-${m.id}">${m.n}</h4><p>${m.d}</p><div class="pd-fx">${m.fx.map((f, i) => `<span class="chip${i ? ' chip-line' : ' pd-fxchip'}">${i ? '' : '<svg aria-hidden="true"><use href="#i-spark"/></svg>'}${f}</span>`).join('')}</div></div></article>`;
 }
 
 /* gravação do Estúdio: endereço, duração e descrição de cada cena */
 const REC_SCENES = [
   { url: 'estudio.halor · kickoff-2027.html', d: 8600, a: 'Cena 1 de 3: a apresentação montada em HTML e editada ali mesmo, no modo apresentação.' },
-  { url: 'estudio.halor · Baixar apresentação', d: 6400, a: 'Cena 2 de 3: a apresentação baixada em HTML, pronta para apresentar. Também sai em PDF ou PPT.' },
-  { url: 'estudio.halor · Importar arquivo', d: 7800, a: 'Cena 3 de 3: um PDF, PPT ou HTML enviado vira uma apresentação Halor, do antes para o depois.' }
+  { url: 'estudio.halor · Baixar apresentação', d: 7600, a: 'Cena 2 de 3: a apresentação baixada em HTML, pronta para apresentar. Também sai em PDF ou PPT.' },
+  { url: 'estudio.halor · Importar arquivo', d: 9400, a: 'Cena 3 de 3: um PDF, PPT ou HTML enviado vira uma apresentação Halor, do antes para o depois.' }
 ];
 
 function bootProduto() {
@@ -125,54 +138,93 @@ function bootProduto() {
   pdBootRec();
 }
 
-/* Modelos: monta os cartões, setas, arrasto, teclado e liga cada efeito só com o cartão à vista */
+/* Modelos: monta os cartões, setas, arrasto e teclado. Cada efeito liga só com o carrossel na tela e o
+   cartão perto da área visível (começa um pouco antes de aparecer, sem "piscar" do quadro final ao inicial).
+   Cursor, toque ou as setas do teclado reiniciam a coreografia; "Pausar efeitos" deixa todos no quadro final. */
 function pdBootModels() {
   const track = $('#pd-models'); if (!track) return;
   track.innerHTML = PD_MODELS.map(pdModelHTML).join('');
-  const car = track.closest('.pd-carousel'), cards = $$('.pd-model', track);
+  const box = track.closest('.pd-models'), car = track.closest('.pd-carousel'), cards = $$('.pd-model', track);
+  const prev = $('.pd-prev', box), next = $('.pd-next', box), fxBtn = $('.pd-fxpause', box), live = $('#pd-live', box);
+  const beh = () => (REDUCED ? 'auto' : 'smooth');
   const step = () => (cards[0] ? cards[0].getBoundingClientRect().width + 16 : 300);
   const by = () => Math.max(step(), Math.floor(track.clientWidth / step()) * step());
-  const go = dx => track.scrollBy({ left: dx, behavior: REDUCED ? 'auto' : 'smooth' });
-  $('.pd-prev', car).addEventListener('click', () => go(-by()));
-  $('.pd-next', car).addEventListener('click', () => go(by()));
-  track.addEventListener('keydown', e => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-    e.preventDefault(); go(e.key === 'ArrowRight' ? step() : -step());
-  });
-  let dx = null, sl = 0;
-  track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; track.classList.add('drag'); });
+  const go = dx => track.scrollBy({ left: dx, behavior: beh() });
+  prev.addEventListener('click', () => go(-by()));
+  next.addEventListener('click', () => go(by()));
+  let dx = null, sl = 0, pt = 'mouse';
+  track.addEventListener('pointerdown', e => { pt = e.pointerType; if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; track.classList.add('drag'); });
   window.addEventListener('pointermove', e => { if (dx != null) track.scrollLeft = sl - (e.clientX - dx); });
   window.addEventListener('pointerup', () => { dx = null; track.classList.remove('drag'); });
-  const edge = () => { car.classList.toggle('at-start', track.scrollLeft < 10); car.classList.toggle('at-end', track.scrollLeft + track.clientWidth > track.scrollWidth - 10); };
+  /* bordas: máscara e setas desligadas no começo e no fim; o foco nunca fica num botão desligado */
+  const edge = () => {
+    const s = track.scrollLeft < 10, e = track.scrollLeft + track.clientWidth > track.scrollWidth - 10, a = document.activeElement;
+    car.classList.toggle('at-start', s); car.classList.toggle('at-end', e);
+    prev.disabled = s; next.disabled = e;
+    if ((a === prev && s) || (a === next && e)) (a === next && !s ? prev : a === prev && !e ? next : track).focus({ preventScroll: true });
+  };
   track.addEventListener('scroll', edge, { passive: true }); edge();
-  /* SMIL (pacotes do conector) só corre com o cartão à vista */
+
+  /* efeitos: ligados = carrossel à vista, cartão perto da área visível e sem pausa */
+  let carOn = false, fxOff = false;
+  const near = new Set();
   const smil = (c, on) => $$('svg', c).forEach(s => { if (s.pauseAnimations) on && !REDUCED ? s.unpauseAnimations() : s.pauseAnimations(); });
-  const replay = c => { if (REDUCED || !c.classList.contains('pd-on')) return; c.classList.remove('pd-on'); void c.offsetWidth; c.classList.add('pd-on'); };
+  const apply = c => { const on = !REDUCED && carOn && near.has(c) && !fxOff; if (c.classList.contains('pd-on') !== on) { c.classList.toggle('pd-on', on); smil(c, on); } };
+  const all = () => cards.forEach(apply);
+  const replay = c => { if (REDUCED || fxOff || !c.classList.contains('pd-on')) return; c.classList.remove('pd-on'); void c.offsetWidth; c.classList.add('pd-on'); };
   cards.forEach(c => {
     smil(c, false);
     c.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') replay(c); });
-    c.addEventListener('focus', () => replay(c));
+    c.addEventListener('click', () => { if (pt !== 'mouse') replay(c); });
   });
-  if (REDUCED || !('IntersectionObserver' in window)) return;
-  const io = new IntersectionObserver(es => es.forEach(e => { e.target.classList.toggle('pd-on', e.isIntersecting); smil(e.target, e.isIntersecting); }), { threshold: .35 });
+
+  /* teclado: o trilho é uma parada só; as setas andam de modelo em modelo (destaque, rolagem e efeito de novo) */
+  let cur = -1;
+  const vis = c => { const t = track.getBoundingClientRect(), r = c.getBoundingClientRect(); return r.left >= t.left - 2 && r.right <= t.right + 2; };
+  const first = () => Math.max(0, cards.findIndex(vis));
+  const mark = i => { cur = i; cards.forEach((c, k) => c.classList.toggle('pd-cur', k === i)); live.textContent = `${PD_MODELS[i].n}, ${PD_MODELS[i].fx[0]}. Modelo ${i + 1} de ${cards.length}.`; };
+  track.addEventListener('focus', () => { if (cur < 0 || !vis(cards[cur])) mark(first()); });
+  track.addEventListener('keydown', e => {
+    if (cur < 0 || !vis(cards[cur])) cur = first();
+    const n = { ArrowRight: cur + 1, ArrowLeft: cur - 1, Home: 0, End: cards.length - 1 }[e.key];
+    if (n == null) return;
+    e.preventDefault();
+    const i = Math.max(0, Math.min(cards.length - 1, n)); if (i === cur) return;
+    const fwd = i > cur; mark(i);
+    if (e.key === 'Home') track.scrollTo({ left: 0, behavior: beh() });
+    else if (e.key === 'End') track.scrollTo({ left: track.scrollWidth, behavior: beh() });
+    else if (!vis(cards[i])) go(fwd ? step() : -step());
+    replay(cards[i]);
+  });
+
+  if (REDUCED || !('IntersectionObserver' in window)) { fxBtn.hidden = true; return; }
+  fxBtn.addEventListener('click', () => {
+    fxOff = !fxOff; all();
+    $('use', fxBtn).setAttribute('href', fxOff ? '#i-play' : '#i-pause');
+    $('span', fxBtn).textContent = fxOff ? 'Retomar efeitos' : 'Pausar efeitos';
+  });
+  new IntersectionObserver(es => { carOn = es[es.length - 1].isIntersecting; all(); }, { rootMargin: '160px 0px' }).observe(track);
+  const io = new IntersectionObserver(es => { es.forEach(e => (e.isIntersecting ? near.add(e.target) : near.delete(e.target))); all(); }, { root: track, rootMargin: '0px 40%' });
   cards.forEach(c => io.observe(c));
 }
 
-/* Gravação do Estúdio: três cenas em loop enquanto o palco está à vista; etapas escolhem a cena e o botão pausa */
+/* Gravação do Estúdio: três cenas em loop enquanto o palco está à vista; etapas escolhem a cena e o botão pausa.
+   Relógio e animações andam juntos: fora da tela ou pausada, os dois congelam (.rec-hold) e continuam de onde pararam. */
 function pdBootRec() {
   const stage = $('#rec-stage'); if (!stage) return;
-  const rec = stage.closest('.pd-rec'), url = $('#rec-url'), btns = $$('[data-rec]'), pause = $('#rec-pause');
+  const rec = stage.closest('.pd-rec'), frame = stage.closest('.pd-rec-frame'), url = $('#rec-url'), btns = $$('[data-rec]'), pause = $('#rec-pause');
   let st = 0, timer = 0, visible = false, paused = false, running = false, t0 = 0, left = 0;
   const can = () => !REDUCED && visible && !paused && currentView === 'v-site';
+  const run = v => { running = v; rec.classList.toggle('rec-hold', !v); };
   /* para o relógio guardando o que falta da cena (para continuar de onde parou) */
-  const stop = () => { if (!running) return; clearTimeout(timer); running = false; left = Math.max(0, left - (performance.now() - t0)); };
+  const stop = () => { if (!running) return; clearTimeout(timer); run(false); left = Math.max(0, left - (performance.now() - t0)); };
   const go = () => {
     stop(); if (!can()) return;
-    running = true; t0 = performance.now();
-    timer = setTimeout(() => { running = false; set((st + 1) % REC_SCENES.length); go(); }, left);
+    run(true); t0 = performance.now();
+    timer = setTimeout(() => { set((st + 1) % REC_SCENES.length); go(); }, left);
   };
   const set = n => {
-    clearTimeout(timer); running = false;
+    clearTimeout(timer); run(false);
     st = n; left = REC_SCENES[n].d; stage.dataset.state = String(n);
     stage.classList.remove('play'); rec.classList.remove('rec-run'); void stage.offsetWidth; stage.classList.add('play'); rec.classList.add('rec-run');
     rec.style.setProperty('--rec-d', REC_SCENES[n].d + 'ms');
@@ -184,10 +236,16 @@ function pdBootRec() {
     $('use', pause).setAttribute('href', paused ? '#i-play' : '#i-pause');
     $('span', pause).textContent = paused ? 'Continuar a gravação' : 'Pausar a gravação';
   };
-  btns.forEach(b => b.addEventListener('click', () => { set(+b.dataset.rec); go(); }));
+  /* escolher uma etapa é pedir para ver a cena: tira a pausa e, em tela estreita, traz o palco para a vista */
+  btns.forEach(b => b.addEventListener('click', () => {
+    if (paused) { paused = false; paint(); }
+    set(+b.dataset.rec); go();
+    if (matchMedia('(max-width: 960px)').matches) { const r = frame.getBoundingClientRect(); if (r.top < 72 || r.bottom > innerHeight) frame.scrollIntoView({ block: 'nearest', behavior: REDUCED ? 'auto' : 'smooth' }); }
+  }));
   if (REDUCED) pause.hidden = true;
   pause.addEventListener('click', () => { if (paused) { paused = false; paint(); go(); } else { stop(); paused = true; paint(); } });
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); go(); } else stop(); }).observe(stage);
+  /* ao voltar à tela: com a gravação rodando, a cena recomeça; pausada, mantém o quadro e o tempo que falta */
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { if (!paused) set(st); go(); } else stop(); }).observe(stage);
   document.addEventListener('halor:view', () => (can() ? go() : stop()));
   set(0);
 }

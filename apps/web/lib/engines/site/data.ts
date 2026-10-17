@@ -23,7 +23,7 @@ export interface ProductModel {
 
 export const PD_MODELS: ProductModel[] = [
   { id: 'mg', n: 'Kickoff de projeto', d: 'Escopo, prazo e time numa abertura que se monta diante da sala.', fx: ['Motion Graphics'], ac: '#8b3dff' },
-  { id: 'ic', n: 'Aula e treinamento', d: 'Cada ideia ganha um ícone que se desenha e reage.', fx: ['Icon Motion'], ac: '#a970ff' },
+  { id: 'ic', n: 'Aula e treinamento', d: 'Cada ideia ganha um ícone que se desenha e reage, e a coruja do halo aponta a da vez.', fx: ['Icon Motion', 'Mascote Halor'], ac: '#a970ff' },
   { id: 'gl', n: 'Relatório executivo', d: 'O número que importa, com brilho e contador.', fx: ['Glow / Light Sweep', 'Contador'], ac: '#7a33eb' },
   { id: 'ho', n: 'Workshop', d: 'Cartões em 3D que chamam a sala para participar.', fx: ['Hologram 3D Cards'], ac: '#b791ff' },
   { id: 'rv', n: 'Apresentação institucional', d: 'A história se revela em camadas, no tempo da fala.', fx: ['Reveal / Mask Reveal'], ac: '#9f70ff' },
@@ -46,6 +46,6 @@ export interface RecScene {
 /** gravação do Estúdio: monte e edite na própria apresentação, baixe, importe um modelo */
 export const REC_SCENES: RecScene[] = [
   { url: 'estudio.halor · kickoff-2027.html', d: 8600, a: 'Cena 1 de 3: a apresentação montada em HTML e editada ali mesmo, no modo apresentação.' },
-  { url: 'estudio.halor · Baixar apresentação', d: 6400, a: 'Cena 2 de 3: a apresentação baixada em HTML, pronta para apresentar. Também sai em PDF ou PPT.' },
-  { url: 'estudio.halor · Importar arquivo', d: 7800, a: 'Cena 3 de 3: um PDF, PPT ou HTML enviado vira uma apresentação Halor, do antes para o depois.' },
+  { url: 'estudio.halor · Baixar apresentação', d: 7600, a: 'Cena 2 de 3: a apresentação baixada em HTML, pronta para apresentar. Também sai em PDF ou PPT.' },
+  { url: 'estudio.halor · Importar arquivo', d: 9400, a: 'Cena 3 de 3: um PDF, PPT ou HTML enviado vira uma apresentação Halor, do antes para o depois.' },
 ];

@@ -23,13 +23,16 @@ export function bootEvo(root: ParentNode): Dispose {
   const sec = $('#linha-do-tempo', root), ev = $('#ev', root);
   if (!sec || !ev) return noop;
   const tabs = $$<HTMLButtonElement>('.ev-stop', ev), scenes = $$('.ev-scene', ev);
-  const stage = $('#ev-stage', ev), info = $('.ev-info', ev), panel = $('#ev-panel', ev), screen = $('.ev-screen', ev), railIn = $('.ev-rail-in', ev);
+  const stage = $('#ev-stage', ev), info = $('.ev-info', ev), panel = $('#ev-panel', ev), screen = $('.ev-screen', ev), railIn = $('.ev-rail-in', ev), bar = $('.ev-bar', ev);
   const play = $<HTMLButtonElement>('#ev-play', ev), playUse = $<SVGUseElement>('.ev-play-ic .ic use', ev), playL = $('.ev-play-l', ev), playS = $('.ev-play-s', ev);
+  const dockIn = $('.ev-dock-in', ev), dockPlay = $<HTMLButtonElement>('#ev-dock-play', ev), dockUse = $<SVGUseElement>('#ev-dock-play use', ev);
+  const dockN = $('#ev-dock-n', ev), dockY = $('#ev-dock-y', ev), dockT = $('#ev-dock-t', ev);
   const prev = $<HTMLButtonElement>('#ev-prev', ev), next = $<HTMLButtonElement>('#ev-next', ev), sr = $('#ev-sr', ev), meter = $('.ev-meter', ev);
   const yEl = $('#ev-y', ev), tEl = $('#ev-t', ev), dEl = $('#ev-d', ev), whoEl = $('#ev-who', ev), attEl = $('#ev-att', ev), nEl = $('#ev-n', ev), eraEl = $('#ev-era', ev);
   const tok = $('#ev-tok', ev), list = $('#ev-tries', ev), tokN = $('#ev-tok-n', ev), tokT = $('#ev-tok-t', ev), tokTl = $('#ev-tok-tl', ev), tokC = $('#ev-tok-c', ev);
   const regen = $<HTMLButtonElement>('#ev-regen', ev), s4 = $('.ev-s4', ev), flag = $('#ev-flag', ev), chipN = $('#ev-chip-n', ev), chipK = $('#ev-chip-k', ev);
-  if (!stage || !info || !panel || !screen || !railIn || !play || !playUse || !playL || !playS || !prev || !next || !sr || !meter
+  if (!stage || !info || !panel || !screen || !railIn || !bar || !play || !playUse || !playL || !playS || !dockIn || !dockPlay || !dockUse
+    || !dockN || !dockY || !dockT || !prev || !next || !sr || !meter
     || !yEl || !tEl || !dEl || !whoEl || !attEl || !nEl || !eraEl || !tok || !list || !tokN || !tokT || !tokTl || !tokC
     || !regen || !s4 || !flag || !chipN || !chipK) return noop;
   const N = Math.min(EVO.length, tabs.length, scenes.length);
@@ -39,11 +42,13 @@ export function bootEvo(root: ParentNode): Dispose {
   const SECS = Math.round(TOTAL / 1000), SCRIPT = EVO_TRIES.reduce((s, x) => s + x.tk, 0);
   const fmtK = (n: number) => Math.round(n).toLocaleString('pt-BR');
   const brl = (n: number) => 'R$ ' + (n * EVO_RATE / 1e6).toFixed(2).replace('.', ',');
-  const ac = new AbortController(), on = { signal: ac.signal };
+  const ac = new AbortController(), on = { signal: ac.signal }, onPassive = { signal: ac.signal, passive: true };
 
   let cur = 0, state: State = 'idle', away = false, visible = false, elapsed = 0, last = 0, raf = 0, leadUntil = 0;
   let outT = 0, glideT = 0, sayT = 0, pressT = 0, attShown = EVO[0].a;
-  let log: EvoTry[] = [], total = 0, shown = 0, busy = false, seqT: number[] = [];
+  let log: EvoTry[] = [], total = 0, busy = false, seqT: number[] = [];
+  /* a câmera só acompanha o play enquanto a pessoa não rolar a página por conta própria */
+  let userScrolled = false, docked = false, dockRaf = 0;
   const tw: Record<string, number> = {};
 
   const say = (m: string) => { sr.textContent = ''; clearTimeout(sayT); sayT = window.setTimeout(() => { sr.textContent = m; }, 60); };
@@ -54,7 +59,7 @@ export function bootEvo(root: ParentNode): Dispose {
     if (REDUCED || ms <= 0) { fn(to); return; }
     const t0 = performance.now();
     const step = (now: number) => {
-      const k = Math.min(1, (now - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+      const k = Math.max(0, Math.min(1, (now - t0) / ms)), e = 1 - Math.pow(1 - k, 3);
       fn(from + (to - from) * e);
       if (k < 1) tw[key] = requestAnimationFrame(step);
     };
@@ -70,12 +75,14 @@ export function bootEvo(root: ParentNode): Dispose {
     clearTimeout(glideT); glideT = window.setTimeout(() => ev.classList.remove('glide', 'back'), 900);
   };
 
-  /* ---- botão de play: rótulo, ícone e anel ---- */
+  /* ---- botão de play (e o do dock): rótulo, ícone e anel ---- */
   const paintPlay = () => {
     ev.dataset.state = state;
-    playUse.setAttribute('href', state === 'playing' ? '#i-pause' : state === 'ended' ? '#i-replay' : '#i-play');
+    const ic = state === 'playing' ? '#i-pause' : state === 'ended' ? '#i-replay' : '#i-play';
+    playUse.setAttribute('href', ic); dockUse.setAttribute('href', ic);
     playL.textContent = state === 'playing' ? 'Pausar' : state === 'paused' ? 'Continuar' : state === 'ended' ? 'Assistir de novo' : 'Assistir à linha do tempo';
     playS.textContent = state === 'playing' ? `Época ${cur + 1} de ${N}` : state === 'paused' ? `Pausado em ${EVO[cur].y}` : state === 'ended' ? `Do começo · ${SECS} s` : `${N} épocas · ${SECS} s`;
+    dockPlay.setAttribute('aria-label', state === 'playing' ? 'Pausar a linha do tempo' : state === 'paused' ? 'Continuar a linha do tempo' : state === 'ended' ? 'Assistir de novo à linha do tempo' : 'Assistir à linha do tempo');
   };
   const paintArrows = () => {
     prev.setAttribute('aria-disabled', String(cur === 0));
@@ -83,9 +90,9 @@ export function bootEvo(root: ParentNode): Dispose {
   };
 
   /* ---- painel de tokens ---- */
-  const setTok = (v: number) => { shown = v; tokN.textContent = fmtK(v); chipK.textContent = fmtK(v); };
+  const setTok = (v: number) => { tokN.textContent = fmtK(v); };
   const setSum = (n: number, label: string, cost: string) => { tokT.textContent = String(n); tokTl.textContent = label; tokC.textContent = cost; };
-  const clearSeq = () => { seqT.forEach(clearTimeout); seqT = []; cancelAnimationFrame(tw.tok); };
+  const clearSeq = () => { seqT.forEach(clearTimeout); seqT = []; cancelAnimationFrame(tw.tok); cancelAnimationFrame(tw.bar); };
   const later = (ms: number, fn: () => void) => { seqT.push(window.setTimeout(fn, ms)); };
   const row = (o: Row) => {
     const li = el('li', 'ev-try'); li.dataset.k = o.k;
@@ -98,9 +105,9 @@ export function bootEvo(root: ParentNode): Dispose {
     return li;
   };
   const resetTok = () => {
-    clearSeq(); busy = false; log = []; total = 0; list.textContent = '';
-    tok.classList.remove('done', 'counting'); setTok(0); setSum(0, 'tentativas', brl(0));
-    s4.dataset.try = '0'; s4.dataset.gen = '0'; delete s4.dataset.fk;
+    clearSeq(); busy = false; log = []; total = 0; list.textContent = ''; list.setAttribute('aria-label', 'Tentativas');
+    tok.classList.remove('done', 'counting', 'zero'); setTok(0); setSum(0, 'tentativas', brl(0));
+    s4.dataset.try = '0'; s4.dataset.gen = '0'; delete s4.dataset.fk; chipN.textContent = '1'; chipK.textContent = '0';
     regen.removeAttribute('aria-disabled');
   };
   const spec = (k: number) => k < EVO_TRIES.length ? EVO_TRIES[k] : EVO_MORE[(k - EVO_TRIES.length) % EVO_MORE.length];
@@ -111,7 +118,9 @@ export function bootEvo(root: ParentNode): Dispose {
     $('.ev-try-k', li)!.textContent = fmtK(s.tk);
     $('.ev-try-r b', li)!.textContent = s.res; $('.ev-try-r em', li)!.textContent = s.why;
     $('.ev-try-bar i', li)!.style.setProperty('--p', '1');
+    /* o selo do palco mostra o custo desta tentativa; o total fica no painel */
     s4.dataset.gen = '0'; s4.dataset.try = String(s.v); s4.dataset.fk = s.k; flag.textContent = s.flag;
+    chipN.textContent = String(log.length); chipK.textContent = fmtK(s.tk);
     tok.classList.remove('counting'); setTok(total);
     setSum(log.length, log.length === 1 ? 'tentativa' : 'tentativas', brl(total));
     if (!quiet) say(`Tentativa ${log.length}: mais ${fmtK(s.tk)} tokens, ${s.res.toLowerCase()}, ${s.why}. Total de ${fmtK(total)} tokens, cerca de ${brl(total)}.`);
@@ -120,11 +129,12 @@ export function bootEvo(root: ParentNode): Dispose {
   const startTry = (quiet = true) => {
     const s = spec(log.length), n = log.length + 1, base = total;
     const li = row({ k: 'run', ic: 'replay', label: `Tentativa ${n}`, tk: '0', res: 'Gerando…', why: '', p: 0 });
-    const bar = $('.ev-try-bar i', li)!, kEl = $('.ev-try-k', li)!;
-    bar.style.setProperty('--ms', EVO_GEN_MS + 'ms');
-    requestAnimationFrame(() => requestAnimationFrame(() => bar.style.setProperty('--p', '1')));
-    s4.dataset.gen = '1'; chipN.textContent = String(n); tok.classList.add('counting');
-    tween('tok', base, base + s.tk, EVO_GEN_MS, v => { setTok(v); kEl.textContent = fmtK(v - base); });
+    const barI = $('.ev-try-bar i', li)!, kEl = $('.ev-try-k', li)!;
+    barI.style.setProperty('--ms', EVO_GEN_MS + 'ms');
+    /* rAF duplo guardado em tw: a limpeza cancela os dois quadros */
+    tw.bar = requestAnimationFrame(() => { tw.bar = requestAnimationFrame(() => { if (!ac.signal.aborted) barI.style.setProperty('--p', '1'); }); });
+    s4.dataset.gen = '1'; chipN.textContent = String(n); chipK.textContent = '0'; tok.classList.add('counting');
+    tween('tok', base, base + s.tk, EVO_GEN_MS, v => { setTok(v); const d = fmtK(v - base); kEl.textContent = d; chipK.textContent = d; });
     later(EVO_GEN_MS + 60, () => finishTry(li, s, quiet));
   };
   const press = () => { regen.classList.add('press'); clearTimeout(pressT); pressT = window.setTimeout(() => regen.classList.remove('press'), 420); };
@@ -142,36 +152,53 @@ export function bootEvo(root: ParentNode): Dispose {
     later(6000, press); later(6200, () => startTry());
     later(8000, done);
   };
-  /* 2026: o mesmo painel vira o contraste. O que a IA gastou fica riscado; com o Halor, zero */
+  /* 2026: o mesmo painel vira o contraste. O que a IA gastou fica riscado; com o Halor, o zero chega direto */
   const showHalor = () => {
     clearSeq(); busy = false;
     const aiTotal = log.length >= EVO_TRIES.length ? total : SCRIPT, aiN = Math.max(log.length, EVO_TRIES.length);
-    tok.dataset.mode = 'hl'; tok.classList.remove('counting', 'done'); list.textContent = '';
+    tok.dataset.mode = 'hl'; tok.classList.remove('counting', 'done', 'zero'); list.textContent = ''; list.setAttribute('aria-label', 'Comparação: IA e Halor');
     row({ k: 'old', ic: 'x', label: 'Com IA', tk: fmtK(aiTotal), res: `${aiN} tentativas`, why: 'e o slide ainda parado', p: 1 });
     row({ k: 'ok', ic: 'check', label: 'Com o Halor', tk: '0', res: 'Do seu jeito', why: 'na primeira edição', p: 0 });
-    setSum(1, 'edição', 'R$ 0,00');
-    tween('tok', shown || aiTotal, 0, 1300, setTok);
+    setSum(1, 'edição', 'R$ 0,00'); setTok(0);
+    if (!REDUCED) { void tok.offsetWidth; tok.classList.add('zero'); }
   };
   const tokenEra = (i: number, from: number) => {
-    if (i === AI) { tok.classList.add('is-open'); runSeq(); }
-    else if (i === NOW) { tok.classList.add('is-open'); if (from !== NOW) showHalor(); }
-    else { tok.classList.remove('is-open'); clearSeq(); busy = false; if (from === AI) s4.dataset.gen = '0'; }
+    const open = i === AI || i === NOW;
+    tok.classList.toggle('is-open', open); sec.dataset.tok = open ? 'open' : 'closed';
+    if (i === AI) runSeq();
+    else if (i === NOW) { if (from !== NOW) showHalor(); }
+    else { clearSeq(); busy = false; if (from === AI) s4.dataset.gen = '0'; }
   };
 
-  /* enquanto toca, a página acompanha: o painel de tokens entra na tela quando abre
-     e, quando ele fecha, a câmera volta para o palco */
-  const smooth = (): ScrollBehavior => REDUCED ? 'auto' : 'smooth';
-  const follow = () => {
-    if (state !== 'playing') return;
-    const r = tok.getBoundingClientRect(), top = ev.getBoundingClientRect().top, over = r.bottom - innerHeight + 16;
-    if (over <= 0) return;
-    const room = top - 84, by = room >= over ? over : innerWidth < 900 ? r.top - 84 : room;
-    if (by > 0) window.scrollBy({ top: by, behavior: smooth() });
-  };
+  /* ---- câmera: enquanto toca (e a pessoa não rolou), a página mantém o palco à vista ---- */
+  const dockTop = () => { const n = $('.s-nav'); return n ? n.offsetHeight : 72; };
+  const narrow = () => innerWidth < 900;
+  const below = () => dockTop() + dockIn.offsetHeight + 14; /* onde o palco fica, logo abaixo da faixa do dock */
+  /* posição na tela sem as transformações do scroll reveal (o trilho e o palco entram com translate/scale) */
+  const at = (n: HTMLElement) => ev.getBoundingClientRect().top + n.offsetTop;
+  const glideBy = (y: number) => { if (Math.abs(y) > 6) window.scrollBy({ top: y, behavior: REDUCED ? 'auto' : 'smooth' }); };
+  /* enquadra: no desktop, o player inteiro; no celular, o palco logo abaixo do dock */
   const frame = () => {
-    const r = ev.getBoundingClientRect(), s = screen.getBoundingClientRect();
-    if (r.top < 72 || s.bottom > innerHeight - 8) window.scrollTo({ top: scrollY + r.top - 100, behavior: smooth() });
+    if (userScrolled) return;
+    if (narrow()) { glideBy(at(screen) - below()); return; }
+    const top = ev.getBoundingClientRect().top;
+    if (top < 72 || at(screen) + screen.offsetHeight > innerHeight - 8) glideBy(top - 100);
   };
+  /* em 2024 o painel abre embaixo: a página sobe só o bastante para mostrá-lo, sem tirar o palco da tela */
+  const follow = () => {
+    if (state !== 'playing' || userScrolled) return;
+    const over = tok.getBoundingClientRect().bottom - innerHeight + 16;
+    if (over <= 0) return;
+    glideBy(Math.max(0, Math.min(over, at(screen) - below())));
+  };
+  /* preso: no celular, quando a legenda chega ao topo; no desktop, quando o botão de play some sob o menu */
+  const paintDock = () => {
+    dockRaf = 0;
+    const top = dockTop();
+    const d = narrow() ? at(bar) + bar.offsetHeight + 16 <= top + 1 : at(play) + play.offsetHeight < top + 4;
+    if (d !== docked) { docked = d; ev.classList.toggle('docked', d); }
+  };
+  const queueDock = () => { if (!dockRaf) dockRaf = requestAnimationFrame(paintDock); };
 
   /* ---- troca de época ---- */
   const show = (i: number, how: How) => {
@@ -187,9 +214,9 @@ export function bootEvo(root: ParentNode): Dispose {
       clearTimeout(outT); outT = window.setTimeout(() => { scenes.forEach(s => s.classList.remove('out')); stage.classList.remove('wiping'); }, 950);
     }
     scenes.forEach((s, k) => s.classList.toggle('on', k === i));
-    const e = EVO[i];
+    const e = EVO[i], n = String(i + 1).padStart(2, '0');
     yEl.textContent = e.y; tEl.textContent = e.t; dEl.textContent = e.d; whoEl.textContent = e.who; eraEl.textContent = e.era;
-    nEl.textContent = String(i + 1).padStart(2, '0');
+    nEl.textContent = n; dockN.textContent = `${n} / ${String(N).padStart(2, '0')}`; dockY.textContent = e.yr; dockT.textContent = e.t;
     if (!REDUCED && how !== 'init') { info.classList.remove('swap'); void info.offsetWidth; info.classList.add('swap'); }
     meter.style.setProperty('--a', String(e.a));
     tween('att', attShown, e.a, 900, v => { attShown = v; attEl.textContent = String(Math.round(v * 100)); });
@@ -199,12 +226,8 @@ export function bootEvo(root: ParentNode): Dispose {
     if (how !== 'init') tokenEra(i, from);
     paintArrows(); paintPlay();
     if (how === 'user') say(`${e.y}, ${e.t}. ${e.d} Atenção da plateia: ${Math.round(e.a * 100)}%.`);
-    if (i === AI && state === 'playing') later(900, follow);
-    else if (state === 'playing' && i === NOW && innerWidth < 900) later(300, () => {
-      const t = screen.getBoundingClientRect().top - 84;
-      if (Math.abs(t) > 8) window.scrollBy({ top: t, behavior: smooth() });
-    });
-    else if (state === 'playing' && how === 'auto' && i !== NOW && ev.getBoundingClientRect().top < 64) frame();
+    if (state === 'playing' && i === AI) later(900, follow);
+    else if (state === 'playing' && how === 'auto' && (narrow() || (i !== NOW && ev.getBoundingClientRect().top < 64))) frame();
   };
 
   /* ---- relógio do play ---- */
@@ -251,19 +274,24 @@ export function bootEvo(root: ParentNode): Dispose {
     if (state === 'playing') leadUntil = performance.now() + 850;
     if (state !== 'idle') setG(BEFORE[i] / TOTAL);
   };
-
-  play.addEventListener('click', () => {
-    if (state === 'playing') pause('user');
-    else if (state === 'paused') { resume(); say(`Continuando em ${EVO[cur].y}.`); }
+  /* o mesmo comando no botão grande e no dock; dar play ou continuar devolve a câmera ao palco */
+  const toggle = () => {
+    if (state === 'playing') { pause('user'); return; }
+    userScrolled = false;
+    if (state === 'paused') { resume(); frame(); say(`Continuando em ${EVO[cur].y}.`); }
     else { start(); say(`Reproduzindo a linha do tempo, a partir de ${EVO[cur].y}.`); }
-  }, on);
+  };
+
+  play.addEventListener('click', toggle, on);
+  dockPlay.addEventListener('click', toggle, on);
   prev.addEventListener('click', () => pick(cur - 1), on);
   next.addEventListener('click', () => pick(cur + 1), on);
   tabs.slice(0, N).forEach((b, i) => b.addEventListener('click', () => pick(i), on));
+  /* trilho horizontal: só as setas laterais, Home e End trocam de época; as verticais continuam rolando a página */
   railIn.addEventListener('keydown', e => {
     const k = e.key; let n = cur;
-    if (k === 'ArrowRight' || k === 'ArrowDown') n = (cur + 1) % N;
-    else if (k === 'ArrowLeft' || k === 'ArrowUp') n = (cur - 1 + N) % N;
+    if (k === 'ArrowRight') n = (cur + 1) % N;
+    else if (k === 'ArrowLeft') n = (cur - 1 + N) % N;
     else if (k === 'Home') n = 0;
     else if (k === 'End') n = N - 1;
     else return;
@@ -276,6 +304,22 @@ export function bootEvo(root: ParentNode): Dispose {
     startTry(false);
     later(EVO_GEN_MS + 120, done);
   }, on);
+
+  /* a pessoa rolou por conta própria: a câmera para de acompanhar até o próximo «Assistir» ou «Continuar» */
+  const mine = () => { userScrolled = true; };
+  const SCROLL_KEYS = ['PageDown', 'PageUp', 'ArrowDown', 'ArrowUp', ' ', 'Home', 'End'];
+  window.addEventListener('wheel', mine, onPassive);
+  window.addEventListener('touchmove', mine, onPassive);
+  window.addEventListener('keydown', e => {
+    if (!SCROLL_KEYS.includes(e.key)) return;
+    const t = e.target instanceof Element ? e.target : null;
+    if (t && t.closest('[role="tablist"], input, textarea, select, [contenteditable]')) return;
+    if (e.key === ' ' && t && t.closest('button, a, summary, [role="button"]')) return;
+    mine();
+  }, on);
+  document.addEventListener('pointerdown', e => { if (e.target === document.documentElement) mine(); }, on);
+  window.addEventListener('scroll', queueDock, onPassive);
+  window.addEventListener('resize', () => { ev.style.setProperty('--ev-top', dockTop() + 'px'); queueDock(); }, onPassive);
 
   /* fora da tela, o play espera; ao voltar, continua de onde parou */
   let io: IntersectionObserver | null = null;
@@ -296,18 +340,22 @@ export function bootEvo(root: ParentNode): Dispose {
   }, on);
 
   /* estado inicial (o mesmo da marcação pré-renderizada): 2016, parado, painel fechado */
-  resetTok(); tok.classList.remove('is-open'); tok.dataset.mode = 'ai';
+  resetTok(); tok.classList.remove('is-open'); tok.dataset.mode = 'ai'; sec.dataset.tok = 'closed';
+  ev.style.setProperty('--ev-top', dockTop() + 'px');
   setF(0); setG(0);
   show(0, 'init');
+  paintDock();
 
   return () => {
     ac.abort(); io?.disconnect();
-    cancelAnimationFrame(raf); Object.values(tw).forEach(cancelAnimationFrame);
+    cancelAnimationFrame(raf); cancelAnimationFrame(dockRaf); Object.values(tw).forEach(cancelAnimationFrame);
     clearSeq(); [outT, glideT, sayT, pressT].forEach(clearTimeout);
     state = 'idle';
-    ev.classList.remove('glide', 'back', 'burst', 'hello');
+    ev.classList.remove('glide', 'back', 'burst', 'hello', 'docked');
+    info.classList.remove('swap');
     stage.classList.remove('wiping'); scenes.forEach(s => s.classList.remove('out'));
-    tok.classList.remove('is-open', 'done', 'counting'); regen.classList.remove('press');
+    tok.classList.remove('is-open', 'done', 'counting', 'zero'); regen.classList.remove('press');
+    sec.dataset.tok = 'closed';
     sr.textContent = '';
   };
 }
