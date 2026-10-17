@@ -961,7 +961,7 @@ button.vt-item:hover .vt-pvchip, button.vt-item:focus-visible .vt-pvchip { backg
 .pv-sh-in em { font: 400 12px var(--f-mono); font-style: normal; color: var(--ok-n); }
 .pv-sh-c.is-done .pv-sh-sk { opacity: 0; }
 .pv-sh-c.is-done .pv-sh-in { opacity: 1; translate: 0 0; }
-.pv-sh-seal { position: absolute; right: 18px; top: 18px; isolation: isolate; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; font: 700 9px var(--f-mono); font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: #fff; background: conic-gradient(from var(--vt-a), rgb(var(--acc)), #ff7ac8, rgb(var(--acc-hi)), #6ee7ff, rgb(var(--acc))); animation: vt-spin calc(4s / var(--sp)) linear infinite; opacity: 0; scale: .5; transition: opacity calc(.5s / var(--sp)) var(--ease-halo) .15s, scale calc(.6s / var(--sp)) var(--ease-spark) .15s; }
+.pv-sh-seal { position: absolute; right: 18px; top: 18px; isolation: isolate; display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%; font: 700 7.5px var(--f-mono); font-style: normal; letter-spacing: .04em; text-transform: uppercase; color: #fff; background: conic-gradient(from var(--vt-a), rgb(var(--acc)), #ff7ac8, rgb(var(--acc-hi)), #6ee7ff, rgb(var(--acc))); animation: vt-spin calc(4s / var(--sp)) linear infinite; opacity: 0; scale: .5; transition: opacity calc(.5s / var(--sp)) var(--ease-halo) .15s, scale calc(.6s / var(--sp)) var(--ease-spark) .15s; }
 .pv-sh-seal::before { content: ""; position: absolute; inset: 3px; z-index: -1; border-radius: 50%; background: #140c2c; }
 .pv-sh-c.is-done .pv-sh-seal { opacity: 1; scale: 1; }
 
@@ -1041,3 +1041,13 @@ button.vt-item:hover .vt-pvchip, button.vt-item:focus-visible .vt-pvchip { backg
 .pv-sd-t { font: 600 clamp(24px, 6.4cqi, 40px)/1.05 var(--f-display); letter-spacing: -.04em; color: #fff; max-width: 15ch; text-shadow: 0 2px 24px rgba(7, 4, 15, .6); overflow-wrap: anywhere; }
 .pv-sd-line { display: block; width: min(60%, 260px); height: 2px; background: linear-gradient(90deg, transparent, #fff, rgb(var(--acc-hi)), transparent) 0 0 / 200% 100%; box-shadow: 0 0 12px rgba(var(--acc-hi), .9); animation: pv-glint calc(3s / var(--sp)) var(--ease-halo) infinite; }
 @keyframes pv-glint { 0% { background-position: 100% 0; opacity: .4; } 50% { opacity: 1; } 100% { background-position: -100% 0; opacity: .4; } }
+@container (max-width: 430px) {
+  .pv-mf-row { gap: 8px; }
+  .pv-mf-row button { padding: 10px; }
+  .pv-mf-row button b { font-size: 15px; white-space: normal; }
+  .pv-mf-row button[aria-pressed="true"] { transform: translate(var(--tx, 0px), var(--ty, 0px)) scale(1.25); }
+  .pv-mi { gap: 8px; padding: 0 5%; }
+  .pv-mi > button { gap: 8px; padding: 8px 10px; font-size: 12.5px; }
+  .pv-he { gap: 8px; padding: 0 4%; }
+  .pv-he-c { padding: 12px 10px; }
+}

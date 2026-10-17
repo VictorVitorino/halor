@@ -69,7 +69,7 @@ export function openModal(id: string) {
   const m = document.getElementById(id); if (!m) return;
   lastFocus = document.activeElement;
   m.hidden = false;
-  const f = m.querySelector<HTMLElement>('input, button:not([data-close]), [href]') || m.querySelector<HTMLElement>('button');
+  const f = m.querySelector<HTMLElement>('input, button:not([data-close]), a[href]') || m.querySelector<HTMLElement>('button');
   setTimeout(() => f?.focus(), 30);
 }
 export function closeModal(m: HTMLElement) {

@@ -1534,9 +1534,12 @@ function vtPreview() {
       if (k === 'sp') stage.style.setProperty('--sp', v);
       inst.apply?.(k, v, phase);
     }, { S, reset: () => inst.reset?.() });
+    h.after($('.vt-what', meta));
     if (REDUCED) rep.hidden = true; else rep.addEventListener('click', () => inst.replay?.());
     ctx.E.open(true);
     openModal('vt-prev');
+    /* o foco vai para o primeiro controle da cena (ou para Editar), dentro do diálogo */
+    setTimeout(() => (stage.querySelector('button, [tabindex="0"]') || $('.vt-edit', card))?.focus({ preventScroll: true }), 60);
     requestAnimationFrame(() => inst.start?.());
   };
 }
@@ -1848,7 +1851,7 @@ VT_PREV[28] = {
 
 /* 29 · Morphing Shapes */
 VT_PREV[29] = {
-  how: 'Troque a fase: silos viram centro, o centro vira rede',
+  how: 'Troque a fase nos botões da cena',
   make(st, S, ctx) {
     const F = {
       silos: [[22, 50, 20, 14], [50, 50, 20, 14], [78, 50, 20, 14], [50, 50, 0, 50], [50, 50, 0, 50]],
