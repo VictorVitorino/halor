@@ -1338,26 +1338,7 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 .rec-steps small { font-size: 13.5px; color: var(--text-2); }
 .rec-steps button[aria-pressed="true"] { border-color: var(--halor-glow); background: rgba(139, 61, 255, .16); box-shadow: 0 0 30px -10px rgba(139, 61, 255, .9); }
 .rec-steps button[aria-pressed="true"] b { background: var(--halor-violet); color: #fff; }
-
-/* modelos */
-.pd-models { margin-top: clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
-.pd-sub { display: grid; gap: 6px; }
-.pd-sub h3 { font-family: var(--f-display); font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.025em; }
-.pd-mgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-@media (max-width: 960px) { .pd-mgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .pd-mgrid { grid-template-columns: 1fr; } }
-.pd-model { border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: transform var(--t-base) var(--ease-halo), border-color var(--t-base), box-shadow var(--t-base); }
-.pd-model:hover { transform: translateY(-3px); border-color: var(--line-c-2); box-shadow: 0 24px 60px -30px rgba(139, 61, 255, .8); }
-.pd-model .slide { border-bottom: 1px solid var(--line-c); }
-.pd-mb { padding: 14px 16px 16px; display: grid; gap: 10px; }
-.pd-mb b { font-size: 15.5px; }
-.pd-fx { display: flex; gap: 6px; flex-wrap: wrap; }
 .pd-feats { margin-top: clamp(48px, 6vw, 80px); }
-
-.tl-ahead { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(36px, 5vw, 56px); }
-@media (max-width: 860px) { .tl-ahead { grid-template-columns: 1fr; } }
-.tl-ahead article { background: #fff; border: 1px solid var(--line-c); border-radius: var(--r-lg); padding: 20px 22px; display: grid; gap: 8px; box-shadow: 0 10px 30px -18px rgba(58, 20, 120, .35); }
-.tl-ahead p:not(.pd-k) { font-size: 15px; color: var(--text-2); }
 
 /* ==========================================================================
    PRODUTO v4 · brilho no ganho principal, passos, upload mágico e carrossel
@@ -1422,53 +1403,6 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
 @keyframes ruSweep { 0% { opacity: 1; left: -10%; } 100% { opacity: 0; left: 102%; } }
 .rec-stage[data-state="2"] .rec-cursor { left: 50%; top: 48%; }
 
-/* modelos em carrossel horizontal, menores e em movimento */
-.pd-carousel { position: relative; min-width: 0; }
-.pd-track { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 8px 4px 22px; scrollbar-width: thin; scrollbar-color: rgba(201, 166, 255, .3) transparent; cursor: grab; --mL: 4%; --mR: 96%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); }
-.pd-carousel.at-start .pd-track { --mL: 0%; }
-.pd-carousel.at-end .pd-track { --mR: 100%; }
-.pd-track.drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
-.pd-track:focus-visible { outline-offset: 4px; }
-.pd-track .pd-model { flex: 0 0 clamp(210px, 21vw, 250px); scroll-snap-align: start; border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: background .45s var(--ease-halo), border-color .45s var(--ease-halo), transform .35s var(--ease-halo), box-shadow .45s var(--ease-halo); }
-.pd-track .pd-model:hover, .pd-track .pd-model:focus-visible { background: linear-gradient(155deg, var(--ac), #1b0b45 85%); border-color: var(--ac); transform: translateY(-4px); box-shadow: 0 24px 60px -24px var(--ac), 0 0 0 1px var(--ac); }
-.pd-track .pd-model:hover .slide { filter: saturate(1.15); }
-.pd-track .pd-model:hover .chip { background: rgba(255, 255, 255, .18); color: #fff; }
-.pd-mthumb { padding: 10px 10px 0; }
-.pd-mthumb .slide { border-radius: 8px; box-shadow: 0 0 0 1px rgba(201, 166, 255, .18); }
-.pd-track .pd-mb { padding: 12px 14px 14px; gap: 8px; }
-.pd-track .pd-mb b { font-size: 14.5px; }
-.pd-track .chip { height: 22px; font-size: 11px; transition: background .4s, color .4s; }
-.pd-nav { position: absolute; top: 40%; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-c-2); background: rgba(14, 8, 32, .85); color: var(--text); display: grid; place-items: center; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .7); transition: opacity var(--t-base), background var(--t-base); }
-.pd-nav:hover { background: var(--halor-violet); }
-.pd-nav svg { width: 18px; height: 18px; }
-.pd-prev { left: -14px; } .pd-next { right: -14px; }
-.pd-carousel.at-start .pd-prev, .pd-carousel.at-end .pd-next { opacity: 0; pointer-events: none; }
-@media (max-width: 700px) { .pd-nav { display: none; } }
-/* motion graphics dentro das miniaturas: só rodam com o carrossel na tela */
-.pd-carousel.run .sl-chart i { animation: mgBars 3.6s var(--ease-halo) infinite both; transform-origin: bottom; }
-.pd-carousel.run .sl-chart i:nth-child(2) { animation-delay: .15s; } .pd-carousel.run .sl-chart i:nth-child(3) { animation-delay: .3s; } .pd-carousel.run .sl-chart i:nth-child(4) { animation-delay: .45s; }
-.pd-carousel.run .sl-big b { animation: mgPop 3.6s var(--ease-spark) infinite both; transform-origin: left bottom; }
-.pd-carousel.run .sl-line { animation: mgDraw 4s var(--ease-halo) infinite both; transform-origin: left; }
-.pd-carousel.run .sl-ms i { animation: mgDot 4s var(--ease-spark) infinite both; }
-.pd-carousel.run .sl-ms:nth-of-type(3) i { animation-delay: .35s; } .pd-carousel.run .sl-ms:nth-of-type(4) i { animation-delay: .7s; } .pd-carousel.run .sl-ms:nth-of-type(5) i { animation-delay: 1.05s; }
-.pd-carousel.run .sl-step { animation: mgRise 3.8s var(--ease-halo) infinite both; }
-.pd-carousel.run .sl-step:nth-child(2) { animation-delay: .25s; } .pd-carousel.run .sl-step:nth-child(3) { animation-delay: .5s; }
-.pd-carousel.run .sl-list div { animation: mgSlide 4s var(--ease-halo) infinite both; }
-.pd-carousel.run .sl-list div:nth-child(2) { animation-delay: .3s; } .pd-carousel.run .sl-list div:nth-child(3) { animation-delay: .6s; }
-.pd-carousel.run .sl-cta { animation: mgBreathe 2.8s ease-in-out infinite; }
-.pd-carousel.run .sl-img::after { animation: mgRing 3.2s ease-in-out infinite; }
-.pd-carousel.run .sl-ring { animation: spin 14s linear infinite; }
-.pd-carousel.run .sl-h { animation: mgType 4.2s var(--ease-halo) infinite both; }
-@keyframes mgBars { 0% { transform: scaleY(0); } 25%, 80% { transform: none; } 100% { transform: scaleY(0); } }
-@keyframes mgPop { 0% { opacity: 0; transform: scale(.7); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
-@keyframes mgDraw { 0% { transform: scaleX(0); } 35%, 85% { transform: none; } 100% { transform: scaleX(0); } }
-@keyframes mgDot { 0%, 12% { transform: scale(0); } 30%, 85% { transform: none; box-shadow: 0 0 0 .6cqw rgba(139, 61, 255, .2); } 100% { transform: scale(0); } }
-@keyframes mgRise { 0% { opacity: 0; transform: translateY(3cqw); } 25%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
-@keyframes mgSlide { 0% { opacity: 0; transform: translateX(-4cqw); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
-@keyframes mgBreathe { 50% { transform: scale(1.06); box-shadow: inset 0 0 0 .3cqw #c4a6ff, 0 0 4cqw rgba(139, 61, 255, .35); } }
-@keyframes mgRing { 50% { transform: scale(1.12); opacity: .6; } }
-@keyframes mgType { 0% { clip-path: inset(0 100% 0 0); } 22%, 92% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 100%); } }
-
 /* O efeito Halor · Icon Motion + Animated Typography em cada quadro */
 .sci-ic { width: 54px; height: 54px; color: var(--halor-violet); overflow: visible; margin-bottom: 4px; }
 .sci-ic path, .sci-ic circle, .sci-ic rect { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
@@ -1529,6 +1463,86 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
   .pd-rec { grid-template-columns: minmax(0, 1.65fr) minmax(max-content, 1fr); }
   .rec-steps small { white-space: nowrap; }
 }
+
+/* barra da gravação: o ponto ao vivo não é cortado e, no celular, fica só o ponto */
+.pd-rec-frame .pf-bar .rec-live { overflow: visible; margin-left: 8px; }
+.pd-rec-frame .pf-bar .rec-live .dot { width: 8px; height: 8px; background: currentColor; }
+@media (max-width: 600px) { .pd-rec-frame .pf-bar .rec-live { font-size: 0; gap: 0; } }
+/* equação no celular: um termo por linha, operadores centralizados entre eles */
+@media (max-width: 560px) { #efeito .equation { flex-direction: column; gap: 6px; } #efeito .eq-op { line-height: 1; } }
+
+/* ==========================================================================
+   MODELOS QUE ENTREGAMOS PRONTOS · carrossel horizontal (separado de 28-produto.css)
+   ========================================================================== */
+
+/* modelos */
+.pd-models { margin-top: clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+.pd-sub { display: grid; gap: 6px; }
+.pd-sub h3 { font-family: var(--f-display); font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.025em; }
+.pd-mgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .pd-mgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .pd-mgrid { grid-template-columns: 1fr; } }
+.pd-model { border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: transform var(--t-base) var(--ease-halo), border-color var(--t-base), box-shadow var(--t-base); }
+.pd-model:hover { transform: translateY(-3px); border-color: var(--line-c-2); box-shadow: 0 24px 60px -30px rgba(139, 61, 255, .8); }
+.pd-model .slide { border-bottom: 1px solid var(--line-c); }
+.pd-mb { padding: 14px 16px 16px; display: grid; gap: 10px; }
+.pd-mb b { font-size: 15.5px; }
+.pd-fx { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* modelos em carrossel horizontal, menores e em movimento */
+.pd-carousel { position: relative; min-width: 0; }
+.pd-track { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 8px 4px 22px; scrollbar-width: thin; scrollbar-color: rgba(201, 166, 255, .3) transparent; cursor: grab; --mL: 4%; --mR: 96%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); }
+.pd-carousel.at-start .pd-track { --mL: 0%; }
+.pd-carousel.at-end .pd-track { --mR: 100%; }
+.pd-track.drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.pd-track:focus-visible { outline-offset: 4px; }
+.pd-track .pd-model { flex: 0 0 clamp(210px, 21vw, 250px); scroll-snap-align: start; border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: background .45s var(--ease-halo), border-color .45s var(--ease-halo), transform .35s var(--ease-halo), box-shadow .45s var(--ease-halo); }
+.pd-track .pd-model:hover, .pd-track .pd-model:focus-visible { background: linear-gradient(155deg, var(--ac), #1b0b45 85%); border-color: var(--ac); transform: translateY(-4px); box-shadow: 0 24px 60px -24px var(--ac), 0 0 0 1px var(--ac); }
+.pd-track .pd-model:hover .slide { filter: saturate(1.15); }
+.pd-track .pd-model:hover .chip { background: rgba(255, 255, 255, .18); color: #fff; }
+.pd-mthumb { padding: 10px 10px 0; }
+.pd-mthumb .slide { border-radius: 8px; box-shadow: 0 0 0 1px rgba(201, 166, 255, .18); }
+.pd-track .pd-mb { padding: 12px 14px 14px; gap: 8px; }
+.pd-track .pd-mb b { font-size: 14.5px; }
+.pd-track .chip { height: 22px; font-size: 11px; transition: background .4s, color .4s; }
+.pd-nav { position: absolute; top: 40%; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-c-2); background: rgba(14, 8, 32, .85); color: var(--text); display: grid; place-items: center; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .7); transition: opacity var(--t-base), background var(--t-base); }
+.pd-nav:hover { background: var(--halor-violet); }
+.pd-nav svg { width: 18px; height: 18px; }
+.pd-prev { left: -14px; } .pd-next { right: -14px; }
+.pd-carousel.at-start .pd-prev, .pd-carousel.at-end .pd-next { opacity: 0; pointer-events: none; }
+@media (max-width: 700px) { .pd-nav { display: none; } }
+/* motion graphics dentro das miniaturas: só rodam com o carrossel na tela */
+.pd-carousel.run .sl-chart i { animation: mgBars 3.6s var(--ease-halo) infinite both; transform-origin: bottom; }
+.pd-carousel.run .sl-chart i:nth-child(2) { animation-delay: .15s; } .pd-carousel.run .sl-chart i:nth-child(3) { animation-delay: .3s; } .pd-carousel.run .sl-chart i:nth-child(4) { animation-delay: .45s; }
+.pd-carousel.run .sl-big b { animation: mgPop 3.6s var(--ease-spark) infinite both; transform-origin: left bottom; }
+.pd-carousel.run .sl-line { animation: mgDraw 4s var(--ease-halo) infinite both; transform-origin: left; }
+.pd-carousel.run .sl-ms i { animation: mgDot 4s var(--ease-spark) infinite both; }
+.pd-carousel.run .sl-ms:nth-of-type(3) i { animation-delay: .35s; } .pd-carousel.run .sl-ms:nth-of-type(4) i { animation-delay: .7s; } .pd-carousel.run .sl-ms:nth-of-type(5) i { animation-delay: 1.05s; }
+.pd-carousel.run .sl-step { animation: mgRise 3.8s var(--ease-halo) infinite both; }
+.pd-carousel.run .sl-step:nth-child(2) { animation-delay: .25s; } .pd-carousel.run .sl-step:nth-child(3) { animation-delay: .5s; }
+.pd-carousel.run .sl-list div { animation: mgSlide 4s var(--ease-halo) infinite both; }
+.pd-carousel.run .sl-list div:nth-child(2) { animation-delay: .3s; } .pd-carousel.run .sl-list div:nth-child(3) { animation-delay: .6s; }
+.pd-carousel.run .sl-cta { animation: mgBreathe 2.8s ease-in-out infinite; }
+.pd-carousel.run .sl-img::after { animation: mgRing 3.2s ease-in-out infinite; }
+.pd-carousel.run .sl-ring { animation: spin 14s linear infinite; }
+.pd-carousel.run .sl-h { animation: mgType 4.2s var(--ease-halo) infinite both; }
+@keyframes mgBars { 0% { transform: scaleY(0); } 25%, 80% { transform: none; } 100% { transform: scaleY(0); } }
+@keyframes mgPop { 0% { opacity: 0; transform: scale(.7); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgDraw { 0% { transform: scaleX(0); } 35%, 85% { transform: none; } 100% { transform: scaleX(0); } }
+@keyframes mgDot { 0%, 12% { transform: scale(0); } 30%, 85% { transform: none; box-shadow: 0 0 0 .6cqw rgba(139, 61, 255, .2); } 100% { transform: scale(0); } }
+@keyframes mgRise { 0% { opacity: 0; transform: translateY(3cqw); } 25%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgSlide { 0% { opacity: 0; transform: translateX(-4cqw); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgBreathe { 50% { transform: scale(1.06); box-shadow: inset 0 0 0 .3cqw #c4a6ff, 0 0 4cqw rgba(139, 61, 255, .35); } }
+@keyframes mgRing { 50% { transform: scale(1.12); opacity: .6; } }
+@keyframes mgType { 0% { clip-path: inset(0 100% 0 0); } 22%, 92% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 100%); } }
+
+/* ==========================================================================
+   LINHA DO TEMPO (separado de 28-produto.css)
+   ========================================================================== */
+.tl-ahead { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(36px, 5vw, 56px); }
+@media (max-width: 860px) { .tl-ahead { grid-template-columns: 1fr; } }
+.tl-ahead article { background: #fff; border: 1px solid var(--line-c); border-radius: var(--r-lg); padding: 20px 22px; display: grid; gap: 8px; box-shadow: 0 10px 30px -18px rgba(58, 20, 120, .35); }
+.tl-ahead p:not(.pd-k) { font-size: 15px; color: var(--text-2); }
 
 /* ==========================================================================
    v6 · Linha do tempo como viagem no tempo: palco da época + trilho que avança
@@ -1775,12 +1789,7 @@ button.vt-item:hover { border-color: var(--accent); background: var(--accent-was
   .ev-scene *, .ev-scene *::before, .ev-scene *::after, .ev-info.swap > * { animation: none !important; }
   .ev-att b, .ev-fill { transition: none; }
 }
-/* barra da gravação: o ponto ao vivo não é cortado e, no celular, fica só o ponto */
-.pd-rec-frame .pf-bar .rec-live { overflow: visible; margin-left: 8px; }
-.pd-rec-frame .pf-bar .rec-live .dot { width: 8px; height: 8px; background: currentColor; }
-@media (max-width: 600px) { .pd-rec-frame .pf-bar .rec-live { font-size: 0; gap: 0; } .ev-stop span em { display: none; } }
-/* equação no celular: um termo por linha, operadores centralizados entre eles */
-@media (max-width: 560px) { #efeito .equation { flex-direction: column; gap: 6px; } #efeito .eq-op { line-height: 1; } }
+@media (max-width: 600px) { .ev-stop span em { display: none; } }
 
 /* ==========================================================================
    VÍDEO · Conheça o Halor (pitch narrado, 1 min 46 s)
@@ -5837,67 +5846,8 @@ document.addEventListener('click', e => {
 });
 
 /* ==========================================================================
-   PRODUTO · gravação do Estúdio em loop (montar, baixar HTML, apresentar)
-   e vitrine de modelos prontos
+   LINHA DO TEMPO (separado de 36-produto.js)
    ========================================================================== */
-const PD_MODELS = [
-  { n: 'Kickoff de projeto', ac: '#8b3dff', fx: ['Timeline Motion', 'Reveal'], s: { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
-  { n: 'Aula e treinamento', ac: '#a970ff', fx: ['Animated Typography', 'Votação'], s: { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] } },
-  { n: 'Relatório executivo', ac: '#6420cc', fx: ['Counter', 'Chart Build'], s: { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', unit: '%', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] } },
-  { n: 'Workshop', ac: '#b791ff', fx: ['Post-its', 'Cronômetro'], s: { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' } },
-  { n: 'Apresentação institucional', ac: '#7a33eb', fx: ['Parallax', 'Glow'], s: { type: 'text', k: 'Quem somos', h: 'Uma história que se vê.', p: ['Missão, números e pessoas em poucos slides.', 'Imagem dominante em cada página.'] } },
-  { n: 'Abertura de evento', ac: '#c9a6ff', fx: ['Particle System', 'Shader'], s: { type: 'cover', k: 'Evento 2027', h: 'Bem-vindos.', sub: 'Abertura · auditório principal' } },
-  { n: 'Roadmap do ano', ac: '#8752f5', fx: ['Connector', 'Spotlight'], s: { type: 'tl', k: 'Roadmap', h: 'Quatro ondas, um ano.', ms: [['T1', 'Base', .1], ['T2', 'Escala', .37], ['T3', 'Dados', .63], ['T4', 'IA', .9]] } },
-  { n: 'Onboarding de time', ac: '#9f70ff', fx: ['Card Stack', 'Flip Card'], s: { type: 'steps', k: 'Boas-vindas', h: 'Sua primeira semana.', s: [['01', 'Conhecer', 'Pessoas e rituais'], ['02', 'Fazer', 'Primeira entrega'], ['03', 'Contar', 'O que aprendeu']] } },
-  { n: 'Pesquisa ao vivo', ac: '#5a35a8', fx: ['Votação', 'Counter'], s: { type: 'kpi', k: 'Ao vivo', h: 'A sala respondeu.', big: '87%', cap: 'votaram pela frente de design', unit: '%', bars: [[22, 'A'], [48, 'B'], [87, 'C'], [35, 'D']] } },
-  { n: 'Retrospectiva', ac: '#cfb3ff', fx: ['Post-its', 'Matriz'], s: { type: 'next', k: 'Retro', h: 'O que levamos daqui?', items: ['O que funcionou', 'O que mudar', 'Quem puxa o quê'], cta: 'Votação em 3 min' } }
-];
-
-function bootProduto() {
-  const track = $('#pd-models');
-  if (track) {
-    PD_MODELS.forEach((m, i) => {
-      const c = el('article', 'pd-model'); c.style.setProperty('--ac', m.ac); c.tabIndex = 0;
-      const th = el('div', 'pd-mthumb'); th.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); c.appendChild(th);
-      const b = el('div', 'pd-mb'); b.appendChild(el('b', null, m.n));
-      const fx = el('div', 'pd-fx'); m.fx.forEach(f => fx.appendChild(el('span', 'chip', f))); b.appendChild(fx);
-      c.appendChild(b); track.appendChild(c);
-    });
-    const car = track.closest('.pd-carousel'), by = () => Math.max(240, track.clientWidth * .8);
-    $('.pd-prev', car).addEventListener('click', () => track.scrollBy({ left: -by(), behavior: REDUCED ? 'auto' : 'smooth' }));
-    $('.pd-next', car).addEventListener('click', () => track.scrollBy({ left: by(), behavior: REDUCED ? 'auto' : 'smooth' }));
-    let dx = null, sl = 0, moved = false;
-    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; moved = false; track.classList.add('drag'); });
-    window.addEventListener('pointermove', e => { if (dx == null) return; const d = e.clientX - dx; if (Math.abs(d) > 4) moved = true; track.scrollLeft = sl - d; });
-    window.addEventListener('pointerup', () => { dx = null; track.classList.remove('drag'); });
-    const edge = () => { car.classList.toggle('at-start', track.scrollLeft < 10); car.classList.toggle('at-end', track.scrollLeft + track.clientWidth > track.scrollWidth - 10); };
-    track.addEventListener('scroll', edge, { passive: true }); edge();
-    new IntersectionObserver(es => car.classList.toggle('run', es[0].isIntersecting)).observe(car);
-  }
-  bootEvo();
-  bootEfeitoFx();
-  const gain = $('.pd-gain');
-  if (gain) new IntersectionObserver(es => { if (es[0].isIntersecting) gain.classList.add('on'); }, { threshold: .4 }).observe(gain);
-  const stage = $('#rec-stage'); if (!stage) return;
-  const rail = $('#re-rail');
-  PD_MODELS.slice(0, 4).forEach((m, i) => { const d = el('div', 're-th' + (i === 2 ? ' on' : '')); d.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); rail.appendChild(d); });
-  $('#re-canvas').innerHTML = slideHTML(PD_MODELS[2].s, 3, 'halor');
-  $('#ru-after').innerHTML = slideHTML({ type: 'cover', k: 'Plano 2027', h: 'Plano 2027 em 12 semanas.', sub: 'Importado de apresentacao-antiga.pptx' }, 1, 'halor');
-  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Salvar como', 'estudio.halor · Importar arquivo'];
-  let st = 0, timer = 0, visible = false;
-  const set = n => {
-    st = n; stage.dataset.state = String(n);
-    stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play');
-    $('#rec-url').textContent = URLS[n];
-    $$('[data-rec]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.rec === n)));
-  };
-  const loop = () => { clearTimeout(timer); if (REDUCED || !visible || currentView !== 'v-site') return; timer = setTimeout(() => { set((st + 1) % 3); loop(); }, 4600); };
-  $$('[data-rec]').forEach(b => b.addEventListener('click', () => { set(+b.dataset.rec); loop(); }));
-  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); loop(); } else clearTimeout(timer); }).observe(stage);
-  document.addEventListener('halor:view', loop);
-  set(0);
-}
-
 /* Linha do tempo · viagem no tempo: um palco mostra como a apresentação era em cada
    época, o trilho avança sozinho enquanto a seção está à vista e para quando a pessoa escolhe */
 const EVO = [
@@ -5909,7 +5859,7 @@ const EVO = [
   { yr: '2026', y: '2026', t: 'HTML vivo e lúdico', d: 'Com o Halor, a apresentação se move, responde e convida a participar. Sem código.', who: 'Participa', a: .88, now: true },
   { yr: 'Próximos', y: 'Próximos anos', t: 'Apresentação que conversa', d: 'Ela se adapta a quem assiste, tira dúvidas e mede a atenção ao vivo.', who: 'Conversa', a: 1, next: true }
 ];
-function bootEvo() {
+function bootTimeline() {
   const ev = $('#ev'); if (!ev) return;
   const rail = $('.ev-rail', ev), inner = $('.ev-rail-in', ev), scenes = $$('.ev-scene', ev), info = $('.ev-info', ev);
   const track = $('.ev-track', ev), fut = $('.ev-fut', ev), fill = $('.ev-fill', ev), prog = $('.ev-prog', ev), att = $('.ev-att b', ev);
@@ -5971,6 +5921,82 @@ function bootEvo() {
   document.addEventListener('visibilitychange', () => { if (document.hidden) { clearTimeout(timer); ev.classList.remove('ticking'); } else schedule(); });
   new ResizeObserver(layout).observe(inner);
   go(0); clearTimeout(timer);
+}
+
+
+/* ==========================================================================
+   MODELOS QUE ENTREGAMOS PRONTOS · carrossel (separado de 36-produto.js)
+   ========================================================================== */
+const PD_MODELS = [
+  { n: 'Kickoff de projeto', ac: '#8b3dff', fx: ['Timeline Motion', 'Reveal'], s: { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] } },
+  { n: 'Aula e treinamento', ac: '#a970ff', fx: ['Animated Typography', 'Votação'], s: { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] } },
+  { n: 'Relatório executivo', ac: '#6420cc', fx: ['Counter', 'Chart Build'], s: { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', unit: '%', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] } },
+  { n: 'Workshop', ac: '#b791ff', fx: ['Post-its', 'Cronômetro'], s: { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' } },
+  { n: 'Apresentação institucional', ac: '#7a33eb', fx: ['Parallax', 'Glow'], s: { type: 'text', k: 'Quem somos', h: 'Uma história que se vê.', p: ['Missão, números e pessoas em poucos slides.', 'Imagem dominante em cada página.'] } },
+  { n: 'Abertura de evento', ac: '#c9a6ff', fx: ['Particle System', 'Shader'], s: { type: 'cover', k: 'Evento 2027', h: 'Bem-vindos.', sub: 'Abertura · auditório principal' } },
+  { n: 'Roadmap do ano', ac: '#8752f5', fx: ['Connector', 'Spotlight'], s: { type: 'tl', k: 'Roadmap', h: 'Quatro ondas, um ano.', ms: [['T1', 'Base', .1], ['T2', 'Escala', .37], ['T3', 'Dados', .63], ['T4', 'IA', .9]] } },
+  { n: 'Onboarding de time', ac: '#9f70ff', fx: ['Card Stack', 'Flip Card'], s: { type: 'steps', k: 'Boas-vindas', h: 'Sua primeira semana.', s: [['01', 'Conhecer', 'Pessoas e rituais'], ['02', 'Fazer', 'Primeira entrega'], ['03', 'Contar', 'O que aprendeu']] } },
+  { n: 'Pesquisa ao vivo', ac: '#5a35a8', fx: ['Votação', 'Counter'], s: { type: 'kpi', k: 'Ao vivo', h: 'A sala respondeu.', big: '87%', cap: 'votaram pela frente de design', unit: '%', bars: [[22, 'A'], [48, 'B'], [87, 'C'], [35, 'D']] } },
+  { n: 'Retrospectiva', ac: '#cfb3ff', fx: ['Post-its', 'Matriz'], s: { type: 'next', k: 'Retro', h: 'O que levamos daqui?', items: ['O que funcionou', 'O que mudar', 'Quem puxa o quê'], cta: 'Votação em 3 min' } }
+];
+
+function bootModelos() {
+  const track = $('#pd-models');
+  if (track) {
+    PD_MODELS.forEach((m, i) => {
+      const c = el('article', 'pd-model'); c.style.setProperty('--ac', m.ac); c.tabIndex = 0;
+      const th = el('div', 'pd-mthumb'); th.insertAdjacentHTML('beforeend', slideHTML(m.s, i + 1, 'halor')); c.appendChild(th);
+      const b = el('div', 'pd-mb'); b.appendChild(el('b', null, m.n));
+      const fx = el('div', 'pd-fx'); m.fx.forEach(f => fx.appendChild(el('span', 'chip', f))); b.appendChild(fx);
+      c.appendChild(b); track.appendChild(c);
+    });
+    const car = track.closest('.pd-carousel'), by = () => Math.max(240, track.clientWidth * .8);
+    $('.pd-prev', car).addEventListener('click', () => track.scrollBy({ left: -by(), behavior: REDUCED ? 'auto' : 'smooth' }));
+    $('.pd-next', car).addEventListener('click', () => track.scrollBy({ left: by(), behavior: REDUCED ? 'auto' : 'smooth' }));
+    let dx = null, sl = 0, moved = false;
+    track.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') return; dx = e.clientX; sl = track.scrollLeft; moved = false; track.classList.add('drag'); });
+    window.addEventListener('pointermove', e => { if (dx == null) return; const d = e.clientX - dx; if (Math.abs(d) > 4) moved = true; track.scrollLeft = sl - d; });
+    window.addEventListener('pointerup', () => { dx = null; track.classList.remove('drag'); });
+    const edge = () => { car.classList.toggle('at-start', track.scrollLeft < 10); car.classList.toggle('at-end', track.scrollLeft + track.clientWidth > track.scrollWidth - 10); };
+    track.addEventListener('scroll', edge, { passive: true }); edge();
+    new IntersectionObserver(es => car.classList.toggle('run', es[0].isIntersecting)).observe(car);
+  }
+}
+
+/* ==========================================================================
+   PRODUTO · gravação do Estúdio em loop (montar, baixar HTML, apresentar)
+   e vitrine de modelos prontos
+   ========================================================================== */
+/* slides da gravação do Estúdio (trilho e canvas) */
+const REC_SLIDES = [
+  { type: 'tl', k: 'Kickoff', h: 'Do kickoff à entrega.', ms: [['S1', 'Kickoff', .1], ['S4', 'Desenho', .37], ['S8', 'Piloto', .63], ['S12', 'Entrega', .9]] },
+  { type: 'steps', k: 'Aula 4', h: 'Três ideias para levar.', s: [['01', 'Ver', 'O olhar decide rápido'], ['02', 'Sentir', 'A emoção segura'], ['03', 'Lembrar', 'A imagem fica']] },
+  { type: 'kpi', k: 'Resultados', h: 'O trimestre em um número.', big: '+32%', cap: 'de leitura completa dos materiais', unit: '%', bars: [[41, 'T1'], [52, 'T2'], [61, 'T3'], [68, 'T4']] },
+  { type: 'next', k: 'Workshop', h: 'O que não pode faltar?', items: ['Escreva um post-it', 'Vote nas três melhores', 'Combine o próximo passo'], cta: '10 min no cronômetro' }
+];
+
+function bootProduto() {
+  bootEfeitoFx();
+  const gain = $('.pd-gain');
+  if (gain) new IntersectionObserver(es => { if (es[0].isIntersecting) gain.classList.add('on'); }, { threshold: .4 }).observe(gain);
+  const stage = $('#rec-stage'); if (!stage) return;
+  const rail = $('#re-rail');
+  REC_SLIDES.forEach((s, i) => { const d = el('div', 're-th' + (i === 2 ? ' on' : '')); d.insertAdjacentHTML('beforeend', slideHTML(s, i + 1, 'halor')); rail.appendChild(d); });
+  $('#re-canvas').innerHTML = slideHTML(REC_SLIDES[2], 3, 'halor');
+  $('#ru-after').innerHTML = slideHTML({ type: 'cover', k: 'Plano 2027', h: 'Plano 2027 em 12 semanas.', sub: 'Importado de apresentacao-antiga.pptx' }, 1, 'halor');
+  const URLS = ['estudio.halor · Kickoff 2027', 'estudio.halor · Salvar como', 'estudio.halor · Importar arquivo'];
+  let st = 0, timer = 0, visible = false;
+  const set = n => {
+    st = n; stage.dataset.state = String(n);
+    stage.classList.remove('play'); void stage.offsetWidth; stage.classList.add('play');
+    $('#rec-url').textContent = URLS[n];
+    $$('[data-rec]').forEach(b => b.setAttribute('aria-pressed', String(+b.dataset.rec === n)));
+  };
+  const loop = () => { clearTimeout(timer); if (REDUCED || !visible || currentView !== 'v-site') return; timer = setTimeout(() => { set((st + 1) % 3); loop(); }, 4600); };
+  $$('[data-rec]').forEach(b => b.addEventListener('click', () => { set(+b.dataset.rec); loop(); }));
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) { set(st); loop(); } else clearTimeout(timer); }).observe(stage);
+  document.addEventListener('halor:view', loop);
+  set(0);
 }
 
 /* O efeito Halor · dispara o desenho dos ícones e a tipografia quando a seção aparece */
@@ -8479,6 +8505,8 @@ function renderBrand() {
    ========================================================================== */
 function boot() {
   bootVitrine();
+  bootModelos();
+  bootTimeline();
   bootProduto();
   renderPlans();
   dashAll();

@@ -3,6 +3,8 @@
    ========================================================================== */
 function boot() {
   bootVitrine();
+  bootModelos();
+  bootTimeline();
   bootProduto();
   renderPlans();
   dashAll();

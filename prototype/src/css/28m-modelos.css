@@ -1,0 +1,64 @@
+/* ==========================================================================
+   MODELOS QUE ENTREGAMOS PRONTOS · carrossel horizontal (separado de 28-produto.css)
+   ========================================================================== */
+
+/* modelos */
+.pd-models { margin-top: clamp(56px, 7vw, 96px); display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+.pd-sub { display: grid; gap: 6px; }
+.pd-sub h3 { font-family: var(--f-display); font-size: clamp(22px, 2.4vw, 30px); letter-spacing: -.025em; }
+.pd-mgrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 960px) { .pd-mgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .pd-mgrid { grid-template-columns: 1fr; } }
+.pd-model { border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: transform var(--t-base) var(--ease-halo), border-color var(--t-base), box-shadow var(--t-base); }
+.pd-model:hover { transform: translateY(-3px); border-color: var(--line-c-2); box-shadow: 0 24px 60px -30px rgba(139, 61, 255, .8); }
+.pd-model .slide { border-bottom: 1px solid var(--line-c); }
+.pd-mb { padding: 14px 16px 16px; display: grid; gap: 10px; }
+.pd-mb b { font-size: 15.5px; }
+.pd-fx { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* modelos em carrossel horizontal, menores e em movimento */
+.pd-carousel { position: relative; min-width: 0; }
+.pd-track { display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: 4px; padding: 8px 4px 22px; scrollbar-width: thin; scrollbar-color: rgba(201, 166, 255, .3) transparent; cursor: grab; --mL: 4%; --mR: 96%; -webkit-mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); mask-image: linear-gradient(90deg, transparent, #000 var(--mL), #000 var(--mR), transparent); }
+.pd-carousel.at-start .pd-track { --mL: 0%; }
+.pd-carousel.at-end .pd-track { --mR: 100%; }
+.pd-track.drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.pd-track:focus-visible { outline-offset: 4px; }
+.pd-track .pd-model { flex: 0 0 clamp(210px, 21vw, 250px); scroll-snap-align: start; border: 1px solid var(--line-c); border-radius: var(--r-lg); overflow: hidden; background: var(--glass); transition: background .45s var(--ease-halo), border-color .45s var(--ease-halo), transform .35s var(--ease-halo), box-shadow .45s var(--ease-halo); }
+.pd-track .pd-model:hover, .pd-track .pd-model:focus-visible { background: linear-gradient(155deg, var(--ac), #1b0b45 85%); border-color: var(--ac); transform: translateY(-4px); box-shadow: 0 24px 60px -24px var(--ac), 0 0 0 1px var(--ac); }
+.pd-track .pd-model:hover .slide { filter: saturate(1.15); }
+.pd-track .pd-model:hover .chip { background: rgba(255, 255, 255, .18); color: #fff; }
+.pd-mthumb { padding: 10px 10px 0; }
+.pd-mthumb .slide { border-radius: 8px; box-shadow: 0 0 0 1px rgba(201, 166, 255, .18); }
+.pd-track .pd-mb { padding: 12px 14px 14px; gap: 8px; }
+.pd-track .pd-mb b { font-size: 14.5px; }
+.pd-track .chip { height: 22px; font-size: 11px; transition: background .4s, color .4s; }
+.pd-nav { position: absolute; top: 40%; z-index: 2; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-c-2); background: rgba(14, 8, 32, .85); color: var(--text); display: grid; place-items: center; box-shadow: 0 10px 30px -10px rgba(0, 0, 0, .7); transition: opacity var(--t-base), background var(--t-base); }
+.pd-nav:hover { background: var(--halor-violet); }
+.pd-nav svg { width: 18px; height: 18px; }
+.pd-prev { left: -14px; } .pd-next { right: -14px; }
+.pd-carousel.at-start .pd-prev, .pd-carousel.at-end .pd-next { opacity: 0; pointer-events: none; }
+@media (max-width: 700px) { .pd-nav { display: none; } }
+/* motion graphics dentro das miniaturas: só rodam com o carrossel na tela */
+.pd-carousel.run .sl-chart i { animation: mgBars 3.6s var(--ease-halo) infinite both; transform-origin: bottom; }
+.pd-carousel.run .sl-chart i:nth-child(2) { animation-delay: .15s; } .pd-carousel.run .sl-chart i:nth-child(3) { animation-delay: .3s; } .pd-carousel.run .sl-chart i:nth-child(4) { animation-delay: .45s; }
+.pd-carousel.run .sl-big b { animation: mgPop 3.6s var(--ease-spark) infinite both; transform-origin: left bottom; }
+.pd-carousel.run .sl-line { animation: mgDraw 4s var(--ease-halo) infinite both; transform-origin: left; }
+.pd-carousel.run .sl-ms i { animation: mgDot 4s var(--ease-spark) infinite both; }
+.pd-carousel.run .sl-ms:nth-of-type(3) i { animation-delay: .35s; } .pd-carousel.run .sl-ms:nth-of-type(4) i { animation-delay: .7s; } .pd-carousel.run .sl-ms:nth-of-type(5) i { animation-delay: 1.05s; }
+.pd-carousel.run .sl-step { animation: mgRise 3.8s var(--ease-halo) infinite both; }
+.pd-carousel.run .sl-step:nth-child(2) { animation-delay: .25s; } .pd-carousel.run .sl-step:nth-child(3) { animation-delay: .5s; }
+.pd-carousel.run .sl-list div { animation: mgSlide 4s var(--ease-halo) infinite both; }
+.pd-carousel.run .sl-list div:nth-child(2) { animation-delay: .3s; } .pd-carousel.run .sl-list div:nth-child(3) { animation-delay: .6s; }
+.pd-carousel.run .sl-cta { animation: mgBreathe 2.8s ease-in-out infinite; }
+.pd-carousel.run .sl-img::after { animation: mgRing 3.2s ease-in-out infinite; }
+.pd-carousel.run .sl-ring { animation: spin 14s linear infinite; }
+.pd-carousel.run .sl-h { animation: mgType 4.2s var(--ease-halo) infinite both; }
+@keyframes mgBars { 0% { transform: scaleY(0); } 25%, 80% { transform: none; } 100% { transform: scaleY(0); } }
+@keyframes mgPop { 0% { opacity: 0; transform: scale(.7); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgDraw { 0% { transform: scaleX(0); } 35%, 85% { transform: none; } 100% { transform: scaleX(0); } }
+@keyframes mgDot { 0%, 12% { transform: scale(0); } 30%, 85% { transform: none; box-shadow: 0 0 0 .6cqw rgba(139, 61, 255, .2); } 100% { transform: scale(0); } }
+@keyframes mgRise { 0% { opacity: 0; transform: translateY(3cqw); } 25%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgSlide { 0% { opacity: 0; transform: translateX(-4cqw); } 22%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mgBreathe { 50% { transform: scale(1.06); box-shadow: inset 0 0 0 .3cqw #c4a6ff, 0 0 4cqw rgba(139, 61, 255, .35); } }
+@keyframes mgRing { 50% { transform: scale(1.12); opacity: .6; } }
+@keyframes mgType { 0% { clip-path: inset(0 100% 0 0); } 22%, 92% { clip-path: inset(0 0 0 0); } 100% { clip-path: inset(0 0 0 100%); } }
