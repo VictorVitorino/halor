@@ -29,6 +29,7 @@ function boot() {
   safe(bootHalos, 'halos');
   safe(bootFields, 'campo');
   safe(bootNavFx, 'menu');
+  safe(bootProtoAway, 'barra do protótipo');
   safe(bootReveal, 'revelar ao rolar');
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();

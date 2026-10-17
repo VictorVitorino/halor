@@ -37,12 +37,12 @@ function bootReveal() {
     const op = parseFloat(cs.opacity) || 1;
     const heading = /^H[12]$/.test(n.tagName);
     const blur = cs.filter === 'none' && kind !== 'frame';
-    const from = { opacity: 0, translate: kind === 'frame' ? '0 56px' : '0 34px', scale: kind === 'frame' ? .965 : .985 };
+    const from = { opacity: 0, translate: kind === 'frame' ? '0 40px' : '0 24px', scale: kind === 'frame' ? .975 : .99 };
     const to = { opacity: op, translate: '0 0', scale: 1 };
-    if (blur) { from.filter = 'blur(8px)'; to.filter = 'blur(0px)'; }
+    if (blur) { from.filter = 'blur(5px)'; to.filter = 'blur(0px)'; }
     if (heading) { from.clipPath = 'inset(0 0 100% 0)'; to.clipPath = 'inset(0 0 -20% 0)'; }
     if (cs.translate !== 'none' || cs.scale !== 'none') { delete from.translate; delete to.translate; delete from.scale; delete to.scale; }
-    const a = n.animate([from, to], { duration: kind === 'frame' ? 1100 : 820, delay: Math.min(i, 7) * 85, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'both' });
+    const a = n.animate([from, to], { duration: kind === 'frame' ? 560 : 460, delay: Math.min(i, 5) * 45, easing: 'cubic-bezier(.22,.61,.36,1)', fill: 'both' });
     a.pause(); a.currentTime = 0;
     items.set(n, { a, done: false });
   };
@@ -52,14 +52,14 @@ function bootReveal() {
   });
   $$('[data-rv]', site).forEach(n => add(n, n.dataset.rv === 'frame' ? 'frame' : 'one', +(n.dataset.rvI || 0)));
 
-  /* faixa de leitura: um pouco menor que a tela, para o bloco nascer e se desfazer à vista */
+  /* faixa de leitura: o bloco nasce assim que aponta na tela (sem esperar) e se desfaz quando sai */
   const io = new IntersectionObserver(es => {
     for (const e of es) {
       const it = items.get(e.target); if (!it) continue;
       if (e.isIntersecting) { it.a.playbackRate = 1; it.a.play(); }
-      else if (it.a.currentTime > 0) { it.a.playbackRate = -1.6; it.a.play(); }
+      else if (it.a.currentTime > 0) { it.a.playbackRate = -1.8; it.a.play(); }
     }
-  }, { rootMargin: '-6% 0px -12% 0px', threshold: 0 });
+  }, { rootMargin: '-2% 0px 10% 0px', threshold: 0 });
   items.forEach((_, n) => io.observe(n));
   /* ao sair do site tudo volta ao estado visível, sem animação presa */
   document.addEventListener('halor:view', e => {
@@ -85,4 +85,23 @@ function bootNavFx() {
     map.forEach(x => { if (x === best) x.a.setAttribute('aria-current', 'true'); else x.a.removeAttribute('aria-current'); });
   }, { rootMargin: '-35% 0px -45% 0px', threshold: [0, .01, .25, .5, .75, 1] });
   map.forEach(x => io.observe(x.s));
+}
+
+/* Barra do protótipo: no site ela sai de cena enquanto a pessoa desce (para não cobrir o conteúdo)
+   e volta ao subir, no topo, no fim da página ou com o foco do teclado */
+function bootProtoAway() {
+  const bar = $('.proto'); if (!bar) return;
+  let lastY = scrollY, ticking = false;
+  const update = () => {
+    ticking = false;
+    const y = scrollY, dy = y - lastY;
+    const nearEnd = y + innerHeight > document.documentElement.scrollHeight - 160;
+    if (currentView !== 'v-site' || y < innerHeight * .6 || nearEnd || bar.contains(document.activeElement)) bar.classList.remove('away');
+    else if (dy > 6) bar.classList.add('away');
+    else if (dy < -6) bar.classList.remove('away');
+    if (Math.abs(dy) > 6) lastY = y;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+  bar.addEventListener('focusin', () => bar.classList.remove('away'));
+  document.addEventListener('halor:view', () => bar.classList.remove('away'));
 }

@@ -415,6 +415,39 @@
   .tl-cost { padding: 14px; }
 }
 
+/* ---- compacto: no desktop a linha do tempo inteira (botão e painéis) cabe na altura da tela ----
+   A altura dos painéis acompanha a janela (entre 430 e 500 px) e o ano, o título,
+   as ilustrações e o custo escondido da IA encolhem junto, sem cortar nada. */
+.s-sec.s-tl { padding-block: clamp(56px, 7vw, 104px); }
+.s-tl .s-head { margin-bottom: clamp(26px, 3.4vw, 44px); }
+@media (min-width: 960px) {
+  .tl { --rowh: clamp(430px, calc(100svh - 230px), 500px); }
+  .tl-bar { margin-bottom: 14px; }
+  .tl-play { height: 50px; }
+  .tl-play-ic { width: 36px; height: 36px; }
+  .tl-ic, .tl-meta { top: 28px; }
+  .tl-v { top: 80px; bottom: 50px; }
+  .tl-idx { bottom: 18px; }
+  .tl-p { --art: clamp(190px, min(calc(var(--open) * .44), calc((var(--rowh) - 150px) * 1.2)), 330px); }
+  .tl-y { font-size: min(clamp(64px, 8.4cqw, 108px), calc(var(--rowh) * .19)); }
+  .tl-t { margin-top: 10px; font-size: min(clamp(22px, 2.15cqw, 28px), calc(var(--rowh) * .056)); }
+  .tl-r { padding-top: 10px; }
+  .tl-d { font-size: 15.5px; }
+  .tl-who { margin-top: 14px; }
+  .tl-next .tl-y { font-size: min(clamp(44px, 5cqw, 66px), calc(var(--rowh) * .12)); }
+  /* 2024: título mais baixo e custo escondido enxuto, para os dois caberem */
+  .tl-ai { --art: clamp(140px, min(calc(var(--open) * .28), calc(var(--rowh) * .38)), 196px); }
+  .tl-ai .tl-h { margin-top: 66px; }
+  .tl-ai .tl-d { max-width: 44ch; }
+  .tl-ai .tl-who { margin-top: 12px; }
+  .tl-ai .tl-art { top: 64px; }
+  .tl-ai .tl-y { font-size: min(clamp(52px, 6cqw, 76px), calc(var(--rowh) * .13)); }
+  .tl-cost { bottom: 18px; gap: 8px; padding: 11px 16px; }
+  .tl-tok b { font-size: 24px; }
+  .tl-miss svg { width: 52px; height: 33px; }
+  .tl-cost-f { font-size: 12.5px; }
+}
+
 /* ---- movimento reduzido: tudo muda na hora, sem animação automática ---- */
 @media (prefers-reduced-motion: reduce) {
   .s-sec.s-tl, .tl-glow, .tl-p, .tl-p *, .tl-p::before, .tl-play, .tl-ring .tl-ring-f { transition: none !important; }

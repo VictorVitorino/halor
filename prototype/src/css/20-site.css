@@ -162,6 +162,8 @@
    ========================================================================== */
 /* #v-site > * deixava o cabeçalho com position: relative; aqui ele volta a ficar preso no topo */
 #v-site > .s-nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 60; }
+/* vidro escuro e firme: o menu continua noite também sobre as faixas claras (linha do tempo) */
+#v-site > .s-nav.scrolled { background: rgba(9, 5, 20, .9); -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%); border-bottom-color: rgba(201, 166, 255, .14); box-shadow: 0 10px 30px -18px rgba(7, 4, 15, .8); }
 .s-links a { position: relative; isolation: isolate; overflow: hidden; }
 /* varredura de luz: passa ao passar o mouse e, de tempos em tempos, em onda por todos os menus */
 .s-links a::before { content: ""; position: absolute; top: -20%; bottom: -20%; left: 0; width: 46%; z-index: -1; pointer-events: none; background: linear-gradient(100deg, transparent, rgba(201, 166, 255, .38), rgba(255, 255, 255, .55), rgba(201, 166, 255, .38), transparent); transform: translateX(-160%) skewX(-18deg); opacity: 0; }

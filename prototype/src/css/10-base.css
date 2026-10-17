@@ -198,6 +198,9 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   max-width: calc(100vw - 24px); overflow-x: auto; scrollbar-width: none;
 }
 .proto::-webkit-scrollbar { display: none; }
+/* no site a barra sai de cena enquanto se desce a página (js/18-reveal.js, bootProtoAway) */
+.proto { transition: transform var(--t-slow) var(--ease-halo), opacity var(--t-slow) var(--ease-halo); }
+.proto.away { transform: translate(-50%, calc(100% + 24px)); opacity: 0; pointer-events: none; }
 .proto-tag { font-family: var(--f-mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--halor-ash); padding: 0 10px 0 12px; white-space: nowrap; display: flex; align-items: center; gap: 8px; }
 .proto-tag svg { width: 18px; height: 18px; }
 .proto a {

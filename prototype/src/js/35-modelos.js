@@ -202,7 +202,21 @@ function bootModelos() {
   track.addEventListener('scroll', edge, { passive: true }); edge();
 
   /* cada slide só anima enquanto aparece (na tela e dentro da faixa visível do carrossel) */
-  const io = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('md-on', e.isIntersecting)), { threshold: .05 });
+  /* na primeira vez que aparece, o slide já chega montado (o ciclo de 9 s pula para a fase cheia)
+     e só depois recomeça a montagem: quem rola a página não espera o slide se construir */
+  const ready = new WeakSet();
+  const skipAhead = c => {
+    if (ready.has(c)) return; ready.add(c);
+    if (REDUCED || !c.getAnimations) return;
+    c.getAnimations({ subtree: true }).forEach(a => {
+      const t = a.effect && a.effect.getTiming();
+      if (t && t.iterations === Infinity && t.duration === 9000) a.currentTime = (a.currentTime || 0) + 9000 * .64;
+    });
+  };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    e.target.classList.toggle('md-on', e.isIntersecting);
+    if (e.isIntersecting) skipAhead(e.target);
+  }), { threshold: .05 });
   $$('.pd-model', track).forEach(c => io.observe(c));
 
   /* cards holográficos seguem o cursor */
