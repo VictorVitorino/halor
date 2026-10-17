@@ -966,9 +966,10 @@ VT_DEMO.chart = card => {
     const s = []; idx.forEach((bi, k) => { s[bi] = k; }); return s;
   };
   const ns = (t, a, parent) => { const n = svgEl(t, a); (parent || svg).append(n); return n; };
+  const gap = d => Math.abs(d) < .05 ? 'na meta' : `${signed(d)} ${d > 0 ? 'acima' : 'abaixo'}`;
   const summary = i => {
     const d = R[i] - M[i];
-    return `${Q[i]}: receita ${R[i]}, meta ${f1(M[i])}, ${d >= 0 ? signed(d) + ' acima' : signed(d) + ' abaixo'} da meta.`;
+    return `${Q[i]}: receita ${R[i]}, meta ${f1(M[i])}, ${Math.abs(d) < .05 ? 'na meta' : gap(d) + ' da meta'}.`;
   };
   const build = () => {
     const W = plot.clientWidth, H = plot.clientHeight; if (!W || !H) return;
@@ -1004,6 +1005,7 @@ VT_DEMO.chart = card => {
       const hit = ns('rect', { y: T, width: band, height: B - T, class: 'vt-ch-hit', tabindex: 0, role: 'button', 'aria-pressed': 'false', 'aria-label': summary(i) + ' Enter fixa o detalhe.' }, hitsG);
       const show = () => {
         bars[i].classList.add('is-hov');
+        if (st.pin === i) { tip.hidden = true; return; }
         tip.hidden = false;
         tip.textContent = `${Q[i]} · Receita ${v} · Meta ${f1(M[i])}`;
         tip.style.left = vtClamp(xc(pos[i]), 80, W - 80) + 'px'; tip.style.top = y(Math.max(v, M[i])) + 'px';
@@ -1056,7 +1058,7 @@ VT_DEMO.chart = card => {
     const d = R[i] - M[i], pv = i ? (R[i] / R[i - 1] - 1) * 100 : null;
     detQ.textContent = Q[i]; detV.textContent = R[i];
     detM.innerHTML = '';
-    detM.append(`Meta ${f1(M[i])} · `, el('em', d >= 0 ? 'is-up' : 'is-down', `${signed(d)} ${d >= 0 ? 'acima' : 'abaixo'}`));
+    detM.append(`Meta ${f1(M[i])} · `, el('em', d >= 0 ? 'is-up' : 'is-down', gap(d)));
     detP.textContent = pv == null ? 'Primeiro trimestre da série' : `${pv >= 0 ? '+' : '−'}${fmtNum(Math.abs(pv), 1)}% sobre ${Q[i - 1]}`;
     det.classList.toggle('is-right', st.sorted);
     det.hidden = false;
@@ -1075,7 +1077,7 @@ VT_DEMO.chart = card => {
   };
   /* clique numa barra fixa o detalhe; outro clique na mesma solta */
   const pin = i => {
-    st.pin = st.pin === i ? -1 : i; paint(); E.touch();
+    st.pin = st.pin === i ? -1 : i; tip.hidden = true; paint(); E.touch();
     E.say(st.pin < 0 ? 'Detalhe fechado.' : `${summary(i)} ${detP.textContent}.`);
   };
   $('.vt-ch-x', det).addEventListener('click', () => { const i = st.pin; st.pin = -1; paint(); if (g && i >= 0) g.hits[i].focus(); E.say('Detalhe fechado.'); });

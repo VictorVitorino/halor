@@ -172,7 +172,7 @@ const PD_MODELS = [
   { n: 'Workshop', ac: '#b791ff', fx: ['Hologram 3D Cards', 'Light Sweep'], th: 'workshop' },
   { n: 'Relatório executivo', ac: '#6420cc', fx: ['Data Highlight', 'Progress Motion'], th: 'relatorio' },
   { n: 'Apresentação institucional', ac: '#7a33eb', fx: ['Glow / Light Sweep'], th: 'institucional' },
-  { n: 'Roadmap do ano', ac: '#8752f5', fx: ['Progress Motion', 'Reveal'], th: 'roadmap' },
+  { n: 'Roadmap do ano', ac: '#8752f5', fx: ['Progress Motion', 'Data Highlight'], th: 'roadmap' },
   { n: 'Abertura de evento', ac: '#c9a6ff', fx: ['Mask Reveal', 'Partículas'], th: 'abertura' },
   { n: 'Processo e fluxo', ac: '#7040d6', fx: ['BPMN Flow Motion', 'Connector'], th: 'processo' },
   { n: 'Onboarding de time', ac: '#9f70ff', fx: ['Motion Graphics', 'Tipografia animada'], th: 'onboarding' },

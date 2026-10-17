@@ -86,11 +86,12 @@
 .au-blob { position: absolute; right: -12cqw; top: -16cqw; width: 44cqw; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(201, 166, 255, .6), rgba(201, 166, 255, 0) 68%); }
 .au-row { position: absolute; left: 6cqw; right: 6cqw; top: 18.6cqw; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 3cqw; }
 .au-t { position: relative; display: grid; justify-items: start; gap: .7cqw; padding: 2.2cqw 2.4cqw 2.4cqw; border-radius: 2.2cqw; background: #fff; border: .22cqw solid #e9dfff; box-shadow: 0 1.6cqw 3.6cqw -2cqw rgba(58, 20, 120, .3); }
-.au-ic { width: 11.4cqw; height: 11.4cqw; margin-bottom: .6cqw; border-radius: 3.2cqw; display: grid; place-items: center; background: linear-gradient(145deg, #f3eeff, #e2d4ff); box-shadow: 0 0 0 calc(.45cqw * var(--md-hi)) #c4a6ff, 0 0 calc(3cqw * var(--md-hi)) rgba(139, 61, 255, .45); }
+.au-ic { position: relative; width: 11.4cqw; height: 11.4cqw; margin-bottom: .6cqw; border-radius: 3.2cqw; display: grid; place-items: center; background: linear-gradient(145deg, #f3eeff, #e2d4ff); box-shadow: 0 0 0 calc(.45cqw * var(--md-hi)) #c4a6ff, 0 0 calc(3cqw * var(--md-hi)) rgba(139, 61, 255, .45); }
 .au-ic svg { width: 7.4cqw; height: 7.4cqw; overflow: visible; fill: none; stroke: #7a2ef0; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .au-t b { font: 600 3.3cqw/1 var(--f-display); letter-spacing: -.03em; }
 .au-t small { font-size: 2.2cqw; line-height: 1.2; color: var(--ink-2); white-space: nowrap; }
 .au-t em { position: absolute; right: 2.2cqw; top: 2cqw; font: 600 2.2cqw/1 var(--f-mono); font-style: normal; color: #b9a5e6; letter-spacing: .04em; }
+.au-ic::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: 0 0 0 .4cqw #a970ff, 0 0 2.4cqw rgba(139, 61, 255, .5); opacity: 0; }
 .au-lid, .au-beat, .au-pupil { transform-box: fill-box; transform-origin: center; }
 .au-beat { fill: rgba(139, 61, 255, calc(.2 * var(--md-p))); }
 .au-glass { fill: rgba(201, 166, 255, calc(.55 * var(--md-p))); }
@@ -171,6 +172,7 @@
 .rm-grid::before { content: ""; position: absolute; left: 26cqw; width: 68cqw; top: 21cqw; height: 22.4cqw; background: repeating-linear-gradient(90deg, rgba(139, 61, 255, .16) 0 .15cqw, transparent .15cqw 17cqw); border-right: .15cqw solid rgba(139, 61, 255, .16); }
 .rm-hd span { position: absolute; top: 17.6cqw; width: 17cqw; text-align: center; font: 600 2.1cqw/1 var(--f-mono); letter-spacing: .12em; color: var(--mute); }
 .rm-r { position: absolute; left: 0; right: 0; height: 4.2cqw; --f: clamp(0, (var(--md-x) - var(--x0)) / var(--len), 1); }
+.rm-r::before { content: ""; position: absolute; left: 4.4cqw; top: -.3cqw; bottom: -.3cqw; width: 21.2cqw; border-radius: 1.2cqw; background: rgba(139, 61, 255, .12); box-shadow: inset 0 0 0 .18cqw rgba(139, 61, 255, .32); opacity: clamp(0, min(var(--f) * 25, (1 - var(--f)) * 25), 1); }
 .rm-r b { position: absolute; left: 6cqw; top: 50%; translate: 0 -50%; font: 600 2.5cqw/1 var(--f-display); letter-spacing: -.02em; }
 .rm-r em { position: absolute; left: 15cqw; width: 9.4cqw; top: 50%; translate: 0 -50%; text-align: right; font: 600 2.2cqw/1 var(--f-mono); font-style: normal; color: var(--halor-violet-700); font-variant-numeric: tabular-nums; }
 .rm-r .md-cnt { --md-n: calc(var(--f) * 100); }
@@ -282,6 +284,7 @@
 
   /* 02 · Aula */
   .au-ic { animation: mdAuDraw var(--T) var(--ease-halo) var(--d) infinite both; }
+  .au-ic::after { animation: mdAuRing var(--T) ease-out var(--d) infinite both; }
   .au-lid { animation: mdAuBlink var(--T) ease-in-out var(--d) infinite both; }
   .au-pupil { animation: mdAuLook var(--T) ease-in-out var(--d) infinite both; }
   .au-beat { animation: mdAuBeat var(--T) ease-out var(--d) infinite both; }
@@ -383,6 +386,7 @@
 
 /* 02 · Aula: desenho do ícone e o gesto de cada um (piscar, olhar, pulsar, acender) */
 @keyframes mdAuDraw { 0%, 4% { --md-p: 0; } 24%, 100% { --md-p: 1; } }
+@keyframes mdAuRing { 0%, 21% { opacity: 0; scale: 1; } 25% { opacity: 1; scale: 1; } 38%, 100% { opacity: 0; scale: 1.4; } }
 @keyframes mdAuBlink { 0%, 30%, 34%, 58%, 62%, 100% { scale: 1 1; } 32%, 60% { scale: 1 .08; } }
 @keyframes mdAuLook { 0%, 36% { translate: 0 0; } 42%, 48% { translate: -2.4px 0; } 54%, 60% { translate: 2.4px 0; } 66%, 100% { translate: 0 0; } }
 @keyframes mdAuBeat { 0%, 28%, 34%, 40%, 50%, 56%, 62%, 100% { scale: 1; } 31%, 53% { scale: 1.2; } 37%, 59% { scale: 1.1; } }
